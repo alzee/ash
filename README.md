@@ -25,13 +25,15 @@ $ ash/a.sh
 
 ### Now your bash environment is back, like phoenix arise from the ashes.
 
-## Have added a new function to your .fun?
+### Have added a new function to your .fun?
 $ cd ash
-# commit change
+## commit change
 $ git add conf/home/fun
 $ git commit -m 'fun changed'
+
+## reload ~/.{env,fun.ali}
 # exit screen or tmux
-$ rl # reload ~/.{env,fun.ali}
+$ rl
 $ screen # tmux
 ```
 
