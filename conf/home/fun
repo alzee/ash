@@ -1206,8 +1206,8 @@ backup(){
 	tar Jcf db_ssh_$time.tar.xz $backupdir/{mysql,ssh}
 	scp db_ssh_$time.tar.xz $vps:dotbackup && rm db_ssh_$time.tar.xz
 
-	cp /etc/hosts $repom/conf
-	cp /etc/httpd/conf.d/vhosts.conf $repom/conf/httpd
+	cp /etc/hosts $repoa/conf
+	cp /etc/httpd/conf.d/vhosts.conf $repoa/conf/httpd
 
 	# backup $backupdir/
 
