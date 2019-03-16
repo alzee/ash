@@ -997,7 +997,7 @@ g(){
 			;;&
 		pl|p)
 			# some files in $repom hard link to ~/, git pull will break the links, so run reborn.sh to re-link
-			[ $? == 0 -a `pwd` == $repom ] && $repom/bash/reborn.sh
+			[ $? == 0 -a `pwd` == $repoa ] && $repoa/a.sh
 			;;
 	esac
 }

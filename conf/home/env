@@ -87,6 +87,7 @@ LFS=/mnt/lfs
 # repo list
 #repo=(~/.misc ~/emma/jiei) # arrays won't be exported, why? see man bash BUGS
 allrepos=	# clear $allrepos so rl() won't duplicate the value
+repoa=~/.ash
 repom=~/.misc
 repod=~/d
 #repoj=$htdoc/ji
