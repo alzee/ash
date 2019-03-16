@@ -36,7 +36,7 @@ sudoer() {
 	else
 		sudo usermod -aG wheel $user
 	fi
-	sudo cp $scriptdir/../conf/$distro/sudoer /etc/sudoers.d/
+	sudo cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
 }
 
 more_repo() {
@@ -50,7 +50,7 @@ more_repo() {
 		fedora)
 			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
 			# add chrome repo
-			sudo cp $scriptdir/../conf/google-chrome.repo /etc/yum.repos.d/ && say "chrome repo installed" || say "chrome repo install failed"
+			sudo cp $scriptdir/conf/templates/google-chrome.repo /etc/yum.repos.d/ && say "chrome repo installed" || say "chrome repo install failed"
 			# add docker repo
 			# sudo dnf -y install dnf-plugins-core
 			sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
@@ -364,7 +364,7 @@ misc() {
 		sudo systemctl mask bluetooth
 		# docker daemon config
 		sudo systemctl start docker	# start docker to initialize /etc/docker/
-		sudo cp $scriptdir/../conf/daemon.json /etc/docker/
+		sudo cp $scriptdir/conf/templates/daemon.json /etc/docker/
 		# fucking lash
 		[ -f /usr/share/applications/lash-panel.desktop ] && sudo rm -f /usr/share/applications/lash-panel.desktop
 
@@ -382,13 +382,13 @@ misc() {
 	sudo firewall-cmd --add-port 8080/tcp	# we use 8080 for znc
 	sudo firewall-cmd --runtime-to-permanent
 
-	crontab $scriptdir/../conf/$distro/cron
+	crontab $scriptdir/conf/templates/$distro/cron
 }
 
 hardlinks(){
 	# hard link conf/home/foo to ~/.foo
 	# dir structure
-	pushd $scriptdir/../conf/home
+	pushd $scriptdir/conf/home
 	for i in $(find -type d)
 	do
 		mkdir -p ~/.${i#./}
@@ -408,7 +408,7 @@ rm_wine_icons(){
 
 sounds() {
 	[ $distro == rhel ] && return
-	cp -r $scriptdir/../sound ~/.local && say ".local/sound copied"
+	cp -r $scriptdir/sound ~/.local && say ".local/sound copied"
 }
 
 redb() {
