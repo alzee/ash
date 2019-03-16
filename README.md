@@ -3,7 +3,7 @@
 ### Build your directory structure.
 * Fork it, commit your dotfiles to ash/conf/home/.
 	```bash
-	# For example, screenrc, .inputrc, .gitconfig, .vimrc, etc.
+	# For example, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
 	for dotfile in screenrc inputrc gitconfig vimrc
 	do
 		cp ~/.${dotfile} ash/conf/home/
