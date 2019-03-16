@@ -297,7 +297,7 @@ dir_struct(){
 	[ $UID -eq 0 ] && exit
 
 	# dir structures
-	mkdir -p ~/{w,.local/bin,.vim/{map,session,template,undo},.sec,.screenlayout,.gpg,.config/{autostart,i3,mpv,cmus}}
+	mkdir -p ~/w
 	#chown -R $USER:$USER ~/{.local,.vim,.sec,.gpg}
 
 	rmdir ~/{Downloads,Documents,Pictures,Music,Videos,Desktop,Public,Templates} 2>/dev/null
@@ -387,8 +387,14 @@ misc() {
 
 hardlinks(){
 	# hard link conf/home/foo to ~/.foo
+	# dir structure
 	pushd $scriptdir/../conf/home
-	for i in $(find -type f);
+	for i in $(find -type d)
+	do
+		mkdir -p ~/.${i#./}
+	done
+
+	for i in $(find -type f)
 	do
 		ln -f $i ~/.${i#./} && say "${i#./} linked"
 	done
@@ -450,7 +456,6 @@ case $1 in
 		more_repo
 		;;
 	"")
-		dir_struct
 		mod_bashrc
 		hardlinks
 		rm_wine_icons
