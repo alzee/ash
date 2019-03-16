@@ -1,9 +1,7 @@
-### Fork it.
-
-### Commit your dotfiles in home to ash/conf/home/, .fun, .env, .ali, .vimrc, etc.
+### Fork it, and commit your dotfiles in home to ash/conf/home/, like .fun, .env, .ali, .vimrc, etc.
 
 ```bash
-## On a new linux.
+### On a new linux.
 
 $ git clone https://github.com/username/ash
 
