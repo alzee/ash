@@ -29,7 +29,7 @@ $ ash/a.sh
 $ cd ash
 ## commit change
 $ git add conf/home/fun
-$ git commit -m 'fun changed'
+$ git commit -m 'added foo() in fun'
 
 ## reload ~/.{env,fun.ali}
 # exit screen or tmux
