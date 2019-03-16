@@ -25,9 +25,13 @@ $ ash/a.sh
 
 ### Now your bash environment is back, like phoenix arise from the ashes.
 
-# Have changed your .vimrc?
+## Have added a new function to your .fun?
 $ cd ash
-$ git add conf/home/vim/vimrc
-$ git commit -m 'vimrc changed'
+# commit change
+$ git add conf/home/fun
+$ git commit -m 'fun changed'
+# exit screen or tmux
+$ rl # reload ~/.{env,fun.ali}
+$ screen # tmux
 ```
 
