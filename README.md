@@ -31,7 +31,7 @@ $ cd ash
 $ git add conf/home/fun
 $ git commit -m 'added foo() in fun'
 
-## reload ~/.{env,fun.ali}
+## new codes in ~/.{env,fun,ali} need to be exported
 # exit screen or tmux
 $ rl
 $ screen # tmux
