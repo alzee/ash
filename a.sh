@@ -389,6 +389,7 @@ hardlinks(){
 	# hard link conf/home/foo to ~/.foo
 	# dir structure
 	pushd $scriptdir/conf/home
+
 	for i in $(find -type d)
 	do
 		mkdir -p ~/.${i#./}
@@ -398,6 +399,7 @@ hardlinks(){
 	do
 		ln -f $i ~/.${i#./} && say "${i#./} linked"
 	done
+
 	popd
 }
 
