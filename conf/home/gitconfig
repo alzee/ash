@@ -1,0 +1,11 @@
+[user]
+	email = z@arcz.ee
+	name = Arc Zee
+[push]
+	default = simple
+[alias]
+	st = status
+	pl = pull
+	p = pull
+	l = log --oneline
+	d = diff

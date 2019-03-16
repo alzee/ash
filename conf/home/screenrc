@@ -1,0 +1,63 @@
+# create a layout, otherwise the regions won't be remembered after reattach
+layout new fuck
+# create windows
+#screen 4 mysql -uroot -p
+#screen 5 nethack
+#screen -t mpv 7
+screen
+#select 0
+
+#https://superuser.com/a/1013881/886777
+altscreen on
+
+# set command key
+#escape ^Ss
+#escape ^Gg
+#escape ^Qq
+#escape ^Tt
+#escape ^Oo
+#defflow off
+hardstatus off
+
+############### key bind start ###############
+# swap s and S
+bind s eval split focus other
+#bind S xoff
+bind S eval other focus other
+# swap v and V
+bind v eval 'split -v' focus other
+bind V version
+bind o only
+#bind q quit
+# swap x and X
+bind x remove
+#bind X lockscreen
+bind l layout show
+bind ^l layout show
+bind C layout new
+bind N layout next
+bind P layout prev
+
+#bind h focus left
+#bind ^h focus left
+#bind j focus down
+#bind ^j focus down
+#bind k focus up
+#bind ^k focus up
+#bind l focus right
+#bind ^l focus right
+bind = resize =
+bind - resize -10
+bind + resize +10
+
+############### key bind end ###############
+
+# modify string escapes
+# c - time HH:MM in 24h format
+# s - seconds
+# M - short month name
+# d - day of month with leading zero
+# D - short weekday name
+# default "%c:%s %M %d %H%? %l%?"
+# chapter of STRING ESCAPES in man screen is NOT complete and accurate though
+time "%c:%s %D %M %d"

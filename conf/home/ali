@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# my aliases
+# create hard link ~/.aliases when running $misc_repo/bash/reborn.bin.sh
+# and ~/.aliases will be sourced in ~/.bashrc
+
+alias monitor='sudo systemctl stop NetworkManager; sudo airmon-ng start wlp2s0'
+alias managed='sudo airmon-ng stop wlp2s0mon; sudo systemctl restart NetworkManager'
+
+alias vim="sudo vim"
+alias gpg="gpg2"
+alias d='cd'
+alias L="command ls -Z"
+alias ll='command ls -l --color=auto'
+alias LL="command ls -lZ"
+alias l.='command ls -d .* --color=auto'
+alias l='command ls --color=auto'
+alias ls='sudo ls --color=auto'
+alias py='python3'
+alias pydoc='pydoc3'
+alias pip='pip3'

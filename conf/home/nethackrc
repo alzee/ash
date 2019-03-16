@@ -1,0 +1,41 @@
+OPTIONS=pickup_types:$"?+!=/*, !pickup_thrown
+OPTIONS=autodig, pushweapon
+
+OPTIONS=time, color, menucolors
+OPTIONS=showexp, showscore, msg_window:r, msghistory:30
+
+OPTIONS=hilite_pet
+
+
+MENUCOLOR="blessed"=cyan&bold
+MENUCOLOR="cursed"=orange&bold
+MENUCOLOR="uncursed"=green
+
+MENUCOLOR="loadstone\|wand \(of\|called\) cancellation"=red&underline
+# color only the real Amulet
+MENUCOLOR="Amulet of Yendor named"=magenta
+MENUCOLOR="gold piece"=yellow
+# forgotten spell
+MENUCOLOR="[a-zA-Z] - [a-zA-Z ]+[ ]+[0-9]+\*[ ]+[a-z]+[ ]+[0-9]+%"=magenta
+# This version will work on NAO.
+# MENUCOLOR="[a-zA-Z ]+[ ]+[0-9]+\*[ ]+[a-z]+[ ]+[0-9]+%"=magenta  # forgotten spell
+
+# OPTIONS=statuscolors	# need patch?
+# 
+# # HP
+# STATUSCOLOR=hp%100=green,hp%66=yellow,hp%50=orange
+# STATUSCOLOR=hp%33=red&bold,hp%15:red&inverse,hp%0:red&inverse&blink
+# # Pw
+# STATUSCOLOR=pw%100=green,pw%66=yellow,pw%50:orange,pw%33=red&bold
+# # Carry
+# STATUSCOLOR=burdened:yellow,stressed:orange,strained:red&bold
+# STATUSCOLOR=overtaxed:red&inverse,overloaded:red&inverse&blink
+# # Hunger
+# STATUSCOLOR=satiated:yellow,hungry:orange,weak:red&bold
+# STATUSCOLOR=fainting:red&inverse,fainted:red&inverse&blink
+# # Mental
+# STATUSCOLOR=hallu:yellow,conf:orange,stun:red&bold
+# # Health
+# STATUSCOLOR=ill:red&inverse,foodpois:red&inverse,slime:red&inverse
+# # Other
+# STATUSCOLOR=held:red&inverse,blind:red&inverse

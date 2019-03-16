@@ -1,0 +1,4 @@
+{
+	"data-root": "/home/dot/.dockerd",
+	"registry-mirrors": ["https://registry.docker-cn.com"]
+}

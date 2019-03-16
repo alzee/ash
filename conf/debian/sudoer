@@ -1,0 +1,2 @@
+# Am I in wheel?
+arc	ALL=(ALL)       NOPASSWD: /usr/bin/apt update, /usr/bin/apt upgrade -y

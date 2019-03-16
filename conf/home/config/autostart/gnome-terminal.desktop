@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=gnome-terminal
+Exec=/usr/bin/gnome-terminal --full-screen

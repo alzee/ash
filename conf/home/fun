@@ -1,0 +1,1262 @@
+#!/bin/bash
+# vim:ft=sh
+# my functions
+# create hard link ~/.fun when running $misc_repo/bash/reborn.bin.sh
+# and ~/.fun will be sourced in ~/.bashrc
+
+# $fun_exported set to null by default in .env. At the end of this file, export all these funcions and set $fun_exported to 1
+[ "$fun_exported" ] && return # since these functions have been exported, we don't need to soure this file anymore
+
+# use some useless dconf keys to store info is a good idea.
+
+set -a
+
+acme(){
+	# Issue cert using manual DNS mode
+	local dom certdir
+	dom="$1"
+	[ -z "$dom" ] && return
+	certdir=${3:-~/cert}
+	acme.sh --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
+	#acme.sh --renew -d "$dom" -d '*.'"$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
+	#acme.sh --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer
+}
+
+# import Fedora's GPG key(s)
+fedora_keys(){
+	curl https://getfedora.org/static/fedora.gpg | gpg --import
+}
+
+# print battery info
+ba(){
+	local f fd n s
+	fd=$(cat /sys/class/power_supply/BAT1/charge_full_design)
+	f=$(cat /sys/class/power_supply/BAT1/charge_full)
+	n=$(cat /sys/class/power_supply/BAT1/charge_now)
+	s=$(cat /sys/class/power_supply/BAT1/status)
+	echo charge_full/charge_full_design
+	echo $f/$fd=$(echo "scale=2;$f*100/$fd" | bc)%
+	echo charge_now/charge_full
+	echo $n/$f=$(echo "scale=2;$n*100/$f" | bc)%
+	echo $s
+}
+
+isint(){
+	local i
+	i="$1"
+
+	#if [[ "$i" =~ ^[-+]?[0-9]+$ ]]; then
+	#	return 0
+	#else
+	#	return 1
+	#fi
+
+	# this solution has integer limit
+	# https://stackoverflow.com/a/19116862/7714132
+	#if [ "$i" -eq "$i" ] 2> /dev/null; then
+	#	return 0
+	#else
+	#	return 1
+	#fi
+
+	# https://stackoverflow.com/a/18620446/7714132
+	case ${i#[-+]} in
+		*[!0-9]* | '')
+			return 1
+			;;
+		*)
+			return 0
+			;;
+	esac
+}
+
+# brightness
+b(){
+	local i j k
+	k=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+	
+	if [ -z "$1" ]; then
+		# print brightness if no parameters
+		j=$(cat /sys/class/backlight/intel_backlight/brightness)
+		echo $j/$k
+	else
+		i=$1
+		if isint "$i"; then
+			[ "$i" -eq 0 ] && echo do not set to 0, you idiot! && return
+			[ "$i" -lt 0 ] && echo how can it be negative, you idiot! && return
+			[ "$i" -gt "$k" ] && echo can not bigger then "$k" && return
+			sudo sh -c "echo $i > /sys/class/backlight/intel_backlight/brightness"
+		else
+			echo give me an integer, idiot!
+		fi
+	fi
+}
+
+mon(){
+	# monitors layout
+	# TODO monitors amount check
+	# determine if we are in DE or WM
+	# if in DE, stop
+	# if only one, should not do xrandr
+	local i
+	#local monitors o primary pos rotate output mode height width old_width old_height width_rotate pos_y
+	#local -A mon
+	#monitors=$(xrandr | awk '/ connected/ {printf $1":";getline;print $1}')
+	#set -- $monitors
+	#if [ "$#" -lt 2 ]; then
+	#	:
+	#fi
+	#for i in $monitors
+	#do
+	#	mon+=([${i%:*}]=${i#*:})
+	#	output=${i%:*}
+	#	mode=${i#*:}
+	#	width=${mode%x*}
+	#	if [ "$old_width" ];then #-a 
+	#		if [ "$width" -gt "$old_width" ];then
+	#			width_rotate=${mode#*x}
+	#			primary=--primary
+	#			rotate=right
+	#			pos=0x0
+	#			height=${mode%x*}
+	#			pos_y=$((old_height-height))
+	#		fi
+	#	else
+	#		# width_rotate=0
+	#		primary=
+	#		rotate=normal
+	#		height=${mode#*x}
+	#		pos=${width_rotate}x${pos_y#-}
+	#	fi
+	#	o+="--output $output $primary --mode $mode --pos $pos --rotate $rotate "
+	#	old_width=$width
+	#	old_height=$height
+	#done
+	#echo $o
+	#echo ${!mon[@]}
+	#echo ${mon[@]}
+	# default.sh is a symbolic link
+	i=~/.screenlayout/default.sh
+	. $i 2> /dev/null
+}
+
+fuckallrpms(){
+	# lets see are all these rpms removable
+	local i
+	for i in $(rpm -qa)
+	do
+		echo n | sudo dnf remove $i
+		say $i
+		echo
+		echo
+		sleep 2
+   	done
+}
+
+cleanup(){
+	# should i add a cron for this?
+	### vim undo file
+	local d=~/.vim/undo/
+	find $d -mtime +15 -delete
+	### ~/.cache 
+	### /var/cache
+	### /var/log
+}
+
+cmdnotfound(){
+	# if last command return 127 (not found), do something with it
+	# TODO how to deal with HISTCONTROL ignored command which don't have history?
+	local cmd r=$?	# r=$? must at the first line or we'll get return code of `local' builtin
+	if [ "$r" -eq 127 ]; then
+		cmd=$(HISTTIMEFORMAT= history 1 | sed 's/^ *[0-9]\+ *//')
+		# who_is her? OR Who is her?
+		tts "${cmd//_/ }"
+	fi
+}
+
+tts(){
+	# speech synthesis
+	echo "$@"
+}
+
+D(){
+	s -t vps 5 ssh $vps -D7777
+	s -X other
+}
+
+# cloudflare api
+cf(){
+	# todo
+	# -z list dns records
+	# -a add zone or dns record, depends on parameter
+	# -t for type
+	# -v for value
+	# -T for ttl
+	# -p for proxied
+	# -P for priority
+	# -e edit dns record, necessary?
+	# -d delete dns record
+	# --DELETE delete zone
+	# getopt multiple parameters for an option?
+	# getopt can NOT have whitespace between option and optional parameter?
+	local suffix method query args zid rid zone name
+
+	args=$(getopt X:q:s:zr:a:d:t:v:T: "$@")
+	set -- $args
+	while :
+	do
+		[ -z "$1" ] && break
+		case "$1" in
+			-X)
+				method="$2"
+				shift 2
+				;;
+			-q)
+				query="-d $2"
+				shift 2
+				;;
+			-s)
+				suffix="$2"
+				shift 2
+				;;
+			-r)	# format output dns records
+				name="$2"
+				cfrecords $name
+				break
+				#shift 2
+				;;
+			-a)
+				;;
+			-d)
+				;;
+			-z)
+				cfzones
+				break
+				shift 1
+				;;
+			*)
+				shift
+		esac
+	done
+}
+
+cfupdaterecord(){
+	# $1 rid
+	# $2 name
+	# $3 type
+	# $4 content
+	# $5 proxied
+	# $6 ttl
+	# $7 priority
+	[ "$1" ] || { echo record id is needed; return 2; }
+	[ "$2" ] || { echo zone name needed; return 1; }
+	[ "$3" ] || { echo type is needed; return 1; }
+	[ "$4" ] || { echo content is needed; return 1; }
+	local suffix query zid rid type name content ttl priority proxied method 
+	name=$2
+	zid=$(cfzid $name)
+	[ "$zid" = null ] && { echo zone "$name" not found; return 2; }
+	rid=$1
+	method=PUT
+	suffix="zones/$zid/dns_records/$rid"
+	type=${3^^}
+	content=$4
+	proxied=${5:-false}
+	ttl=${6:-1} # 1 is 'automatic'
+	priority=${7:-10}
+	query="{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$content\",\"ttl\":$ttl,\"priority\":$priority,\"proxied\":$proxied}"
+	cfcurl $suffix $method $query | jq
+}
+
+cfaddrecord(){
+	# $1 name
+	# $2 type
+	# $3 content
+	# $4 proxied
+	# $5 ttl
+	# $6 priority
+	[ "$1" ] || { echo zone name needed; return 1; }
+	[ "$2" ] || { echo type is needed; return 1; }
+	[ "$3" ] || { echo content is needed; return 1; }
+	local suffix query zid type name content ttl priority proxied method
+	name=$1
+	zid=$(cfzid $name)
+	[ "$zid" = null ] && { echo zone "$name" not found; return 2; }
+	suffix="zones/$zid/dns_records"
+	type=${2^^}
+	content=$3
+	proxied=${4:-false}
+	ttl=${5:-1} # 1 is 'automatic'
+	priority=${6:-10}
+	method=POST
+	query="{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$content\",\"ttl\":$ttl,\"priority\":$priority,\"proxied\":$proxied}"
+	cfcurl $suffix $method $query | jq
+}
+
+cfdelrecord(){
+	# $1 zone name. Why? Because we need zone id which is required in url
+	# $2 rid
+	[ "$1" ] || { echo zone name needed; return 1; }
+	[ "$2" ] || { echo record id is needed; return 2; }
+	local suffix method zid rid
+	zid=$(cfzid $1)
+	[ "$zid" = null ] && { echo zone "$1" not found; return 2; }
+	rid=$2
+	method=DELETE
+	suffix="zones/$zid/dns_records/$rid"
+	cfcurl $suffix $method | jq
+}
+
+cfaddzone(){
+	# $1 zone name
+	[ "$1" ] || { echo zone name needed; return 1; }
+	local suffix query name account jump_start method
+	name=$1
+	jump_start=${2:-true}
+	suffix=zones
+	account=$(cfaccount)
+	method=POST
+	query="{\"name\":\"$name\",\"account\":$account,\"jump_start\":$jump_start}"
+	cfcurl $suffix $method $query | jq
+}
+
+cfdelzone(){
+	# $1 zone name
+	[ "$1" ] || { echo zone name needed; return 1; }
+	local suffix zid
+	zid=$(cfzid $1)
+	[ "$zid" = null ] && { echo zone "$1" not found; return 2; }
+	suffix=zones/$zid
+	method=DELETE
+	cfcurl $suffix $method | jq
+}
+
+cfzones(){
+	local suffix
+	suffix="zones?per_page=50"
+	cfcurl $suffix | jq -r '.result[] | "\(.id) \(.name)"'
+}
+
+cfpurge(){
+	# $1 zone name
+	[ "$1" ] || { echo zone name needed; return 1; }
+	local suffix zid
+	zid=$(cfzid $1)
+	[ "$zid" = null ] && { echo zone "$1" not found; return 2; }
+	suffix=zones/$zid/purge_cache
+	method=POST
+	query="{\"purge_everything\":true}"
+	cfcurl $suffix $method $query | jq
+}
+
+cfzid(){
+	# $1 zone_name
+	local suffix name zone
+	name=$1
+	zone=${name%.*.*} # or zone=${name%.*}; zone=${zone%.*}
+	zone=${name#$zone.}	# or zone=${name/$zone./}
+	suffix="zones?name=$zone"
+	cfcurl $suffix | jq -r '.result[0].id'
+}
+
+cfrecords(){
+	# $1 zone_name
+	[ "$1" ] || { echo zone name needed; return 1; }
+	local suffix zid
+	zid=$(cfzid $1)
+	[ "$zid" = null ] && { echo zone "$1" not found; return 2; }
+	suffix="zones/$zid/dns_records?per_page=100"
+	cfcurl $suffix | jq -r '.result[] | "\(.id) \(.type)\t\(.name)\t\(.content)\t\t\(.ttl)\t\(.proxied)\t\(.priority)"'
+}
+
+cfaccount(){
+	local suffix
+	suffix=accounts
+	#cfcurl $suffix | jq -r '.result[] | "{\"id\":\"\(.id)\",\"name\":\"\(.name)\"}"'	# whitespace cause Malformed JSON
+	cfcurl $suffix | jq -r '.result[] | "{\"id\":\"\(.id)\"}"'
+	#cfcurl $suffix | jq '.result[] | {id,name}'	# whitespace cause Malformed JSON
+}
+
+cfcurl(){
+	# $1 suffix
+	# $2 method
+	# $3 query
+	local URL suffix CONTYPE method query keyfile auth email key
+	keyfile=~/.config/cfkey
+	[ -f "$keyfile" ] || { echo no auth found; return; }
+	auth=$(cat $keyfile)
+	email=${auth%:*}
+	key=${auth#*:}
+	URL="https://api.cloudflare.com/client/v4/"
+	CONTYPE="application/json"
+	suffix=${1:-'zones?per_page=50'}
+	method=${2:-'GET'}
+	query=${3:+"-d $3"}
+
+	# to uppercase
+	method=${method^^}
+
+	# if $query is empty
+	# query="-d {\"type\":\"TXT\",\"name\":\"$name\",\"content\":\"20a67af02088104e2e937337321da43939681ed6\",\"ttl\":3600}"
+	[ "$method" = POST -a -z "$query" ] && { echo query string needed for POST; return; }
+
+	curl -s -X $method "${URL}${suffix}" -H "X-Auth-Email: $email" -H "X-Auth-Key: $key" -H "Content-Type: $CONTYPE" $query
+}
+
+getacme(){
+	curl https://get.acme.sh | sh
+}
+
+# switch sound output
+pa(){
+	# usage
+	# With no arg, switch between sinks
+	# With -s N, switch to sink N
+	# With -p N, switch to port N
+	# With vol N, change volume to N%
+	# With ls, list sinks and volume
+
+	local sink f
+	# f=~/.sinks
+	# [ -f "$f" ] || pactl list sinks short | awk '{print $1}' | tr -d '\n' > $f
+	# sinks=$(cat $f)
+	# sink=${sinks:0:1}
+	sink=${sinks%%:*} # get the first sink's id
+
+	case "$1" in
+		ls|l|"")
+			pactl list sinks | awk\
+				'BEGIN {FS="#"}{if(NR==1)printf $2"\t"; FS=" ";if(NR==2) printf $2"\t"; if(NR==3) printf $2"\t"; if(NR==10) printf $5"\t"; if(NR==53) print $3}'
+			;;
+		vol|vo|v)
+			local vl
+			if [ "$2" ]; then
+				vl=$((65536*$2/100))
+				pacmd set-sink-volume $sink $vl
+			fi
+			;;
+		sw|w)
+			sink=$2
+			sinks=${sink}${sinks/$sink/}
+			echo $sinks > $f
+
+			[ "$sink" ] || return
+			# set sink
+			pacmd set-default-sink $sink
+
+			local sinkinputs
+			sinkinputs=$(pactl list sink-inputs short | awk '{print $1}')
+			for i in $sinkinputs
+			do
+				pacmd move-sink-input $i $sink
+			done
+			;;
+		port|por|po|p)
+			# set port
+			if [ "$2" ]; then
+				:
+			fi
+			;;
+	esac
+}
+
+totp(){
+	local key sec
+	local keyfile=$(echo $secdir/totp-key/$1*)
+
+	keyfile=${keyfile%% *}	# only first one
+	if [ -f $keyfile ];then
+		key=$(gpg -dq $keyfile)
+		[ "$key" ] || return
+		echo $keyfile
+		oathtool --totp -b "$key"
+		sec=$(date +%S)
+		sec=${sec#0}
+		[ $sec -ge 30 ] && let sec=60-sec || let sec=30-sec
+		echo $sec seconds left
+	else
+		echo $keyfile no found
+	fi
+}
+
+t(){
+	if ! pidof transmission-daemon; then
+		transmission-daemon
+		sleep 0.5	# why
+	fi
+	if [ "$1" ];then
+		transmission-remote "$@"
+	else
+		transmission-remote -l
+	fi
+}
+
+i(){
+	# if irssi is running
+	# are we in matrix?
+	# select irssi
+	# not running
+	# screen irssi
+
+	# assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
+	local c=select
+	# assume we are in the matrix
+	if pgrep irssi; then
+		screen -S $screen -X $c irssi
+	else
+		screen -T screen 9 irssi
+	fi
+}
+
+c(){
+	# if cmus is running
+	# are we in matrix?
+	# select cmus
+	# not running
+	# screen cmus
+
+	# assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
+	local c=select
+	# assume we are in the matrix
+	if pgrep cmus; then
+		#screen -S $screen -X $c cmus
+		cmus-remote -u
+	else
+		screen -T screen 8 cmus
+		# don't need this anymore since we have setting 'resume'
+		#sleep 0.5
+		#cmus-remote -p
+		# cmus always start with the first song although shuffle is on
+		#cmus-remote -n
+	fi
+}
+
+s(){
+	local arg
+	# we only use default command key (^Aa) in ssh
+	[ "$SSH_TTY" ] ||  arg='-e ^Ss'
+
+	# if we are in the matrix
+	if [ "${STY#*.}" = "$screen" ];then
+		screen "$@"
+	else
+		# seems like ansi escape code 3(italic) is treated as inverse in
+		# screen, which makes prompt ugly, so we clear env $italic here
+		italic= screen $arg -d -R -S $screen -T $TERM
+	fi
+}
+
+mip(){
+	local ip
+	ip=$(curl -s 'https://api.ipify.org')
+	echo $ip
+}
+
+vpaste(){
+	uri="http://vpaste.net/"
+	if [ -f "$1" ]; then
+		out=`curl -s -F "text=<$1" "$uri?$2"`
+	else
+		out=`curl -s -F 'text=<-' "$uri?$1"`
+	fi
+	echo "$out"
+	if [ -x "`which xclip 2>/dev/null`" -a "$DISPLAY" ]; then
+		echo -n "$out" | xclip -i -selection primary
+		echo -n "$out" | xclip -i -selection clipboard
+	fi
+}
+
+wordpress(){
+	if [ "$1" == -d ]; then
+		curl -L https://wordpress.org/latest.tar.gz -o wordpress.tar.gz
+		return
+	fi
+	# create a bunch of wordpress demos
+	# make sure httpd is running and httpd user (usually 'apache') have write permission for creating wp-config.php
+	# and the selinux thing
+	# TODO parameters
+
+	local i sample dbhost domain dbname dbuser dbpass
+	sample=wordpress/
+	dbhost=localhost
+	domain=emma
+	dbname=wordpress
+	dbuser=root
+	dbpass=dot
+
+	mysql -h $dbhost -u$dbuser -p$dbpass -e "create database if not exists $dbname;"
+	for i in {a..h}
+	do
+		cp $sample $i -r
+		chcon --reference=$sample $i -R
+		echo -e ${yellow}${bold}creating wp-config.php${end}
+		curl -d "dbname=$dbname&uname=$dbuser&pwd=$dbpass&dbhost=localhost&prefix=${i}_&submit=Submit" "${domain}/${i}/wp-admin/setup-config.php?step=2"
+		sed -i "/Happy/i define('FS_METHOD', 'direct');" ${i}/wp-config.php	# no fucking ftp
+		# why error occurs if I put dos2unix before sed?
+		# dos2unix: Failed to change the owner and group of temporary output file h/d2utmppQzwKT: Operation not permitted
+		dos2unix ${i}/wp-config.php # why the wp-config[-sample].php's fileformat is fucking [dos]?
+		echo -e ${yellow}${bold}installing database.${end} # -m(--max-time 10) to prevent some hanging for 75 seconds shit, fucking gfw?
+		curl -m 10 -d "weblog_title=sisters&user_name=admin&admin_password=admin&pass1-text=admin&admin_password2=admin&pw_weak=on&admin_email=a@a.com&Submit='Install WordPress'" "${domain}/${i}/wp-admin/install.php?step=2"
+	done
+
+}
+
+# change gnome-terminal profile preferences
+gt(){
+	local id schema k v s
+	id=$(gsettings get org.gnome.Terminal.ProfilesList default)
+	id=${id:1:-1}
+	schema=org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${id}/
+	k=$2
+	v=$3
+
+	case "$1" in
+		""|l)
+			gsettings list-recursively $schema
+			;;
+		g)
+			gsettings get $schema $k
+			;;
+		s)
+			gsettings set $schema $k $v
+			;;
+		r)
+			gsettings range $schema $k
+			;;
+		p)	#change background transparency
+			k=background-transparency-percent
+			local pidfile=~/.gt_b_pid
+
+			# if "gterm b" is running, kill it and reset to 25
+			if [ -f "$pidfile" ]; then
+				kill $(cat $pidfile)
+				rm $pidfile
+				gsettings set $schema $k 25
+				[ "$2" ] || return 
+			fi
+
+			# if $2 is given, use it as key value
+			[ "$2" ] && { gsettings set $schema $k $2; return; }
+
+			# if no parameters is given
+			v=0 s=+
+			while :
+			do
+				gsettings set $schema $k $v
+				[ "$v" -eq 100 ] && s=-
+				[ "$v" -eq 0 ] && s=+
+				[ "$s" = - ] && let v-- || let v++
+			done &
+			echo $! > $pidfile
+			;;
+	esac
+}
+
+# a simple page crawler
+crawl(){
+	[ $1 ] || return
+	local i url l index=index.html
+	url=$1
+	[ "${url##*/}" != $index -a "${url##*/}" ] && index=${url##*/}
+	curl $url -o $index
+	url=${url%$index}
+	url=${url%/}
+	l=($(grep -io 'href="[^"]*"' $index | grep -o '[^"]*\.[^"#]*' | sort -u))
+
+	echo -e $red $bold
+	echo we have ${#l[@]} pages...
+	echo starting download
+	echo -e $end
+
+	i=0
+	while [ $i -lt ${#l[@]} ]
+	do
+		echo -e $red $bold downloading ${l[$i]} $((i+1))/${#l[@]} $end
+		curl ${url}/${l[$i]} -o ${l[$i]}
+		let i++
+	done
+}
+
+am(){
+	local s r m=mariadb
+	[ "$1" == -n ] && r='nginx php-fpm' s=httpd || r=httpd s='nginx php-fpm'
+	sudo systemctl stop $s
+	sudo systemctl restart $r $m
+}
+
+mysqldir(){
+	local cnf=/etc/my.cnf.d/mariadb-server.cnf
+	[ "$1" ] || { grep datadir $cnf; return; }
+
+	local prefix=~/.mysql
+	local dir=$1
+
+	# we need the fucking getopts
+	if [ $1 = -n ];then		# -n to create a new mysqldir
+		local dir=$2
+
+		mysql_install_db --datadir=${prefix}/$dir	# mysql_intall_db will do 'mkdir -p'
+
+		cd $prefix
+		sudo chown -R mysql:mysql $dir
+		sudo chcon -R --reference=/var/lib/mysql $dir
+	fi
+
+	sudo sed -i "/datadir=/s:/.*:${prefix}/$dir:" $cnf
+	grep datadir $cnf
+}
+
+smb(){
+	local sever share mountpoint user
+
+	# -s to setup a samba service
+	# if not installed
+	sudo dnf install samba
+	sudo smbpasswd -a $user
+	# edit /etc/samba/smb.cnf
+	sudo systemctl restart smb
+	# firewalld
+	# selinux
+
+	# client side
+	sudo mount.cifs //$server/$share $mountpoint -o guest,user=guest,uid=1000
+
+	# if permission denied, should be selinux
+}
+
+nfs(){
+	# server side
+	# sudo systemctl restart nfs
+	# edit /etc/exports
+	# man exports
+
+	# exportfs -ra
+
+	# client side
+	# mount server:share_dir somedir
+	:
+}
+
+# assign array a to array b
+assign_array(){
+	local a=$1
+	unset b
+	# declare array b as associaitve if a is
+	declare -A $a 2> /dev/null && declare -A $b
+
+	for i in $(eval echo \${!$a[@]})
+	do
+		eval $b[$i]=\${$a[$i]}
+	done
+}
+
+# get key of the value in an array
+getkey(){
+	# $1 value, $2 array
+	local i v=$1 a=$2
+	# assign_array $2 $a
+	for i in $(eval echo \${!$a[@]})
+	do
+		#echo $i
+		eval [ "$v" == \${$a[$i]} ] && echo $i && return 0
+	done
+	return 1
+}
+
+dedup(){
+	local i md5=$1 md5set=$2
+	for i in $md5set
+	do
+		[ $md5 == $i ] && return 1
+	done
+	return 0
+}
+
+dlpages(){
+	[ -z $1 ] && return 1
+	local links url=$1 dlsum hashtable
+	[ ${url%/} == $url ] && url=$url/	# suffix '/' if it don't have one
+
+	mapfile links < <(curl "$url" | grep -o href=\".*\.html[^\"]*\")
+	total=${#links[@]}
+
+	# does not re-download the links which downloads fail
+	for i in ${links[@]}
+	do
+		i=${i#href=\"}
+		i=${i%#*}
+		md5=$(echo -n $i | md5sum | cut -d" " -f1)
+		dedup $md5 ${hashtable[@]} && curl "$url$i" -o $i && echo $((dlsum+1))/$total && hashtable+=($md5)
+		dlsum=${#hashtable[@]}
+	done
+}
+
+dl_site_backup(){
+	local file date
+	date=`date +%Y%m%d`
+	scp $vps:drush-backups/archive-dump/$date*/drupal.${date}_*.tar.gz.* .
+	file=`ls drupal.${date}_*.tar.gz.*`
+
+	# check sum
+	[ ${file##*.} != $(sha1sum $file | awk '{print $1}') ] && echo 'file not intact' && rm $file && return
+
+	gpg -o $backupdir/sites/${file%.*}.gpg -r 13538519 -e $file
+	rm $file
+}
+
+itove(){
+	local i=15 j=0 p=0 c=255 cc=0
+	while :;
+	do
+		if [ $p -eq 0 ];then
+			let i-=1
+			[ $i -eq 1 ] && p=1
+		else
+			let i+=1
+			[ $i -eq 15 ] && p=0
+		fi
+
+		for j in `seq $i`
+		do
+			tput setaf $c
+			echo -ne ${bold}ITOVE${white}.\\t
+			if [ $cc -eq 0 ];then
+				let c-=1
+				[ $c -eq 1 ] && cc=1
+			else
+				let c+=1
+				[ $c -eq 255 ] && cc=0
+			fi
+		done
+		echo
+		#[] && c=1
+		sleep 0.3
+
+	done
+
+}
+
+msg_every_pts(){
+	local i msg l=$(ls /dev/pts/[0-9])
+	msg=${@:-"Let's take a break, see you later."}
+	for i in $l
+	do
+		echo $msg > $i
+	done
+}
+
+abreak(){
+	local i j k uptime
+	uptime=$(cut -d. -f1 /proc/uptime)
+	[ $uptime -lt 2400 ] && return # if uptime less than 40 min
+	# interval initialize to 2.5s, minus 0.1 every loop
+	#for ((i=2,j=5;i>0||j>0;j--))
+	for ((i=2,j=5;i+j>0;j--))
+	do
+		msg_every_pts
+		sleep $i.$j
+
+		if [ $j == 0 ]; then
+			j=10
+			i=$((i-1))
+		fi
+
+		# when interval reduces to 0.5s, do 20 times and exit
+		if [ $i == 0 -a $j == 5 ]; then
+			for ((k=20;k>0;k--))
+			do
+				msg_every_pts
+				sleep $i.$j
+			done
+			#kill $(pidof vlc) &> /dev/null
+			$play $sound/break.mp3 < /dev/null &> /dev/null &
+			sleep 2.5
+			DISPLAY=:0 xset dpms force off
+			#sleep 2.3
+			#kill $(ps -C vlc | awk '/vlc/ {print $1}')
+			#kill $(pidof vlc)
+			return
+			#i=0;j=0
+		fi
+	done
+}
+
+self_sign_cert(){
+	[ -z $1 ] && echo the key name, asshole! && return
+	local i=$1
+	local key=$i.key
+	local pem=$i.pem
+	local csr=$i.csr
+	local crt=$i.crt
+
+	#openssl req -x509 -new -newkey rsa:4096 -sha256 -days 1000 -nodes -out freenode.pem -keyout freenode.pem
+	# or
+	#openssl req -nodes -newkey rsa:2048 -keyout user.pem -x509 -days 3650 -out user.pem -subj "/CN=YourNickname"
+	# or
+	# generate private key
+	openssl genrsa -des3 -out $pem 1024
+	# generate CSR
+	openssl req -new -key $pem -out $csr
+	# remove password
+	openssl rsa -in $pem -out $key
+	# issue a certificate signed with $key
+	openssl x509 -req -days 365 -in $csr -signkey $key -out $crt
+}
+
+say(){
+	[ -z "$1" ] && echo "say what?" && return
+	set $@ # so we can use quotes
+	echo -en ${red}${bold}
+	while :; do
+		echo -n $1
+		shift
+		[ -z $1 ] && echo && break || echo -n " "
+		local r=`date +%N`
+		r=${r##*0}
+		local r=${r:0:1} # a 1~9 random number
+		sleep 0.$r
+	done
+	echo -en ${end}
+}
+
+countdown(){
+	local i j from to interval
+	from=${1:-100}
+	echo -en ${red}${bold}
+	for i in `seq -w 0 $from | sort -rn`; do
+		for j in `seq ${#i}`; do
+			echo -ne \\b
+		done
+		echo -n $i
+		[ $i -gt 0 ] && sleep 1
+	done
+	echo -e ${end}
+}
+
+# chrome
+C(){
+	case $1 in
+		1)
+			google-chrome http://www.xiami.com/radio/play/type/12/oid/21 &> /dev/null &
+			;;
+		2)
+			google-chrome http://www.xiami.com/radio/play/type/13/oid/1372 &> /dev/null &
+			;;
+		3)
+			google-chrome http://www.xiami.com/radio/play/type/13/oid/3242 &> /dev/null &
+			;;
+		php)
+			google-chrome php/function.${2//_/-}.html&> /dev/null &
+			;;
+		npr)
+			google-chrome http://www.npr.org &> /dev/null &
+			;;
+		fox)
+			google-chrome http://radio.foxnews.com/player-files/radio.html &> /dev/null &
+			;;
+		*)
+			google-chrome $1 &> /dev/null &
+			;;
+	esac
+	disown
+}
+
+tor(){
+	local d=$download/tor
+	$d/Browser/start-tor-browser --detach
+}
+
+# git
+g(){
+	local comment i opt user
+	user=$(whoami)
+	case $1 in
+		"")
+			git status 2> /dev/null
+			[ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end && for i in $allrepos; do echo -e "${yellow}${bold}Checking ${italic}$i${end}"; git -C $i st; echo; done
+			;;
+		d)
+			git status 2> /dev/null
+			[ "$?" -eq 128 ] && opt="-C /home/$user/.misc"
+			shift
+			git $opt diff "$@"
+			;;
+		c)
+			git status 2> /dev/null
+			[ "$?" -eq 128 ] && opt="-C /home/$user/.misc"
+			git $opt add -A
+			shift
+			comment=${*:-nth}
+			git $opt commit -m "$comment"
+			read -p "press any key in 5 sec to git push..." -n 1 -t5 i
+			echo
+			[ -n "$i" ] && echo -e "\nstarting push..." && git $opt push
+			;;
+		*)
+			git $@
+			;;&
+		pl|p)
+			# some files in $repom hard link to ~/, git pull will break the links, so run reborn.sh to re-link
+			[ $? == 0 -a `pwd` == $repom ] && $repom/bash/reborn.sh
+			;;
+	esac
+}
+
+splitkey(){
+	gpg -a --export-secret-keys $1 | sed -e /^-/d -e /^$/d > $1.asc
+	sleep 60
+	local x=1
+	#local y=19
+	local y=24
+	local linenum=`wc -l < $1.asc`
+	for i in {a..d}; do
+		[ $((linenum-z)) -lt 40 ] && z=$linenum || z=$((x+y-1))
+		sed -n "$x,$z"p $1.asc | qrencode -o $1.$i.png
+		x=$((x+y))
+		((y++))
+	done
+	#sed -n 1,19p $1.asc | qrencode -o $1.a.png
+	#sed -n 20,39p $1.asc | qrencode -o $1.b.png
+	#sed -n 40,60p $1.asc | qrencode -o $1.c.png
+	#sed -n 61,82p $1.asc | qrencode -o $1.d.png
+	#sed -n '83,$p' $1.asc | qrencode -o $1.e.png
+	rm $1.asc
+}
+
+# switch mouse left-right-hand
+lhand(){
+	# TODO use dconf instead of gsettings
+	# xinput xmodmap cause error if we are not in x
+	# we are in DE or WM?
+	# if we are in gnome, don't do the rest
+	local gget='gsettings get'
+	local lhand='org.gnome.desktop.peripherals.mouse left-handed'
+	local gset='gsettings set'
+	local batcent='org.gnome.desktop.interface show-battery-percentage' 
+	local toupad=$(xinput | grep -i touchpad | cut -f2 | cut -d'=' -f2)
+	local driver
+	[ "$toupad" ] &&
+		driver=$(xinput list-props $toupad | awk '{if(NR==8) print $1}')
+
+	if [ $($gget $lhand) = false -o "$1" = yes ]; then 
+		##### for gnome
+		$gset $batcent false
+		$gset $lhand true
+
+		##### for other wm, if we are in gnome, stop
+		#xmodmap -e "pointer = 3 2 1" 2> /dev/null
+		# or
+		# xinput set-button-map $mouseid 3 2 1
+		# although, we probably don't want to use xinput because it's high
+		# level and device oriented which means we have to setup for each
+		#
+		## for touchbuttons
+		case "$driver" in
+			libinput)
+				# seems libinput don't have "TapButtonX" options
+				# but libinput has "LeftHanded" option which only affects to mouse
+				# buttons, we can do some trick with this
+				xinput set-prop $toupad 'libinput Tapping Enabled' 1
+				xinput set-prop $toupad 'libinput Left Handed Enabled' 1
+				;;
+			Synaptics)
+				xmodmap -e "pointer = 3 2 1" 2> /dev/null
+				# we can map tapbutton and mousebutton seperately using synclient
+				# for tap buttons
+				synclient TapButton1=3 TapButton2=1 TapButton3=2
+				;;
+		esac
+	else
+		$gset $batcent true
+		$gset $lhand false
+
+		##### for other wm, if we are in gnome, stop
+		xmodmap -e "pointer = default"
+		case "$driver" in
+			libinput)
+				xinput set-prop $toupad 'libinput Left Handed Enabled' 0
+				;;
+			Synaptics)
+				synclient TapButton1=1 TapButton2=3 TapButton3=2
+				;;
+		esac
+	fi
+}
+
+n(){
+	nautilus -q
+	nautilus $1 &
+}
+
+idlast(){
+	#local id=${1::17}
+	local id=$1
+	[ ${#id} -lt 17 ] && echo 17 numbers, assohole! && return 69
+	local factor=(7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2)
+	local last=(1 0 X 9 8 7 6 5 4 3 2)
+
+	local i sum=0
+	for i in `seq 0 16`
+	do
+		let sum+=$((${id:$i:1} * ${factor[$i]}))
+	done
+
+	echo ${last[$(($sum%11))]}
+}
+
+shutthefuckdown(){
+	local i pids hour=$(date +%H)
+	[ "$1" == -c ] && { pkill -f shutthefuc; return; }
+	# 5 minutes countdown.
+	for i in $(ls -vr $sound | grep a.mp3)
+	do
+		$play $sound/$i < /dev/null &> /dev/null &
+		if [ ${i:0:2} -eq "60" ]; then
+			# push $allrepos to github 60s before shutdown
+			for i in $allrepos; do
+				cd $i;git add -A;git commit -m "auto commit by dotr";git push
+			done &
+
+			sleep 50
+		else
+			sleep 60
+		fi
+	done
+
+	# 10 seconds countdown.
+	for i in $(ls -vr $sound | grep b.mp3)
+	do
+		$play $sound/$i < /dev/null &> /dev/null
+		sleep 0.1
+	done
+
+	$play $sound/bye.mp3
+
+	if [ $hour -eq 12 ]; then
+		$play $sound/lunch.mp3 < /dev/null &> /dev/null
+	elif [ $hour -eq $offtime ]; then
+		$play $sound/night.mp3 < /dev/null &> /dev/null
+	fi
+
+	sudo shutdown now
+}
+
+# obfuscate file size by compressing with a foo.padding file.
+obfus(){
+	local ifname=$1 ofname= siz=$2
+	read -p "what size you want to obfuscate?" siz
+	dd if=/dev/urandom of=$ifname.padding count=$siz
+
+	read -p "output name?" ofname
+	tar Jcf $ofname.tar.xz $ifname{.padding,}
+}
+
+# encrypt using gpg, put encrypted files into $gpgdir
+# take one upto two parameter(s), first is file name, compress before encrypt if $2 is -z
+encrypt(){
+	local i=$1 j
+	# can not be empty, can not be /
+	if [ -z "$i" -o "$i" == "/" ];then
+		echo "filename not illegal"
+	elif [ -e "$i" ]; then
+		j=`basename $i`
+		# strip "." if it starts the filename
+		j=${j#.}
+
+		# compress if file is directory or -z is given
+		[ -d $i -o "$2" == "-z" ] && tar Jcf $j.tar.xz $i && j=$j.tar.xz && i=$j && k=$j
+
+		# obfuscate file size if -o is given
+		[ "$4" == "-o" ] && obfus $i $5
+
+		gpg -o $gpgdir/$j.gpg --recipient 13538519 -e $i
+
+		# remove temporary file foo.tar.xz after encrypt
+		[ -e "$k" ] && rm $k
+		# remove file after encrypt if -r is given
+		[ "$3" == "-r" ] && rm $1 -rf
+	else
+		echo  "$i: No such file or directory"
+	fi
+}
+
+# some backups
+backup(){
+	local mysqlpass=`gpg -qd $gpgdir/mysqlpasswd.asc`
+	local time=`date +%y%m%d_%H%M`
+	# start mariadb if not running
+	while ! systemctl is-active mariadb &> /dev/null
+	do
+		sudo systemctl restart mariadb
+	done
+
+	# mysql backup
+	mysqldump -u root -p$mysqlpass --databases cm > cm.$time.sql
+	encrypt cm.$time.sql -z -r
+	mv $gpgdir/cm.$time.sql.* $backupdir/mysql
+
+	mysqldump -u root -p$mysqlpass --databases grind > $backupdir/mysql/grind.$time.sql
+
+	find $backupdir/mysql -daystart -mtime +0 -delete
+
+	# backup ~/.ssh/
+	encrypt ~/.ssh
+	mv $gpgdir/ssh* $backupdir/ssh
+
+	tar Jcf db_ssh_$time.tar.xz $backupdir/{mysql,ssh}
+	scp db_ssh_$time.tar.xz $vps:dotbackup && rm db_ssh_$time.tar.xz
+
+	cp /etc/hosts $repom/conf
+	cp /etc/httpd/conf.d/vhosts.conf $repom/conf/httpd
+
+	# backup $backupdir/
+
+	# backup ~/.local/sound/
+}
+
+m(){
+	[ $1 ] && { man $@; :; } || man bash
+}
+
+ascii(){
+	if [ "$1" == -c ];then
+		[ "$2" -lt 256 ] || return 1
+		printf "\\$(printf '%03o' "$2")"
+		return 0
+	fi
+	printf '%d\n' "'$1"
+}
+
+v(){
+	if [ "$1" ];then
+		command vim "$@"
+	else
+		# $vim_default_file defined in .env
+		#command vim $vim_default_file
+		# $vim_default_session defined in .env
+		command vim -S $vim_default_session
+	fi
+}
+
+are_u_sure(){
+        read -n1 -p "Are you sure to exit? [y/N] "
+        [ "$REPLY" != y ] && { echo; history -a; bash; }
+}
+#trap are_u_sure EXIT
+
+# reload ~/.{env,fun}
+rl(){
+	fun_exported=
+	env_exported=
+	. ~/.env
+	. ~/.fun
+}
+
+fun_exported=fuck
+
+# set mouse button to left handed when startup
+#[ "$ID" = fedora ] && lhand yes
+xinput &> /dev/null && lhand yes
+
+# set monitors layout
+mon

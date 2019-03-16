@@ -1,0 +1,143 @@
+#!/bin/bash
+#
+# my envs
+# create hard link ~/.env when running $misc_repo/bash/reborn.bin.sh
+# and ~/.env will be sourced in ~/.bashrc
+
+#touch shlvl_$SHLVL
+
+if [ "$STY" ]; then
+	PS1="[\[${yellow}${bold}\]\D{%H}\[${white}${bold}\]\D{%M}\[${end}${white}\]\D{%S}\[${end}\] \u@\h \[${red}${bold}${italic}\]\W\[${end}\]]\[${red}${bold}\]\$\[${end}\] "
+fi
+
+# $env_exported set to null by default right below. At the end of ~/.fun, export all these envs then set $env_exported to 1
+# since these envs have been exported in ~/.fun, we don't need to soure this file anymore
+# except $PS1, which will be set everytime a interactive shell starts (~/.bashrc). So put $PS1 at the beginning
+[ "$env_exported" ] && return
+
+set -a
+
+# sys
+# MACHTYPE
+# OSTYPE
+[ -f /etc/os-release ] && . /etc/os-release
+HISTTIMEFORMAT="%b %d %T "
+HISTCONTROL=ignoreboth
+LIBVIRT_DEFAULT_URI=qemu:///system
+http_proxy=
+https_proxy=
+#ftp_proxy=
+all_proxy=
+SOCKS_SERVER=
+SOCKS_VERSION=5
+# only once, despite of rl()
+if [ "$SHLVL" -eq 1 ]; then
+	PATH=$PATH:$HOME/.local/bin
+	[ "$ID" = debian ] && PATH=/usr/sbin:/sbin:$PATH
+	if [ "$PROMPT_COMMAND" ]; then
+		# where is __vte_prompt_command?
+		PROMPT_COMMAND="$PROMPT_COMMAND;cmdnotfound"
+	else
+		PROMPT_COMMAND="cmdnotfound"
+	fi
+fi
+
+# ANSI escape code
+black="\e[30m"
+red="\e[31m"
+green="\e[32m"
+yellow="\e[33m"
+blue="\e[34m"
+magenta="\e[35m"
+cyan="\e[36m"
+white="\e[37m"
+bg_black="\e[40m"
+bg_red="\e[41m"
+bg_green="\e[42m"
+bg_yellow="\e[43m"
+bg_blue="\e[44m"
+bg_magenta="\e[45m"
+bg_cyan="\e[46m"
+bg_white="\e[47m"
+end="\e[m"
+bold="\e[1m"
+faint="\e[2m"
+italic="\e[3m"
+underline="\e[4m"
+blinks="\e[5m"
+blindr="\e[6m"
+image="\e[7m"
+conceal="\e[8m"
+cross="\e[9m"
+
+# dir structure
+htdoc=~/w
+media=~/m
+video=$media/v
+music="$(echo $media/*)"
+music="${music/$video/}" # remove "/home/Dot/v" from list
+document=~/d
+download=~/l
+picture=~/p
+sound=~/.sound
+secdir=~/.sec
+vmdir=~/.vm
+LFS=/mnt/lfs
+
+# repo list
+#repo=(~/.misc ~/emma/jiei) # arrays won't be exported, why? see man bash BUGS
+allrepos=	# clear $allrepos so rl() won't duplicate the value
+repom=~/.misc
+repod=~/d
+#repoj=$htdoc/ji
+#repow=$htdoc/wow
+#reposi=$htdoc/sissy
+#repoi=$htdoc/it
+#repowx=$htdoc/wx
+#repocgi=$htdoc/cgi
+for i in ${!repo*}
+do
+	allrepos+="${!i} "
+done
+
+# path aliases
+e=/var/log/httpd/error_log
+f=~/w/it/fgw/
+h=/etc/httpd/conf/httpd.conf
+n=$repod/note
+v=/etc/httpd/conf.d/vhosts.conf
+w=~/w
+
+# miscellaneous
+#t="\t"
+screen=matrix
+# vim_default_file=$repod/note # use $vim_default_session instead
+vim_default_session=~/.vim/session/default.vim
+# temporary or private vars
+[ -f ~/.v ] && . ~/.v
+#NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
+
+# since I only use fedora as workstation
+if [ "$ID" = fedora ]; then
+	sinks=$(pactl list sinks short | awk '{print $1":"$2}')
+	offtime=18
+	iw=wlp2s0
+	iww=wlp2s0mon
+	#monitors=$(xrandr | awk '/connected/ {printf $1":";getline;print $1}')
+	which mpv &> /dev/null && play="mpv --really-quiet --volume 100"
+
+fi
+
+if [ "$domain" ];then
+	for i in $(grep -o "\w*\.$domain" ~/.ssh/config)
+	do
+		# TODO can we not use eval here?
+		# export is good, but we already have set -a
+		eval ${i%%.*}=$i
+	done
+fi
+
+vps=$vl
+
+unset i
+env_exported=fuck

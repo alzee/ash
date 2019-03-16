@@ -1,0 +1,2 @@
+# Am I in wheel?
+arc	ALL=(ALL)       NOPASSWD: /sbin/shutdown now, /bin/systemctl restart *, /bin/systemctl stop *, /bin/dnf update -y

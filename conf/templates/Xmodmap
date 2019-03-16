@@ -1,0 +1,10 @@
+! ~/.Xmodmap
+!
+! get out!  now we use lhand()
+!
+! https://askubuntu.com/a/516857
+! xmodmap -e "pointer = 3 2 1"
+!
+! libinput makes this so simple
+! xinput --set-prop 13 'libinput Left Handed Enabled' 1
+!pointer = 3 2 1

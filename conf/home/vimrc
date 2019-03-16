@@ -1,0 +1,160 @@
+set nocompatible
+set backspace=indent,eol,start
+set history=50
+set ruler
+set showcmd
+set wildmenu
+set ttimeout
+set ttimeoutlen=100
+set display=truncate
+set bg=dark
+set wildmode=longest,list
+set nu
+set numberwidth=1
+"set expandtab
+set tabstop=4
+"set softtabstop=4
+set shiftwidth=4
+" set path=
+set undofile
+set undodir=~/.vim/undo
+" set backupdir+=~/.vim/bk
+" set directory=~/.vim/swp
+set dict=/usr/share/dict/words
+set cot-=preview
+set t_Co=256
+"set scrolloff=5
+set nrformats-=octal
+set incsearch
+set hlsearch
+syntax on
+let c_comment_strings=1
+packadd! matchit
+
+
+"""""""""""""""""""""""""""""" global mappings
+nmap <space>h :h<CR>:only<CR>
+nmap <space>w :w<CR>
+nmap <space>q :q<CR>
+nmap <space>x :x<CR>
+nmap <space>s :mks! $vim_default_session<CR>
+nmap <space>X :set cursorcolumn! cursorline!<cr>
+"auto enable paste mode
+nmap <space>i :set paste<cr>i
+nmap <space>I :set paste<cr>I
+nmap <space>a :set paste<cr>a
+nmap <space>A :set paste<cr>A
+nmap <space>o :set paste<cr>o
+nmap <space>O :set paste<cr>O
+"add <c-g>U before <left> to avoid escape, see :h ^gU
+inoremap ( ()<c-g>U<left>
+inoremap { {}<c-g>U<left>
+inoremap [ []<c-g>U<left>
+"inoremap ) ()<esc>i
+"inoremap } {}<esc>i
+"inoremap ] []<esc>i
+inoremap ' ''<c-g>U<left>
+inoremap " ""<c-g>U<left>
+" omni completion
+inoremap <c-o> <c-x><c-o>
+" filename completion
+inoremap <c-f> <c-x><c-f>
+map Q gq
+inoremap <C-U> <C-G>u<C-U>
+
+
+"""""""""""""""""""""""""""""" autocmds
+au FileType help setl nu
+
+" read template and move cursor to the main() line
+" use "let @/='main' | /" instead of /main to avoid search history
+au BufNewFile *.c 0r ~/.vim/template/c.vim | let @/='main' | /
+" au FileType c source ~/.vim/map/c.vim
+
+au BufNewFile *.sh 0r ~/.vim/template/sh.vim | $
+au FileType sh source ~/.vim/map/sh.vim
+
+au BufNewFile *.html 0r ~/.vim/template/html.vim | let @/='body' | /
+au FileType html source ~/.vim/map/html.vim | set ts=2 sw=2
+
+au BufNewFile *.twig 0r ~/.vim/template/twig.vim | let @/='body' | /
+au FileType twig set ft=html
+" au FileType twig source ~/.vim/map/twig.vim
+
+au BufNewFile *.php 0r ~/.vim/template/php.vim | let @/='class \zsFuck' | %s//\=expand("%:t:r")/e
+au FileType php source ~/.vim/map/php.vim
+
+au BufNewFile *.asm 0r ~/.vim/template/asm.vim | let @/='start' | /
+" au FileType asm source ~/.vim/map/asm.vim
+
+au FileType javascript source ~/.vim/map/javascript.vim
+
+au FileType sql source ~/.vim/map/sql.vim
+
+"au WinEnter * resize
+
+au InsertLeave * set nopaste
+
+
+""""""""""""""""""""""""""""""
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  augroup END
+
+else
+
+  set autoindent		" always set autoindenting on
+
+endif " has("autocmd")
+
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Enable file type detection.
+  " Use the default filetype settings, so that mail gets 'tw' set to 72,
+  " 'cindent' is on in C files, etc.
+  " Also load indent files, to automatically do language-dependent indenting.
+  " Revert with ":filetype off".
+  filetype plugin indent on
+
+  " Put these in an autocmd group, so that you can revert them with:
+  " ":augroup vimStartup | au! | augroup END"
+  augroup vimStartup
+    au!
+
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    autocmd BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
+
+  augroup END
+
+endif " has("autocmd")
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+" Revert with: ":delcommand DiffOrig".
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
+if has('langmap') && exists('+langremap')
+  " Prevent that the langmap option applies to characters that result from a
+  " mapping.  If set (default), this may break plugins (but it's backward
+  " compatible).
+  set nolangremap
+endif
