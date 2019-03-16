@@ -1,5 +1,8 @@
 ## a.sh - Bring back your dotfiles, automate your bash environment configuration.
-### Fork it, and commit your dotfiles in home to ash/conf/home/, like .fun, .env, .ali, .vimrc, etc.
+### Fork it, commit your dotfiles to ash/conf/home/, like .screenrc, .inputrc, .gitconfig, .vimrc, etc.
+* Put your vars in ash/conf/home/env
+* Put your functions in ash/conf/home/fun
+* Put your aliases in ash/conf/home/ali
 
 ```bash
 ### On a new linux.
