@@ -20,6 +20,7 @@
 $ git clone https://github.com/username/ash
 
 # run a.sh to hard link all the files in ash/conf/home to your home dir
+# ~/.{env,fun,ali} will be added to ~/.bashrc
 $ ash/a.sh
 
 ### Now your bash environment is back, like phoenix arise from the ashes.
