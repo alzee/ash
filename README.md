@@ -9,9 +9,9 @@
 		cp ~/.${dotfile} ash/conf/home/
 	done
 	```
-* Put your vars in ash/conf/home/env
-* Put your functions in ash/conf/home/fun
-* Put your aliases in ash/conf/home/ali
+* Replace ash/conf/home/env with your own vars. 
+* Replace ash/conf/home/fun with your own functions.
+* Replace ash/conf/home/ali with your own aliases. 
 
 ### Usage
 ```bash
