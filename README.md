@@ -1,3 +1,4 @@
+## a.sh - Bring back your dotfiles, automate your bash environment configuration.
 ### Fork it, and commit your dotfiles in home to ash/conf/home/, like .fun, .env, .ali, .vimrc, etc.
 
 ```bash
