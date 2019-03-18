@@ -26,7 +26,7 @@ $ git clone https://github.com/username/ash
 $ ash/a.sh
 ```
 
-## Have changed you dotfiles?
+## Have changed your dotfiles?
 ```bash
 ## Let's say ~/.fun
 ## Don't forget it's a hark link to conf/home/fun
