@@ -1,4 +1,4 @@
-## a.sh - Bring back your dotfiles, automate your bash environment configuration.
+## a.sh - Restore your dotfiles, bash environment and configurations.
 
 ### Build your directory structure.
 * Fork it, commit your dotfiles to ash/conf/home/.
@@ -21,9 +21,7 @@ $ git clone https://github.com/username/ash
 
 # run a.sh to hard link all the files in ash/conf/home to your home dir
 # ~/.{env,fun,ali} will be added to ~/.bashrc
-$ ash/a.sh
-
-### Now your bash environment is back, like phoenix arise from the ashes.
+$ ash/a.sh # Now the phoenix reborn from the ashes.
 
 ### Have added a new function to your .fun?
 $ cd ash
@@ -36,4 +34,3 @@ $ git commit -m 'added foo() in fun'
 $ rl
 $ screen # tmux
 ```
-
