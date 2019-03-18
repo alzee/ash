@@ -1,4 +1,4 @@
-# a.sh
+# ash
 
 Restore your dotfiles, bash environment and configurations.
 
@@ -16,8 +16,8 @@ Restore your dotfiles, bash environment and configurations.
 * Replace ash/conf/home/ali with your own aliases. 
 * Commit and push.
 
-## Usage
-### Restore on a new linux.
+## Restore on a new linux.
+Phoenix arising from the ashes.
 ```bash
 $ git clone https://github.com/username/ash
 
@@ -26,7 +26,7 @@ $ git clone https://github.com/username/ash
 $ ash/a.sh # Now the phoenix reborn from the ashes.
 ```
 
-### Have added a new function to your .fun?
+## Have added a new function to your .fun?
 ```bash
 $ cd ash
 ## commit change
