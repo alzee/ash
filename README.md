@@ -16,15 +16,17 @@ Restore your dotfiles, bash environment and configurations.
 * Replace ash/conf/home/ali with your own aliases. 
 
 ## Usage
-```bash
 ### Restore on a new linux.
+```bash
 $ git clone https://github.com/username/ash
 
 # run a.sh to hard link all the files in ash/conf/home to your home dir
 # ~/.{env,fun,ali} will be added to ~/.bashrc
 $ ash/a.sh # Now the phoenix reborn from the ashes.
+```
 
 ### Have added a new function to your .fun?
+```bash
 $ cd ash
 ## commit change
 $ git add conf/home/fun
