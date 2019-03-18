@@ -17,8 +17,7 @@ Restore your dotfiles, bash environment and configurations.
 
 ## Usage
 ```bash
-### On a new linux.
-
+### Restore on a new linux.
 $ git clone https://github.com/username/ash
 
 # run a.sh to hard link all the files in ash/conf/home to your home dir
