@@ -1,6 +1,8 @@
-## a.sh - Restore your dotfiles, bash environment and configurations.
+# a.sh
 
-### Build your directory structure.
+Restore your dotfiles, bash environment and configurations.
+
+## Build your directory structure.
 * Fork it, commit your dotfiles to ash/conf/home/.
 	```bash
 	# For example, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
@@ -13,7 +15,7 @@
 * Replace ash/conf/home/fun with your own functions.
 * Replace ash/conf/home/ali with your own aliases. 
 
-### Usage
+## Usage
 ```bash
 ### On a new linux.
 
