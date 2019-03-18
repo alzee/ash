@@ -3,7 +3,7 @@
 Restore your dotfiles, bash environment and configurations.
 
 ## Build your directory structure.
-* Fork it, commit your dotfiles to ash/conf/home/.
+* Fork it, clone, copy your dotfiles to ash/conf/home/ without starting dot.
 	```bash
 	# For example, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
 	for dotfile in screenrc inputrc gitconfig vimrc
@@ -14,6 +14,7 @@ Restore your dotfiles, bash environment and configurations.
 * Replace ash/conf/home/env with your own vars. 
 * Replace ash/conf/home/fun with your own functions.
 * Replace ash/conf/home/ali with your own aliases. 
+* Commit and push.
 
 ## Usage
 ### Restore on a new linux.
