@@ -23,13 +23,15 @@ $ git clone https://github.com/username/ash
 
 # run a.sh to hard link all the files in ash/conf/home to your home dir
 # ~/.{env,fun,ali} will be added to ~/.bashrc
-$ ash/a.sh # Now the phoenix reborn from the ashes.
+$ ash/a.sh
 ```
 
-## Have added a new function to your .fun?
+## Have changed you dotfiles?
 ```bash
+## Let's say ~/.fun.
+## Don't forget it's a hark link to conf/home/fun
 $ cd ash
-## commit change
+## Commit change
 $ git add conf/home/fun
 $ git commit -m 'added foo() in fun'
 
