@@ -977,13 +977,13 @@ g(){
 			;;
 		d)
 			git status 2> /dev/null
-			[ "$?" -eq 128 ] && opt="-C /home/$user/.misc"
+			[ "$?" -eq 128 ] && opt="-C $repoa"
 			shift
 			git $opt diff "$@"
 			;;
 		c)
 			git status 2> /dev/null
-			[ "$?" -eq 128 ] && opt="-C /home/$user/.misc"
+			[ "$?" -eq 128 ] && opt="-C $repoa"
 			git $opt add -A
 			shift
 			comment=${*:-nth}

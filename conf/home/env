@@ -34,12 +34,12 @@ SOCKS_VERSION=5
 if [ "$SHLVL" -eq 1 ]; then
 	PATH=$PATH:$HOME/.local/bin
 	[ "$ID" = debian ] && PATH=/usr/sbin:/sbin:$PATH
-	if [ "$PROMPT_COMMAND" ]; then
-		# where is __vte_prompt_command?
-		PROMPT_COMMAND="$PROMPT_COMMAND;cmdnotfound"
-	else
-		PROMPT_COMMAND="cmdnotfound"
-	fi
+	#if [ "$PROMPT_COMMAND" ]; then
+	#	# where is __vte_prompt_command?
+	#	PROMPT_COMMAND="$PROMPT_COMMAND;cmdnotfound"
+	#else
+	#	PROMPT_COMMAND="cmdnotfound"
+	#fi
 fi
 
 # ANSI escape code
