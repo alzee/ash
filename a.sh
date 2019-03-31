@@ -210,6 +210,7 @@ gset() {
 		mkdir -p $a
 		git clone https://github.com/mlutfy/hidetopbar.git $a/hidetopbar@mathieu.bidon.ca
 		pushd hidetopbar@mathieu.bidon.ca
+		git pull
 		make schemas
 		popd
 	fi
