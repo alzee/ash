@@ -391,12 +391,12 @@ hardlinks(){
 	# dir structure
 	pushd $scriptdir/conf/home
 
-	for i in $(find -type d)
+	for i in $(find . -type d)
 	do
 		mkdir -p ~/.${i#./}
 	done
 
-	for i in $(find -type f)
+	for i in $(find . -type f)
 	do
 		ln -f $i ~/.${i#./} && say "${i#./} linked"
 	done
