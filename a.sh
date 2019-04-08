@@ -8,16 +8,21 @@
 ############### Variables ###############
 type dnf &> /dev/null && yum=dnf || yum=yum
 
-user=zee
+user=z
 hostname=tes
 
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
 scriptdir=$(dirname $0)
 
 # which distro and version?
-. /etc/os-release
-distro=$ID
-distro_ver=$VERSION_ID
+if [ -f /etc/os-release ]; then
+	. /etc/os-release
+	distro=$ID
+	distro_ver=$VERSION_ID
+else
+	# bsd
+	distro=$(uname)
+fi
 
 ############### Functions ###############
 
