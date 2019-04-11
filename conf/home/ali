@@ -10,12 +10,23 @@ alias managed='sudo airmon-ng stop wlp2s0mon; sudo systemctl restart NetworkMana
 alias vim="sudo vim"
 alias gpg="gpg2"
 alias d='cd'
-alias L="command ls -Z"
-alias ll='command ls -l --color=auto'
-alias LL="command ls -lZ"
-alias l.='command ls -d .* --color=auto'
-alias l='command ls --color=auto'
-alias ls='sudo ls --color=auto'
-alias py='python3'
-alias pydoc='pydoc3'
-alias pip='pip3'
+
+if [ "$ID" = FreeBSD ]; then
+	alias ll='command ls -l -G'
+	alias l.='command ls -d .* -G'
+	alias l='command ls -G'
+	alias ls='sudo ls -G'
+	alias py='python3.6'
+	alias pydoc='pydoc3.6'
+	alias pip='pip3'
+else
+	alias L="command ls -Z"
+	alias ll='command ls -l --color=auto'
+	alias LL="command ls -lZ"
+	alias l.='command ls -d .* --color=auto'
+	alias l='command ls --color=auto'
+	alias ls='sudo ls --color=auto'
+	alias py='python3'
+	alias pydoc='pydoc3'
+	alias pip='pip3'
+fi
