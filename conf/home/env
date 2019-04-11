@@ -20,7 +20,13 @@ set -a
 # sys
 # MACHTYPE
 # OSTYPE
-[ -f /etc/os-release ] && . /etc/os-release
+if [ -f /etc/os-release ]; then
+	. /etc/os-release
+else
+	# bsd
+	ID=$(uname)
+fi
+
 HISTTIMEFORMAT="%b %d %T "
 HISTCONTROL=ignoreboth
 LIBVIRT_DEFAULT_URI=qemu:///system
