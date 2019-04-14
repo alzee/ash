@@ -13,7 +13,7 @@ alias d='cd'
 
 if [ "$ID" = FreeBSD ]; then
 	alias ll='command ls -l -G'
-	alias l.='command ls -d .* -G'
+	alias l.='command ls -Gd .*'
 	alias l='command ls -G'
 	alias ls='sudo ls -G'
 	alias py='python3.6'
