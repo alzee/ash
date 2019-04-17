@@ -11,6 +11,39 @@
 
 set -a
 
+vhost(){
+	[ "$1" ] || return
+	if [ "$1" = -r ]; then
+		site=$2
+		# modify /etc/hosts
+		# keep /w/$site
+		return
+	fi
+
+	cd ~/w
+
+	site=$1
+	user=z14
+
+	if [ ! -d $site ]; then
+		mkdir -p $site/{css,js}
+		cd $site
+		ln -s ../../main/css/bootstrap.min.css css/
+		touch TODO
+		git init --quiet
+		git remote add origin git@github.com:$user/$site.git
+		# github api to create repo?
+	fi
+
+	### ~/w/vhost/$site.conf
+
+	### /etc/hosts
+
+	if ! grep -wq $site /etc/hosts; then
+		sudo sed -i '$a'"127.0.0.1	$site" /etc/hosts
+	fi
+}
+
 acme(){
 	# Issue cert using manual DNS mode
 	local dom certdir
