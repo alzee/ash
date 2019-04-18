@@ -5,6 +5,8 @@
 # and ~/.fun will be sourced in ~/.bashrc
 
 # $fun_exported set to null by default in .env. At the end of this file, export all these funcions and set $fun_exported to 1
+complete -F _man m
+complete -F _git g
 [ "$fun_exported" ] && return # since these functions have been exported, we don't need to soure this file anymore
 
 # use some useless dconf keys to store info is a good idea.
@@ -40,6 +42,7 @@ vhost(){
 	### /etc/hosts
 
 	if ! grep -wq $site /etc/hosts; then
+		echo Editing /etc/hosts ...
 		sudo sed -i '$a'"127.0.0.1	$site" /etc/hosts
 	fi
 }
