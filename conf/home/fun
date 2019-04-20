@@ -13,6 +13,13 @@
 
 set -a
 
+troubleshooting(){
+	say Selinux?
+	say Any typo?
+	say Is this config file including other config files?
+	say Version?
+}
+
 vhost(){
 	[ "$1" ] || return
 	if [ "$1" = -r ]; then
@@ -42,7 +49,7 @@ vhost(){
 	### /etc/hosts
 
 	if ! grep -wq $site /etc/hosts; then
-		echo Editing /etc/hosts ...
+		say Editing /etc/hosts ...
 		sudo sed -i '$a'"127.0.0.1	$site" /etc/hosts
 	fi
 }
