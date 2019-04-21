@@ -13,6 +13,10 @@
 
 set -a
 
+e(){
+	echo -e '\e[33;1m'$@'\e[m'
+}
+
 troubleshooting(){
 	say Selinux?
 	say Any typo?
