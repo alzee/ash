@@ -33,11 +33,26 @@ vhost(){
 		return
 	fi
 
-	cd ~/w
+	# change default vhost
+	if [ "$1" = -d ]; then
+		site="$2"
+		pushd ~/w
+		if [ -d "$site" ]; then
+			# 0/ is the vhost dir set in ~/.vhosts/00.conf
+			# filename 00.conf first read, so be the default vhost
+			ln -sfn "$2" 0
+		else
+			echo "$site" not exist
+		fi
+		popd
+		return
+	fi
+
 
 	site=$1
 	user=z14
 
+	pushd ~/w
 	if [ ! -d $site ]; then
 		mkdir -p $site/{css,js}
 		cd $site
@@ -47,11 +62,11 @@ vhost(){
 		git remote add origin git@github.com:$user/$site.git
 		# github api to create repo?
 	fi
+	popd
 
 	### ~/w/vhost/$site.conf
 
 	### /etc/hosts
-
 	if ! grep -wq $site /etc/hosts; then
 		say Editing /etc/hosts ...
 		sudo sed -i '$a'"127.0.0.1	$site" /etc/hosts
