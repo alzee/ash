@@ -21,16 +21,18 @@ hardstatus off
 
 ############### key bind start ###############
 # swap s and S
-bind s eval split focus other
+bind s eval split focus screen
 #bind S xoff
 bind S eval other focus other
 # swap v and V
-bind v eval 'split -v' focus other
+bind v eval 'split -v' focus screen
+bind ^v eval 'split -v' focus screen
 bind V version
 bind o only
 #bind q quit
 # swap x and X
 bind x remove
+bind ^x remove
 #bind X lockscreen
 bind l layout show
 bind ^l layout show
