@@ -8,13 +8,8 @@
 <meta name="author" content="">
 <meta name="keyword" content="">
 <title>{% block title %}Welcome!{% endblock %}</title>
-<!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css" media="" href="">
-<!--external css-->
-<link rel="stylesheet" type="text/css" media="" href="">
-<!-- Custom styles for this template -->
-<link rel="stylesheet" type="text/css" media="" href="">
-        {% block stylesheets %}{% endblock %}
+{% block stylesheets %}{% endblock %}
 </head>
 <body>
 	{% block body %}{% endblock %}
@@ -34,15 +29,7 @@
 	</footer>
 
 	{% block javascripts %}{% endblock %}
-    <!-- js placed at the end of the document so the pages load faster -->
 	<script src=""></script>
-
-    <!--common script for all pages-->
-	<script src=""></script>
-
-    <!--script for this page-->
-	<script src=""></script>
-
 	<noscript></noscript>
 </body>
 </html>

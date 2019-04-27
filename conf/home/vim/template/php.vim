@@ -1,7 +1,7 @@
 <?php
 /**
- * vim:ft=php et
- * @author Dotcra <dotcra@gmail.com>
+ * vim:ft=php et ts=4 sts=4
+ * @author z14 <z@arcz.ee>
  * @version
  * @todo
  */
