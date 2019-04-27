@@ -1,24 +1,27 @@
 <?php
 /**
- * vim:ft=php
+ * vim:ft=php et
  * @author Dotcra <dotcra@gmail.com>
  * @version
  * @todo
  */
 
-class Fuck{
-	private $a;
-	private $b;
-	private $c;
-	function __construct(){
-	}
+namespace Zee\Fuck;
 
-	function __destruct(){
-	}
+// use What;
 
-	function f(){
-	}
+class Fuck
+{
+    private $a;
+    private $b;
+    private $c;
+    function __construct(){
+    }
+
+    function __destruct(){
+    }
+
+    public function f()
+    {
+    }
 }
-
-#new pus();
-#pus::f();

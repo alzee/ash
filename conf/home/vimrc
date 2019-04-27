@@ -82,7 +82,7 @@ au FileType twig set ft=html
 " au FileType twig source ~/.vim/map/twig.vim
 
 au BufNewFile *.php 0r ~/.vim/template/php.vim | let @/='class \zsFuck' | %s//\=expand("%:t:r")/e
-au FileType php source ~/.vim/map/php.vim
+au FileType php source ~/.vim/map/php.vim | set sts=4 et
 
 au BufNewFile *.asm 0r ~/.vim/template/asm.vim | let @/='start' | /
 " au FileType asm source ~/.vim/map/asm.vim
