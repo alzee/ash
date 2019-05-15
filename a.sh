@@ -376,6 +376,9 @@ misc() {
 
 		[ -f /usr/share/applications/nethack.desktop ] && sudo rm -f /usr/share/applications/nethack.desktop
 
+		sudo ln -s ~/.vhosts /etc/httpd/conf.d/
+		sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/
+
 		# change VirtualBox dir
 		# comment it since we don't use virtualbox anymore
 		#sed -i '/defaultMachine/s:defaultMachineFolder="[^"]*":defaultMachineFolder="'~/.vm\": ~/.config/VirtualBox/VirtualBox.xml
