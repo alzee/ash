@@ -8,7 +8,7 @@
 ############### Variables ###############
 type dnf &> /dev/null && yum=dnf || yum=yum
 
-user=z
+user=arc
 hostname=tes
 
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
@@ -60,8 +60,8 @@ more_repo() {
 			# sudo dnf -y install dnf-plugins-core
 			sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 			php=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,devel})
-			ilist="$ilist i3 slock httpd mod_ssl mariadb-server $php git gcl ImageMagick nasm nmap samba postfix wireshark aircrack-ng libpcap-devel pixiewps irssi ansible nethack myman jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable docker-ce mpv unrar"
-			#xautolock arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake ctags dosemu obs-studio mplayer gimp blender dsniff ettercap driftnet reaver rdesktop chntpw gnome-tweaks qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko VirtualBox vlc
+			ilist="$ilist i3 httpd mod_ssl mariadb-server $php git gcl ImageMagick nasm nmap samba postfix wireshark aircrack-ng libpcap-devel pixiewps irssi ansible nethack jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable docker-ce mpv unrar"
+			#myman slock xautolock arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake ctags dosemu obs-studio mplayer gimp blender dsniff ettercap driftnet reaver rdesktop chntpw gnome-tweaks qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko VirtualBox vlc
 			rlist="tmux gnome-user-share gnome-initial-setup virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution libreoffice-core libreoffice-ure libreoffice-data libreoffice-opensymbol-fonts bijiben rhythmbox shotwell transmission-gtk gnome-weather gnome-todo gnome-software orca empathy gnome-contacts gnome-maps gnome-calendar gnome-system-monitor gnome-disk-utility gnome-color-manager gedit devassistant-core gnome-boxes vinagre totem-nautilus totem cheese gnome-documents gnome-calculator file-roller baobab gnome-screenshot gnome-characters gnome-font-viewer setroubleshoot gnome-getting-started-docs gnome-shell-extension-background-logo gnome-user-docs gnome-logs yelp seahorse gnome-abrt abrt gnome-clocks firefox jwhois esmtp"
 			# flatpak 
 			;;
@@ -328,6 +328,7 @@ mod_bashrc(){
 
 default_pool(){
 	[ "$distro" != fedora ] && return
+	sudo systemctl restart libvirtd
 	# change libvirt default storage pool
 	# https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt
 	sudo virsh pool-destroy default
@@ -464,7 +465,7 @@ case $1 in
 		sudoer
 		;;
 	-d)
-		more_repo
+		default_pool
 		;;
 	"")
 		mod_bashrc
