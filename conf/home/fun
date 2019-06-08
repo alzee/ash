@@ -13,6 +13,21 @@
 
 set -a
 
+p(){
+	# TODO get ip address
+	local c ip
+	ip=192.168.10.1
+	c=$(awk -F'.' '{print NF-1}' <<< "$1")
+	case "$c" in
+		0)
+			echo ping $(cut -d'.' -f1-3 <<< $ip)."$1"
+			;;
+		1)
+			echo ping $(cut -d'.' -f1-2 <<< $ip)."$1"
+			;;
+	esac
+}
+
 e(){
 	echo -e '\e[33;1m'$@'\e[m'
 }
