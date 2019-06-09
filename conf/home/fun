@@ -16,14 +16,23 @@ set -a
 p(){
 	# TODO get ip address
 	local c ip
-	ip=192.168.10.1
+	ip=$(hostname -I)
+	if [ "$ip" = 127.0.0.1 ]; then
+		# https://stackoverflow.com/a/21336679/7714132
+		ip=$(ip route get 8.8.8.8 | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
+	fi
 	c=$(awk -F'.' '{print NF-1}' <<< "$1")
 	case "$c" in
 		0)
-			echo ping $(cut -d'.' -f1-3 <<< $ip)."$1"
+			ping $(cut -d'.' -f1-3 <<< $ip)."$1"
 			;;
 		1)
-			echo ping $(cut -d'.' -f1-2 <<< $ip)."$1"
+			ping $(cut -d'.' -f1-2 <<< $ip)."$1"
+			;;
+		2)
+			;;
+		3)
+			ping "$1"
 			;;
 	esac
 }
