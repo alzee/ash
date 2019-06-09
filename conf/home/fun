@@ -14,8 +14,8 @@
 set -a
 
 p(){
-	# TODO get ip address
 	local c ip
+	# get ip address
 	ip=$(hostname -I)
 	if [ "$ip" = 127.0.0.1 ]; then
 		# https://stackoverflow.com/a/21336679/7714132
