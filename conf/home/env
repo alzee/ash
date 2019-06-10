@@ -117,10 +117,10 @@ w=~/w
 # miscellaneous
 #t="\t"
 screen=matrix
-SCREENDIR=~/.screen
 # vim_default_file=$repod/note # use $vim_default_session instead
 vim_default_session=~/.vim/session/default.vim
 # temporary or private vars
+[ -f ~/.env.local ] && . ~/.env.local
 [ -f ~/.v ] && . ~/.v
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
