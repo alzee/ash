@@ -8,7 +8,6 @@ alias monitor='sudo systemctl stop NetworkManager; sudo airmon-ng start wlp2s0'
 alias managed='sudo airmon-ng stop wlp2s0mon; sudo systemctl restart NetworkManager'
 
 alias vim="sudo vim"
-alias gpg="gpg2"
 alias d='cd'
 
 if [ "$ID" = FreeBSD ]; then
@@ -29,4 +28,8 @@ else
 	alias py='python3'
 	alias pydoc='pydoc3'
 	alias pip='pip3'
+fi
+
+if [ "$ID" = fedora ]; then
+	alias gpg="gpg2"
 fi
