@@ -96,7 +96,8 @@ more_repo() {
 			php=php${php%+*}
 			ilist="$ilist libapache2-mod-$php"
 			php=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysqlnd,curl,json,fpm,uploadprogress})
-			ilist="$ilist apache2 $php mariadb-server git psmisc xz-utils bzip2 bash-completion man-db firewalld selinux-basics selinux-policy-default auditd znc"
+			ilist="$ilist apache2 $php mariadb-server git psmisc xz-utils bzip2 bash-completion man-db firewalld znc"
+			#firewalld selinux-basics selinux-policy-default auditd"
 			# apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
 			# Run selinux-activate(as root) to configure GRUB and PAM and to create /.autorelabel
 			;;
