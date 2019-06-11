@@ -87,8 +87,10 @@ more_repo() {
 			yum=apt
 
 			# add testing repo (latest packages)
-			sudo sed -i '$adeb http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
-			sudo sed -i '$adeb-src http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
+			if ! grep -q testing /etc/apt/sources.list; then
+				sudo sed -i '$adeb http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
+				sudo sed -i '$adeb-src http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
+			fi
 
 			sudo $yum update -y
 
