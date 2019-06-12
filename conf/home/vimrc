@@ -91,6 +91,8 @@ au FileType javascript source ~/.vim/map/javascript.vim
 
 au FileType sql source ~/.vim/map/sql.vim
 
+au FileType dosbatch source ~/.vim/map/cmd.vim
+
 "au WinEnter * resize
 
 au InsertLeave * set nopaste
