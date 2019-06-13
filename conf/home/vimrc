@@ -91,6 +91,7 @@ au FileType javascript source ~/.vim/map/javascript.vim
 
 au FileType sql source ~/.vim/map/sql.vim
 
+au BufNewFile *.cmd 0r ~/.vim/template/cmd.vim
 au FileType dosbatch source ~/.vim/map/cmd.vim
 
 "au WinEnter * resize
