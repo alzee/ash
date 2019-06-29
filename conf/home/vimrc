@@ -75,7 +75,7 @@ au BufNewFile *.sh 0r ~/.vim/template/sh.vim | $
 au FileType sh source ~/.vim/map/sh.vim
 
 au BufNewFile *.html 0r ~/.vim/template/html.vim | let @/='body' | /
-au FileType html source ~/.vim/map/html.vim | set ts=2 sw=2
+au FileType html source ~/.vim/map/html.vim | set et ts=2 sw=2
 
 au BufNewFile *.twig 0r ~/.vim/template/twig.vim | let @/='body' | /
 au FileType twig set ft=html
