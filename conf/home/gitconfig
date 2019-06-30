@@ -9,3 +9,5 @@
 	p = pull
 	l = log --oneline
 	d = diff
+[core]
+	hooksPath = .githooks/

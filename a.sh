@@ -470,10 +470,10 @@ case $1 in
 	-d)
 		default_pool
 		;;
-	"")
-		mod_bashrc
+	-H)
 		hardlinks
-		rm_wine_icons
+		;;
+	"")
 		;;
 	*)
 		;;
