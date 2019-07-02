@@ -23,16 +23,4 @@ class Fuck
     public function __destruct()
     {
     }
-
-    protected static function f1()
-    {
-    }
-
-    abstract protected function f2()
-    {
-    }
-
-    final public static function f3()
-    {
-    }
 }
