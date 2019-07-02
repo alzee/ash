@@ -15,13 +15,24 @@ class Fuck
     private $a;
     private $b;
     private $c;
-    function __construct(){
+    
+    public function __construct()
+    {
     }
 
-    function __destruct(){
+    public function __destruct()
+    {
     }
 
-    public function f()
+    protected static function f1()
+    {
+    }
+
+    abstract protected function f2()
+    {
+    }
+
+    final public static function f3()
     {
     }
 }
