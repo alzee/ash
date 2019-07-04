@@ -8,4 +8,3 @@ nnoremap <buffer> <space><space>f o<form id="" class="" method="get" action=""><
 nnoremap <buffer> <space><space>n o<input id="" class="" type="text" name="" /><esc>F"i
 nnoremap <buffer> <space><space>t :r ~/.vim/template/table.html.vim<cr>=at
 inoremap <buffer> < <><c-g>U<left>
-inoremap <buffer> > <><c-g>U<left>
