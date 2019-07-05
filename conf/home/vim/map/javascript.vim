@@ -1,3 +1,3 @@
 nmap <buffer> // I//<Esc>
-nnoremap <space>f ofunction (){<CR>}<esc>kf<space>a
-imap ,f function (){<CR>}<esc>kf<space>a
+nnoremap <space>f ofunction ()<CR>{<CR>}<esc>kkf<space>a
+inoremap ,f function ()<CR>{<CR>}<esc>kkf<space>a

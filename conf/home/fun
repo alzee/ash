@@ -764,10 +764,35 @@ crawl(){
 }
 
 am(){
-	local s r m=mariadb
-	[ "$1" == -n ] && r='nginx php-fpm' s=httpd || r=httpd s='nginx php-fpm'
-	sudo systemctl stop $s
-	sudo systemctl restart $r $m
+	local start_target mariadb stop_target
+	start_target=httpd
+	mariadb=mariadb
+	stop_target=nginx
+	case $ID in
+		debian)
+			start_target=apache2
+			mariadb=mysql
+			;;
+		fedora)
+			;;
+	esac
+
+	if [ "$1" = -n ]; then
+		local i
+		i=$start_target
+		start_target=$stop_target
+		stop_target=$i
+	fi
+
+	if which systemctl; then
+		sudo systemctl stop $stop_target
+		sudo systemctl restart $start_target $mariadb
+	else
+		sudo service $stop_target stop
+		sudo service $start_target restart
+		sudo service $mariadb restart
+	fi
+
 }
 
 mysqldir(){
