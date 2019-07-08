@@ -784,7 +784,7 @@ am(){
 		stop_target=$i
 	fi
 
-	if which systemctl; then
+	if which systemctl &> /dev/null; then
 		sudo systemctl stop $stop_target
 		sudo systemctl restart $start_target $mariadb
 	else
