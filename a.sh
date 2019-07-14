@@ -438,8 +438,14 @@ say(){
 }
 
 _mkswap(){
-	local i
-	echo don\'t forget to make a swap
+	local swapfile
+	swapfile=swapfile
+	[ $distro != debian ] && return
+	dd bs=4M if=/dev/zero of=$swapfile count=500
+	chmod 600 $swapfile
+	sudo chown root:root $swapfile
+	sudo swapon $swapfile
+	echo don\'t forget to add swap to /etc/fstab
 }
 
 ############### Main Part ###############

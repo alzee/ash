@@ -144,7 +144,7 @@ if [ "$domain" ];then
 	done
 fi
 
-vps=$vl
+vps=$do
 
 unset i
 env_exported=fuck
