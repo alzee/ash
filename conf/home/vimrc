@@ -75,6 +75,7 @@ au BufNewFile *.sh 0r ~/.vim/template/sh.vim | $
 au FileType sh source ~/.vim/map/sh.vim
 
 au BufNewFile *.py 0r ~/.vim/template/py.vim | $
+au FileType python source ~/.vim/map/py.vim
 
 au BufNewFile *.html 0r ~/.vim/template/html.vim | let @/='body' | /
 au FileType html source ~/.vim/map/html.vim | set et ts=2 sw=2
