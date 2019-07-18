@@ -132,7 +132,6 @@ if [ "$ID" = fedora ]; then
 	iww=wlp2s0mon
 	#monitors=$(xrandr | awk '/connected/ {printf $1":";getline;print $1}')
 	which mpv &> /dev/null && play="mpv --really-quiet --volume 100"
-
 fi
 
 if [ "$domain" ];then
