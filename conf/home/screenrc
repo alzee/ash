@@ -1,7 +1,7 @@
 # create a layout, otherwise the regions won't be remembered after reattach
 layout new fuck
 # create windows
-#screen 4 mysql -uroot -p
+screen 4 mysql -uroot -p
 #screen 5 nethack
 #screen -t mpv 7
 screen
