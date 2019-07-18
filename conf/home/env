@@ -119,9 +119,9 @@ w=~/w
 screen=matrix
 # vim_default_file=$repod/note # use $vim_default_session instead
 vim_default_session=~/.vim/session/default.vim
-# temporary or private vars
+# local or private vars
 [ -f ~/.env.local ] && . ~/.env.local
-[ -f ~/.v ] && . ~/.v
+[ -f ~/.env.sec ] && . ~/.env.sec
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
 # since I only use fedora as workstation
