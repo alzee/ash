@@ -10,6 +10,7 @@ type dnf &> /dev/null && yum=dnf || yum=yum
 
 user=arc
 hostname=tes
+errlog=ash_error.log
 
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
 scriptdir=$(dirname $0)
@@ -27,8 +28,8 @@ fi
 ############### Functions ###############
 
 sudoer() {
+	[ $UID -ne 0 ] && say "$0: Permission denied" && exit
 	if ! id $user &> /dev/null ; then
-		[ $UID -ne 0 ] && say "$0: Permission denied" && exit
 		say user $user not exist, now creating...
 		useradd -m $user -u 1000 -s /bin/bash || useradd -m $user -s /bin/bash	# debian need to specify shell
 		#echo $user | sudo passwd --stdin $user # debian have no --stdin option
@@ -50,7 +51,7 @@ more_repo() {
 	[ "$UID" -eq 0 ] && say "DO NOT use root, assohole!" && exit
 
 	say adding some repository...
-	ilist="screen nginx nodejs vim ctags unzip curl"
+	ilist="screen nginx nodejs vim openssh-server ctags unzip curl"
 	case $distro in
 		fedora)
 			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
@@ -87,10 +88,11 @@ more_repo() {
 			yum=apt
 
 			# add testing repo (latest packages)
-			if ! grep -q testing /etc/apt/sources.list; then
-				sudo sed -i '$adeb http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
-				sudo sed -i '$adeb-src http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
-			fi
+			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
+			#if ! grep -q testing /etc/apt/sources.list; then
+			#	sudo sed -i '$adeb http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
+			#	sudo sed -i '$adeb-src http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
+			#fi
 
 			sudo $yum update -y
 
@@ -127,7 +129,7 @@ inapps() {
 	say installing packages...
 	for i in $ilist
 	do
-		sudo $yum install -y $i > /dev/null && say "$i installed" || say "$i install failed"
+		sudo $yum install -y $i > /dev/null && say "$i installed" || { say "$i install failed" | tee $errlog }
 	done
 }
 
