@@ -2,12 +2,7 @@
 #
 # A script for quickly implementing softwares and settings after a Linux fresh installation. Mainly for Fedora semiannual upgrade purpose re-installation.
 
-# TODO no sudos
-#VARIANT_ID=workstation
-
 ############### Variables ###############
-type dnf &> /dev/null && yum=dnf || yum=yum
-
 user=arc
 hostname=tes
 errlog=ash_error.log
@@ -24,6 +19,23 @@ else
 	# bsd
 	distro=$(uname)
 fi
+case $distro in
+	fedora)
+		yum=dnf
+		;;
+	rhel)
+		;&
+	centos)
+		yum=yum
+		distro=rhel
+		;;
+	debian)
+		yum=apt
+		;;
+	freebsd)
+		:
+		;;
+esac
 
 ############### Functions ###############
 
@@ -36,13 +48,15 @@ sudoer() {
 		echo $user:$user | sudo chpasswd
 	fi
 
+	$yum install -y sudo
+
 	say making $user sudoer...
 	if [ "$distro" = debian ]; then
-		sudo usermod -aG sudo $user
+		usermod -aG sudo $user
 	else
-		sudo usermod -aG wheel $user
+		usermod -aG wheel $user
 	fi
-	sudo cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
+	cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
 }
 
 more_repo() {
@@ -67,10 +81,8 @@ more_repo() {
 			# flatpak 
 			;;
 		rhel)
-			sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$distro_ver.noarch.rpm
-			;&
-		centos)
 			# The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
+			sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$distro_ver.noarch.rpm
 			sudo $yum install -y https://${distro}${distro_ver}.iuscommunity.org/ius-release.rpm
 
 			#nic=$(nmcli d | grep ethernet | cut -d" " -f1)
@@ -82,11 +94,8 @@ more_repo() {
 			php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx} mod_$php)
 			ilist="$ilist httpd24u httpd24u-mod_ssl $php mariadb101u-server git2u psmisc xz bzip2 bash-completion znc"
 			rlist="mariadb-libs git"
-			distro=rhel
 			;;
 		debian)
-			yum=apt
-
 			# add testing repo (latest packages)
 			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
 			#if ! grep -q testing /etc/apt/sources.list; then
@@ -450,7 +459,7 @@ _mkswap(){
 	echo don\'t forget to add swap to /etc/fstab
 }
 
-############### Main Part ###############
+############### Main ###############
 
 case $1 in
 	"-a")
