@@ -59,7 +59,7 @@ sudoer() {
 	cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
 }
 
-more_repo() {
+_init() {
 	# TODO internet?
 	#id $user &> /dev/null || { say user $user no exist, run $0 -s to create. ; exit; }
 	[ "$UID" -eq 0 ] && say "DO NOT use root, assohole!" && exit
@@ -118,8 +118,7 @@ more_repo() {
 	esac
 }
 
-# remove unneeded apps
-rmapps() {
+remove_pkg() {
 	[ $distro = debian ] && return
 	say removing unneeded packages...
 	for i in $rlist
@@ -131,8 +130,7 @@ rmapps() {
 	sudo $yum clean all # although debian don't have 'all'
 }
 
-# install necessary apps
-inapps() {
+install_pkg() {
 	say updating...
 	sudo $yum upgrade -y
 
@@ -365,8 +363,8 @@ misc() {
 		sudo ln -s ../mods-available/ssl.conf /etc/apache2/mods-enabled/
 		sudo ln -s ../mods-available/socache_shmcb.load /etc/apache2/mods-enabled/
 
-		sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
-		sudo ln -s ~/vhosts.conf /etc/apache2/conf-enabled/
+		sudo ln -s ~/.vhosts /etc/apache2/sites-enabled/
+		sudo ln -s ~/.vhosts.conf /etc/apache2/conf-enabled/
 
 		# use mysql native password insead of system user credentials
 		sudo mysql -e "use mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'"
@@ -464,9 +462,9 @@ _mkswap(){
 
 case $1 in
 	"-a")
-		more_repo
-		rmapps
-		inapps
+		_init
+		remove_pkg
+		install_pkg
 		addgrp
 		mysqldir
 		gset
