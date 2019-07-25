@@ -10,7 +10,6 @@ errlog=ash_error.log
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
 scriptdir=$(dirname $0)
 
-# which distro and version?
 if [ -f /etc/os-release ]; then
 	. /etc/os-release
 	distro=$ID
@@ -71,14 +70,11 @@ _init() {
 			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
 			# add chrome repo
 			sudo cp $scriptdir/conf/templates/google-chrome.repo /etc/yum.repos.d/ && say "chrome repo installed" || say "chrome repo install failed"
-			# add docker repo
-			# sudo dnf -y install dnf-plugins-core
 			sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 			php=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,devel})
 			ilist="$ilist i3 httpd mod_ssl mariadb-server $php git gcl ImageMagick nodejs nasm nmap samba postfix wireshark aircrack-ng libpcap-devel pixiewps irssi ansible nethack jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable docker-ce mpv unrar"
 			#myman slock xautolock arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake ctags dosemu obs-studio mplayer gimp blender dsniff ettercap driftnet reaver rdesktop chntpw gnome-tweaks qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko VirtualBox vlc
 			rlist="tmux gnome-user-share gnome-initial-setup virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution libreoffice-core libreoffice-ure libreoffice-data libreoffice-opensymbol-fonts bijiben rhythmbox shotwell transmission-gtk gnome-weather gnome-todo gnome-software orca empathy gnome-contacts gnome-maps gnome-calendar gnome-system-monitor gnome-disk-utility gnome-color-manager gedit devassistant-core gnome-boxes vinagre totem-nautilus totem cheese gnome-documents gnome-calculator file-roller baobab gnome-screenshot gnome-characters gnome-font-viewer setroubleshoot gnome-getting-started-docs gnome-shell-extension-background-logo gnome-user-docs gnome-logs yelp seahorse gnome-abrt abrt gnome-clocks firefox jwhois esmtp"
-			# flatpak 
 			;;
 		rhel)
 			# The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
@@ -98,10 +94,6 @@ _init() {
 		debian)
 			# add testing repo (latest packages)
 			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
-			#if ! grep -q testing /etc/apt/sources.list; then
-			#	sudo sed -i '$adeb http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
-			#	sudo sed -i '$adeb-src http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
-			#fi
 
 			curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - # nodejs 12.x repo
 			sudo $yum update -y
@@ -142,7 +134,6 @@ install_pkg() {
 }
 
 getcomposer(){
-	# composer
 	if [ ! -x ~/.local/bin/composer ];then
 		say get composer...
 		local a=composer-setup.php
@@ -152,8 +143,6 @@ getcomposer(){
 			php $a && rm $a
 			mkdir ~/.local/bin -p
 			mv composer.phar ~/.local/bin/composer
-			#composer config -g repo.packagist composer https://packagist.phpcomposer.com
-			#composer config -g repo.packagist composer https?://packagist.org
 		else
 			say checksum fail!
 		fi
@@ -314,17 +303,8 @@ settimezone(){
 
 dir_struct(){
 	[ $UID -eq 0 ] && exit
-
-	# dir structures
 	mkdir -p ~/w
-	#chown -R $USER:$USER ~/{.local,.vim,.sec,.gpg}
-
 	rmdir ~/{Downloads,Documents,Pictures,Music,Videos,Desktop,Public,Templates} 2>/dev/null
-	#[ -d ~/Downloads ] && mv ~/{Downloads,l}
-	#[ -d ~/Documents ] && mv ~/{Documents,d}
-	#[ -d ~/Pictures ] && mv ~/{Pictures,p}
-	#[ -d ~/Music ] && mv ~/{Music,m}
-	#[ -d ~/Videos ] && mv ~/{Videos,v} && mv ~/v ~/m
 }
 
 mod_bashrc(){
@@ -392,10 +372,6 @@ misc() {
 
 		sudo ln -s ~/.vhosts /etc/httpd/conf.d/
 		sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/
-
-		# change VirtualBox dir
-		# comment it since we don't use virtualbox anymore
-		#sed -i '/defaultMachine/s:defaultMachineFolder="[^"]*":defaultMachineFolder="'~/.vm\": ~/.config/VirtualBox/VirtualBox.xml
 	fi
 
 	# since debian default don't have selinux active
@@ -410,7 +386,6 @@ misc() {
 
 hardlinks(){
 	# hard link conf/home/foo to ~/.foo
-	# dir structure
 	pushd $scriptdir/conf/home
 
 	for i in $(find . -type d)
