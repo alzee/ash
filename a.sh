@@ -65,7 +65,7 @@ more_repo() {
 	[ "$UID" -eq 0 ] && say "DO NOT use root, assohole!" && exit
 
 	say adding some repository...
-	ilist="screen nginx nodejs vim openssh-server ctags unzip curl"
+	ilist="screen nginx vim openssh-server ctags unzip curl"
 	case $distro in
 		fedora)
 			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
@@ -75,7 +75,7 @@ more_repo() {
 			# sudo dnf -y install dnf-plugins-core
 			sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 			php=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,devel})
-			ilist="$ilist i3 httpd mod_ssl mariadb-server $php git gcl ImageMagick nasm nmap samba postfix wireshark aircrack-ng libpcap-devel pixiewps irssi ansible nethack jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable docker-ce mpv unrar"
+			ilist="$ilist i3 httpd mod_ssl mariadb-server $php git gcl ImageMagick nodejs nasm nmap samba postfix wireshark aircrack-ng libpcap-devel pixiewps irssi ansible nethack jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable docker-ce mpv unrar"
 			#myman slock xautolock arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake ctags dosemu obs-studio mplayer gimp blender dsniff ettercap driftnet reaver rdesktop chntpw gnome-tweaks qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko VirtualBox vlc
 			rlist="tmux gnome-user-share gnome-initial-setup virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution libreoffice-core libreoffice-ure libreoffice-data libreoffice-opensymbol-fonts bijiben rhythmbox shotwell transmission-gtk gnome-weather gnome-todo gnome-software orca empathy gnome-contacts gnome-maps gnome-calendar gnome-system-monitor gnome-disk-utility gnome-color-manager gedit devassistant-core gnome-boxes vinagre totem-nautilus totem cheese gnome-documents gnome-calculator file-roller baobab gnome-screenshot gnome-characters gnome-font-viewer setroubleshoot gnome-getting-started-docs gnome-shell-extension-background-logo gnome-user-docs gnome-logs yelp seahorse gnome-abrt abrt gnome-clocks firefox jwhois esmtp"
 			# flatpak 
@@ -103,11 +103,12 @@ more_repo() {
 			#	sudo sed -i '$adeb-src http://ftp.debian.org/debian testing main contrib non-free' /etc/apt/sources.list
 			#fi
 
+			curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - # nodejs 12.x repo
 			sudo $yum update -y
 
 			php=$(apt list php -a | grep testing | cut -d':' -f2)
 			php=php${php%+*}
-			ilist="$ilist libapache2-mod-$php"
+			ilist="$ilist libapache2-mod-$php nodejs"
 			php=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysqlnd,curl,json,fpm,uploadprogress})
 			ilist="$ilist apache2 $php mariadb-server git psmisc xz-utils bzip2 bash-completion man-db znc"
 			#unixodbc unixodbc-dev firewalld selinux-basics selinux-policy-default auditd"
@@ -138,7 +139,7 @@ inapps() {
 	say installing packages...
 	for i in $ilist
 	do
-		sudo $yum install -y $i > /dev/null && say "$i installed" || { say "$i install failed" | tee $errlog }
+		sudo $yum install -y $i > /dev/null && say "$i installed" || { say "$i install failed" | tee $errlog; }
 	done
 }
 
