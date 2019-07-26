@@ -13,6 +13,20 @@
 
 set -a
 
+php_fucking_mssql(){
+	echo apt install pear
+	echo pecl channel-update pecl.php.net
+	echo pecl install pdo_sqlsrv
+	echo apt install unixodbc{,-dev}
+	echo Remember the fucking ln in /etc/php/...
+	echo dpkg -i msodbcsql17.... where to find? the fucing microsoft.com
+	echo See some libmsodbcsql-17.3.so.1.1 file not found shit?
+	echo ldd /opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.3.so.1.1
+	echo and you will see libcrypto.so.1.0.2 and libssl.so.1.0.2 not found
+	echo Now install libssl1.0.2, can not find in repo? Directly download from packages.debian.org
+	echo Okay, enjoy your fucking MSSQL with php.
+}
+
 p(){
 	local c ip
 	# get ip address
