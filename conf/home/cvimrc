@@ -1,20 +1,17 @@
 " let configpath = '/home/dot/.cvimrc'
 " set localconfig
 
-"let hintcharacters = "abcdefghijklmnopqrtuvwxyz123456789"
 let hintcharacters = "qwertadfgzxcvb"
 map s createHint
-"map S createTabbedHint
 map S createMultiHint
-map ms createMultiHint
 map f scrollFullPageDown
 map b scrollFullPageUp
 map e scrollDown
+map y scrollUp
 map gx closeTabsToRight
-map <C-e> scrollDown
-map <C-y> scrollUp
 let fullpagescrollpercent = 90
 set noautofocus
 set autohidecursor
-"set smoothscroll
+set nosmartcase
+set noignorecase
 let blacklists = ["*://mail.google.com/*", "*://outlook.live.com/*"]
