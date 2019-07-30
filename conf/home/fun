@@ -92,10 +92,12 @@ vhost(){
 
 	pushd ~/w
 	if [ ! -d $site ]; then
-		mkdir -p $site/{css,js}
+		say Creating directory ...
+		mkdir -p $site/pub/{css,js}
 		cd $site
-		ln -s ../../main/css/bootstrap.min.css css/
+		ln -s ../../../main/css/bootstrap.min.css pub/css/
 		touch TODO
+		say Initializing git ...
 		git init --quiet
 		git remote add origin git@github.com:$user/$site.git
 		# github api to create repo?
