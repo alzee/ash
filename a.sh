@@ -347,8 +347,8 @@ misc() {
 		sudo ln -s ~/.vhosts.conf /etc/apache2/conf-enabled/
 
 		# use mysql native password insead of system user credentials
-		sudo mysql -e "use mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'"
-		sudo mysql -e "FLUSH PRIVILEGES"
+		#sudo mysql -e "use mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'"
+		#sudo mysql -e "FLUSH PRIVILEGES"
 
 		sudo systemctl stop nginx
 		sudo systemctl disable nginx
