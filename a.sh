@@ -429,6 +429,7 @@ _mkswap(){
 	dd bs=4M if=/dev/zero of=$swapfile count=500
 	chmod 600 $swapfile
 	sudo chown root:root $swapfile
+	sudo mkswap $swapfile
 	sudo swapon $swapfile
 	echo don\'t forget to add swap to /etc/fstab
 }
