@@ -343,8 +343,10 @@ misc() {
 		sudo ln -s ../mods-available/ssl.conf /etc/apache2/mods-enabled/
 		sudo ln -s ../mods-available/socache_shmcb.load /etc/apache2/mods-enabled/
 
-		sudo ln -s ~/.vhosts /etc/apache2/sites-enabled/
-		sudo ln -s ~/.vhosts.conf /etc/apache2/conf-enabled/
+		sudo ln -s ../mods-available/headers.load /etc/apache2/mods-enabled/
+
+		sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
+		sudo ln -s ~/vhosts.conf /etc/apache2/conf-enabled/
 
 		# use mysql native password insead of system user credentials
 		sudo mysql -e "use mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'"
