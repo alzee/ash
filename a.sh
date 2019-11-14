@@ -95,7 +95,7 @@ _init() {
 			# add testing repo (latest packages)
 			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
 
-			curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - # nodejs 12.x repo
+			#curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - # nodejs 12.x repo
 			sudo $yum update -y
 
 			php=$(apt list php -a | grep testing | cut -d':' -f2)
