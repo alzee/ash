@@ -804,7 +804,8 @@ am(){
 		stop_target=$i
 	fi
 
-	if which systemctl &> /dev/null; then
+	# WSL do have systemctl but not working, so test with a sub-command rather than `which systemctl`
+	if systemctl list-jobs &> /dev/null; then
 		sudo systemctl stop $stop_target
 		sudo systemctl restart $start_target $mariadb
 	else
