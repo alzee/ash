@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # my envs
-# create hard link ~/.env when running $misc_repo/bash/reborn.bin.sh
+# create hard link ~/.env when running ~/.ash/a.sh -H
 # and ~/.env will be sourced in ~/.bashrc
 
 #touch shlvl_$SHLVL
@@ -77,45 +77,45 @@ conceal="\e[8m"
 cross="\e[9m"
 
 # dir structure
-htdoc=~/w
-media=~/m
-video=$media/v
-music="$(echo $media/*)"
-music="${music/$video/}" # remove "/home/Dot/v" from list
-document=~/d
-download=~/l
-picture=~/p
-sound=~/.sound
-secdir=~/.sec
-vmdir=~/.vm
-LFS=/mnt/lfs
+#htdoc=~/w
+#media=~/m
+#video=$media/v
+#music="$(echo $media/*)"
+#music="${music/$video/}" # remove "/home/Dot/v" from list
+#document=~/d
+#download=~/l
+#picture=~/p
+#sound=~/.sound
+#secdir=~/.sec
+#vmdir=~/.vm
+#LFS=/mnt/lfs
 
 # repo list
 #repo=(~/.misc ~/emma/jiei) # arrays won't be exported, why? see man bash BUGS
-allrepos=	# clear $allrepos so rl() won't duplicate the value
-repoa=~/.ash
-repod=~/d
+#allrepos=	# clear $allrepos so rl() won't duplicate the value
+#repoa=~/.ash
+#repod=~/d
 #repoj=$htdoc/ji
 #repow=$htdoc/wow
 #reposi=$htdoc/sissy
 #repoi=$htdoc/it
 #repowx=$htdoc/wx
 #repocgi=$htdoc/cgi
-for i in ${!repo*}
-do
-	allrepos+="${!i} "
-done
+#for i in ${!repo*}
+#do
+#	allrepos+="${!i} "
+#done
 
 # path aliases
-e=/var/log/httpd/error_log
-f=~/w/it/fgw/
-h=/etc/httpd/conf/httpd.conf
-n=$repod/note
-v=/etc/httpd/conf.d/vhosts.conf
-w=~/w
+#e=/var/log/httpd/error_log
+#h=/etc/httpd/conf/httpd.conf
+#v=/etc/httpd/conf.d/vhosts.conf
+#w=~/w
 
 # miscellaneous
 #t="\t"
+t=$(uname -r)
+[ "${t##*Microsoft*}" ] || is_WSL=1
 screen=matrix
 # vim_default_file=$repod/note # use $vim_default_session instead
 vim_default_session=~/.vim/session/default.vim
@@ -145,5 +145,5 @@ fi
 
 vps=$azure
 
-unset i
-env_exported=fuck
+unset i t
+env_exported=1

@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim:ft=sh
 # my functions
-# create hard link ~/.fun when running $misc_repo/bash/reborn.bin.sh
+# create hard link ~/.fun when running ~/.ash/a.sh -H
 # and ~/.fun will be sourced in ~/.bashrc
 
 # $fun_exported set to null by default in .env. At the end of this file, export all these funcions and set $fun_exported to 1
@@ -1379,7 +1379,7 @@ rl(){
 	. ~/.fun
 }
 
-fun_exported=fuck
+fun_exported=1
 
 # set mouse button to left handed when startup
 #[ "$ID" = fedora ] && lhand yes
