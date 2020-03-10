@@ -1379,7 +1379,7 @@ rl(){
 	. ~/.fun
 }
 
-fun_exported=1
+fun_exported=my_length_is_nonzero
 
 # set mouse button to left handed when startup
 #[ "$ID" = fedora ] && lhand yes

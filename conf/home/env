@@ -115,7 +115,7 @@ cross="\e[9m"
 # miscellaneous
 #t="\t"
 t=$(uname -r)
-[ "${t##*Microsoft*}" ] || is_WSL=1
+[ "${t##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
 screen=matrix
 # vim_default_file=$repod/note # use $vim_default_session instead
 vim_default_session=~/.vim/session/default.vim
@@ -146,4 +146,4 @@ fi
 vps=$azure
 
 unset i t
-env_exported=1
+env_exported=my_length_is_nonzero
