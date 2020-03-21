@@ -7,7 +7,7 @@ URxvt*background: rgba:0000/0000/0200/c800
 URxvt*foreground: green
 URxvt.pointerBlank: 1
 URxvt*scrollBar: 0
-! URxvt.cursorUnderline: 1
+!URxvt.cursorUnderline: 1
 
 ! https://superuser.com/a/1247292
 ! Extensions
@@ -67,7 +67,7 @@ URxvt.keysym.C-S-0x56: eval:paste_clipboard
 URxvt.fading: 0
 
 URxvt.cursorColor: #AAAAAA
-URxvt.cursorBlink: 1
+URxvt.cursorBlink: 0
 
 !URxvt.background: black
 !URxvt.foreground: gray
