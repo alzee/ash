@@ -3,7 +3,7 @@
 # A script for quickly implementing softwares and settings after a Linux fresh installation. Mainly for Fedora semiannual upgrade purpose re-installation.
 
 ############### Variables ###############
-user=arc
+user=al
 hostname=tes
 errlog=ash_error.log
 
@@ -35,6 +35,9 @@ case $distro in
 		:
 		;;
 esac
+
+t=$(uname -r)
+[ "${t##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
 
 ############### Functions ###############
 
@@ -427,7 +430,7 @@ say(){
 _mkswap(){
 	local swapfile
 	swapfile=swapfile
-	[ $distro != debian ] && return
+	[ $distro != debian -o "$is_WSL" ] && return
 	# dd, fallocate, truncate
 	# https://stackoverflow.com/questions/257844/quickly-create-a-large-file-on-a-linux-system
 	# https://askubuntu.com/questions/1017309/fallocate-vs-dd-for-swapfile
