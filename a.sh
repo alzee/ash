@@ -474,6 +474,9 @@ case $1 in
 	-H)
 		hardlinks
 		;;
+	-C)
+		getcomposer
+		;;
 	"")
 		;;
 	*)
