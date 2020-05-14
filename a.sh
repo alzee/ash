@@ -355,8 +355,8 @@ misc() {
 		sudo mysql -e "use mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'"
 		sudo mysql -e "FLUSH PRIVILEGES"
 
-		sudo systemctl stop nginx
-		sudo systemctl disable nginx
+		sudo systemctl stop nginx redis-server
+		sudo systemctl disable nginx redis-server
 
 		# debain default using dash, change to bash
 		sudo ln -sf bash /bin/sh
