@@ -118,14 +118,21 @@ vhost(){
 }
 
 acme(){
-	# Issue cert using manual DNS mode
-	local dom certdir
+	# TODO parameters: --issue --renew --dns-manual --install-cert
+	local dom certdir acme cmd  CF CF_Token CF_Account_ID CF_Zone_ID
+	export CF_Token=""
+	export CF_Account_ID=""
+	export CF_Zone_ID=""
 	dom="$1"
+	acme="~/.acme.sh/acme.sh"
+	cmd="sudo systemctl restart apache2"
 	[ -z "$dom" ] && return
 	certdir=${3:-~/cert}
-	acme.sh --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
-	#acme.sh --renew -d "$dom" -d '*.'"$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
-	#acme.sh --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer
+	$acme --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
+	$acme --renew -d "$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
+	$acme --issue -d "$dom" -d '*.'"$dom" --dns dns_cf
+	$acme --renew -d "$dom"
+	$acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd \"$cmd\"
 }
 
 # import Fedora's GPG key(s)

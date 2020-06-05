@@ -1,2 +1,2 @@
 # Am I in wheel?
-arc	ALL=(ALL)       NOPASSWD: /bin/yum update -y
+al	ALL=(ALL)       NOPASSWD: /bin/yum update -y
