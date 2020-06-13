@@ -73,9 +73,8 @@ _init() {
 			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
 			# add chrome repo
 			sudo cp $scriptdir/conf/templates/google-chrome.repo /etc/yum.repos.d/ && say "chrome repo installed" || say "chrome repo install failed"
-			sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 			php=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,devel})
-			ilist="$ilist i3 httpd mod_ssl mariadb-server $php git gcl ImageMagick nodejs nasm nmap samba postfix wireshark aircrack-ng libpcap-devel pixiewps irssi ansible nethack jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable docker-ce mpv unrar"
+			ilist="$ilist i3 sway httpd mod_ssl mariadb-server $php git gcl ImageMagick nodejs nasm nmap samba postfix wireshark aircrack-ng libpcap-devel pixiewps irssi nethack jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable mpv unrar"
 			#myman slock xautolock arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake ctags dosemu obs-studio mplayer gimp blender dsniff ettercap driftnet reaver rdesktop chntpw gnome-tweaks qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko VirtualBox vlc
 			rlist="evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux gnome-user-share gnome-initial-setup virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution libreoffice-core libreoffice-ure libreoffice-data libreoffice-opensymbol-fonts bijiben rhythmbox shotwell transmission-gtk gnome-weather gnome-todo gnome-software orca empathy gnome-contacts gnome-maps gnome-calendar gnome-system-monitor gnome-disk-utility gnome-color-manager gedit devassistant-core gnome-boxes vinagre totem-nautilus totem cheese gnome-documents gnome-calculator file-roller baobab gnome-screenshot gnome-characters gnome-font-viewer setroubleshoot gnome-getting-started-docs gnome-shell-extension-background-logo gnome-user-docs gnome-logs yelp seahorse gnome-abrt abrt gnome-clocks jwhois esmtp"
 			;;
@@ -98,7 +97,6 @@ _init() {
 			# add testing repo (latest packages)
 			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
 
-			#curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - # nodejs 12.x repo
 			sudo $yum update -y
 
 			php=$(apt list php -a | grep testing | cut -d':' -f2)
@@ -169,7 +167,7 @@ addgrp() {
 	# add $USER into some groups
 	# seems add to group kvm is not necessary
 	[ $distro = fedora ] &&
-		sudo usermod -a -G wireshark,docker,libvirt $USER && say "added $USER to wireshark,,docker,libvirt"
+		sudo usermod -a -G wireshark,libvirt $USER && say "added $USER to wireshark,libvirt"
 }
 
 mysqldir(){
@@ -367,9 +365,6 @@ misc() {
 		sudo firewall-cmd --remove-service ssh
 		sudo systemctl disable libvirtd cups.socket
 		sudo systemctl mask bluetooth
-		# docker daemon config
-		sudo systemctl start docker	# start docker to initialize /etc/docker/
-		sudo cp $scriptdir/conf/templates/daemon.json /etc/docker/
 		# fucking lash
 		[ -f /usr/share/applications/lash-panel.desktop ] && sudo rm -f /usr/share/applications/lash-panel.desktop
 
