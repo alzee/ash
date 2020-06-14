@@ -136,11 +136,6 @@ acme(){
 	$acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd \"$cmd\"
 }
 
-# import Fedora's GPG key(s)
-fedora_keys(){
-	curl https://getfedora.org/static/fedora.gpg | gpg --import
-}
-
 # print battery info
 ba(){
 	local f fd n s
@@ -252,19 +247,6 @@ mon(){
 	# default.sh is a symbolic link
 	i=~/.screenlayout/default.sh
 	. $i 2> /dev/null
-}
-
-fuckallrpms(){
-	# lets see are all these rpms removable
-	local i
-	for i in $(rpm -qa)
-	do
-		echo n | sudo dnf remove $i
-		say $i
-		echo
-		echo
-		sleep 2
-   	done
 }
 
 cleanup(){
@@ -515,10 +497,6 @@ cfcurl(){
 	[ "$method" = POST -a -z "$query" ] && { echo query string needed for POST; return; }
 
 	curl -s -X $method "${URL}${suffix}" -H "X-Auth-Email: $email" -H "X-Auth-Key: $key" -H "Content-Type: $CONTYPE" $query
-}
-
-getacme(){
-	curl https://get.acme.sh | sh
 }
 
 # switch sound output
@@ -931,19 +909,6 @@ dlpages(){
 	done
 }
 
-dl_site_backup(){
-	local file date
-	date=`date +%Y%m%d`
-	scp $vps:drush-backups/archive-dump/$date*/drupal.${date}_*.tar.gz.* .
-	file=`ls drupal.${date}_*.tar.gz.*`
-
-	# check sum
-	[ ${file##*.} != $(sha1sum $file | awk '{print $1}') ] && echo 'file not intact' && rm $file && return
-
-	gpg -o $backupdir/sites/${file%.*}.gpg -r 13538519 -e $file
-	rm $file
-}
-
 itove(){
 	local i=15 j=0 p=0 c=255 cc=0
 	while :;
@@ -977,7 +942,7 @@ itove(){
 }
 
 msg_every_pts(){
-	local i msg l=$(ls /dev/pts/[0-9])
+	local i msg l=$(command ls /dev/pts/[0-9])
 	msg=${@:-"Let's take a break, see you later."}
 	for i in $l
 	do
@@ -1071,34 +1036,6 @@ countdown(){
 		[ $i -gt 0 ] && sleep 1
 	done
 	echo -e ${end}
-}
-
-# chrome
-C(){
-	case $1 in
-		1)
-			google-chrome http://www.xiami.com/radio/play/type/12/oid/21 &> /dev/null &
-			;;
-		2)
-			google-chrome http://www.xiami.com/radio/play/type/13/oid/1372 &> /dev/null &
-			;;
-		3)
-			google-chrome http://www.xiami.com/radio/play/type/13/oid/3242 &> /dev/null &
-			;;
-		php)
-			google-chrome php/function.${2//_/-}.html&> /dev/null &
-			;;
-		npr)
-			google-chrome http://www.npr.org &> /dev/null &
-			;;
-		fox)
-			google-chrome http://radio.foxnews.com/player-files/radio.html &> /dev/null &
-			;;
-		*)
-			google-chrome $1 &> /dev/null &
-			;;
-	esac
-	disown
 }
 
 tor(){
