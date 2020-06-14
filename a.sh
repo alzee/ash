@@ -273,6 +273,8 @@ gset() {
 	gsettings set $schema audible-bell false
 	gsettings set $schema foreground-color 'rgb(0,255,0)'
 	gsettings set $schema background-color 'rgb(0,0,0)'
+	gsettings set $schema cursor-shape 'block'
+	gsettings set $schema cursor-blink-mode 'off'
 
 	# change background and screensaver pic. aha, too trivial, I choose set it using gui :(
 	#gsettings get org.gnome.desktop.screensaver picture-uri 'file:////usr/share/gnome-control-center/pixmaps/noise-texture-light.png'
