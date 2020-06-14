@@ -12,6 +12,7 @@
 # use some useless dconf keys to store info is a good idea.
 
 set -a
+
 reset_mysql_root_pw(){
 	local i
 	sudo mysqld_safe --skip-grant-tables --skip-networking
@@ -1388,6 +1389,8 @@ rl(){
 }
 
 fun_exported=my_length_is_nonzero
+
+set +a
 
 # set mouse button to left handed when startup
 #[ "$ID" = fedora ] && lhand yes

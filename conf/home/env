@@ -147,3 +147,5 @@ vps=$azure
 
 unset i t
 env_exported=my_length_is_nonzero
+
+set +a
