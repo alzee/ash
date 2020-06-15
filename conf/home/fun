@@ -11,7 +11,15 @@
 
 # use some useless dconf keys to store info is a good idea.
 
+
 set -a
+
+mouse_speed_by_ctm(){
+	local x y z
+	x=0.8 y=0.8 z=0.8
+	# xinput set-prop 8 156 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+	xinput set-prop $mouse_id $ctm_id $x, 0.000000, 0.000000, 0.000000, $y, 0.000000, 0.000000, 0.000000, $z
+}
 
 reset_mysql_root_pw(){
 	local i
@@ -150,7 +158,7 @@ ba(){
 	echo $s
 }
 
-isint(){
+is_int(){
 	local i
 	i="$1"
 
@@ -190,7 +198,7 @@ b(){
 		echo $j/$k
 	else
 		i=$1
-		if isint "$i"; then
+		if is_int "$i"; then
 			[ "$i" -eq 0 ] && echo do not set to 0, you idiot! && return
 			[ "$i" -lt 0 ] && echo how can it be negative, you idiot! && return
 			[ "$i" -gt "$k" ] && echo can not bigger then "$k" && return
@@ -1331,7 +1339,7 @@ set +a
 
 # set mouse button to left handed when startup
 #[ "$ID" = fedora ] && lhand yes
-xinput &> /dev/null && lhand yes
+# xinput &> /dev/null && lhand yes
 
 # set monitors layout
-mon
+# mon
