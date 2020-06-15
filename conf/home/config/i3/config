@@ -34,9 +34,8 @@ assign [class="battle.net.exe"] $ws4
 # the focus is alway on laptop monitor which is ws 2
 # i3-msg will do as expected
 # why, i can't explain
-#exec workspace 1;urxvt
 # SHLVL will be 2
-#exec i3-msg 'workspace 1';i3-sensible-terminal
+#exec workspace 1;i3-sensible-terminal
 
 # not working here, must conf in bar{} block?
 #exec i3-msg 'bar mode hide'
