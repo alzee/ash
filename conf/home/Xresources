@@ -11,6 +11,9 @@ URxvt.pointerBlank: 1
 URxvt*scrollBar: 0
 !URxvt.cursorUnderline: 1
 
+URxvt.inputMethod: ibus
+URxvt.preeditType: OverTheSpot
+
 ! https://superuser.com/a/1247292
 ! Extensions
 ! ==========

@@ -18,6 +18,10 @@ fi
 set -a
 
 # sys
+GTK_IM_MODULE=ibus
+XMODIFIERS=@im=ibus
+QT_IM_MODULE=ibus
+
 # MACHTYPE
 # OSTYPE
 if [ -f /etc/os-release ]; then
