@@ -21,9 +21,11 @@ set $ws9 "9"
 set $ws10 "10"
 
 #assign [class="URxvt"] $ws1	# maybe we need terminal to run on other ws
-assign [class="Google-chrome"] $ws2
-assign [class="mpv"] $ws3
-assign [class="start-tor-browser"] $ws4	# not working, what's this class
+#assign [class="Google-chrome"] $ws2
+#assign [class="mpv"] $ws3
+#assign [class="start-tor-browser"] $ws4	# not working, what's this class
+assign [class="wowclassic.exe"] $ws3
+assign [class="battle.net.exe"] $ws4
 
 # autostart terminal when i3 load
 # https://unix.stackexchange.com/questions/96798/i3wm-start-applications-on-specific-workspaces-when-i3-starts
@@ -33,7 +35,8 @@ assign [class="start-tor-browser"] $ws4	# not working, what's this class
 # i3-msg will do as expected
 # why, i can't explain
 #exec workspace 1;urxvt
-exec i3-msg 'workspace 1';i3-sensible-terminal
+# SHLVL will be 2
+#exec i3-msg 'workspace 1';i3-sensible-terminal
 
 # not working here, must conf in bar{} block?
 #exec i3-msg 'bar mode hide'
@@ -43,7 +46,7 @@ exec i3-msg 'workspace 1';i3-sensible-terminal
 # then i hope ws 1 to 3 all on primary monitor, so we let ws on second monitor
 # start from 4
 # also, exec rename workspace 2 to 4 won't work, why? i can't explain
-exec i3-msg 'rename workspace 2 to 4'
+exec i3-msg 'rename workspace 2 to 7'
 
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -136,7 +139,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+#bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
