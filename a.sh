@@ -194,7 +194,8 @@ mysqldir(){
 	# prepend # comment this line
 	#sudo sed -i "1,/^socket/s/^socket/#socket/" /etc/my.cnf.d/mariadb-server.cnf
 	#sudo sed -i "/^socket=/s:/.*:${prefix}/mysql.sock:" /etc/my.cnf.d/mariadb-server.cnf
-	#sudo -u mysql mysql_install_db	# althought mysql_intall_db will do 'mkdir -p' ...
+
+	sudo -u mysql mysql_install_db
 
 	sudo systemctl restart mariadb
 	#mysql_secure_installation
