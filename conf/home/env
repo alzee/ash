@@ -21,9 +21,9 @@ set -a
 
 # https://wiki.archlinux.org/index.php/IBus#rxvt-unicode
 # Seems not necessary
-#GTK_IM_MODULE=ibus
-#XMODIFIERS=@im=ibus
-#QT_IM_MODULE=ibus
+GTK_IM_MODULE=ibus
+XMODIFIERS=@im=ibus
+QT_IM_MODULE=ibus
 
 # MACHTYPE
 # OSTYPE
