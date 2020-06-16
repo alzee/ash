@@ -135,10 +135,8 @@ vim_default_session=~/.vim/session/default.vim
 if [ "$ID" = fedora ]; then
 	sinks=$(pactl list sinks short | awk '{print $1":"$2}')
 	offtime=18
-	iw=wlp2s0
-	iww=wlp2s0mon
 	#monitors=$(xrandr | awk '/connected/ {printf $1":";getline;print $1}')
-	which mpv &> /dev/null && play="mpv --really-quiet --volume 100"
+	play="mpv --really-quiet --volume 100"
 fi
 
 if [ "$domain" ];then
