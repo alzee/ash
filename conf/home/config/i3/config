@@ -20,10 +20,10 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-#assign [class="URxvt"] $ws1	# maybe we need terminal to run on other ws
-#assign [class="Google-chrome"] $ws2
-#assign [class="mpv"] $ws3
-#assign [class="start-tor-browser"] $ws4	# not working, what's this class
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $sink0 +2%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $sink0 -2%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sink0 toggle
+
 assign [class="wowclassic.exe"] $ws3
 assign [class="battle.net.exe"] $ws4
 

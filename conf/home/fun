@@ -531,7 +531,8 @@ pa(){
 	# [ -f "$f" ] || pactl list sinks short | awk '{print $1}' | tr -d '\n' > $f
 	# sinks=$(cat $f)
 	# sink=${sinks:0:1}
-	sink=${sinks%%:*} # get the first sink's id
+	# sink=${sinks%%:*} # get the first sink's id
+	sink=${sinks%% *} # get the first sink name
 
 	case "$1" in
 		ls|l|"")
@@ -541,9 +542,14 @@ pa(){
 		vol|vo|v)
 			local vl
 			if [ "$2" ]; then
-				vl=$((65536*$2/100))
-				pacmd set-sink-volume $sink $vl
+				# vl=$((65536*$2/100))
+				# pacmd set-sink-volume $sink $vl
+				vl=$2
+				pactl set-sink-volume $sink ${vl}%
 			fi
+			;;
+		m|mute)
+			pactl set-sink-mute $sink toggle
 			;;
 		sw|w)
 			sink=$2
