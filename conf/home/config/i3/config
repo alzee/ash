@@ -26,6 +26,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sink0 toggle
 
 assign [class="wowclassic.exe"] $ws3
 assign [class="battle.net.exe"] $ws4
+assign [class="Firefox"] $ws5
 
 # autostart terminal when i3 load
 # https://unix.stackexchange.com/questions/96798/i3wm-start-applications-on-specific-workspaces-when-i3-starts
