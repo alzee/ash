@@ -33,12 +33,17 @@ bindsym $mod+c exec --no-startup-id cmus-remote -u
 #bindsym $mod+= exec --no-startup-id cmus-remote -v +5%
 #bindsym $mod+- exec --no-startup-id cmus-remote -v -5%
 
+workspace 1 output primary
+workspace 2 output primary
 workspace 3 output primary
 workspace 4 output primary
 workspace 5 output primary
+
 assign [class="wowclassic.exe"] $ws3
 assign [class="battle.net.exe"] $ws4
 assign [class="Firefox"] $ws5
+
+exec ~/.config/i3/startup.sh
 
 # autostart terminal when i3 load
 # https://unix.stackexchange.com/questions/96798/i3wm-start-applications-on-specific-workspaces-when-i3-starts
@@ -53,13 +58,6 @@ assign [class="Firefox"] $ws5
 # not working here, must conf in bar{} block?
 #exec i3-msg 'bar mode hide'
 #exec i3-msg bar hidden_state hide
-
-# if we have ws 2 at start, which means we have at least two monitors
-# then i hope ws 1 to 3 all on primary monitor, so we let ws on second monitor
-# start from 4
-# also, exec rename workspace 2 to 4 won't work, why? i can't explain
-exec i3-msg 'rename workspace 2 to 7'
-
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
