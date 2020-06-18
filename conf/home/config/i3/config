@@ -220,4 +220,5 @@ bar {
 		mode hide
 		hidden_state hide
         status_command i3status -c ~/.config/i3/i3status.conf
+		#tray_output primary
 }
