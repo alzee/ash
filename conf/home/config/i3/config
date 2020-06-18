@@ -30,6 +30,9 @@ bindsym $mod+c exec --no-startup-id cmus-remote -u
 #bindsym $mod+= exec --no-startup-id cmus-remote -v +5%
 #bindsym $mod+- exec --no-startup-id cmus-remote -v -5%
 
+workspace 3 output primary
+workspace 4 output primary
+workspace 5 output primary
 assign [class="wowclassic.exe"] $ws3
 assign [class="battle.net.exe"] $ws4
 assign [class="Firefox"] $ws5
