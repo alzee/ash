@@ -23,6 +23,9 @@ set $ws10 "10"
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $sink0 +2%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $sink0 -2%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sink0 toggle
+bindsym $mod+F11 exec --no-startup-id pactl set-sink-volume $sink0 +2%
+bindsym $mod+F10 exec --no-startup-id pactl set-sink-volume $sink0 -2%
+bindsym $mod+F9 exec --no-startup-id pactl set-sink-mute $sink0 toggle
 bindsym $mod+b exec --no-startup-id cmus-remote -n
 bindsym $mod+z exec --no-startup-id cmus-remote -r
 bindsym $mod+c exec --no-startup-id cmus-remote -u
