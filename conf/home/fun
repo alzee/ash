@@ -1354,10 +1354,3 @@ fun_exported=my_length_is_nonzero
 [ -f ~/.fun.local ] && . ~/.fun.local
 
 set +a
-
-# set mouse button to left handed when startup
-#[ "$ID" = fedora ] && lhand yes
-# xinput &> /dev/null && lhand yes
-
-# set monitors layout
-# mon
