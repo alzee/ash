@@ -1,4 +1,4 @@
-setenv PS1 "[\[${yellow}${bold}\]\D{%H}\[${white}${bold}\]\D{%M}\[${end}${white}\]\D{%S}\[${end}\] \u@\h \[${red}${bold}${italic}\]\W\[${end}\]]\[${red}${bold}\]\$\[${end}\] "
+setenv PS1 "[\[${yellow}${bold}\]\D{%H%M}\[${end}${white}\]\D{%S}\[${end}\] \u@\h \[${red}${bold}${italic}\]\W\[${end}\]]\[${red}${bold}\]\$\[${end}\] "
 # create a layout, otherwise the regions won't be remembered after reattach
 layout new fuck
 # create windows
