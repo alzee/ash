@@ -35,16 +35,12 @@ https_proxy=
 all_proxy=
 SOCKS_SERVER=
 SOCKS_VERSION=5
-# only once, despite of rl()
-if [ "$SHLVL" -eq 1 ]; then
+if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
 	PATH=$PATH:$HOME/.local/bin
-	[ "$ID" = debian ] && PATH=/usr/sbin:/sbin:$PATH
-	#if [ "$PROMPT_COMMAND" ]; then
-	#	# where is __vte_prompt_command?
-	#	PROMPT_COMMAND="$PROMPT_COMMAND;cmdnotfound"
-	#else
-	#	PROMPT_COMMAND="cmdnotfound"
-	#fi
+fi
+
+if  [ "$ID" = debian ]; then
+	[[ ! "$PATH" =~ "/usr/sbin:/sbin" ]] && PATH=/usr/sbin:/sbin:$PATH
 fi
 
 # ANSI escape code
