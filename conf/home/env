@@ -4,12 +4,6 @@
 # create hard link ~/.env when running ~/.ash/a.sh -H
 # and ~/.env will be sourced in ~/.bashrc
 
-#touch shlvl_$SHLVL
-
-if [ "$STY" ]; then
-	PS1="[\[${yellow}${bold}\]\D{%H}\[${white}${bold}\]\D{%M}\[${end}${white}\]\D{%S}\[${end}\] \u@\h \[${red}${bold}${italic}\]\W\[${end}\]]\[${red}${bold}\]\$\[${end}\] "
-fi
-
 # $env_exported set to null by default right below. At the end of ~/.fun, export all these envs then set $env_exported to 1
 # since these envs have been exported in ~/.fun, we don't need to soure this file anymore
 # except $PS1, which will be set everytime a interactive shell starts (~/.bashrc). So put $PS1 at the beginning
