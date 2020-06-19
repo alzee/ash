@@ -1335,48 +1335,49 @@ v(){
 	fi
 }
 
-vim(){
-	sudo command vim "$@"
-}
 
-d(){
-	cd "$@"
-}
-
-# Will be overriden by aliases anyway, this is so sad
-if [ "$ID" = FreeBSD ]; then
-	ll(){
-		command ls -l -G "$@"
-	}
-	l.(){
-		command ls -Gd .* "$@"
-	}
-	l(){
-		command ls -G "$@"
-	}
-	ls(){
-		sudo command ls -G "$@"
-	}
-else
-	L(){
-		command ls -Z "$@"
-	}
-	ll(){
-		command ls -l --color=auto "$@"
-	}
-	LL(){
-		command ls -lZ "$@"
-	}
-	l.(){
-		command ls -d .* --color=auto "$@"
-	}
-	l(){
-		command ls --color=auto "$@"
-	}
-	ls(){
-		sudo command ls --color=auto "$@"
-	}
-fi
+## Will be overriden by aliases anyway, this is so sad
+#vim(){
+#	sudo command vim "$@"
+#}
+#
+#d(){
+#	cd "$@"
+#}
+#
+#if [ "$ID" = FreeBSD ]; then
+#	ll(){
+#		command ls -l -G "$@"
+#	}
+#	l.(){
+#		command ls -Gd .* "$@"
+#	}
+#	l(){
+#		command ls -G "$@"
+#	}
+#	ls(){
+#		sudo command ls -G "$@"
+#	}
+#else
+#	L(){
+#		command ls -Z "$@"
+#	}
+#	ll(){
+#		command ls -l --color=auto "$@"
+#	}
+#	LL(){
+#		command ls -lZ "$@"
+#	}
+#	l.(){
+#		command ls -d .* --color=auto "$@"
+#	}
+#	l(){
+#		command ls --color=auto "$@"
+#	}
+#	ls(){
+#		sudo command ls --color=auto "$@"
+#	}
+#fi
 
 are_u_sure(){
         read -n1 -p "Are you sure to exit? [y/N] "
