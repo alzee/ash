@@ -1,3 +1,8 @@
+#!/bin/bash
+#
+# vim:ft=sh
+# Run by startx
+
 userresources=$HOME/.Xresources
 [ -r "$userresources" ] && xrdb -merge "$userresources"
 
