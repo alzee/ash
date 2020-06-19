@@ -53,7 +53,7 @@ exec ~/.config/i3/startup.sh
 # i3-msg will do as expected
 # why, i can't explain
 # SHLVL will be 2
-#exec workspace 1;i3-sensible-terminal
+exec workspace 1;i3-sensible-terminal
 
 # not working here, must conf in bar{} block?
 #exec i3-msg 'bar mode hide'

@@ -1,0 +1,4 @@
+userresources=$HOME/.Xresources
+[ -r "$userresources" ] && xrdb -merge "$userresources"
+
+exec i3

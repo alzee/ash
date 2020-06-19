@@ -74,9 +74,9 @@ _init() {
 			# add chrome repo
 			sudo cp $scriptdir/conf/templates/google-chrome.repo /etc/yum.repos.d/ && say "chrome repo installed" || say "chrome repo install failed"
 			php=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,devel})
-			ilist="$ilist i3 compton httpd mod_ssl mariadb-server $php git gcl ImageMagick nodejs nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable mpv unrar"
+			ilist="$ilist i3 feh compton httpd mod_ssl mariadb-server $php git gcl ImageMagick nodejs nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable mpv unrar"
 			#postfix aircrack-ng libpcap-devel pixiewps sway slock xautolock arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake ctags dosemu obs-studio mplayer gimp blender dsniff ettercap driftnet reaver rdesktop chntpw gnome-tweaks qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko VirtualBox vlc
-			rlist="evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux gnome-user-share gnome-initial-setup virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution libreoffice-core libreoffice-ure libreoffice-data libreoffice-opensymbol-fonts bijiben rhythmbox shotwell transmission-gtk gnome-weather gnome-todo gnome-software orca empathy gnome-contacts gnome-maps gnome-calendar gnome-system-monitor gnome-disk-utility gnome-color-manager gedit devassistant-core gnome-boxes vinagre totem-nautilus totem cheese gnome-documents gnome-calculator file-roller baobab gnome-screenshot gnome-characters gnome-font-viewer setroubleshoot gnome-getting-started-docs gnome-shell-extension-background-logo gnome-user-docs gnome-logs yelp seahorse gnome-abrt abrt gnome-clocks jwhois esmtp"
+			rlist="eog evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux gnome-user-share gnome-initial-setup virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution libreoffice-core libreoffice-ure libreoffice-data libreoffice-opensymbol-fonts bijiben rhythmbox shotwell transmission-gtk gnome-weather gnome-todo gnome-software orca empathy gnome-contacts gnome-maps gnome-calendar gnome-system-monitor gnome-disk-utility gnome-color-manager gedit devassistant-core gnome-boxes vinagre totem-nautilus totem cheese gnome-documents gnome-calculator file-roller baobab gnome-screenshot gnome-characters gnome-font-viewer setroubleshoot gnome-getting-started-docs gnome-shell-extension-background-logo gnome-user-docs gnome-logs yelp seahorse gnome-abrt abrt gnome-clocks jwhois esmtp"
 			;;
 		rhel)
 			# The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
@@ -313,11 +313,13 @@ dir_struct(){
 
 mod_bashrc(){
 	# source env,fun,ali in ~/.bashrc
-	for i in env fun ali
-	do
-		grep -qw "~/.$i" ~/.bashrc || echo "[ -f ~/.$i ] && . ~/.$i" >> ~/.bashrc
-		#[ -f ~/.$i ] && . ~/.$i
-	done
+	#for i in env fun ali
+	#do
+	#	grep -qw "~/.$i" ~/.bashrc || echo "[ -f ~/.$i ] && . ~/.$i" >> ~/.bashrc
+	#	#[ -f ~/.$i ] && . ~/.$i
+	#done
+	# No env and fun anymore. Since I only need them to run once, they should be put into ~/.bash_profile
+	grep -qw "~/.ali" ~/.bashrc || echo "[ -f ~/.ali ] && . ~/.ali" >> ~/.bashrc
 
 	# stty -ixon in ~/.bashrc
 	grep -qw 'ixon' ~/.bashrc || echo 'stty -ixon' >> ~/.bashrc
