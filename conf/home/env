@@ -1,12 +1,10 @@
 #!/bin/bash
 #
-# my envs
-# create hard link ~/.env when running ~/.ash/a.sh -H
-# and ~/.env will be sourced in ~/.bashrc
+# My envs
+# Create hard link ~/.env when running ~/.ash/a.sh -H
+# and ~/.env will be sourced in ~/.bash_profile
+# Export all these envs and set $env_exported at the end of this file.
 
-# $env_exported set to null by default right below. At the end of ~/.fun, export all these envs then set $env_exported to 1
-# since these envs have been exported in ~/.fun, we don't need to soure this file anymore
-# except $PS1, which will be set everytime a interactive shell starts (~/.bashrc). So put $PS1 at the beginning
 [ "$env_exported" ] && return
 
 set -a
@@ -146,7 +144,7 @@ fi
 
 vps=$azure
 
-unset i t
+# unset i t
 env_exported=my_length_is_nonzero
 
 set +a

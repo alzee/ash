@@ -1,10 +1,10 @@
 #!/bin/bash
 # vim:ft=sh
-# my functions
-# create hard link ~/.fun when running ~/.ash/a.sh -H
-# and ~/.fun will be sourced in ~/.bashrc
+# My functions
+# Create hard link ~/.fun when running ~/.ash/a.sh -H
+# and ~/.fun will be sourced in ~/.bash_profile
+# Export all these funcions and set $fun_exported at the end of this file.
 
-# $fun_exported set to null by default in .env. At the end of this file, export all these funcions and set $fun_exported to 1
 # complete -F _man m
 # complete -F _git g
 [ "$fun_exported" ] && return # since these functions have been exported, we don't need to soure this file anymore
