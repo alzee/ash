@@ -29,9 +29,8 @@ bindsym $mod+F9 exec --no-startup-id pactl set-sink-mute $sink0 toggle
 bindsym $mod+b exec --no-startup-id cmus-remote -n
 bindsym $mod+z exec --no-startup-id cmus-remote -r
 bindsym $mod+c exec --no-startup-id cmus-remote -u
-# - = not working
-#bindsym $mod+= exec --no-startup-id cmus-remote -v +5%
-#bindsym $mod+- exec --no-startup-id cmus-remote -v -5%
+bindsym $mod+plus exec --no-startup-id cmus-remote -v +5%
+bindsym $mod+minus exec --no-startup-id cmus-remote -v -5%
 
 workspace 1 output primary
 workspace 2 output primary
