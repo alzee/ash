@@ -32,6 +32,8 @@ bindsym $mod+c exec --no-startup-id cmus-remote -u
 bindsym $mod+plus exec --no-startup-id cmus-remote -v +5%
 bindsym $mod+minus exec --no-startup-id cmus-remote -v -5%
 
+bindsym $mod+semicolon exec i3lock -c 1a1a1a -e
+
 workspace 1 output primary
 workspace 2 output primary
 workspace 3 output primary
@@ -163,7 +165,8 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
