@@ -16,10 +16,11 @@ set -a
 
 mouse_speed_by_ctm(){
 	# xinput set-prop 8 156 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+	# id may change, use name instead
 	local x y z
-	if is_num $1 && [ "$mouse_id" -a "$ctm_id" ]; then
+	if is_num $1 && [ "$mouse" -a "$ctm" ]; then
 		x=$1 y=$1 z=$1
-		xinput set-prop $mouse_id $ctm_id $x, 0, 0, 0, $y, 0, 0, 0, $z
+		xinput set-prop "$mouse" "$ctm" $x, 0, 0, 0, $y, 0, 0, 0, $z
 	fi
 }
 
