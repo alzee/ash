@@ -1,9 +1,7 @@
 # .bashrc
 
 # Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+[ -f /etc/bashrc ] && . /etc/bashrc
 
 # Fedora /etc/bashrc will source /etc/profile.d/*.sh
 # and some of them will set aliases
