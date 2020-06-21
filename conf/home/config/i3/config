@@ -42,7 +42,6 @@ assign [class="Firefox"] $ws5
 
 exec ~/.config/i3/startup.sh
 
-# SHLVL will +1
 exec i3-sensible-terminal
 
 # Font for window titles. Will also be used by the bar unless a different font
