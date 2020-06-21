@@ -2,7 +2,6 @@
 
 [ -f ~/.env ] && . ~/.env
 [ -f ~/.fun ] && . ~/.fun
-[ -f ~/.ali ] && . ~/.ali
 
 # https://wiki.gentoo.org/wiki/X_without_Display_Manager
 # https://wiki.gentoo.org/wiki/Start_X_on_login
