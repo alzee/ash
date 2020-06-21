@@ -1,19 +1,11 @@
 # .bash_profile
 
-# Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
-fi
-
-# User specific environment and startup programs
-
-# User specific aliases and functions
 [ -f ~/.env ] && . ~/.env
 [ -f ~/.fun ] && . ~/.fun
 [ -f ~/.ali ] && . ~/.ali
 
 # https://wiki.gentoo.org/wiki/X_without_Display_Manager
 # https://wiki.gentoo.org/wiki/Start_X_on_login
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+if [ -z "$DISPLAY" -a "$(tty)" = /dev/tty1 ]; then
 	exec startx
 fi

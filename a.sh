@@ -311,20 +311,6 @@ dir_struct(){
 	rmdir ~/{Downloads,Documents,Pictures,Music,Videos,Desktop,Public,Templates} 2>/dev/null
 }
 
-mod_bashrc(){
-	# source env,fun,ali in ~/.bashrc
-	#for i in env fun ali
-	#do
-	#	grep -qw "~/.$i" ~/.bashrc || echo "[ -f ~/.$i ] && . ~/.$i" >> ~/.bashrc
-	#	#[ -f ~/.$i ] && . ~/.$i
-	#done
-	# No env and fun anymore. Since I only need them to run once, they should be put into ~/.bash_profile
-	grep -qw "~/.ali" ~/.bashrc || echo "[ -f ~/.ali ] && . ~/.ali" >> ~/.bashrc
-
-	# stty -ixon in ~/.bashrc
-	grep -qw 'ixon' ~/.bashrc || echo 'stty -ixon' >> ~/.bashrc
-}
-
 default_pool(){
 	[ "$distro" != fedora ] && return
 	sudo systemctl restart libvirtd
@@ -460,7 +446,6 @@ case $1 in
 		getcomposer
 		misc
 		hardlinks
-		mod_bashrc
 		rm_wine_icons
 		redb
 		_mkswap
