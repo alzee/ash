@@ -354,7 +354,7 @@ misc() {
 	if [ "$distro" = fedora ]; then
 		sudo firewall-cmd --add-service samba
 		sudo firewall-cmd --remove-service ssh
-		sudo systemctl disable libvirtd cups.socket
+		sudo systemctl disable libvirtd cups.socket sshd
 		sudo systemctl mask bluetooth
 		# fucking lash
 		[ -f /usr/share/applications/lash-panel.desktop ] && sudo rm -f /usr/share/applications/lash-panel.desktop
