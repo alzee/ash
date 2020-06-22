@@ -120,7 +120,7 @@ remove_pkg() {
 	done
 
 	sudo $yum autoremove -y
-	sudo $yum clean all # although debian don't have 'all'
+	#sudo $yum clean all # although debian don't have 'all'
 }
 
 install_pkg() {
