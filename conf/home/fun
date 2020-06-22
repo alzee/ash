@@ -1181,11 +1181,6 @@ lhand(){
 	fi
 }
 
-n(){
-	nautilus -q
-	nautilus $1 &
-}
-
 idlast(){
 	#local id=${1::17}
 	local id=$1
