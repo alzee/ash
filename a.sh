@@ -67,7 +67,7 @@ _init() {
 	[ "$UID" -eq 0 ] && say "DO NOT use root, assohole!" && exit
 
 	say adding some repository...
-	ilist="screen nginx vim openssh-server ctags unzip curl"
+	ilist="screen nginx vim openssh-server ctags unzip curl wireguard-tools"
 	case $distro in
 		fedora)
 			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
