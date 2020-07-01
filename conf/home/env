@@ -41,9 +41,6 @@ fi
 
 if  [ "$ID" = debian ]; then
 	[[ ! "$PATH" =~ "/usr/sbin:/sbin" ]] && PATH=/usr/sbin:/sbin:$PATH
-	# Leave my PS1 alone
-	# SUDO_USER=fuck_debian_fancy_PS1_in_etc_bash.bashrc
-	# SUDO_PS1=fuck_debian_fancy_PS1_in_etc_bash.bashrc
 fi
 
 # ANSI escape code
