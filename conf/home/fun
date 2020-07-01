@@ -1357,9 +1357,10 @@ v(){
 # So remove all aliases
 unalias -a
 vim(){
-	# sudo looks for external programs, not shell builtins
+	# sudo looks for external programs, not shell builtins, and not shell functions
 	# sudo command vim "$@"
-	sudo $(which vim) "$@"
+	# sudo $(which vim) "$@"
+	sudo vim "$@"
 }
 
 d(){
@@ -1378,7 +1379,8 @@ if [ "$ID" = FreeBSD ]; then
 	}
 	ls(){
 		# sudo command ls -G "$@"
-		sudo $(which ls) -G "$@"
+		# sudo $(which ls) -G "$@"
+		sudo ls -G "$@"
 	}
 else
 	L(){
@@ -1398,7 +1400,8 @@ else
 	}
 	ls(){
 		# sudo command ls --color=auto "$@"
-		sudo $(which ls) --color=auto "$@"
+		# sudo $(which ls) --color=auto "$@"
+		sudo ls --color=auto "$@"
 	}
 fi
 
