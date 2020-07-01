@@ -45,7 +45,7 @@ sudoer() {
 	[ $UID -ne 0 ] && say "$0: Permission denied" && exit
 	if ! id $user &> /dev/null ; then
 		say user $user not exist, now creating...
-		useradd -m $user -u 1000 -s /bin/bash || useradd -m $user -s /bin/bash	# debian need to specify shell
+		useradd -m $user -s /bin/bash	# debian need to specify shell
 		#echo $user | sudo passwd --stdin $user # debian have no --stdin option
 		echo $user:$user | sudo chpasswd
 	fi
