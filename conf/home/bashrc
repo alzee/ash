@@ -26,4 +26,9 @@ unset i
 # Fedora /etc/bashrc will source /etc/profile.d/*.sh
 # and some of them will set aliases
 unalias -a
-stty -ixon
+
+# [ "$SHLVL" -le 2 ] && stty -ixon
+
+if [ -z "$STY" -a -z "$SSH_TTY" ]; then
+	stty -ixon
+fi
