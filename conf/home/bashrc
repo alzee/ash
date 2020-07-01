@@ -4,6 +4,8 @@
 # Fedora
 # [ -f /etc/bashrc ] && . /etc/bashrc
 # Debian
+# On debian /etc/profile try to change my PATH,
+# and /etc/bash.bashrc try to change my PS1. WTF!
 # /etc/bash.bashrc won't source /etc/profile.d/*.sh
 # /etc/profile will do
 # [ -f /etc/profile ] && . /etc/profile
