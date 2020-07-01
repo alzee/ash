@@ -669,7 +669,8 @@ c(){
 }
 
 s(){
-	local arg
+	local arg TERM
+	TERM=screen
 	# we only use default command key (^Aa) in ssh
 	[ "$SSH_TTY" ] ||  arg='-e ^Ss'
 
@@ -679,7 +680,7 @@ s(){
 	else
 		# seems like ansi escape code 3(italic) is treated as inverse in
 		# screen, which makes prompt ugly, so we clear env $italic here
-		italic= screen $arg -d -R -S $screen -T screen
+		italic= screen $arg -d -R -S $screen -T $TERM
 	fi
 }
 
