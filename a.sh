@@ -328,6 +328,9 @@ misc() {
 	# debian will auto start and enable apache2 and mariadb-server
 
 	if [ "$distro" = debian ]; then
+		# fuck off u fucking bash.bashrc
+		sudo mv /etc/bash.bashrc /etc/bash.bashrc.fuck
+
 		# enable rewrite module
 		sudo ln -s ../mods-available/rewrite.load /etc/apache2/mods-enabled/
 		# enable mod_ssl
