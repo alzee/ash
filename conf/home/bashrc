@@ -4,7 +4,7 @@
 # Fedora
 [ -f /etc/bashrc ] && . /etc/bashrc
 # Debian
-[ -f /etc/bash.bashrc ] && . /etc/bash.bashrc
+[ -f /etc/profile ] && . /etc/profile
 
 # Fedora /etc/bashrc will source /etc/profile.d/*.sh
 # and some of them will set aliases
