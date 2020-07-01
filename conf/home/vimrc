@@ -6,7 +6,8 @@ set showcmd
 set wildmenu
 set ttimeout
 set ttimeoutlen=100
-set display=truncate
+"set display=truncate "not available in vim7
+set display=lastline
 set bg=dark
 set wildmode=longest,list
 set nu
