@@ -1,5 +1,4 @@
 setenv PS1 "[\[${yellow}${bold}\]\D{%I}\[${cyan}${bold}\]\D{%M}\[${end}${white}\]\D{%S}\[${end}\] \u@\h \[${red}${bold}${italic}\]\W\[${end}\]]\[${red}${bold}\]\$\[${end}\] "
-setenv TERM screen
 # create a layout, otherwise the regions won't be remembered after reattach
 layout new fuck
 # create windows

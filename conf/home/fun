@@ -679,7 +679,7 @@ s(){
 	else
 		# seems like ansi escape code 3(italic) is treated as inverse in
 		# screen, which makes prompt ugly, so we clear env $italic here
-		italic= screen $arg -d -R -S $screen -T $TERM
+		italic= screen $arg -d -R -S $screen -T screen
 	fi
 }
 
