@@ -2,11 +2,24 @@
 
 # Source global definitions
 # Fedora
-[ -f /etc/bashrc ] && . /etc/bashrc
+# [ -f /etc/bashrc ] && . /etc/bashrc
 # Debian
 # /etc/bash.bashrc won't source /etc/profile.d/*.sh
 # /etc/profile will do
-[ -f /etc/profile ] && . /etc/profile
+# [ -f /etc/profile ] && . /etc/profile
+
+# Only display echos from profile.d scripts if we are no login shell
+# and interactive - otherwise just process them to set envvars
+for i in /etc/profile.d/*.sh; do
+	if [ -r "$i" ]; then
+		if [ "$PS1" ]; then
+			. "$i"
+		else
+			. "$i" >/dev/null
+		fi
+	fi
+done
+unset i
 
 # Fedora /etc/bashrc will source /etc/profile.d/*.sh
 # and some of them will set aliases
