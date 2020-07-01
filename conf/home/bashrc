@@ -4,6 +4,8 @@
 # Fedora
 [ -f /etc/bashrc ] && . /etc/bashrc
 # Debian
+# /etc/bash.bashrc won't source /etc/profile.d/*.sh
+# /etc/profile will do
 [ -f /etc/profile ] && . /etc/profile
 
 # Fedora /etc/bashrc will source /etc/profile.d/*.sh
