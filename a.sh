@@ -433,7 +433,7 @@ _sysctl(){
 	f=$scriptdir/conf/templates/$distro/z-sysctl.conf
 	if [ -f $f ]; then
 		sudo cp $scriptdir/conf/templates/$distro/z-sysctl.conf /etc/sysctl.d/
-		sudo sysctl -p
+		sudo sysctl -p $f
 	fi
 }
 
