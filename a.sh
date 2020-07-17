@@ -428,6 +428,18 @@ _mkswap(){
 	echo don\'t forget to add swap to /etc/fstab
 }
 
+_sysctl(){
+	local f;
+	f=$scriptdir/conf/templates/$distro/z-sysctl.conf
+	if [ -f $f ]; then
+		sudo cp $scriptdir/conf/templates/$distro/z-sysctl.conf /etc/sysctl.d/
+		sudo sysctl -p
+	fi
+}
+
+setupwg(){
+}
+
 ############### Main ###############
 
 case $1 in
@@ -447,6 +459,8 @@ case $1 in
 		rm_wine_icons
 		redb
 		_mkswap
+		_sysctl
+		setupwg
 		;;
 	-s)
 		sudoer
@@ -456,6 +470,9 @@ case $1 in
 		;;
 	-H)
 		hardlinks
+		;;
+	-S)
+		_sysctl
 		;;
 	-C)
 		getcomposer
