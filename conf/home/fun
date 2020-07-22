@@ -670,7 +670,7 @@ c(){
 
 s(){
 	local arg TERM
-	TERM=linux
+	TERM=screen
 	# we only use default command key (^Aa) in ssh
 	[ "$SSH_TTY" ] ||  arg='-e ^Ss'
 
