@@ -28,10 +28,12 @@ set t_Co=256
 set nrformats-=octal
 set incsearch
 set hlsearch
-set foldmethod=indent
 syntax on
 let c_comment_strings=1
 packadd! matchit
+set foldmethod=indent
+set foldlevel=1
+set nofoldenable
 
 
 """""""""""""""""""""""""""""" global mappings
