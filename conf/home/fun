@@ -14,6 +14,12 @@
 
 set -a
 
+f(){
+	if [ "$@" ]; then
+		feh -. "$@" &
+	fi
+}
+
 wgz(){
 	local wg_if wg_ip wg_port wg_key wg_peer wg_allowdips wg_endpoint sec
 	wg_if=wg0
