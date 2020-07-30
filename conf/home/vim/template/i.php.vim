@@ -28,8 +28,10 @@ if (isset($_SERVER['PATH_INFO'])) {
         default:
             $template = $twig->load('index.html.twig');
             break;
-
     }
+}
+else {
+    $template = $twig->load('index.html.twig');
 }
 
 echo $template->render();
