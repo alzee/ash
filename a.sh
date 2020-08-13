@@ -177,23 +177,26 @@ mysqldir(){
 	sudo systemctl restart mariadb
 	say changing mysql datadir...
 
-	local prefix=~/.mysql
+	local prefix serverconf
+	prefix=~/.mysql
+	serverconf = /etc/my.cnf.d/mariadb-server.cnf
 
 	mkdir -p $prefix
 	chcon -t mysqld_db_t $prefix
 	sudo chown mysql:mysql $prefix
 
 	# copy this line
-	sudo sed -i "/^datadir/p" /etc/my.cnf.d/mariadb-server.cnf
+	sudo sed -i "/^datadir/p" $serverconf
 	# prepend # to comment this line
-	sudo sed -i "1,/^datadir/s/^datadir/#datadir/" /etc/my.cnf.d/mariadb-server.cnf
-	sudo sed -i "/^datadir=/s:/.*:${prefix}/main:" /etc/my.cnf.d/mariadb-server.cnf
+	sudo sed -i "1,/^datadir/s/^datadir/#datadir/" $serverconf
+	sudo sed -i "/^datadir=/s:/.*:${prefix}/main:" $serverconf
+	sudo sed -i '/\[mysqld\]/a character-set-server = utf8mb4' $serverconf
 	# we better use the defaut mysql.sock path
 	# copy this line
-	#sudo sed -i "/^socket/p" /etc/my.cnf.d/mariadb-server.cnf
+	#sudo sed -i "/^socket/p" $serverconf
 	# prepend # comment this line
-	#sudo sed -i "1,/^socket/s/^socket/#socket/" /etc/my.cnf.d/mariadb-server.cnf
-	#sudo sed -i "/^socket=/s:/.*:${prefix}/mysql.sock:" /etc/my.cnf.d/mariadb-server.cnf
+	#sudo sed -i "1,/^socket/s/^socket/#socket/" $serverconf
+	#sudo sed -i "/^socket=/s:/.*:${prefix}/mysql.sock:" $serverconf
 
 	sudo -u mysql mysql_install_db
 
