@@ -462,7 +462,6 @@ case $1 in
 		hardlinks
 		rm_wine_icons
 		redb
-		_mkswap
 		_sysctl
 		setupwg
 		;;
@@ -480,6 +479,9 @@ case $1 in
 		;;
 	-C)
 		getcomposer
+		;;
+	-w)
+		_mkswap
 		;;
 	"")
 		;;
