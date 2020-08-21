@@ -99,11 +99,11 @@ _init() {
 
 			sudo $yum update -y
 
-			php=$(apt list php -a | grep testing | cut -d':' -f2)
-			php=php${php%+*}
+			php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
+			php=php${php_ver%+*}
 			ilist="$ilist libapache2-mod-$php nodejs"
-			php=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysqlnd,curl,json,fpm,uploadprogress})
-			ilist="$ilist apache2 $php mariadb-server firewalld redis-server git python3-pip psmisc xz-utils bzip2 bash-completion man-db znc"
+			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysqlnd,curl,json,fpm,uploadprogress})
+			ilist="$ilist apache2 $php_with_exts mariadb-server firewalld redis-server git python3-pip psmisc xz-utils bzip2 bash-completion man-db znc"
 			#unixodbc unixodbc-dev selinux-basics selinux-policy-default auditd"
 			# apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
 			# Run selinux-activate(as root) to configure GRUB and PAM and to create /.autorelabel
@@ -335,13 +335,20 @@ misc() {
 		sudo mv /etc/bash.bashrc /etc/bash.bashrc.fuck
 
 		# enable rewrite module
-		sudo ln -s ../mods-available/rewrite.load /etc/apache2/mods-enabled/
-		# enable mod_ssl
-		sudo ln -s ../mods-available/ssl.load /etc/apache2/mods-enabled/
-		sudo ln -s ../mods-available/ssl.conf /etc/apache2/mods-enabled/
-		sudo ln -s ../mods-available/socache_shmcb.load /etc/apache2/mods-enabled/
+        sudo a2enmod rewrite
+		# sudo ln -s ../mods-available/rewrite.load /etc/apache2/mods-enabled/
+		# enable ssl
+		sudo a2enmod ssl
+        sudo a2enmod socache_shmcb
+		# sudo ln -s ../mods-available/ssl.load /etc/apache2/mods-enabled/
+		# sudo ln -s ../mods-available/ssl.conf /etc/apache2/mods-enabled/
+		# sudo ln -s ../mods-available/socache_shmcb.load /etc/apache2/mods-enabled/
 
-		sudo ln -s ../mods-available/headers.load /etc/apache2/mods-enabled/
+        sudo a2enmod headers
+		# sudo ln -s ../mods-available/headers.load /etc/apache2/mods-enabled/
+
+        sudo a2enmod proxy_fcgi setenvif
+        sudo a2enconf $php-fpm
 
 		sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
 		sudo ln -s ~/vhosts.conf /etc/apache2/conf-enabled/
