@@ -346,7 +346,7 @@ misc() {
         sudo a2enmod headers
 		# sudo ln -s ../mods-available/headers.load /etc/apache2/mods-enabled/
 
-        #sudo a2dismod $php
+        sudo a2dismod $php
         sudo a2enmod proxy_fcgi setenvif
         sudo a2enconf $php-fpm
 
