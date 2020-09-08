@@ -5,6 +5,7 @@
 
 # https://wiki.gentoo.org/wiki/X_without_Display_Manager
 # https://wiki.gentoo.org/wiki/Start_X_on_login
-if [ -z "$DISPLAY" -a "$(tty)" = /dev/tty1 ]; then
-	exec startx
-fi
+# Since we don't need to startx in most case, it's better to comment it out
+#if [ -z "$DISPLAY" -a "$(tty)" = /dev/tty1 ]; then
+#	exec startx
+#fi
