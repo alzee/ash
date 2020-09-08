@@ -1,5 +1,7 @@
 # .bash_profile
 
+eval $(dircolors -b <(dircolors -p))
+
 [ -f ~/.env ] && . ~/.env
 [ -f ~/.fun ] && . ~/.fun
 
