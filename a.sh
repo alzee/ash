@@ -331,11 +331,20 @@ misc() {
 	# debian will auto start and enable apache2 and mariadb-server
 
 	if [ "$distro" = debian ]; then
-		# fuck off u fucking bash.bashrc
+		# get rid of bash.bashrc
 		sudo mv /etc/bash.bashrc /etc/bash.bashrc.fuck
 
         # comment out default apt sources
-        sed -i 's/^/#/' /etc/apt/sources.list
+        sudo sed -i 's/^/#/' /etc/apt/sources.list
+
+        # Use server priorities for cipher algorithm choice.
+        sudo sed -i '/SSLHonorCipherOrder/s/#//' /etc/apache2/mods-enabled/ssl.conf
+
+        # mod_http2 doesn't work with mpm_prefork'
+        # and "event mpm is nowadays the best one"
+        # https://httpd.apache.org/docs/2.4/howto/http2.html#mpm-config
+        sudo a2dismod mpm_prefork
+        sudo a2enmod mpm_event
 
         sudo a2enmod http2
 		# enable rewrite module
