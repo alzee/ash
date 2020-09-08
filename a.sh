@@ -337,6 +337,7 @@ misc() {
         # comment out default apt sources
         sed -i 's/^/#/' /etc/apt/sources.list
 
+        sudo a2enmod http2
 		# enable rewrite module
         sudo a2enmod rewrite
 		# sudo ln -s ../mods-available/rewrite.load /etc/apache2/mods-enabled/
