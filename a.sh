@@ -334,6 +334,9 @@ misc() {
 		# fuck off u fucking bash.bashrc
 		sudo mv /etc/bash.bashrc /etc/bash.bashrc.fuck
 
+        # comment out default apt sources
+        sed -i 's/^/#/' /etc/apt/sources.list
+
 		# enable rewrite module
         sudo a2enmod rewrite
 		# sudo ln -s ../mods-available/rewrite.load /etc/apache2/mods-enabled/
