@@ -426,7 +426,7 @@ say(){
 _mkswap(){
 	local swapfile
 	swapfile=/swapfile
-	[ $distro != debian -o "$is_WSL" ] && return
+	[ $distro != debian -o "$is_WSL" -o -f "$swapfile" ] && return
 	# dd, fallocate, truncate
 	# https://stackoverflow.com/questions/257844/quickly-create-a-large-file-on-a-linux-system
 	# https://askubuntu.com/questions/1017309/fallocate-vs-dd-for-swapfile
