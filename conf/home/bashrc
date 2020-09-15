@@ -29,6 +29,7 @@ unalias -a
 
 # Avoid scp error "stty: 'standard input': Inappropriate ioctl for device"
 # [ "$SHLVL" -le 2 ] && stty -ixon
-if [ -z "$STY" -a -z "$SSH_TTY" -a -n "$PS1" ]; then
+#if [ -z "$STY" -a -z "$SSH_TTY" -a -n "$PS1" ]; then
+if [ -n "$PS1" ]; then
 	stty -ixon
 fi
