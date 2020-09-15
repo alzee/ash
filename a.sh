@@ -425,15 +425,14 @@ say(){
 
 _mkswap(){
 	local swapfile
-	swapfile=swapfile
+	swapfile=/swapfile
 	[ $distro != debian -o "$is_WSL" ] && return
 	# dd, fallocate, truncate
 	# https://stackoverflow.com/questions/257844/quickly-create-a-large-file-on-a-linux-system
 	# https://askubuntu.com/questions/1017309/fallocate-vs-dd-for-swapfile
 	#dd if=/dev/zero of=$swapfile bs=1 count=0 seek=2G # pretty fast using seek, but have holes
-	dd if=/dev/zero of=$swapfile bs=4M count=500
+	sudo dd if=/dev/zero of=$swapfile bs=4M count=500
 	chmod 600 $swapfile
-	sudo chown root:root $swapfile
 	sudo mkswap $swapfile
 	sudo swapon $swapfile
 	echo don\'t forget to add swap to /etc/fstab
