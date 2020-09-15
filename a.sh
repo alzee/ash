@@ -435,7 +435,7 @@ _mkswap(){
 	sudo chmod 600 $swapfile
 	sudo mkswap $swapfile
 	sudo swapon $swapfile
-	echo don\'t forget to add swap to /etc/fstab
+    sudo sed -i '$a'"$swapfile none swap defaults 0 0" /etc/fstab
 }
 
 _sysctl(){
