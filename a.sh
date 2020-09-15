@@ -95,6 +95,9 @@ _init() {
 			rlist="mariadb-libs git"
 			;;
 		debian)
+            # comment out default apt sources
+            sudo sed -i 's/^/#/' /etc/apt/sources.list
+
 			# add testing repo (latest packages)
 			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
 
@@ -332,9 +335,6 @@ misc() {
 	if [ "$distro" = debian ]; then
 		# get rid of bash.bashrc
 		sudo mv /etc/bash.bashrc /etc/bash.bashrc.fuck
-
-        # comment out default apt sources
-        sudo sed -i 's/^/#/' /etc/apt/sources.list
 
         # Use server priorities for cipher algorithm choice.
         sudo sed -i '/SSLHonorCipherOrder/s/#//' /etc/apache2/mods-enabled/ssl.conf
