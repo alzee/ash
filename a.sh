@@ -432,7 +432,7 @@ _mkswap(){
 	# https://askubuntu.com/questions/1017309/fallocate-vs-dd-for-swapfile
 	#dd if=/dev/zero of=$swapfile bs=1 count=0 seek=2G # pretty fast using seek, but have holes
 	sudo dd if=/dev/zero of=$swapfile bs=4M count=500
-	chmod 600 $swapfile
+	sudo chmod 600 $swapfile
 	sudo mkswap $swapfile
 	sudo swapon $swapfile
 	echo don\'t forget to add swap to /etc/fstab
