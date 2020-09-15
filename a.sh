@@ -67,7 +67,7 @@ _init() {
 	[ "$UID" -eq 0 ] && say "DO NOT use root, assohole!" && exit
 
 	say adding some repository...
-	ilist="screen nginx vim openssh-server ctags unzip curl wireguard-tools"
+	ilist="screen nginx vim openssh-server unzip curl wireguard-tools"
     # mdadm
 	case $distro in
 		fedora)
@@ -90,7 +90,7 @@ _init() {
 
 			# TODO, version
 			php=php72u
-			php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx} mod_$php)
+			php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysql,json,fpm,fpm-nginx} mod_$php)
 			ilist="$ilist httpd24u httpd24u-mod_ssl $php mariadb101u-server git2u psmisc xz bzip2 bash-completion znc"
 			rlist="mariadb-libs git"
 			;;
