@@ -342,7 +342,7 @@ misc() {
         # mod_http2 doesn't work with mpm_prefork'
         # and "event mpm is nowadays the best one"
         # https://httpd.apache.org/docs/2.4/howto/http2.html#mpm-config
-        sudo a2dismod $php mpm_prefork # if other version of mod_php is enabled, mpm_prefork won't be disabled due to dependency
+        sudo a2dismod php* mpm_prefork # disable all version of mod_php or mpm_prefork won't be disabled due to dependency
         sudo a2enmod mpm_event http2 rewrite ssl socache_shmcb headers proxy_fcgi setenvif
         sudo a2enconf $php-fpm
 
