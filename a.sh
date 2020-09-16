@@ -133,7 +133,7 @@ install_pkg() {
 	say installing packages...
 	for i in $ilist
 	do
-		sudo $yum install -y $i > /dev/null && say "$i installed" || { say "$i install failed" | tee $errlog; }
+		sudo $yum install -y $i > /dev/null && say "$i installed" || { say "$i install failed" | tee -a $errlog; }
 	done
 }
 
