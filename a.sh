@@ -346,7 +346,7 @@ misc() {
         sudo a2enmod mpm_event http2 rewrite ssl socache_shmcb headers proxy_fcgi setenvif
         sudo a2enconf $php-fpm
 
-		sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
+		#sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
 		sudo ln -s ~/vhosts.conf /etc/apache2/conf-enabled/
 
 		# use mysql native password insead of system user credentials
@@ -366,7 +366,7 @@ misc() {
 		sudo systemctl disable libvirtd cups.socket
 		sudo systemctl mask bluetooth
 
-		sudo ln -s ~/.vhosts /etc/httpd/conf.d/
+		#sudo ln -s ~/.vhosts /etc/httpd/conf.d/
 		sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/
 	fi
 
