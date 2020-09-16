@@ -90,7 +90,7 @@ _init() {
 
 			# TODO, version
 			php=php72u
-			php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysql,json,fpm,fpm-nginx} mod_$php)
+			php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx} mod_$php)
 			ilist="$ilist httpd24u httpd24u-mod_ssl $php mariadb101u-server git2u psmisc xz bzip2 bash-completion znc"
 			rlist="mariadb-libs git"
 			;;
@@ -105,7 +105,7 @@ _init() {
 
 			php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
 			php=php${php_ver%+*}
-			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysqlnd,curl,json,fpm,uploadprogress})
+			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysql,curl,json,fpm,uploadprogress})
 			ilist="$ilist apache2 $php_with_exts mariadb-server firewalld redis-server git python3-pip psmisc xz-utils bzip2 bash-completion man-db znc"
 			# unixodbc unixodbc-dev selinux-basics selinux-policy-default auditd"
 			# libapache2-mod-$php apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
