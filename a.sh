@@ -455,6 +455,7 @@ setupwg(){
 
 case $1 in
 	"-a")
+		_mkswap
 		_init
 		remove_pkg
 		install_pkg
