@@ -67,7 +67,7 @@ _init() {
 	[ "$UID" -eq 0 ] && say "DO NOT use root, assohole!" && exit
 
 	say adding some repository...
-	ilist="screen nginx vim openssh-server ctags unzip curl wireguard-tools"
+	ilist="screen nginx vim openssh-server unzip curl wireguard-tools"
     # mdadm
 	case $distro in
 		fedora)
@@ -95,6 +95,9 @@ _init() {
 			rlist="mariadb-libs git"
 			;;
 		debian)
+            # comment out default apt sources
+            sudo sed -i 's/^/#/' /etc/apt/sources.list
+
 			# add testing repo (latest packages)
 			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
 
@@ -102,7 +105,7 @@ _init() {
 
 			php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
 			php=php${php_ver%+*}
-			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysqlnd,curl,json,fpm,uploadprogress})
+			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysql,curl,json,fpm,uploadprogress})
 			ilist="$ilist apache2 $php_with_exts mariadb-server firewalld redis-server git python3-pip psmisc xz-utils bzip2 bash-completion man-db znc"
 			# unixodbc unixodbc-dev selinux-basics selinux-policy-default auditd"
 			# libapache2-mod-$php apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
@@ -130,7 +133,7 @@ install_pkg() {
 	say installing packages...
 	for i in $ilist
 	do
-		sudo $yum install -y $i > /dev/null && say "$i installed" || { say "$i install failed" | tee $errlog; }
+		sudo $yum install -y $i > /dev/null && say "$i installed" || { echo "$i install failed" | tee -a $errlog; }
 	done
 }
 
@@ -333,25 +336,17 @@ misc() {
 		# get rid of bash.bashrc
 		sudo mv /etc/bash.bashrc /etc/bash.bashrc.fuck
 
-        # comment out default apt sources
-        sudo sed -i 's/^/#/' /etc/apt/sources.list
-
         # Use server priorities for cipher algorithm choice.
         sudo sed -i '/SSLHonorCipherOrder/s/#//' /etc/apache2/mods-enabled/ssl.conf
 
         # mod_http2 doesn't work with mpm_prefork'
         # and "event mpm is nowadays the best one"
         # https://httpd.apache.org/docs/2.4/howto/http2.html#mpm-config
-        sudo a2dismod $php mpm_prefork
+        sudo a2dismod php* mpm_prefork # disable all version of mod_php or mpm_prefork won't be disabled due to dependency
         sudo a2enmod mpm_event http2 rewrite ssl socache_shmcb headers proxy_fcgi setenvif
         sudo a2enconf $php-fpm
-		# sudo ln -s ../mods-available/rewrite.load /etc/apache2/mods-enabled/
-		# sudo ln -s ../mods-available/ssl.load /etc/apache2/mods-enabled/
-		# sudo ln -s ../mods-available/ssl.conf /etc/apache2/mods-enabled/
-		# sudo ln -s ../mods-available/socache_shmcb.load /etc/apache2/mods-enabled/
-		# sudo ln -s ../mods-available/headers.load /etc/apache2/mods-enabled/
 
-		sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
+		#sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
 		sudo ln -s ~/vhosts.conf /etc/apache2/conf-enabled/
 
 		# use mysql native password insead of system user credentials
@@ -371,7 +366,7 @@ misc() {
 		sudo systemctl disable libvirtd cups.socket
 		sudo systemctl mask bluetooth
 
-		sudo ln -s ~/.vhosts /etc/httpd/conf.d/
+		#sudo ln -s ~/.vhosts /etc/httpd/conf.d/
 		sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/
 	fi
 
@@ -425,18 +420,18 @@ say(){
 
 _mkswap(){
 	local swapfile
-	swapfile=swapfile
-	[ $distro != debian -o "$is_WSL" ] && return
+	swapfile=/swapfile
+	[ $distro != debian -o "$is_WSL" -o -f "$swapfile" ] && return
 	# dd, fallocate, truncate
 	# https://stackoverflow.com/questions/257844/quickly-create-a-large-file-on-a-linux-system
 	# https://askubuntu.com/questions/1017309/fallocate-vs-dd-for-swapfile
 	#dd if=/dev/zero of=$swapfile bs=1 count=0 seek=2G # pretty fast using seek, but have holes
-	dd if=/dev/zero of=$swapfile bs=4M count=500
-	chmod 600 $swapfile
-	sudo chown root:root $swapfile
+    say Making swap file...
+	sudo dd if=/dev/zero of=$swapfile bs=4M count=500
+	sudo chmod 600 $swapfile
 	sudo mkswap $swapfile
 	sudo swapon $swapfile
-	echo don\'t forget to add swap to /etc/fstab
+    sudo sed -i '$a'"$swapfile none swap defaults 0 0" /etc/fstab
 }
 
 _sysctl(){
@@ -456,6 +451,7 @@ setupwg(){
 
 case $1 in
 	"-a")
+		_mkswap
 		_init
 		remove_pkg
 		install_pkg
