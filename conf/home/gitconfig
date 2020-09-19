@@ -7,7 +7,7 @@
 	st = status
 	pl = pull
 	p = pull
-	l = log --oneline
+	l = log --format='%C(auto)%h %cd %s' --date=format:'%a %F %I:%M %p'
 	d = diff
 [core]
 	hooksPath = .githooks/
