@@ -10,6 +10,7 @@
 <title></title>
 <link rel="stylesheet" type="text/css" media="" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" media="" href="">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 </head>
 <body>
 	<header>
