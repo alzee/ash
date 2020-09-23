@@ -7,6 +7,8 @@ if [ "$ID" = debian ]; then
     eval $(dircolors -b <(dircolors -p))
 fi
 
+stty -ixon
+
 # https://wiki.gentoo.org/wiki/X_without_Display_Manager
 # https://wiki.gentoo.org/wiki/Start_X_on_login
 # Since we don't need to startx in most case, it's better to comment it out
