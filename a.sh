@@ -74,7 +74,7 @@ _init() {
 			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
 			# add chrome repo
 			sudo cp $scriptdir/conf/templates/google-chrome.repo /etc/yum.repos.d/ && say "chrome repo installed" || say "chrome repo install failed"
-			php_with_exts=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm})
+			php_with_exts=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,devel})
 			ilist="rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie pulseaudio alsa-utils bash-completion $ilist i3 xautolock lightdm-gtk lightdm feh httpd mod_ssl mariadb-server $php_with_exts git ImageMagick nodejs nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable firefox mpv unrar @Fonts"
 			#xorg-x11-drv-nvidia compton gcl postfix aircrack-ng libpcap-devel pixiewps sway arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake dosemu obs-studio gimp blender dsniff ettercap driftnet reaver rdesktop chntpw qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko wine-dxvk
 			rlist="@gnome-desktop @LibreOffice nano eog evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution bijiben rhythmbox shotwell transmission-gtk orca empathy gedit devassistant-core vinagre totem-nautilus totem cheese file-roller baobab setroubleshoot yelp seahorse abrt jwhois esmtp"
@@ -105,8 +105,8 @@ _init() {
 
 			php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
 			php=php${php_ver%+*}
-			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysql,curl,json,fpm,uploadprogress})
-			ilist="$ilist apache2 $php_with_exts mariadb-server firewalld redis-server git python3-pip psmisc xz-utils bzip2 bash-completion man-db znc"
+			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysql,curl,json,fpm,dev,uploadprogress})
+			ilist="$ilist apache2 $php_with_exts pkg-php-tools mariadb-server firewalld redis-server git python3-pip psmisc xz-utils bzip2 bash-completion man-db znc"
 			# unixodbc unixodbc-dev selinux-basics selinux-policy-default auditd"
 			# libapache2-mod-$php apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
 			# Run selinux-activate(as root) to configure GRUB and PAM and to create /.autorelabel
