@@ -163,5 +163,5 @@ bar {
 		#tray_output primary
 }
 
-exec ~/.config/i3/startup.sh
 exec i3-sensible-terminal
+exec ~/.config/i3/startup.sh
