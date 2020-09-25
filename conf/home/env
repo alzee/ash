@@ -110,6 +110,7 @@ secdir=~/.sec
 
 # miscellaneous
 #t="\t"
+bg=~/.config/i3/bg.png
 t=$(uname -r)
 [ "${t##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
 screen=matrix
