@@ -11,3 +11,5 @@
 	d = diff
 [core]
 	hooksPath = .githooks/
+[pull]
+	ff = only
