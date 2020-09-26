@@ -827,8 +827,9 @@ am(){
 	stop_target=nginx
 	case $ID in
 		debian)
-            cd /etc/apache2/conf-enabled/
+            pushd /etc/apache2/conf-enabled/
             fpm=$(echo php*)
+            popd
             fpm=${fpm//.conf/}
 			httpd=apache2
 			mariadb=mysql
