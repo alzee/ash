@@ -336,9 +336,6 @@ misc() {
 		# get rid of bash.bashrc
 		sudo mv /etc/bash.bashrc /etc/bash.bashrc.fuck
 
-        # Use server priorities for cipher algorithm choice.
-        sudo sed -i '/SSLHonorCipherOrder/s/#//' /etc/apache2/mods-enabled/ssl.conf
-
         # mod_http2 doesn't work with mpm_prefork'
         # and "event mpm is nowadays the best one"
         # https://httpd.apache.org/docs/2.4/howto/http2.html#mpm-config
