@@ -50,6 +50,12 @@ mouse_speed_by_ctm(){
 	fi
 }
 
+
+enable_console(){
+    sudo systemctl enable serial-getty@ttyS0.service
+    sudo systemctl start serial-getty@ttyS0.service
+}
+
 reset_mysql_root_pw(){
 	local i
 	sudo mysqld_safe --skip-grant-tables --skip-networking
