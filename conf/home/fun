@@ -829,6 +829,7 @@ crawl(){
 
 am(){
 	local start_target httpd web_server mariadb stop_target fpm i
+    mariadb=mariadb
     httpd=httpd
 	stop_target=nginx
 	case $ID in
