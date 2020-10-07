@@ -24,7 +24,7 @@ set undodir=~/.vim/undo
 set dict=/usr/share/dict/words
 set cot-=preview
 set t_Co=256
-"set scrolloff=5
+set scrolloff=0
 set nrformats-=octal
 set incsearch
 set hlsearch
