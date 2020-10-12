@@ -1109,7 +1109,7 @@ countdown(){
 }
 
 tor(){
-	local d=$download/tor
+	local d=~/l/tor
 	$d/Browser/start-tor-browser --detach
 }
 
