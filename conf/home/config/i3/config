@@ -52,13 +52,13 @@ bindsym $mod+Tab workspace back_and_forth
 
 # screenshot for screen
 # --release flag indicates it will run when the mouse button is released.
-bindsym --release Print exec import -window root $(date +%F_%T).png
+bindsym --release Print exec import -window root $(date +%F_%H%M%S).png
 # screenshot for selected rectangle
-bindsym --release Shift+Print exec import $(date +%F_%T).png
+bindsym --release Shift+Print exec import $(date +%F_%H%M%S).png
 # screenshot for selected window
 # https://www.reddit.com/r/i3wm/comments/8yx7ju/i3_screenshot_application/e2eifsp/
 # why 'Sys_Req'? why 'Print' not work here?
-bindsym --release Mod1+Sys_Req exec "import -window $(xwininfo | awk '/.*Window id:.*/ {print $4}') $(date +%F_%T).png"
+bindsym --release Mod1+Sys_Req exec "import -window $(xwininfo | awk '/.*Window id:.*/ {print $4}') $(date +%F_%H%M%S).png"
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
