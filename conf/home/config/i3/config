@@ -20,7 +20,7 @@ workspace 5 output primary
 
 assign [class="wowclassic.exe"] $ws3
 assign [class="battle.net.exe"] $ws4
-assign [class="Firefox"] $ws5
+#assign [class="Firefox"] $ws5
 
 default_border none
 
