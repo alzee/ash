@@ -1,6 +1,7 @@
 setenv PS1 "[\[${yellow}${bold}\]\D{%I}\[${cyan}${bold}\]\D{%M}\[${end}${white}\]\D{%S}\[${end}\] \u@\h \[${red}${bold}\]\W\[${end}\]]\[${red}${bold}\]\$\[${end}\] "
 # create a layout, otherwise the regions won't be remembered after reattach
-layout new layout1
+layout new
+layout new
 # create windows
 #screen 4 mysql -uroot -p$mysql_root_pw
 #screen 5 nethack
@@ -21,34 +22,36 @@ altscreen on
 hardstatus off
 
 ############### key bind start ###############
-# swap s and S
 bind s eval split focus screen
-#bind S xoff
 bind S eval other focus other
-# swap v and V
 bind v eval 'split -v' focus screen
 bind ^v eval 'split -v' focus screen
 bind V version
 bind o only
-#bind q quit
-# swap x and X
 bind x remove
 bind ^x remove
+
+bind l focus right
+bind ^l focus right
+bind h focus left
+bind ^h focus left
+bind j focus down
+bind ^j focus down
+bind k focus up
+bind ^k focus up
+bind t focus top
+bind ^t focus top
+bind b focus bottom
+bind ^b focus bottom
+
+bind K kill
+
 #bind X lockscreen
-bind l layout show
-bind ^l layout show
+bind L layout show
 bind C layout new
 bind N layout next
 bind P layout prev
 
-#bind h focus left
-#bind ^h focus left
-#bind j focus down
-#bind ^j focus down
-#bind k focus up
-#bind ^k focus up
-#bind l focus right
-#bind ^l focus right
 bind = resize =
 bind - resize -10
 bind + resize +10
