@@ -33,3 +33,7 @@ unalias -a
 if [ -n "$PS1" ]; then
 	stty -ixon
 fi
+
+#if [ -z "$STY" ]; then
+#    screen -R
+#fi
