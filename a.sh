@@ -105,7 +105,7 @@ _init() {
 
 			php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
 			php=php${php_ver%+*}
-			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,mbstring,zip,mysql,curl,json,fpm,dev,uploadprogress})
+			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,apcu,mbstring,zip,mysql,curl,json,fpm,dev,uploadprogress})
 			ilist="$ilist apache2 $php_with_exts pkg-php-tools mariadb-server firewalld redis-server git python3-pip psmisc xz-utils bzip2 bash-completion man-db znc"
 			# unixodbc unixodbc-dev selinux-basics selinux-policy-default auditd"
 			# libapache2-mod-$php apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
