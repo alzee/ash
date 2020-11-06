@@ -182,7 +182,7 @@ mysqldir(){
 
 	local prefix serverconf
 	prefix=~/.mysql
-	serverconf = /etc/my.cnf.d/mariadb-server.cnf
+	serverconf=/etc/my.cnf.d/mariadb-server.cnf
 
 	mkdir -p $prefix
 	chcon -t mysqld_db_t $prefix
