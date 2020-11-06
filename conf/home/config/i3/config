@@ -18,8 +18,6 @@ workspace 3 output primary
 workspace 4 output primary
 workspace 5 output primary
 
-assign [class="wowclassic.exe"] $ws3
-assign [class="battle.net.exe"] $ws4
 #assign [class="Firefox"] $ws5
 
 default_border none
@@ -163,5 +161,4 @@ bar {
 		#tray_output primary
 }
 
-exec i3-sensible-terminal
 exec ~/.config/i3/startup.sh
