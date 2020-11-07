@@ -14,5 +14,5 @@ ibus-daemon -rxd
 
 feh --bg-fill $bg
 
-i3-msg workspace 1
-#i3-sensible-terminal
+#i3-msg workspace 1
+i3-sensible-terminal

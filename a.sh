@@ -77,7 +77,7 @@ _init() {
 			php_with_exts=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,devel})
 			ilist="rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie pulseaudio alsa-utils bash-completion $ilist i3 xautolock lightdm-gtk lightdm feh httpd mod_ssl mariadb-server $php_with_exts git ImageMagick nodejs nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm oathtool google-chrome-stable firefox mpv unrar @Fonts"
 			#xorg-x11-drv-nvidia compton gcl postfix aircrack-ng libpcap-devel pixiewps sway arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake dosemu obs-studio gimp blender dsniff ettercap driftnet reaver freerdp rdesktop chntpw qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko wine-dxvk
-			rlist="@gnome-desktop @xfce-desktop xfce* xf* asunder atril claws-mail galculator geany xarchiver gnumeric pidgin xscreensaver-base ibus-cangjie pavucontrol @LibreOffice nano eog evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution bijiben rhythmbox shotwell transmission-gtk orca empathy gedit devassistant-core vinagre totem-nautilus totem cheese file-roller baobab setroubleshoot yelp seahorse abrt jwhois esmtp gnome-disk-utility gnome-desktop3"
+			rlist="@gnome-desktop @xfce-desktop xfce* xf* fpaste asunder atril claws-mail galculator geany xarchiver gnumeric pidgin xscreensaver-base ibus-cangjie pavucontrol @LibreOffice nano eog evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution bijiben rhythmbox shotwell transmission-gtk orca empathy gedit devassistant-core vinagre totem-nautilus totem cheese file-roller baobab setroubleshoot yelp seahorse abrt jwhois esmtp gnome-disk-utility gnome-desktop3"
 			;;
 		rhel)
 			# The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
@@ -119,7 +119,8 @@ remove_pkg() {
 	say removing unneeded packages...
 	for i in $rlist
 	do
-		rpm -q $i &> /dev/null && { sudo $yum remove -y $i > /dev/null && say "$i removed" || say "$i remove failed"; }
+        say "Removing $i"
+        sudo $yum remove -y $i
 	done
 
 	sudo $yum autoremove -y
@@ -135,22 +136,6 @@ install_pkg() {
 	do
 		sudo $yum install -y $i > /dev/null && say "$i installed" || { echo "$i install failed" | tee -a $errlog; }
 	done
-}
-
-getcomposer(){
-	if [ ! -x ~/.local/bin/composer ];then
-		say get composer...
-		local a=composer-setup.php
-		curl -L https://getcomposer.org/installer -o $a
-		# TODO not return
-		if echo -n $(curl -s https://composer.github.io/installer.sig) $a | sha384sum -c --status;then
-			php $a && rm $a
-			mkdir ~/.local/bin -p
-			mv composer.phar ~/.local/bin/composer
-		else
-			say checksum fail!
-		fi
-	fi
 }
 
 addgrp() {
