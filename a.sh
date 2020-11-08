@@ -449,7 +449,6 @@ case $1 in
 		settimezone
 		dir_struct
 		default_pool
-		getcomposer
 		misc
 		hardlinks
 		rm_wine_icons
@@ -470,7 +469,6 @@ case $1 in
 		_sysctl
 		;;
 	-C)
-		getcomposer
 		;;
 	-w)
 		_mkswap
