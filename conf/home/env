@@ -27,6 +27,7 @@ else
 	ID=$(uname)
 fi
 
+TERMINAL=alacritty
 HISTTIMEFORMAT="%b %d %T "
 HISTCONTROL=ignoreboth
 LIBVIRT_DEFAULT_URI=qemu:///system
