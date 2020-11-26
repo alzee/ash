@@ -1,6 +1,7 @@
 [user]
 	email = z@alz.ee
 	name = Al Zee
+	signingKey = less
 [push]
 	default = simple
 [alias]
@@ -13,3 +14,5 @@
 	hooksPath = .githooks/
 [pull]
 	ff = only
+[commit]
+	gpgsign = true
