@@ -8,8 +8,9 @@
 <meta name="author" content="">
 <meta name="keyword" content="">
 <title></title>
-<link rel="stylesheet" type="text/css" media="" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" media="" href="">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="">
 <!--
 <link rel="shortcut icon" href="data:image/x-icon;" type="image/x-icon" />
 <link rel="icon" href="data:;base64,=">
@@ -32,9 +33,9 @@
 	<footer>
 	</footer>
 
-	<script src=""></script>
-
-	<noscript></noscript>
+  <!--
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  -->
 </body>
 </html>
 
