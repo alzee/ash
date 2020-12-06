@@ -95,6 +95,7 @@ au FileType php source ~/.vim/map/php.vim | set sts=4 et
 au BufNewFile *.asm 0r ~/.vim/template/asm.vim | let @/='start' | /
 " au FileType asm source ~/.vim/map/asm.vim
 
+au BufNewFile md.js %d | 0r ~/.vim/template/md.js.vim
 au FileType javascript source ~/.vim/map/javascript.vim
 
 au FileType sql source ~/.vim/map/sql.vim
