@@ -72,35 +72,35 @@ au FileType help setl nu
 
 " read template and move cursor to the main() line
 " use "let @/='main' | /" instead of /main to avoid search history
-au BufNewFile *.c 0r ~/.vim/template/c.vim | let @/='main' | /
+au BufNewFile *.c 0r ~/.vim/templates/c.vim | let @/='main' | /
 " au FileType c source ~/.vim/map/c.vim
 
-au BufNewFile *.sh 0r ~/.vim/template/sh.vim | $
+au BufNewFile *.sh 0r ~/.vim/templates/sh.vim | $
 au FileType sh source ~/.vim/map/sh.vim
 
-au BufNewFile *.py 0r ~/.vim/template/py.vim | $
+au BufNewFile *.py 0r ~/.vim/templates/py.vim | $
 au FileType python source ~/.vim/map/py.vim
 
-au BufNewFile *.html 0r ~/.vim/template/html.vim | let @/='body' | /
+au BufNewFile *.html 0r ~/.vim/templates/html.vim | let @/='body' | /
 au FileType html source ~/.vim/map/html.vim | set et ts=2 sw=2
 
-au BufNewFile *.twig 0r ~/.vim/template/twig.vim | let @/='body' | /
+au BufNewFile *.twig 0r ~/.vim/templates/twig.vim | let @/='body' | /
 au FileType twig set ft=html
 " au FileType twig source ~/.vim/map/twig.vim
 
-au BufNewFile *.php 0r ~/.vim/template/php.vim | let @/='class \zsFuck' | %s//\=expand("%:t:r")/e
-au BufNewFile i.php %d | 0r ~/.vim/template/i.php.vim
+au BufNewFile *.php 0r ~/.vim/templates/php.vim | let @/='class \zsFuck' | %s//\=expand("%:t:r")/e
+au BufNewFile i.php %d | 0r ~/.vim/templates/i.php.vim
 au FileType php source ~/.vim/map/php.vim | set sts=4 et
 
-au BufNewFile *.asm 0r ~/.vim/template/asm.vim | let @/='start' | /
+au BufNewFile *.asm 0r ~/.vim/templates/asm.vim | let @/='start' | /
 " au FileType asm source ~/.vim/map/asm.vim
 
-au BufNewFile md.js %d | 0r ~/.vim/template/md.js.vim
+au BufNewFile md.js %d | 0r ~/.vim/templates/md.js.vim
 au FileType javascript source ~/.vim/map/javascript.vim
 
 au FileType sql source ~/.vim/map/sql.vim
 
-au BufNewFile *.cmd 0r ~/.vim/template/cmd.vim
+au BufNewFile *.cmd 0r ~/.vim/templates/cmd.vim
 au FileType dosbatch source ~/.vim/map/cmd.vim
 
 "au WinEnter * resize
