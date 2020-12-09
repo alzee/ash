@@ -1159,6 +1159,9 @@ g(){
 }
 
 githooks(){
+    # Run in root of working tree
+    # then hooks in .githooks will be tracked and can be triggered whether or not "during a push",
+    # as long as it's not a bare repo.
     if [ -d .git ]; then
         mkdir .githooks
         ln -s ../.githooks/ .git/
