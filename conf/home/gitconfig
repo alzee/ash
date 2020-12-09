@@ -11,7 +11,11 @@
 	l = log --format='%C(auto)%h %Cred%cd%Creset %s' --date=format:'%b %d %H:%M'
 	d = diff
 [core]
-	hooksPath = .githooks/
+    # In root of working tree, issue
+    # mkdir .githooks; ln -s ../.githooks/ .git/
+    # Now hooks in .githooks will be tracked and can be triggered whether or not "during a push",
+    # as long as it's not a bare repo.
+    hooksPath = .githooks/
 [pull]
 	ff = only
 [commit]
