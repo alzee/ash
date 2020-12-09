@@ -1158,6 +1158,13 @@ g(){
 	esac
 }
 
+githooks(){
+    if [ -d .git ]; then
+        mkdir .githooks
+        ln -s ../.githooks/ .git/
+    fi
+}
+
 splitkey(){
 	gpg -a --export-secret-keys $1 | sed -e /^-/d -e /^$/d > $1.asc
 	sleep 60
