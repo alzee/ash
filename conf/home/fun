@@ -1128,21 +1128,18 @@ tor(){
 
 # git
 g(){
-	local comment i opt user
-	user=$(whoami)
+	local comment i opt
 	case $1 in
 		"")
 			git status 2> /dev/null
 			[ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end && for i in $allrepos; do echo -e "${yellow}${bold}Checking ${italic}$i${end}"; git -C $i st; echo; done
 			;;
 		d)
-			git status 2> /dev/null
 			[ "$?" -eq 128 ] && opt="-C $repoa"
 			shift
 			git $opt diff "$@"
 			;;
 		c)
-			git status 2> /dev/null
 			[ "$?" -eq 128 ] && opt="-C $repoa"
 			git $opt add -A
 			shift
