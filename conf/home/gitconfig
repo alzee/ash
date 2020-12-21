@@ -17,3 +17,5 @@
     hooksPath = .githooks/
 [commit]
 	gpgsign = true
+[pull]
+	ff = true
