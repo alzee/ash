@@ -4,7 +4,7 @@
 
 ############### Variables ###############
 user=al
-hostname=tes
+hostname=meg
 errlog=ash_error.log
 
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
@@ -400,23 +400,6 @@ hardlinks(){
 	popd
 }
 
-rm_wine_icons(){
-	# fucking wine-desktops
-	[ -f /usr/share/applications/wine.desktop ] && { say "The damn wine icons show again, let's clease them"; sudo rm -f /usr/share/applications/wine*.desktop; }
-}
-
-sounds() {
-	[ $distro == rhel ] && return
-	cp -r $scriptdir/sound ~/.local && say ".local/sound copied"
-}
-
-redb() {
-	[ $distro == rhel ] && return
-	# import mysql backups
-	say import cm
-	say import grind
-}
-
 say(){
 	echo -e '\e[33;1m'$@'\e[m'
 }
@@ -446,7 +429,7 @@ _sysctl(){
 	fi
 }
 
-setupwg(){
+setup_wg(){
 	:
 }
 
@@ -466,10 +449,8 @@ case $1 in
 		default_pool
 		misc
 		hardlinks
-		rm_wine_icons
-		redb
 		_sysctl
-		setupwg
+		setup_wg
 		;;
 	-s)
 		sudoer
