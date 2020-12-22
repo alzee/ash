@@ -3,6 +3,7 @@
 	name = Al Zee
 	signingKey = less
 [alias]
+	s = show
 	i = init
 	st = status
 	sw = switch
