@@ -9,8 +9,8 @@ Restore your dotfiles, bash environment and configurations.
     # Clone
     git clone git@github.com:username/ash
 	# Choose dotfiles you want to backup.
-    # For example, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
-    dotfiles='.screenrc .inputrc .gitconfig .vimrc'
+    # For example, .fun, .env, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
+    dotfiles='.fun .env .screenrc .inputrc .gitconfig .vimrc'
 	for i in dotfiles
 	do
 		cp -a ~/$i ash/conf/home/${i#.}
