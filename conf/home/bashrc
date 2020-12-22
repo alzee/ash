@@ -37,3 +37,10 @@ fi
 #if [ -z "$STY" ]; then
 #    screen -R
 #fi
+
+
+# re-use completions
+_completion_loader git
+complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
+_completion_loader man
+complete -F _man m

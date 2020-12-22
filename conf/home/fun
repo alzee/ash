@@ -1126,6 +1126,10 @@ tor(){
 	$d/Browser/start-tor-browser --detach
 }
 
+grep(){
+    command grep --color=auto "$@"
+}
+
 # git
 g(){
 	local comment i opt
