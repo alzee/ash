@@ -3,17 +3,21 @@
 Restore your dotfiles, bash environment and configurations.
 
 ## Build your directory structure.
-* Fork it, clone, copy your dotfiles to ash/conf/home/ without starting dot.
+* Fork it, clone, copy your dotfiles to ash/conf/home/ without leading dot.
 	```bash
-	# For example, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
-	for dotfile in screenrc inputrc gitconfig vimrc
+    # Fork this repo
+    # Clone
+    git clone git@github.com:yourusername/ash
+	# Choose dotfiles you want to backup.
+    # For example, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
+    dotfiles='.screenrc .inputrc .gitconfig .vimrc'
+	for i in dotfiles
 	do
-		cp ~/.${dotfile} ash/conf/home/
+		cp -a ~/$i ash/conf/home/${i#.}
 	done
 	```
-* Replace ash/conf/home/env with your own vars. 
-* Replace ash/conf/home/fun with your own functions.
-* Replace ash/conf/home/ali with your own aliases. 
+* Write your env in ash/conf/home/env. 
+* Write you functions in ash/conf/home/fun.
 * Commit and push.
 
 ## Restore on a new linux.
@@ -21,15 +25,14 @@ Phoenix arising from the ashes.
 ```bash
 $ git clone https://github.com/username/ash
 
-# run a.sh to hard link all the files in ash/conf/home to your home dir
-# ~/.{env,fun,ali} will be added to ~/.bashrc
-$ ash/a.sh
+# Hard link all files in ash/conf/home to your home dir
+$ ash/a.sh -H
 ```
 
-## Have changed your dotfiles?
+## Have modified your dotfiles?
 ```bash
 ## Let's say ~/.fun
-## Don't forget it's a hark link to conf/home/fun
+## Don't forget it's a hark link to ash/conf/home/fun
 $ cd ash
 ## Commit change
 $ git add conf/home/fun
