@@ -16,9 +16,12 @@ Restore your dotfiles, bash environment and configurations.
 		cp -a ~/$i ash/conf/home/${i#.}
 	done
 	```
-* Write your env in ash/conf/home/env. 
-* Write you functions in ash/conf/home/fun.
-* Commit and push.
+* Write your env in ash/conf/home/env
+* Write you functions in ash/conf/home/fun
+* Write your local env in ~/.env.local
+* Write your secret env in ~/.env.sec 
+* Write you local functions in ~/.fun.local
+* Commit and push
 
 ## Restore on a new linux.
 Phoenix arising from the ashes.
