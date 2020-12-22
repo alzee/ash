@@ -7,7 +7,7 @@ Restore your dotfiles, bash environment and configurations.
 	```bash
     # Fork this repo
     # Clone
-    git clone git@github.com:yourusername/ash
+    git clone git@github.com:username/ash
 	# Choose dotfiles you want to backup.
     # For example, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
     dotfiles='.screenrc .inputrc .gitconfig .vimrc'
