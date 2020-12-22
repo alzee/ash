@@ -37,6 +37,7 @@ $ cd ash
 ## Commit change
 $ git add conf/home/fun
 $ git commit -m 'added foo() in fun'
+$ git push
 
 ## New codes in ~/.{env,fun,ali} need to be exported
 $ # exit screen or tmux
