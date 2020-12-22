@@ -16,10 +16,10 @@ Restore your dotfiles, bash environment and configurations.
 		cp -a ~/$i ash/conf/home/${i#.}
 	done
 	```
-* Write your env in ash/conf/home/env
+* Write your envs in ash/conf/home/env
 * Write you functions in ash/conf/home/fun
-* Write your local env in ~/.env.local
-* Write your secret env in ~/.env.sec 
+* Write your local envs in ~/.env.local
+* Write your secret envs in ~/.env.sec 
 * Write you local functions in ~/.fun.local
 * Commit and push
 
