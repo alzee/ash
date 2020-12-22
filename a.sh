@@ -365,6 +365,23 @@ misc() {
 
 	crontab $scriptdir/conf/templates/$distro/cron
 }
+_hardlinks(){
+    local dotfiles
+	# hard link ~/.foo to conf/home/foo
+	pushd ~
+
+	for i in $(find $dotfiles -type d)
+	do
+		mkdir -p $scriptdir/conf/home/${i#./.}
+	done
+
+	for i in $(find $dotfiles -type f)
+	do
+		ln -f $i $scriptdir/confi/home/${i#./.} && say "${i#./.} linked"
+	done
+
+	popd
+}
 
 hardlinks(){
 	# hard link conf/home/foo to ~/.foo
