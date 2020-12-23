@@ -5,12 +5,14 @@
 # and ~/.fun will be sourced in ~/.bash_profile
 # Export all these funcions and set $fun_exported at the end of this file.
 
-# complete -F _man m
-# complete -F _git g
 [ "$fun_exported" ] && return # since these functions have been exported, we don't need to soure this file anymore
 
 # use some useless dconf keys to store info is a good idea.
 
+# functions names will be overriden by aliases, this is so sad
+# Causes syntax error if the word is already a alias
+# So remove all aliases
+unalias -a
 
 set -a
 
@@ -1400,11 +1402,6 @@ v(){
 	fi
 }
 
-
-## Will be overriden by aliases anyway, this is so sad
-# Causes syntax error if the word is already a alias
-# So remove all aliases
-unalias -a
 vim(){
 	# sudo looks for external programs, not shell builtins, and not shell functions
 	# sudo command vim "$@"
