@@ -1156,7 +1156,7 @@ g(){
 			[ -n "$i" ] && echo -e "\nstarting push..." && git $opt push
 			;;
 		*)
-			git $@
+			git "$@"
 			;;
 	esac
 }
