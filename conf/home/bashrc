@@ -32,15 +32,14 @@ unalias -a
 #if [ -z "$STY" -a -z "$SSH_TTY" -a -n "$PS1" ]; then
 if [ -n "$PS1" ]; then
 	stty -ixon
+
+    # re-use completions
+    _completion_loader git
+    complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
+    _completion_loader man
+    complete -F _man m
 fi
 
 #if [ -z "$STY" ]; then
 #    screen -R
 #fi
-
-
-# re-use completions
-_completion_loader git
-complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
-_completion_loader man
-complete -F _man m
