@@ -44,7 +44,7 @@ t=$(uname -r)
 
 ############### Functions ###############
 _clean(){
-    popd
+    popd 2> /dev/null
     rm -rf "$tempdir"
 }
 
