@@ -47,7 +47,6 @@ _clean(){
     popd 2> /dev/null
     rm -rf "$tempdir"
 }
-
 trap _clean EXIT
 
 sudoer() {
@@ -442,6 +441,22 @@ setup_wg(){
 	:
 }
 
+install_composer(){
+    if [ ! -x ~/.local/bin/composer ];then
+        say Installing composer...
+        local a=composer-setup.php
+        curl -L https://getcomposer.org/installer -o $a
+        # TODO not return
+        if echo -n $(curl -s https://composer.github.io/installer.sig) $a | sha384sum -c --status;then
+            php $a && rm $a
+            mkdir ~/.local/bin -p
+            mv composer.phar ~/.local/bin/composer
+        else
+            say checksum fail!
+        fi
+    fi
+}
+
 install_node(){
     pushd $tempdir
 
@@ -466,12 +481,17 @@ case $1 in
         dir_struct
         default_pool
         misc
+        install_composer
+        install_node
         hardlinks
         _sysctl
         setup_wg
         ;;
     -s)
         sudoer
+        ;;
+    -c)
+        install_composer
         ;;
     -n)
         install_node

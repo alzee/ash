@@ -52,22 +52,6 @@ mouse_speed_by_ctm(){
 	fi
 }
 
-getcomposer(){
-	if [ ! -x ~/.local/bin/composer ];then
-		say get composer...
-		local a=composer-setup.php
-		curl -L https://getcomposer.org/installer -o $a
-		# TODO not return
-		if echo -n $(curl -s https://composer.github.io/installer.sig) $a | sha384sum -c --status;then
-			php $a && rm $a
-			mkdir ~/.local/bin -p
-			mv composer.phar ~/.local/bin/composer
-		else
-			say checksum fail!
-		fi
-	fi
-}
-
 enable_console(){
     sudo systemctl enable serial-getty@ttyS0.service
     sudo systemctl start serial-getty@ttyS0.service
