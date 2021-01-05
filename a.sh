@@ -9,6 +9,9 @@ errlog=ash_error.log
 
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
 scriptdir=$(dirname $0)
+tempdir=$(mktemp -d XXXXX)
+node_tar='node-lts-linux.x64.tar.xz'
+node_url=$(curl -s https://nodejs.org/en/download/ | grep -o 'https://.*linux-x64.tar.xz')
 
 if [ -f /etc/os-release ]; then
 	. /etc/os-release
@@ -40,6 +43,12 @@ t=$(uname -r)
 [ "${t##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
 
 ############### Functions ###############
+_clean(){
+    popd
+    rm -rf "$tempdir"
+}
+
+trap _clean EXIT
 
 sudoer() {
 	[ $UID -ne 0 ] && say "$0: Permission denied" && exit
@@ -433,43 +442,56 @@ setup_wg(){
 	:
 }
 
+install_node(){
+    pushd $tempdir
+
+    curl -o $node_tar $node_url
+
+    tar xf $node_tar
+
+    sudo cp -a node-*/{bin/,include/,lib/,share/} /usr/local/
+}
+
 ############### Main ###############
 
 case $1 in
-	"-a")
-		_mkswap
-		_init
-		remove_pkg
-		install_pkg
-		addgrp
-		mysqldir
-		settimezone
-		dir_struct
-		default_pool
-		misc
-		hardlinks
-		_sysctl
-		setup_wg
-		;;
-	-s)
-		sudoer
-		;;
-	-d)
-		default_pool
-		;;
-	-H)
-		hardlinks
-		;;
-	-S)
-		_sysctl
-		;;
-	-C)
-		;;
-	-w)
-		_mkswap
-		;;
-	"")
-		;;
-	*)
-		;;
+    "-a")
+        _mkswap
+        _init
+        remove_pkg
+        install_pkg
+        addgrp
+        mysqldir
+        settimezone
+        dir_struct
+        default_pool
+        misc
+        hardlinks
+        _sysctl
+        setup_wg
+        ;;
+    -s)
+        sudoer
+        ;;
+    -n)
+        install_node
+        ;;
+    -d)
+        default_pool
+        ;;
+    -H)
+        hardlinks
+        ;;
+    -S)
+        _sysctl
+        ;;
+    -C)
+        ;;
+    -w)
+        _mkswap
+        ;;
+    "")
+        ;;
+    *)
+        ;;
 esac
