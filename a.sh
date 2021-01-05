@@ -443,7 +443,6 @@ case $1 in
 		install_pkg
 		addgrp
 		mysqldir
-		sethostname
 		settimezone
 		dir_struct
 		default_pool
