@@ -4,7 +4,7 @@
 
 ############### Variables ###############
 user=al
-hostname=meg
+hostname=jess
 errlog=ash_error.log
 
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
@@ -473,6 +473,7 @@ case $1 in
         _init
         remove_pkg
         install_pkg
+        sethostname
         addgrp
         mysqldir
         settimezone
