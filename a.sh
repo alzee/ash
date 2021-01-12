@@ -75,13 +75,13 @@ _init() {
 	[ "$UID" -eq 0 ] && say "DO NOT use root, assohole!" && exit
 
 	say adding some repository...
-	ilist="screen nginx vim openssh-server unzip curl wireguard-tools"
+	ilist="screen nginx vim openssh-server unzip curl wireguard-tools bash-completion git"
     # mdadm
 	case $distro in
 		fedora)
 			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
 			php_with_exts=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,pecl-apcu,pecl-xdebug,mysqlnd,json,fpm,devel})
-			ilist="alacritty rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie pulseaudio alsa-utils bash-completion $ilist i3 xautolock lightdm-gtk feh httpd mod_ssl mariadb-server $php_with_exts git ImageMagick nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm virt-manager oathtool chromium-freeworld firefox mpv unrar @Fonts"
+			ilist="alacritty rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie pulseaudio alsa-utils $ilist i3 xautolock lightdm-gtk feh httpd mod_ssl mariadb-server $php_with_exts ImageMagick nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm virt-manager oathtool chromium-freeworld firefox mpv unrar @Fonts"
 			#xorg-x11-drv-nvidia compton gcl postfix aircrack-ng libpcap-devel pixiewps sway arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake dosemu obs-studio gimp blender dsniff ettercap driftnet reaver freerdp rdesktop chntpw qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko wine-dxvk
 			rlist="@gnome-desktop @xfce-desktop xfce* xf* fpaste asunder atril claws-mail galculator geany xarchiver gnumeric pidgin xscreensaver-base ibus-cangjie pavucontrol @LibreOffice nano eog evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution bijiben rhythmbox shotwell transmission-gtk orca empathy gedit devassistant-core vinagre totem-nautilus totem cheese file-roller baobab setroubleshoot yelp seahorse abrt jwhois esmtp gnome-disk-utility gnome-desktop3"
 			;;
@@ -97,8 +97,8 @@ _init() {
 			# TODO, version
 			php=php72u
 			php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx} mod_$php)
-			ilist="$ilist httpd24u httpd24u-mod_ssl $php mariadb101u-server git2u psmisc xz bzip2 bash-completion znc"
-			rlist="mariadb-libs git"
+			ilist="$ilist httpd24u httpd24u-mod_ssl $php mariadb101u-server psmisc xz bzip2 znc"
+			rlist="mariadb-libs"
 			;;
 		debian)
             # comment out default apt sources
@@ -112,7 +112,7 @@ _init() {
 			php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
 			php=php${php_ver%+*}
 			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,apcu,mbstring,zip,mysql,curl,json,fpm,dev,uploadprogress})
-			ilist="$ilist apache2 $php_with_exts pkg-php-tools mariadb-server firewalld redis-server git python3-pip psmisc xz-utils bzip2 bash-completion man-db znc"
+			ilist="$ilist apache2 $php_with_exts pkg-php-tools mariadb-server firewalld redis-server python3-pip psmisc xz-utils bzip2 man-db znc"
 			# unixodbc unixodbc-dev selinux-basics selinux-policy-default auditd"
 			# libapache2-mod-$php apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
 			# Run selinux-activate(as root) to configure GRUB and PAM and to create /.autorelabel
@@ -459,12 +459,10 @@ install_composer(){
 
 install_node(){
     pushd $tempdir
-
     curl -o $node_tar $node_url
-
     tar xf $node_tar
-
     sudo cp -a node-*/{bin/,include/,lib/,share/} /usr/local/
+    popd
 }
 
 ############### Main ###############
