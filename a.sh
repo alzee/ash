@@ -118,7 +118,7 @@ _init() {
         freebsd)
             php_ver=80
 			php=php${php_ver}
-            php_with_exts=$(echo $php-{phar,filter,mbstring,openssl,xml,gd,opcache,zip,mysqli,curl})
+            php_with_exts=$(echo $php-{extensions,phar,mbstring,openssl,gd,zip,mysqli,curl})
             ilist="$ilist $php_with_exts coreutils"
             ;;
 	esac
