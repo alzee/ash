@@ -17,9 +17,6 @@ if [ -f /etc/os-release ]; then
 	. /etc/os-release
 	distro=$ID
 	distro_ver=$VERSION_ID
-else
-	# bsd
-	distro=$(uname)
 fi
 case $distro in
 	fedora)
@@ -35,6 +32,7 @@ case $distro in
 		yum=apt
 		;;
 	freebsd)
+		yum=pkg
 		:
 		;;
 esac
@@ -117,6 +115,12 @@ _init() {
 			# libapache2-mod-$php apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
 			# Run selinux-activate(as root) to configure GRUB and PAM and to create /.autorelabel
 			;;
+        freebsd)
+            php_ver=80
+			php=php${php_ver}
+            php_with_exts=$(echo $php-{phar,filter,mbstring,openssl,xml,gd,opcache,zip,mysqli,curl})
+            ilist="$ilist $php_with_exts coreutils"
+            ;;
 	esac
 }
 
