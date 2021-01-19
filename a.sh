@@ -95,7 +95,7 @@ _init() {
 			# TODO, version
 			php=php72u
 			php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx} mod_$php)
-			ilist="$ilist httpd24u httpd24u-mod_ssl $php mariadb101u-server psmisc xz bzip2 znc"
+			ilist="$ilist httpd24u httpd24u-mod_ssl $php mariadb101u-server psmisc xz bzip2"
 			rlist="mariadb-libs"
 			;;
 		debian)
@@ -110,7 +110,7 @@ _init() {
 			php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
 			php=php${php_ver%+*}
 			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,apcu,mbstring,zip,mysql,curl,json,fpm,dev,uploadprogress})
-			ilist="$ilist apache2 $php_with_exts pkg-php-tools mariadb-server firewalld redis-server python3-pip psmisc xz-utils bzip2 man-db znc"
+			ilist="$ilist apache2 $php_with_exts pkg-php-tools mariadb-server firewalld redis-server python3-pip psmisc xz-utils bzip2 man-db"
 			# unixodbc unixodbc-dev selinux-basics selinux-policy-default auditd"
 			# libapache2-mod-$php apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
 			# Run selinux-activate(as root) to configure GRUB and PAM and to create /.autorelabel
