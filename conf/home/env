@@ -142,7 +142,7 @@ if [ "$domain" ];then
 	done
 fi
 
-vps=$hk
+vps=$kr
 
 # unset i t
 env_exported=my_length_is_nonzero
