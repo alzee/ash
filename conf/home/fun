@@ -165,10 +165,10 @@ vhost(){
 acme(){
     # Iusse certs with acme.sh, using CloudFlare API and DNS alias mode
 	local dom certdir acme cmd alias
-	local CF_Token CF_Account_ID CF_Zone_ID
-	export CF_Token=""
-	export CF_Account_ID=""
-	export CF_Zone_ID=""
+	#local CF_Token CF_Account_ID CF_Zone_ID
+	#export CF_Token=""
+	#export CF_Account_ID=""
+	#export CF_Zone_ID=""
 
 	[ -z "$1" ] && return
 
