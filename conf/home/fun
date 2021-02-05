@@ -174,7 +174,7 @@ acme(){
 
 	dom="$1"
     alias="jiei.xyz"
-	acme="~/.acme.sh/acme.sh"
+	acme=~/.acme.sh/acme.sh
 	cmd="sudo service apache2 force-reload"
 	certdir=${3:-~/cert}
 
