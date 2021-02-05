@@ -179,7 +179,7 @@ acme(){
 	certdir=${3:-~/cert}
 
 	$acme --issue -d "$dom" -d '*.'"$dom" --dns dns_cf --challenge-alias $alias
-	$acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd \"$cmd\"
+	$acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd "$cmd"
 
 	#$acme --renew -d "$dom"
 	#$acme --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
