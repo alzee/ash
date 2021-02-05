@@ -163,21 +163,26 @@ vhost(){
 }
 
 acme(){
-	# TODO parameters: --issue --renew --dns-manual --install-cert
-	local dom certdir acme cmd  CF CF_Token CF_Account_ID CF_Zone_ID
+    # Iusse certs with acme.sh, using CloudFlare API and DNS alias mode
+	local dom certdir acme cmd  CF CF_Token CF_Account_ID CF_Zone_ID alias
 	export CF_Token=""
 	export CF_Account_ID=""
 	export CF_Zone_ID=""
+
+	[ -z "$1" ] && return
+
 	dom="$1"
+    alias="challenge-alias.com"
 	acme="~/.acme.sh/acme.sh"
-	cmd="sudo systemctl restart apache2"
-	[ -z "$dom" ] && return
+	cmd="sudo service apache2 force-reload"
 	certdir=${3:-~/cert}
-	$acme --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
-	$acme --renew -d "$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
-	$acme --issue -d "$dom" -d '*.'"$dom" --dns dns_cf
-	$acme --renew -d "$dom"
+
+	$acme --issue -d "$dom" -d '*.'"$dom" --dns dns_cf --challenge-alias $alias
 	$acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd \"$cmd\"
+
+	#$acme --renew -d "$dom"
+	#$acme --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
+	#$acme --renew -d "$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
 }
 
 # print battery info
