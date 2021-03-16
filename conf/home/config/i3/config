@@ -61,6 +61,7 @@ bindsym --release Mod1+Sys_Req exec "import -window $(xwininfo | awk '/.*Window 
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+m workspace 8;exec mame
 
 # kill focused window
 bindsym $mod+Shift+q kill

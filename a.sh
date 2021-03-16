@@ -368,7 +368,7 @@ misc() {
 		sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/
 
         # so php-fpm can access mysql port
-        sudo setsebool httpd_can_network_connect 1
+        sudo setsebool -P httpd_can_network_connect 1
 	fi
 
 	# since debian default don't have selinux active
