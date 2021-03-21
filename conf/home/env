@@ -111,6 +111,7 @@ secdir=~/.sec
 
 # miscellaneous
 #t="\t"
+g="6a2f98e1cd7230fdd314adb6cfcf8c8184beadf3"
 bg=~/.config/i3/bg.png
 t=$(uname -r)
 [ "${t##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
@@ -123,15 +124,15 @@ vim_default_session=~/.vim/session/default.vim
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
 # since I only use fedora as workstation
-if [ "$ID" = fedora ]; then
-	if $(which pactl &> /dev/null); then
-		sinks=$(pactl list sinks short | awk '{print $2}')	#get sink names. ID is changing, not reliable
-		sink0=${sinks%% *}
-	fi
-	offtime=18
-	#monitors=$(xrandr | awk '/connected/ {printf $1":";getline;print $1}')
-	play="mpv --really-quiet --volume 100"
-fi
+#if [ "$ID" = fedora ]; then
+#	if $(which pactl &> /dev/null); then
+#		sinks=$(pactl list sinks short | awk '{print $2}')	#get sink names. ID is changing, not reliable
+#		sink0=${sinks%% *}
+#	fi
+#	offtime=18
+#	#monitors=$(xrandr | awk '/connected/ {printf $1":";getline;print $1}')
+#	play="mpv --really-quiet --volume 100"
+#fi
 
 if [ "$domain" ];then
 	for i in $(grep -o "\w*\.$domain" ~/.ssh/config)
