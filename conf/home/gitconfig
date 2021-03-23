@@ -18,5 +18,6 @@
     # as long as it's not a bare repo.
     hooksPath = .githooks/
 [commit]
+	gpgsign = true
 [pull]
 	ff = true
