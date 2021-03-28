@@ -3,11 +3,11 @@ setenv PS1 "[\[${yellow}${bold}\]\D{%I}\[${cyan}${bold}\]\D{%M}\[${end}${white}\
 layout new
 layout new
 # create windows
-#screen 4 mysql -uroot -p$mysql_root_pw
+screen 4 mysql -uroot -p$mysql_root_pw
 #screen 5 nethack
 #screen -t mpv 7
-#screen
-#select 0
+screen
+select 0
 
 #https://superuser.com/a/1013881/886777
 altscreen on
