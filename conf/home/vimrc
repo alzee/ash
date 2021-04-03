@@ -97,6 +97,7 @@ au BufNewFile *.asm 0r ~/.vim/templates/asm.vim | let @/='start' | /
 
 au BufNewFile md.js %d | 0r ~/.vim/templates/md.js.vim
 au FileType javascript source ~/.vim/map/javascript.vim
+au FileType typescript source ~/.vim/map/typescript.vim
 
 au FileType sql source ~/.vim/map/sql.vim
 
