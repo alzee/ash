@@ -26,8 +26,7 @@ get(){
             url='https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm'
             file=teamviewer.x86_64.rpm
             wget -O $file "$url"
-            sudo dnf install $file
-            rm $file
+            sudo dnf install $file && rm $file
             ;;
         composer)
             ;;
