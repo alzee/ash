@@ -16,6 +16,22 @@ unalias -a
 
 set -a
 
+get(){
+    local i url file
+    $i = $1
+    case "$i" in
+        teamviewer)
+            url = 'https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm'
+            file = teamviewer.x86_64.rpm
+            wget -O $file "$url"
+            sudo dnf install $file
+            rm $file
+            ;;
+        composer)
+            ;;
+    esac
+}
+
 f(){
 	if [ "$1" ]; then
         (feh -. "$@" &)
@@ -62,7 +78,7 @@ reset_mysql_root_pw(){
 	sudo mysqld_safe --skip-grant-tables --skip-networking
 }
 
-php_fucking_mssql(){
+php_mssql(){
 	echo apt install pear
 	echo pecl channel-update pecl.php.net
 	echo pecl install pdo_sqlsrv
