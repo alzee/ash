@@ -17,12 +17,14 @@ unalias -a
 set -a
 
 get(){
+	[ "$1" ] || return
+
     local i url file
-    $i = $1
+    i=$1
     case "$i" in
         teamviewer)
-            url = 'https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm'
-            file = teamviewer.x86_64.rpm
+            url='https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm'
+            file=teamviewer.x86_64.rpm
             wget -O $file "$url"
             sudo dnf install $file
             rm $file
