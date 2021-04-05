@@ -1,4 +1,4 @@
-nmap <buffer> // I//<Esc>
+nmap <buffer> // I// <Esc>
 nnoremap <space>f ofunction () {<CR>}<esc>kf<space>a
 inoremap ,f function () {<CR>}<esc>kf<space>a
 " Because xhr.js.vim have 10 lines. How to use a var?
