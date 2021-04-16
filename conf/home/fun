@@ -30,6 +30,14 @@ get(){
             ;;
         composer)
             ;;
+        vimium)
+            pushd ~/w/
+            git clone --depth 1 https://github.com/philc/vimium.git
+            pushd vimium
+            git pull https://github.com/gdh1995/vimium fix-findmode-on-ff
+            popd
+            popd
+            ;;
     esac
 }
 
