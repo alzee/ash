@@ -144,6 +144,8 @@ if [ "$domain" ];then
 fi
 
 vps=$kr
+meg=10.5.0.6
+yq=10.5.0.5
 
 # unset i t
 env_exported=my_length_is_nonzero

@@ -9,7 +9,7 @@
   "filterLinkHints": false,
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
-  "keyMappings": "map s LinkHints.activateMode\nmap S LinkHints.activateModeWithQueue\nmap <c-f> scrollFullPageDown\nmap <c-b> scrollFullPageUp\nunmap f\nunmap F\nunmap <a-f>",
+  "keyMappings": "map s LinkHints.activateMode\nmap S LinkHints.activateModeWithQueue\nmap f scrollFullPageDown\nmap b scrollFullPageUp\nmap e scrollDown\nmap y scrollUp\nunmap F\nunmap <a-f>",
   "linkHintCharacters": "12345qwertadfgzxcvb",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "about:newtab",
