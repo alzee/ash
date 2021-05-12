@@ -146,6 +146,8 @@ install_pkg() {
 	do
 		sudo $yum install -y $i > /dev/null && say "$i installed" || { echo "$i install failed" | tee -a $errlog; }
 	done
+
+	sudo $yum autoremove -y
 }
 
 addgrp() {
