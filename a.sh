@@ -94,7 +94,6 @@ add_repo() {
 }
 
 pkg_list() {
-	# TODO internet?
 	#id $user &> /dev/null || { say user $user no exist, run $0 -s to create. ; exit; }
 
 	ilist="screen nginx vim openssh-server unzip curl wireguard-tools bash-completion git"
@@ -393,6 +392,7 @@ misc() {
 
 	crontab $scriptdir/conf/templates/$distro/cron
 }
+
 _hardlinks(){
     local dotfiles
 	# hard link ~/.foo to conf/home/foo
