@@ -67,29 +67,46 @@ sudoer() {
 	cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
 }
 
-repo() {
+add_repo() {
+	say adding some repository...
+
+	case $distro in
+		fedora)
+			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
+			;;
+		rhel)
+			# The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
+			sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$distro_ver.noarch.rpm
+			sudo $yum install -y https://${distro}${distro_ver}.iuscommunity.org/ius-release.rpm
+			;;
+		debian)
+            # comment out default apt sources
+            sudo sed -i 's/^/#/' /etc/apt/sources.list
+
+			# add testing repo (latest packages)
+			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
+
+			sudo $yum update -y
+			;;
+        freebsd)
+            ;;
+	esac
 }
 
-_init() {
+pkg_list() {
 	# TODO internet?
 	#id $user &> /dev/null || { say user $user no exist, run $0 -s to create. ; exit; }
 
-	say adding some repository...
 	ilist="screen nginx vim openssh-server unzip curl wireguard-tools bash-completion git"
     # mdadm
 	case $distro in
 		fedora)
-			sudo $yum install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
 			php_with_exts=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,pecl-apcu,pecl-xdebug,mysqlnd,json,fpm,devel})
 			ilist="alacritty rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie pulseaudio alsa-utils $ilist i3 xautolock lightdm-gtk feh httpd mod_ssl mariadb-server $php_with_exts ImageMagick nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm virt-manager oathtool chromium-freeworld firefox mpv unrar @Fonts"
 			#xorg-x11-drv-nvidia compton gcl postfix aircrack-ng libpcap-devel pixiewps sway arandr tlp id3v2 jmtpfs dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg virt-manager autoconf automake dosemu obs-studio gimp blender dsniff ettercap driftnet reaver freerdp rdesktop chntpw qrencode zbar android-tools libnotify zenity wine-core wine-mono wine-common mingw64-wine-gecko mingw32-wine-gecko wine-dxvk
 			rlist="@gnome-desktop @xfce-desktop xfce* xf* fpaste asunder atril claws-mail galculator geany xarchiver gnumeric pidgin xscreensaver-base ibus-cangjie pavucontrol @LibreOffice nano eog evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution bijiben rhythmbox shotwell transmission-gtk orca empathy gedit devassistant-core vinagre totem-nautilus totem cheese file-roller baobab setroubleshoot yelp seahorse abrt jwhois esmtp gnome-disk-utility gnome-desktop3"
 			;;
 		rhel)
-			# The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
-			sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$distro_ver.noarch.rpm
-			sudo $yum install -y https://${distro}${distro_ver}.iuscommunity.org/ius-release.rpm
-
 			#nic=$(nmcli d | grep ethernet | cut -d" " -f1)
 			#sudo sed -i /ONBOOT/s/=.*/=yes/ /etc/sysconfig/network-scripts/ifcfg-$nic
 			nmcli d connect $nic
@@ -101,14 +118,6 @@ _init() {
 			rlist="mariadb-libs"
 			;;
 		debian)
-            # comment out default apt sources
-            sudo sed -i 's/^/#/' /etc/apt/sources.list
-
-			# add testing repo (latest packages)
-			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
-
-			sudo $yum update -y
-
 			php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
 			php=php${php_ver%+*}
 			php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,apcu,mbstring,zip,mysql,curl,json,fpm,dev,uploadprogress})
@@ -481,9 +490,10 @@ install_node(){
 ############### Main ###############
 
 case $1 in
-    "-a")
+    -a)
         _mkswap
-        _init
+        add_repo
+        pkg_list
         remove_pkg
         install_pkg
         sethostname
@@ -517,12 +527,11 @@ case $1 in
     -S)
         _sysctl
         ;;
-    -C)
-        ;;
     -w)
         _mkswap
         ;;
-    "")
+    -r)
+        add_repo
         ;;
     *)
         ;;
