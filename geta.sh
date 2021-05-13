@@ -14,4 +14,5 @@ f=${url##*/}
 curl -O "$url"
 
 tar xf $f
+rm $f
 mv ${f%%.*} .${f%-master*}
