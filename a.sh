@@ -2,6 +2,7 @@
 #
 # A script for quickly implementing softwares and settings after a Linux fresh installation. Mainly for Fedora semiannual upgrade purpose re-installation.
 
+[ "$UID" -eq 0 ] && echo "Do NOT use root!" && exit
 ############### Variables ###############
 user=al
 hostname=jess
@@ -66,10 +67,12 @@ sudoer() {
 	cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
 }
 
+repo() {
+}
+
 _init() {
 	# TODO internet?
 	#id $user &> /dev/null || { say user $user no exist, run $0 -s to create. ; exit; }
-	[ "$UID" -eq 0 ] && say "DO NOT use root, assohole!" && exit
 
 	say adding some repository...
 	ilist="screen nginx vim openssh-server unzip curl wireguard-tools bash-completion git"
