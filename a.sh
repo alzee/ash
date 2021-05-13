@@ -10,14 +10,13 @@ errlog=ash_error.log
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
 scriptdir=$(dirname $0)
 tempdir=$(mktemp -d XXXXX)
-node_tar='node-lts-linux.x64.tar.xz'
-node_url=$(curl -s https://nodejs.org/en/download/ | grep -o 'https://.*linux-x64.tar.xz')
 
 if [ -f /etc/os-release ]; then
 	. /etc/os-release
 	distro=$ID
 	distro_ver=$VERSION_ID
 fi
+
 case $distro in
 	fedora)
 		yum=dnf
@@ -37,8 +36,8 @@ case $distro in
 		;;
 esac
 
-t=$(uname -r)
-[ "${t##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
+kernel=$(uname -r)
+[ "${kernel##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
 
 ############### Functions ###############
 _clean(){
@@ -467,6 +466,8 @@ install_composer(){
 }
 
 install_node(){
+    node_tar='node-lts-linux.x64.tar.xz'
+    node_url=$(curl -s https://nodejs.org/en/download/ | grep -o 'https://.*linux-x64.tar.xz')
     pushd $tempdir
     curl -o $node_tar $node_url
     tar xf $node_tar
