@@ -381,14 +381,9 @@ misc() {
 
         # so php-fpm can access mysql port
         sudo setsebool -P httpd_can_network_connect 1
-	fi
 
-	# since debian default don't have selinux active
-	[ "$distro" != debian ] && chcon -Rt httpd_sys_content_t ~/w
-	sudo firewall-cmd --add-service http
-	sudo firewall-cmd --add-service https
-	sudo firewall-cmd --add-port 8080/tcp	# we use 8080 for znc
-	sudo firewall-cmd --runtime-to-permanent
+        chcon -Rt httpd_sys_content_t ~/w
+	fi
 
 	crontab $scriptdir/conf/templates/$distro/cron
 }
