@@ -1182,7 +1182,7 @@ githooks(){
     # as long as it's not a bare repo.
     if [ -d .git ]; then
         mkdir -p .githooks
-        ln -s ../.githooks/ .git/
+        ln -sf ../.githooks/ .git/
     fi
 }
 
