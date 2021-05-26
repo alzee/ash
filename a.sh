@@ -386,8 +386,8 @@ misc() {
 		#sudo ln -s ~/.vhosts /etc/httpd/conf.d/
 		sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/
 
-        # so php-fpm can access mysql port
-        sudo setsebool -P httpd_can_network_connect 1
+        sudo setsebool -P httpd_can_network_connect 1   # so php-fpm can access mysql port
+        sudo setsebool -P samba_enable_home_dirs 1
 
         chcon -Rt httpd_sys_content_t ~/w
 	fi
