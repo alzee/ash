@@ -389,7 +389,7 @@ misc() {
         sudo setsebool -P httpd_can_network_connect 1   # so php-fpm can access mysql port
         sudo setsebool -P samba_enable_home_dirs 1
 
-        chcon -Rt httpd_sys_content_t ~/w
+        sudo chcon -Rt httpd_sys_content_t ~/w
 	fi
 
 	crontab $scriptdir/conf/templates/$distro/cron
