@@ -192,7 +192,7 @@ mysqldir(){
 	serverconf=/etc/my.cnf.d/mariadb-server.cnf
 
 	mkdir -p $prefix
-	chcon -t mysqld_db_t $prefix
+	sudo chcon -t mysqld_db_t $prefix
 	sudo chown mysql:mysql $prefix
 
 	# copy this line
