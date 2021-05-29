@@ -4,7 +4,7 @@ layout new
 layout new
 # create windows
 screen 4 mysql -uroot -p$mysql_root_pw
-screen 8 cmus
+#screen 8 cmus
 screen
 select 0
 
