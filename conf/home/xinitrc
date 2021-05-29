@@ -3,7 +3,8 @@
 # vim:ft=sh
 # Run by startx
 
-userresources=$HOME/.Xresources
-[ -r "$userresources" ] && xrdb -merge "$userresources"
+# Since we don't use urxvt anymore
+# userresources=$HOME/.Xresources
+# [ -r "$userresources" ] && xrdb -merge "$userresources"
 
-exec i3
+# exec i3
