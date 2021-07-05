@@ -1417,6 +1417,10 @@ v(){
 	fi
 }
 
+p(){
+    mpv --really-quiet "$@" &
+}
+
 vim(){
 	# sudo looks for external programs, not shell builtins, and not shell functions
 	# sudo command vim "$@"
