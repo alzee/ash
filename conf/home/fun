@@ -1402,7 +1402,7 @@ m(){
 	[ $1 ] && { man $@; :; } || man bash
 }
 
-ascii(){
+ascii_of(){
 	if [ "$1" == -c ];then
 		[ "$2" -lt 256 ] || return 1
 		printf "\\$(printf '%03o' "$2")"
@@ -1420,6 +1420,10 @@ v(){
 		# $vim_default_session defined in .env
 		command vim -S $vim_default_session
 	fi
+}
+
+p(){
+    mpv --really-quiet "$@" &
 }
 
 vim(){
