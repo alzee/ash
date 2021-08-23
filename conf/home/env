@@ -110,7 +110,8 @@ secdir=~/.sec
 #w=~/w
 
 # miscellaneous
-#t="\t"
+# DRI_PRIME=1
+# t="\t"
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
 bg=~/.config/i3/bg.png
 t=$(uname -r)
