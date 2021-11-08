@@ -126,13 +126,13 @@ vim_default_session=~/.vim/session/default.vim
 
 # since I only use fedora as workstation
 if [ "$ID" = fedora ]; then
-	if $(which pactl &> /dev/null); then
+	if $(which pactl &> /dev/null) && [ -z $sink0 ]; then
 		sinks=$(pactl list sinks short | awk '{print $2}')	#get sink names. ID is changing, not reliable
 		sink0=${sinks%% *}
 	fi
-	offtime=18
+	#offtime=18
 	#monitors=$(xrandr | awk '/connected/ {printf $1":";getline;print $1}')
-	play="mpv --really-quiet --volume 100"
+	#play="mpv --really-quiet --volume 100"
 fi
 
 if [ "$domain" ];then
