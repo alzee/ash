@@ -389,7 +389,12 @@ misc() {
         sudo setsebool -P samba_enable_home_dirs 1
 
         sudo chcon -Rt httpd_sys_content_t ~/w
+
+        # run tcpdump as non-root, seems no need to add user to group
+        # https://askubuntu.com/a/632189
+        sudo setcap cap_net_raw,cap_net_admin=eip /sbin/tcpdump
 	fi
+
 
 	crontab $scriptdir/conf/templates/$distro/cron
 }
