@@ -483,6 +483,10 @@ install_composer(){
     fi
 }
 
+install_symfony(){
+    wget https://get.symfony.com/cli/installer -O - | bash
+}
+
 install_node(){
     node_tar='node-lts-linux.x64.tar.xz'
     node_url=$(curl -s https://nodejs.org/en/download/ | grep -o 'https://.*linux-x64.tar.xz')
@@ -510,6 +514,7 @@ case $1 in
         default_pool
         misc
         install_composer
+        install_symfony
         install_node
         hardlinks
         _sysctl
@@ -518,8 +523,11 @@ case $1 in
     -s)
         sudoer
         ;;
-    -c)
+    -C)
         install_composer
+        ;;
+    -S)
+        install_symfony
         ;;
     -n)
         install_node
