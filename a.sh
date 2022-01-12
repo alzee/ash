@@ -484,7 +484,8 @@ install_composer(){
 }
 
 install_symfony(){
-    wget https://get.symfony.com/cli/installer -O - | bash
+    sudo cp $scriptdir/conf/templates/$distro/symfony-cli.repo /etc/yum.repos.d/
+    sudo dnf install symfony-cli -y
 }
 
 install_node(){
