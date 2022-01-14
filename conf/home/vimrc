@@ -82,7 +82,9 @@ au BufNewFile *.py 0r ~/.vim/templates/py.vim | $
 au FileType python source ~/.vim/map/py.vim
 
 au BufNewFile *.html 0r ~/.vim/templates/html.vim | let @/='body' | /
-au FileType html source ~/.vim/map/html.vim | set et ts=2 sw=2
+au FileType html source ~/.vim/map/html.vim | set ts=2 sw=2
+au FileType css set ts=2 sw=2
+au FileType scss set ts=2 sw=2
 
 au BufNewFile *.twig 0r ~/.vim/templates/twig.vim | let @/='body' | /
 au FileType twig set ft=html
@@ -90,7 +92,7 @@ au FileType twig set ft=html
 
 au BufNewFile *.php 0r ~/.vim/templates/php.vim | let @/='class \zsFuck' | %s//\=expand("%:t:r")/e
 au BufNewFile i.php %d | 0r ~/.vim/templates/i.php.vim
-au FileType php source ~/.vim/map/php.vim | set sts=4 et
+au FileType php source ~/.vim/map/php.vim | set sts=4
 
 au BufNewFile *.asm 0r ~/.vim/templates/asm.vim | let @/='start' | /
 " au FileType asm source ~/.vim/map/asm.vim
