@@ -16,6 +16,19 @@ unalias -a
 
 set -a
 
+drupalnew(){
+    [ -z "$1" ] && echo Please type directory name. && return
+
+    local f="https://raw.githubusercontent.com/github/gitignore/main/Drupal.gitignore"
+
+    composer cre drupal/recommended-project $1
+    cd $1
+    composer req drush/drush drupal/{pathauto,metatag,admin_toolbar}
+    composer req --dev drupal/devel
+    wget "$f" -O .gitignore
+    git init
+}
+
 z(){
     local p=/.wine/drive_c/Program\ Files/Plants\ vs\ Zombies/PlantsVsZombies.exe
     wine ~/.wine/drive_c/Program\ Files/Plants\ vs\ Zombies/PlantsVsZombies.exe -changedir &> /dev/null &
