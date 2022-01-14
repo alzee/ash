@@ -484,8 +484,10 @@ install_composer(){
 }
 
 install_symfony(){
-    sudo cp $scriptdir/conf/templates/$distro/symfony-cli.repo /etc/yum.repos.d/
-    sudo dnf install symfony-cli -y
+	if [ "$distro" = fedora ]; then
+        sudo cp $scriptdir/conf/templates/$distro/symfony-cli.repo /etc/yum.repos.d/
+        sudo dnf install symfony-cli -y
+    fi
 }
 
 install_node(){
@@ -494,8 +496,9 @@ install_node(){
     pushd $tempdir
     curl -o $node_tar $node_url
     tar xf $node_tar
-    sudo cp -a node-*/{bin/,include/,lib/,share/} /usr/local/
+    sudo cp -a node-*/{bin/,include/,lib/,share/} ~/.local/
     popd
+    npm -g install n ionic sass
 }
 
 ############### Main ###############
@@ -530,7 +533,7 @@ case $1 in
     -S)
         install_symfony
         ;;
-    -n)
+    -N)
         install_node
         ;;
     -d)
