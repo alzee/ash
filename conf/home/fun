@@ -19,14 +19,16 @@ set -a
 drupalnew(){
     [ -z "$1" ] && echo Please type directory name. && return
 
-    local f="https://raw.githubusercontent.com/github/gitignore/main/Drupal.gitignore"
+    local f="https://raw.githubusercontent.com/alzee/gitignore/main/Drupal.gitignore"
 
     composer cre drupal/recommended-project $1
     cd $1
     composer req drush/drush drupal/{pathauto,metatag,admin_toolbar}
     composer req --dev drupal/devel
-    wget "$f" -O .gitignore
+    mkdir bin
+    ln -s ../vendor/bin/drush bin/
     git init
+    wget "$f" -O .gitignore
 }
 
 z(){
