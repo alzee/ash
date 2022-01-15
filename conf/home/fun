@@ -19,16 +19,26 @@ set -a
 drupalnew(){
     [ -z "$1" ] && echo Please type directory name. && return
 
-    local f="https://raw.githubusercontent.com/alzee/gitignore/main/Drupal.gitignore"
+    local f d locale
+    d=$1
+    locale=zh
+    f=~/w/gitignore/Drupal.gitignore
 
-    composer cre drupal/recommended-project $1
-    cd $1
-    composer req drush/drush drupal/{pathauto,metatag,admin_toolbar}
+    composer cre drupal/recommended-project $d
+    cd $d
+    composer req drush/drush drupal/{token,ctools,pathauto,metatag,admin_toolbar,adminimal_theme}
     composer req --dev drupal/devel
     mkdir bin
     ln -s ../vendor/bin/drush bin/
     git init
-    wget "$f" -O .gitignore
+    cp "$f" .gitignore
+
+    # f="https://raw.githubusercontent.com/alzee/gitignore/main/Drupal.gitignore"
+    # wget "$f" -O .gitignore
+
+    bin/drush si --db-url mysql://root:toor@localhost:3306/$d --account-pass 111 -y
+    bin/drush pm:enable token ctools pathauto admin_toolbar metatag language locale devel -y
+    bin/drush theme:enable adminimal_theme
 }
 
 z(){
