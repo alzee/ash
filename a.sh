@@ -498,7 +498,7 @@ install_node(){
     tar xf $node_tar
     sudo cp -a node-*/{bin/,include/,lib/,share/} ~/.local/
     popd
-    npm -g install n ionic sass
+    npm -g install n sass @angular/cli ionic
 }
 
 ############### Main ###############
