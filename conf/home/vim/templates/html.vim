@@ -8,7 +8,6 @@
 <meta name="author" content="">
 <meta name="keyword" content="">
 <title></title>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <!--
 <link rel="shortcut icon" href="data:image/x-icon;" type="image/x-icon" />
@@ -32,7 +31,7 @@
 	<footer>
 	</footer>
 
-  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
 

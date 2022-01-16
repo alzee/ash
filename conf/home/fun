@@ -16,6 +16,23 @@ unalias -a
 
 set -a
 
+warmane(){
+    local interface
+    interface=enp0s26u1u1
+    ip link show $interface > /dev/null || return
+
+    gateway=$(ip r show default dev $interface | awk '{print $3}')
+
+    # auth
+    sudo ip route add 188.138.40.87 via $gateway dev $interface
+    # Icecrown 8092
+    sudo ip route add 51.91.106.148 via $gateway dev $interface
+    # Blackrock 8095 & Lordaeron 8091
+    sudo ip route add 51.178.64.97 via $gateway dev $interface
+    # Frostmourne 8096
+    sudo ip route add 51.178.64.87 via $gateway dev $interface
+}
+
 drupalnew(){
     [ -z "$1" ] && echo Please type directory name. && return
 
