@@ -498,7 +498,10 @@ install_node(){
     tar xf $node_tar
     sudo cp -a node-*/{bin/,include/,lib/,share/} ~/.local/
     popd
-    npm -g install n sass @angular/cli ionic
+    npm -g install n
+	if [ "$distro" = fedora ]; then
+        npm -g install sass @angular/cli ionic
+    fi
 }
 
 ############### Main ###############
