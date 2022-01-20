@@ -501,6 +501,7 @@ install_node(){
     npm -g install n
 	if [ "$distro" = fedora ]; then
         npm -g install sass @angular/cli ionic
+        # npm -g install cordova cordova-res
     fi
 }
 
