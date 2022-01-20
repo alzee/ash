@@ -500,7 +500,7 @@ install_node(){
     popd
     npm -g install n
 	if [ "$distro" = fedora ]; then
-        npm -g install sass @angular/cli ionic
+        npm -g install sass @angular/cli @ionic/cli
         # npm -g install cordova cordova-res
     fi
 }
