@@ -60,6 +60,37 @@ drupalnew(){
     bin/drush pm:enable token ctools pathauto admin_toolbar metatag devel -y
     # bin/drush pm:enable language locale -y # no need since they will be enabled if not install as en
     bin/drush theme:enable adminimal_theme
+    bin/drush cset adminimal_theme.settings disable_google_fonts 1
+    
+    # Setup development environment
+    chmod 755 web/sites/default/
+    chmod 644 web/sites/default/settings.php
+
+    cp web/sites/example.settings.local.php web/sites/default/settings.local.php
+    # Uncomment to load settings.local.php
+    sed -i "/# if .*settings.local.php/,+2s/# //" web/sites/default/settings.php
+    # Uncomment to disable render cache
+    sed -i  "/^# \$settings.*render/s/# //" web/sites/default/settings.local.php
+    # Uncomment to disable dynamic page cache
+    sed -i  "/^# \$settings.*dynamic_page_cache/s/# //" web/sites/default/settings.local.php
+    # Uncomment to disable **Internal page** cache
+    sed -i  "/^# \$settings.*\<page\>/s/# //" web/sites/default/settings.local.php
+    # debug true
+    cp web/sites/default/default.services.yml web/sites/default/services.yml
+    sed -i "/debug: false/s/false/true/" web/sites/default/services.yml
+
+    chmod 555 web/sites/default/
+    chmod 444 web/sites/default/{settings.php,settings.local.php,services.yml}
+
+    # Custom config
+    bin/drush cset metatag.metatag_defaults.front tags.title '[site:name]' -y
+    bin/drush cset system.theme admin adminimal_theme -y
+
+    # TODO
+    # menu settings can't export/import
+
+    # Export config
+    bin/drush cex -y
 }
 
 z(){
