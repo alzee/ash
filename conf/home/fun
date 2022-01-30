@@ -87,6 +87,8 @@ drupalnew(){
     # Custom config
     bin/drush cset metatag.metatag_defaults.front tags.title '[site:name]' -y
     bin/drush cset system.theme admin adminimal_theme -y
+    bin/drush cset system.date country.default CN -y
+    bin/drush cset system.date first_day 1 -y
     # bin/drush cset adminimal_theme.settings disable_google_fonts 1
 
     # TODO
