@@ -36,13 +36,16 @@ warmane(){
 drupalnew(){
     [ -z "$1" ] && echo Please type directory name. && return
 
-    local gitignore name locale user mail pass
+    local gitignore name locale user mail pass site_path
     name=$1
     user=z
+    db_user=root
+    db_pass=toor
     mail=z@alz.ee
     pass=111
     locale=zh-hans
     gitignore=~/w/gitignore/Drupal.gitignore
+    site_path=web/sites/default
 
     composer cre drupal/recommended-project $name
     cd $name
@@ -56,35 +59,35 @@ drupalnew(){
     # gitignore="https://raw.githubusercontent.com/alzee/gitignore/main/Drupal.gitignore"
     # wget "$gitignore" -O .gitignore
 
-    bin/drush si --locale $locale  --db-url mysql://root:toor@localhost:3306/$name --site-mail $mail --account-name $user --account-mail $mail --account-pass $pass -y
+    bin/drush si --locale $locale  --db-url mysql://$db_user:$db_pass@localhost:3306/$name --site-mail $mail --account-name $user --account-mail $mail --account-pass $pass -y
     bin/drush pm:enable token ctools pathauto admin_toolbar metatag devel -y
     # bin/drush pm:enable language locale -y # no need since they will be enabled if not install as en
     bin/drush theme:enable adminimal_theme
-    bin/drush cset adminimal_theme.settings disable_google_fonts 1
     
     # Setup development environment
-    chmod 755 web/sites/default/
-    chmod 644 web/sites/default/settings.php
+    chmod 755 $site_path/
+    chmod 644 $site_path/settings.php
 
-    cp web/sites/example.settings.local.php web/sites/default/settings.local.php
+    cp web/sites/example.settings.local.php $site_path/settings.local.php
     # Uncomment to load settings.local.php
-    sed -i "/# if .*settings.local.php/,+2s/# //" web/sites/default/settings.php
+    sed -i "/# if .*settings.local.php/,+2s/# //" $site_path/settings.php
     # Uncomment to disable render cache
-    sed -i  "/^# \$settings.*render/s/# //" web/sites/default/settings.local.php
+    sed -i  "/^# \$settings.*render/s/# //" $site_path/settings.local.php
     # Uncomment to disable dynamic page cache
-    sed -i  "/^# \$settings.*dynamic_page_cache/s/# //" web/sites/default/settings.local.php
+    sed -i  "/^# \$settings.*dynamic_page_cache/s/# //" $site_path/settings.local.php
     # Uncomment to disable **Internal page** cache
-    sed -i  "/^# \$settings.*\<page\>/s/# //" web/sites/default/settings.local.php
+    sed -i  "/^# \$settings.*\<page\>/s/# //" $site_path/settings.local.php
     # debug true
-    cp web/sites/default/default.services.yml web/sites/default/services.yml
-    sed -i "/debug: false/s/false/true/" web/sites/default/services.yml
+    cp $site_path/default.services.yml $site_path/services.yml
+    sed -i "/debug: false/s/false/true/" $site_path/services.yml
 
-    chmod 555 web/sites/default/
-    chmod 444 web/sites/default/{settings.php,settings.local.php,services.yml}
+    chmod 555 $site_path/
+    chmod 444 $site_path/{settings.php,settings.local.php,services.yml}
 
     # Custom config
     bin/drush cset metatag.metatag_defaults.front tags.title '[site:name]' -y
     bin/drush cset system.theme admin adminimal_theme -y
+    # bin/drush cset adminimal_theme.settings disable_google_fonts 1
 
     # TODO
     # menu settings can't export/import
