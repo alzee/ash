@@ -4,7 +4,8 @@
             "composer/installers": true,
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
-            "ocramius/package-versions": true
+            "ocramius/package-versions": true,
+            "symfony/flex": true
         }
     },
     "repositories": {
