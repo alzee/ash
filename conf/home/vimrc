@@ -39,7 +39,7 @@ set nofoldenable
 """""""""""""""""""""""""""""" global mappings
 nmap <space>h :h<CR>:only<CR>
 nmap <space>w :w<CR>
-nmap <space>q :q<CR>
+nmap <space>q :q!<CR>
 nmap <space>x :x<CR>
 nmap <space>s :mks! $vim_default_session<CR>
 nmap <space>X :set cursorcolumn! cursorline!<cr>
