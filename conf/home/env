@@ -128,8 +128,13 @@ vim_default_session=~/.vim/session/default.vim
 # since I only use fedora as workstation
 if [ "$ID" = fedora ]; then
 	if $(which pactl &> /dev/null) && [ -z $sink0 ]; then
-		sinks=$(pactl list sinks short | awk '{print $2}')	#get sink names. ID is changing, not reliable
-		sink0=${sinks%% *}
+		# sinks=$(pactl list sinks short | awk '{print $2}')	#get sink names. ID is changing, not reliable
+		# sink0=${sinks%% *}
+        # https://github.com/hastinbe/i3-volume/blob/master/volume#L686
+        # sink0=$(pactl info | awk -F': ' '/^Default Sink: /{print $2}')
+        # https://github.com/hastinbe/i3-volume/pull/36
+        # sink0=$(pactl get-default-sink)
+        sink0=@DEFAULT_SINK@
 	fi
 	#offtime=18
 	#monitors=$(xrandr | awk '/connected/ {printf $1":";getline;print $1}')
