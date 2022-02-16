@@ -496,7 +496,7 @@ install_node(){
     pushd $tempdir
     curl -o $node_tar $node_url
     tar xf $node_tar
-    sudo cp -a node-*/{bin/,include/,lib/,share/} ~/.local/
+    cp -a node-*/{bin/,include/,lib/,share/} ~/.local/
     popd
     npm -g install n
 	if [ "$distro" = fedora ]; then
