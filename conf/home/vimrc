@@ -29,7 +29,9 @@ set nrformats-=octal
 set incsearch
 set hlsearch
 syntax on
-let c_comment_strings=1
+let c_comment_strings = 1
+" https://github.com/2072/PHP-Indenting-for-VIm/issues/56#issuecomment-285954208
+let PHP_vintage_case_default_indent = 1
 packadd! matchit
 set foldmethod=indent
 set foldlevel=1
