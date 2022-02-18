@@ -29,9 +29,15 @@ font pango:monospace 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $sink0 +2%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $sink0 -2%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sink0 toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 bindsym $mod+equal exec --no-startup-id pactl set-sink-volume $sink0 +2%    # for sway compatibility
 bindsym $mod+plus exec --no-startup-id pactl set-sink-volume $sink0 +2%
 bindsym $mod+minus exec --no-startup-id pactl set-sink-volume $sink0 -2%
@@ -44,6 +50,7 @@ bindsym $mod+Shift+minus exec --no-startup-id cmus-remote -v -5%
 
 bindsym $mod+slash exec i3lock -c 1a1a1a -e
 
+bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+semicolon exec --no-startup-id i3-dmenu-desktop
 
 # To switch back to the previously focused workspace
@@ -61,6 +68,7 @@ bindsym --release Mod1+Sys_Req exec "import -window $(xwininfo | awk '/.*Window 
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+b workspace 2;exec chromium-freeworld
 bindsym $mod+Shift+m workspace 8;exec mame
 
 # kill focused window
