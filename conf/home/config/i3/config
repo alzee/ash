@@ -50,7 +50,7 @@ bindsym $mod+Shift+minus exec --no-startup-id cmus-remote -v -5%
 
 bindsym $mod+slash exec i3lock -c 1a1a1a -e
 
-bindsym $mod+d exec --no-startup-id dmenu_run
+# bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+semicolon exec --no-startup-id i3-dmenu-desktop
 
 # To switch back to the previously focused workspace
