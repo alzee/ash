@@ -18,7 +18,7 @@ set -a
 
 warmane(){
     local interface
-    interface=enp0s26u1u1
+    interface=$(ip link | grep -o 'enp0s2\w*')
     ip link show $interface > /dev/null || return
 
     gateway=$(ip r show default dev $interface | awk '{print $3}')
