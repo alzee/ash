@@ -16,3 +16,7 @@ feh --bg-fill $bg
 
 #i3-msg workspace 1
 i3-sensible-terminal
+
+touchpad=$(xinput --list --name-only | grep -i touchpad)
+[ "$touchpad" ] &&
+    xinput --set-prop "$touchpad" 'libinput Tapping Enabled' 1
