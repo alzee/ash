@@ -497,7 +497,8 @@ install_node(){
     tar xf $node_tar
     cp -a node-*/{bin/,include/,lib/,share/} ~/.local/
     popd
-    npm -g install n
+	PATH=$PATH:$HOME/.local/bin
+    N_PREFIX=~/.local npm -g install n
 	if [ "$distro" = fedora ]; then
         npm -g install sass @angular/cli @ionic/cli
         # npm -g install cordova cordova-res
