@@ -102,7 +102,7 @@ pkg_list() {
     case $distro in
         fedora)
             php_with_exts=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,pecl-apcu,pecl-xdebug,mysqlnd,json,fpm,devel})
-            ilist="alacritty rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie alsa-utils $ilist i3 xautolock lightdm-gtk feh httpd mod_ssl mariadb-server $php_with_exts ImageMagick nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm virt-manager oathtool chromium-freeworld firefox mpv unrar @Fonts rust cargo"
+            ilist="dnf-automatic alacritty rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie alsa-utils $ilist i3 xautolock lightdm-gtk feh httpd mod_ssl mariadb-server $php_with_exts ImageMagick nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm virt-manager oathtool chromium-freeworld firefox mpv unrar @Fonts rust cargo"
             # remmina
             # https://github.com/rdesktop/rdesktop/wiki/Network-Level-Authentication-(NLA))
             # rdesktop krb5-workstation
@@ -404,6 +404,8 @@ misc() {
         # run tcpdump as non-root, seems no need to add user to group
         # https://askubuntu.com/a/632189
         sudo setcap cap_net_raw,cap_net_admin=eip /sbin/tcpdump
+
+        sudo systemctl enable --now dnf-automatic.timer
     fi
 
     crontab $scriptdir/conf/templates/$distro/cron
