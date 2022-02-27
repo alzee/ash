@@ -585,41 +585,6 @@ vpaste(){
 	fi
 }
 
-wordpress(){
-	if [ "$1" == -d ]; then
-		curl -L https://wordpress.org/latest.tar.gz -o wordpress.tar.gz
-		return
-	fi
-	# create a bunch of wordpress demos
-	# make sure httpd is running and httpd user (usually 'apache') have write permission for creating wp-config.php
-	# and the selinux thing
-	# TODO parameters
-
-	local i sample dbhost domain dbname dbuser dbpass
-	sample=wordpress/
-	dbhost=localhost
-	domain=emma
-	dbname=wordpress
-	dbuser=root
-	dbpass=dot
-
-	mysql -h $dbhost -u$dbuser -p$dbpass -e "create database if not exists $dbname;"
-	for i in {a..h}
-	do
-		cp $sample $i -r
-		chcon --reference=$sample $i -R
-		echo -e ${yellow}${bold}creating wp-config.php${end}
-		curl -d "dbname=$dbname&uname=$dbuser&pwd=$dbpass&dbhost=localhost&prefix=${i}_&submit=Submit" "${domain}/${i}/wp-admin/setup-config.php?step=2"
-		sed -i "/Happy/i define('FS_METHOD', 'direct');" ${i}/wp-config.php	# no fucking ftp
-		# why error occurs if I put dos2unix before sed?
-		# dos2unix: Failed to change the owner and group of temporary output file h/d2utmppQzwKT: Operation not permitted
-		dos2unix ${i}/wp-config.php # why the wp-config[-sample].php's fileformat is fucking [dos]?
-		echo -e ${yellow}${bold}installing database.${end} # -m(--max-time 10) to prevent some hanging for 75 seconds shit, fucking gfw?
-		curl -m 10 -d "weblog_title=sisters&user_name=admin&admin_password=admin&pass1-text=admin&admin_password2=admin&pw_weak=on&admin_email=a@a.com&Submit='Install WordPress'" "${domain}/${i}/wp-admin/install.php?step=2"
-	done
-
-}
-
 # change gnome-terminal profile preferences
 gt(){
 	local id schema k v s
