@@ -357,6 +357,10 @@ misc() {
 
 		# use mysql native password insead of system user credentials
 		sudo mysql -e "use mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'"
+        # This way will disallow `sudo mysql'
+        # sudo mysql -e "alter user root@localhost identified by 'toor'"
+        # This way will allow `sudo mysql'
+        sudo mysqladmin -u root password toor
 		sudo mysql -e "FLUSH PRIVILEGES"
 
 		sudo systemctl stop nginx redis-server
