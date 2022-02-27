@@ -5,7 +5,7 @@
 [ "$UID" -eq 0 ] && echo "Do NOT use root!" && exit
 ############### Variables ###############
 user=al
-hostname=jess
+hostname=ash
 errlog=ash_error.log
 
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
