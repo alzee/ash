@@ -84,7 +84,7 @@ add_repo() {
             sudo sed -i 's/^/#/' /etc/apt/sources.list
 
 			# add testing repo (latest packages)
-			sudo cp $scriptdir/conf/templates/debian/sources_z.list /etc/apt/sources.list.d/
+			sudo cp $scriptdir/conf/templates/debian/testing.list /etc/apt/sources.list.d/
 
 			sudo $yum update -y
 			;;
