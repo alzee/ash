@@ -104,31 +104,6 @@ z(){
     wine ~/.wine/drive_c/Program\ Files/Plants\ vs\ Zombies/PlantsVsZombies.exe -changedir &> /dev/null &
 }
 
-get(){
-	[ "$1" ] || return
-
-    local i url file
-    i=$1
-    case "$i" in
-        teamviewer)
-            url='https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm'
-            file=teamviewer.x86_64.rpm
-            wget -O $file "$url"
-            sudo dnf install $file && rm $file
-            ;;
-        composer)
-            ;;
-        vimium)
-            pushd ~/w/
-            git clone --depth 1 https://github.com/philc/vimium.git
-            pushd vimium
-            git pull https://github.com/gdh1995/vimium fix-findmode-on-ff
-            popd
-            popd
-            ;;
-    esac
-}
-
 f(){
 	if [ "$1" ]; then
         (feh -. "$@" &)
@@ -189,7 +164,7 @@ php_mssql(){
 	echo Okay, enjoy your fucking MSSQL with php.
 }
 
-p(){
+z_ping(){
 	local c ip
 	# get ip address
 	ip=$(hostname -I)
@@ -439,11 +414,6 @@ cmdnotfound(){
 		# who_is her? OR Who is her?
 		tts "${cmd//_/ }"
 	fi
-}
-
-tts(){
-	# speech synthesis
-	echo "$@"
 }
 
 D(){
