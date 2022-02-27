@@ -2,5 +2,3 @@ SHELL=/bin/bash
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 #MAILTO=root
 
-# -y can't answer all
-#5 5 * * * sudo apt update; sudo apt upgrade -y
