@@ -703,7 +703,6 @@ am(){
             sudo service $i start
         done
 	fi
-
 }
 
 mysqldir(){
