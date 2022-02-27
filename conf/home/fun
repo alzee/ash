@@ -61,10 +61,11 @@ drupalnew(){
 
     bin/drush si --locale $locale  --db-url mysql://$db_user:$db_pass@localhost:3306/$name \
         --site-mail $mail --account-name $user --account-mail $mail --account-pass $pass -y
+
     bin/drush pm:enable token ctools pathauto admin_toolbar metatag devel -y
     # bin/drush pm:enable language locale -y # no need since they will be enabled if not install as en
     bin/drush theme:enable adminimal_theme
-    
+
     # Setup development environment
     chmod 755 $site_path/
     chmod 644 $site_path/settings.php
@@ -105,39 +106,39 @@ z(){
 }
 
 f(){
-	if [ "$1" ]; then
+    if [ "$1" ]; then
         (feh -. "$@" &)
-	fi
+    fi
 }
 
 wgz(){
-	local wg_if wg_ip wg_port wg_key wg_peer wg_allowdips wg_endpoint sec
-	wg_if=wg0
-	wg_ip=10.5.5.5/24
-	wg_port=51820
-	wg_peer=
-	wg_allowedips=
-	wg_endpoint=
-	wg_key=
-	sec=30
+    local wg_if wg_ip wg_port wg_key wg_peer wg_allowdips wg_endpoint sec
+    wg_if=wg0
+    wg_ip=10.5.5.5/24
+    wg_port=51820
+    wg_peer=
+    wg_allowedips=
+    wg_endpoint=
+    wg_key=
+    sec=30
 
-	ip link add $wg_if type wireguard
-	ip addr add dev $wg_if $wg_ip
-	ip link set $wg_if up
+    ip link add $wg_if type wireguard
+    ip addr add dev $wg_if $wg_ip
+    ip link set $wg_if up
 
-	wg set $wg_if private-key $wg_key
-	wg set $wg_if listen-port $wg_port
-	wg set $wg_if peer $wg_peer allowed-ips $wg_allowedips endpoint $wg_endpoint persistent-keepalive $sec
+    wg set $wg_if private-key $wg_key
+    wg set $wg_if listen-port $wg_port
+    wg set $wg_if peer $wg_peer allowed-ips $wg_allowedips endpoint $wg_endpoint persistent-keepalive $sec
 }
 
 mouse_speed_by_ctm(){
-	# xinput set-prop 8 156 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
-	# id may change, use name instead
-	local x y z
-	if is_num $1 && [ "$mouse" -a "$ctm" ]; then
-		x=$1 y=$1 z=$1
-		xinput set-prop "$mouse" "$ctm" $x, 0, 0, 0, $y, 0, 0, 0, $z
-	fi
+    # xinput set-prop 8 156 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+    # id may change, use name instead
+    local x y z
+    if is_num $1 && [ "$mouse" -a "$ctm" ]; then
+        x=$1 y=$1 z=$1
+        xinput set-prop "$mouse" "$ctm" $x, 0, 0, 0, $y, 0, 0, 0, $z
+    fi
 }
 
 enable_console(){
@@ -146,804 +147,804 @@ enable_console(){
 }
 
 reset_mysql_root_pw(){
-	local i
-	sudo mysqld_safe --skip-grant-tables --skip-networking
+    local i
+    sudo mysqld_safe --skip-grant-tables --skip-networking
 }
 
 php_mssql(){
-	echo apt install pear
-	echo pecl channel-update pecl.php.net
-	echo pecl install pdo_sqlsrv
-	echo apt install unixodbc{,-dev}
-	echo Remember the fucking ln in /etc/php/...
-	echo dpkg -i msodbcsql17.... where to find? the fucing microsoft.com
-	echo See some libmsodbcsql-17.3.so.1.1 file not found shit?
-	echo ldd /opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.3.so.1.1
-	echo and you will see libcrypto.so.1.0.2 and libssl.so.1.0.2 not found
-	echo Now install libssl1.0.2, can not find in repo? Directly download from packages.debian.org
-	echo Okay, enjoy your fucking MSSQL with php.
+    echo apt install pear
+    echo pecl channel-update pecl.php.net
+    echo pecl install pdo_sqlsrv
+    echo apt install unixodbc{,-dev}
+    echo Remember the fucking ln in /etc/php/...
+    echo dpkg -i msodbcsql17.... where to find? the fucing microsoft.com
+    echo See some libmsodbcsql-17.3.so.1.1 file not found shit?
+    echo ldd /opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.3.so.1.1
+    echo and you will see libcrypto.so.1.0.2 and libssl.so.1.0.2 not found
+    echo Now install libssl1.0.2, can not find in repo? Directly download from packages.debian.org
+    echo Okay, enjoy your fucking MSSQL with php.
 }
 
 z_ping(){
-	local c ip
-	# get ip address
-	ip=$(hostname -I)
-	if [ "$ip" = 127.0.0.1 ]; then
-		# https://stackoverflow.com/a/21336679/7714132
-		ip=$(ip route get 8.8.8.8 | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
-	fi
-	c=$(awk -F'.' '{print NF-1}' <<< "$1")
-	case "$c" in
-		0)
-			ping $(cut -d'.' -f1-3 <<< $ip)."$1"
-			;;
-		1)
-			ping $(cut -d'.' -f1-2 <<< $ip)."$1"
-			;;
-		2)
-			;;
-		3)
-			ping "$1"
-			;;
-	esac
+    local c ip
+    # get ip address
+    ip=$(hostname -I)
+    if [ "$ip" = 127.0.0.1 ]; then
+        # https://stackoverflow.com/a/21336679/7714132
+        ip=$(ip route get 8.8.8.8 | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
+    fi
+    c=$(awk -F'.' '{print NF-1}' <<< "$1")
+    case "$c" in
+        0)
+            ping $(cut -d'.' -f1-3 <<< $ip)."$1"
+            ;;
+        1)
+            ping $(cut -d'.' -f1-2 <<< $ip)."$1"
+            ;;
+        2)
+            ;;
+        3)
+            ping "$1"
+            ;;
+    esac
 }
 
 e(){
-	echo -e '\e[33;1m'$@'\e[m'
+    echo -e '\e[33;1m'$@'\e[m'
 }
 
 troubleshooting(){
-	say Selinux?
-	say Any typo?
-	say Is this config file including other config files?
-	say Version?
+    say Selinux?
+    say Any typo?
+    say Is this config file including other config files?
+    say Version?
 }
 
 vhost(){
-	[ "$1" ] || return
-	if [ "$1" = -r ]; then
-		site=$2
-		# modify /etc/hosts
-		# keep /w/$site
-		return
-	fi
+    [ "$1" ] || return
+    if [ "$1" = -r ]; then
+        site=$2
+        # modify /etc/hosts
+        # keep /w/$site
+        return
+    fi
 
-	# change default vhost
-	if [ "$1" = -d ]; then
-		site="$2"
-		pushd ~/w
-		if [ -d "$site" ]; then
-			# 0/ is the vhost dir set in ~/.vhosts/00.conf
-			# filename 00.conf first read, so be the default vhost
-			ln -sfn "$2" 0
-		else
-			echo "$site" not exist
-		fi
-		popd
-		return
-	fi
+    # change default vhost
+    if [ "$1" = -d ]; then
+        site="$2"
+        pushd ~/w
+        if [ -d "$site" ]; then
+            # 0/ is the vhost dir set in ~/.vhosts/00.conf
+            # filename 00.conf first read, so be the default vhost
+            ln -sfn "$2" 0
+        else
+            echo "$site" not exist
+        fi
+        popd
+        return
+    fi
 
 
-	site=$1
-	user=z14
+    site=$1
+    user=z14
 
-	pushd ~/w
-	if [ ! -d $site ]; then
-		say Creating directory ...
-		mkdir -p $site/pub/{css,js}
-		cd $site
-		ln -s ../../../main/css/bootstrap.min.css pub/css/
-		touch TODO
-		say Initializing git ...
-		git init --quiet
-		git remote add origin git@github.com:$user/$site.git
-		# github api to create repo?
-	fi
-	popd
+    pushd ~/w
+    if [ ! -d $site ]; then
+        say Creating directory ...
+        mkdir -p $site/pub/{css,js}
+        cd $site
+        ln -s ../../../main/css/bootstrap.min.css pub/css/
+        touch TODO
+        say Initializing git ...
+        git init --quiet
+        git remote add origin git@github.com:$user/$site.git
+        # github api to create repo?
+    fi
+    popd
 
-	### ~/w/vhost/$site.conf
+    ### ~/w/vhost/$site.conf
 
-	### /etc/hosts
-	if ! grep -wq $site /etc/hosts; then
-		say Editing /etc/hosts ...
-		sudo sed -i '$a'"127.0.0.1	$site" /etc/hosts
-	fi
+    ### /etc/hosts
+    if ! grep -wq $site /etc/hosts; then
+        say Editing /etc/hosts ...
+        sudo sed -i '$a'"127.0.0.1	$site" /etc/hosts
+    fi
 }
 
 acme(){
     # Iusse certs with acme.sh, using CloudFlare API and DNS alias mode
-	local dom certdir acme cmd alias
-	#local CF_Token CF_Account_ID CF_Zone_ID
-	#export CF_Token=""
-	#export CF_Account_ID=""
-	#export CF_Zone_ID=""
+    local dom certdir acme cmd alias
+    #local CF_Token CF_Account_ID CF_Zone_ID
+    #export CF_Token=""
+    #export CF_Account_ID=""
+    #export CF_Zone_ID=""
 
-	[ -z "$1" ] && return
+    [ -z "$1" ] && return
 
-	dom="$1"
+    dom="$1"
     alias="jiei.xyz"
-	acme=~/.acme.sh/acme.sh
-	cmd="sudo service apache2 force-reload"
-	certdir=${3:-~/cert}
+    acme=~/.acme.sh/acme.sh
+    cmd="sudo service apache2 force-reload"
+    certdir=${3:-~/cert}
 
-	$acme --issue -d "$dom" -d '*.'"$dom" --dns dns_cf --challenge-alias $alias
-	$acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd "$cmd"
+    $acme --issue -d "$dom" -d '*.'"$dom" --dns dns_cf --challenge-alias $alias
+    $acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd "$cmd"
 
-	#$acme --renew -d "$dom"
-	#$acme --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
-	#$acme --renew -d "$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
+    #$acme --renew -d "$dom"
+    #$acme --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
+    #$acme --renew -d "$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
 }
 
 # print battery info
 ba(){
-	local f fd n s
-	fd=$(cat /sys/class/power_supply/BAT1/charge_full_design)
-	f=$(cat /sys/class/power_supply/BAT1/charge_full)
-	n=$(cat /sys/class/power_supply/BAT1/charge_now)
-	s=$(cat /sys/class/power_supply/BAT1/status)
-	echo charge_full/charge_full_design
-	echo $f/$fd=$(echo "scale=2;$f*100/$fd" | bc)%
-	echo charge_now/charge_full
-	echo $n/$f=$(echo "scale=2;$n*100/$f" | bc)%
-	echo $s
+    local f fd n s
+    fd=$(cat /sys/class/power_supply/BAT1/charge_full_design)
+    f=$(cat /sys/class/power_supply/BAT1/charge_full)
+    n=$(cat /sys/class/power_supply/BAT1/charge_now)
+    s=$(cat /sys/class/power_supply/BAT1/status)
+    echo charge_full/charge_full_design
+    echo $f/$fd=$(echo "scale=2;$f*100/$fd" | bc)%
+    echo charge_now/charge_full
+    echo $n/$f=$(echo "scale=2;$n*100/$f" | bc)%
+    echo $s
 }
 
 is_num(){
-	local i
+    local i
 }
 
 is_float(){
-	local i
+    local i
 }
 
 is_int(){
-	local i
-	i="$1"
+    local i
+    i="$1"
 
-	#if [[ "$i" =~ ^[-+]?[0-9]+$ ]]; then
-	#	return 0
-	#else
-	#	return 1
-	#fi
+    #if [[ "$i" =~ ^[-+]?[0-9]+$ ]]; then
+    #	return 0
+    #else
+    #	return 1
+    #fi
 
-	# this solution has integer limit
-	# https://stackoverflow.com/a/19116862/7714132
-	#if [ "$i" -eq "$i" ] 2> /dev/null; then
-	#	return 0
-	#else
-	#	return 1
-	#fi
+    # this solution has integer limit
+    # https://stackoverflow.com/a/19116862/7714132
+    #if [ "$i" -eq "$i" ] 2> /dev/null; then
+    #	return 0
+    #else
+    #	return 1
+    #fi
 
-	# https://stackoverflow.com/a/18620446/7714132
-	case ${i#[-+]} in
-		*[!0-9]* | '')
-			return 1
-			;;
-		*)
-			return 0
-			;;
-	esac
+    # https://stackoverflow.com/a/18620446/7714132
+    case ${i#[-+]} in
+        *[!0-9]* | '')
+            return 1
+            ;;
+        *)
+            return 0
+            ;;
+    esac
 }
 
 # brightness
 b(){
-	local i j k
-	k=$(cat /sys/class/backlight/intel_backlight/max_brightness)
-	
-	if [ -z "$1" ]; then
-		# print brightness if no parameters
-		j=$(cat /sys/class/backlight/intel_backlight/brightness)
-		echo $j/$k
-	else
-		i=$1
-		if is_int "$i"; then
-			[ "$i" -eq 0 ] && echo do not set to 0, you idiot! && return
-			[ "$i" -lt 0 ] && echo how can it be negative, you idiot! && return
-			[ "$i" -gt "$k" ] && echo can not bigger then "$k" && return
-			sudo sh -c "echo $i > /sys/class/backlight/intel_backlight/brightness"
-		else
-			echo give me an integer, idiot!
-		fi
-	fi
+    local i j k
+    k=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+
+    if [ -z "$1" ]; then
+        # print brightness if no parameters
+        j=$(cat /sys/class/backlight/intel_backlight/brightness)
+        echo $j/$k
+    else
+        i=$1
+        if is_int "$i"; then
+            [ "$i" -eq 0 ] && echo do not set to 0, you idiot! && return
+            [ "$i" -lt 0 ] && echo how can it be negative, you idiot! && return
+            [ "$i" -gt "$k" ] && echo can not bigger then "$k" && return
+            sudo sh -c "echo $i > /sys/class/backlight/intel_backlight/brightness"
+        else
+            echo give me an integer, idiot!
+        fi
+    fi
 }
 
 mon(){
-	# monitors layout
-	# TODO monitors amount check
-	# determine if we are in DE or WM
-	# if in DE, stop
-	# if only one, should not do xrandr
-	local i
-	#local monitors o primary pos rotate output mode height width old_width old_height width_rotate pos_y
-	#local -A mon
-	#monitors=$(xrandr | awk '/ connected/ {printf $1":";getline;print $1}')
-	#set -- $monitors
-	#if [ "$#" -lt 2 ]; then
-	#	:
-	#fi
-	#for i in $monitors
-	#do
-	#	mon+=([${i%:*}]=${i#*:})
-	#	output=${i%:*}
-	#	mode=${i#*:}
-	#	width=${mode%x*}
-	#	if [ "$old_width" ];then #-a 
-	#		if [ "$width" -gt "$old_width" ];then
-	#			width_rotate=${mode#*x}
-	#			primary=--primary
-	#			rotate=right
-	#			pos=0x0
-	#			height=${mode%x*}
-	#			pos_y=$((old_height-height))
-	#		fi
-	#	else
-	#		# width_rotate=0
-	#		primary=
-	#		rotate=normal
-	#		height=${mode#*x}
-	#		pos=${width_rotate}x${pos_y#-}
-	#	fi
-	#	o+="--output $output $primary --mode $mode --pos $pos --rotate $rotate "
-	#	old_width=$width
-	#	old_height=$height
-	#done
-	#echo $o
-	#echo ${!mon[@]}
-	#echo ${mon[@]}
-	# default.sh is a symbolic link
-	i=~/.screenlayout/default.sh
-	. $i 2> /dev/null
+    # monitors layout
+    # TODO monitors amount check
+    # determine if we are in DE or WM
+    # if in DE, stop
+    # if only one, should not do xrandr
+    local i
+    #local monitors o primary pos rotate output mode height width old_width old_height width_rotate pos_y
+    #local -A mon
+    #monitors=$(xrandr | awk '/ connected/ {printf $1":";getline;print $1}')
+    #set -- $monitors
+    #if [ "$#" -lt 2 ]; then
+    #	:
+    #fi
+    #for i in $monitors
+    #do
+    #	mon+=([${i%:*}]=${i#*:})
+    #	output=${i%:*}
+    #	mode=${i#*:}
+    #	width=${mode%x*}
+    #	if [ "$old_width" ];then #-a 
+    #		if [ "$width" -gt "$old_width" ];then
+    #			width_rotate=${mode#*x}
+    #			primary=--primary
+    #			rotate=right
+    #			pos=0x0
+    #			height=${mode%x*}
+    #			pos_y=$((old_height-height))
+    #		fi
+    #	else
+    #		# width_rotate=0
+    #		primary=
+    #		rotate=normal
+    #		height=${mode#*x}
+    #		pos=${width_rotate}x${pos_y#-}
+    #	fi
+    #	o+="--output $output $primary --mode $mode --pos $pos --rotate $rotate "
+    #	old_width=$width
+    #	old_height=$height
+    #done
+    #echo $o
+    #echo ${!mon[@]}
+    #echo ${mon[@]}
+    # default.sh is a symbolic link
+    i=~/.screenlayout/default.sh
+    . $i 2> /dev/null
 }
 
 cleanup(){
-	# should i add a cron for this?
-	### vim undo file
-	local d=~/.vim/undo/
-	find $d -mtime +15 -delete
-	### ~/.cache 
-	### /var/cache
-	### /var/log
+    # should i add a cron for this?
+    ### vim undo file
+    local d=~/.vim/undo/
+    find $d -mtime +15 -delete
+    ### ~/.cache 
+    ### /var/cache
+    ### /var/log
 }
 
 cmdnotfound(){
-	# if last command return 127 (not found), do something with it
-	# TODO how to deal with HISTCONTROL ignored command which don't have history?
-	local cmd r=$?	# r=$? must at the first line or we'll get return code of `local' builtin
-	if [ "$r" -eq 127 ]; then
-		cmd=$(HISTTIMEFORMAT= history 1 | sed 's/^ *[0-9]\+ *//')
-		# who_is her? OR Who is her?
-		tts "${cmd//_/ }"
-	fi
+    # if last command return 127 (not found), do something with it
+    # TODO how to deal with HISTCONTROL ignored command which don't have history?
+    local cmd r=$?	# r=$? must at the first line or we'll get return code of `local' builtin
+    if [ "$r" -eq 127 ]; then
+        cmd=$(HISTTIMEFORMAT= history 1 | sed 's/^ *[0-9]\+ *//')
+        # who_is her? OR Who is her?
+        tts "${cmd//_/ }"
+    fi
 }
 
 D(){
-	s -t vps 5 ssh $vps -D7777
-	s -X other
+    s -t vps 5 ssh $vps -D7777
+    s -X other
 }
 
 # switch sound output
 pa(){
-	# usage
-	# With no arg, switch between sinks
-	# With -s N, switch to sink N
-	# With -p N, switch to port N
-	# With vol N, change volume to N%
-	# With ls, list sinks and volume
+    # usage
+    # With no arg, switch between sinks
+    # With -s N, switch to sink N
+    # With -p N, switch to port N
+    # With vol N, change volume to N%
+    # With ls, list sinks and volume
 
-	local sink f
-	# f=~/.sinks
-	# [ -f "$f" ] || pactl list sinks short | awk '{print $1}' | tr -d '\n' > $f
-	# sinks=$(cat $f)
-	# sink=${sinks:0:1}
-	# sink=${sinks%%:*} # get the first sink's id
-	sink=${sinks%% *} # get the first sink name
+    local sink f
+    # f=~/.sinks
+    # [ -f "$f" ] || pactl list sinks short | awk '{print $1}' | tr -d '\n' > $f
+    # sinks=$(cat $f)
+    # sink=${sinks:0:1}
+    # sink=${sinks%%:*} # get the first sink's id
+    sink=${sinks%% *} # get the first sink name
 
-	case "$1" in
-		ls|l|"")
-			pactl list sinks | awk\
-				'BEGIN {FS="#"}{if(NR==1)printf $2"\t"; FS=" ";if(NR==2) printf $2"\t"; if(NR==3) printf $2"\t"; if(NR==10) printf $5"\t"; if(NR==53) print $3}'
-			;;
-		vol|vo|v)
-			local vl
-			if [ "$2" ]; then
-				# vl=$((65536*$2/100))
-				# pacmd set-sink-volume $sink $vl
-				vl=$2
-				pactl set-sink-volume $sink ${vl}%
-			fi
-			;;
-		m|mute)
-			pactl set-sink-mute $sink toggle
-			;;
-		sw|w)
-			sink=$2
-			sinks=${sink}${sinks/$sink/}
-			echo $sinks > $f
+    case "$1" in
+        ls|l|"")
+            pactl list sinks | awk\
+                'BEGIN {FS="#"}{if(NR==1)printf $2"\t"; FS=" ";if(NR==2) printf $2"\t"; if(NR==3) printf $2"\t"; if(NR==10) printf $5"\t"; if(NR==53) print $3}'
+                            ;;
+                        vol|vo|v)
+                            local vl
+                            if [ "$2" ]; then
+                                # vl=$((65536*$2/100))
+                                # pacmd set-sink-volume $sink $vl
+                                vl=$2
+                                pactl set-sink-volume $sink ${vl}%
+                            fi
+                            ;;
+                        m|mute)
+                            pactl set-sink-mute $sink toggle
+                            ;;
+                        sw|w)
+                            sink=$2
+                            sinks=${sink}${sinks/$sink/}
+                            echo $sinks > $f
 
-			[ "$sink" ] || return
-			# set sink
-			pacmd set-default-sink $sink
+                            [ "$sink" ] || return
+                            # set sink
+                            pacmd set-default-sink $sink
 
-			local sinkinputs
-			sinkinputs=$(pactl list sink-inputs short | awk '{print $1}')
-			for i in $sinkinputs
-			do
-				pacmd move-sink-input $i $sink
-			done
-			;;
-		port|por|po|p)
-			# set port
-			if [ "$2" ]; then
-				:
-			fi
-			;;
-	esac
-}
+                            local sinkinputs
+                            sinkinputs=$(pactl list sink-inputs short | awk '{print $1}')
+                            for i in $sinkinputs
+                            do
+                                pacmd move-sink-input $i $sink
+                            done
+                            ;;
+                        port|por|po|p)
+                            # set port
+                            if [ "$2" ]; then
+                                :
+                            fi
+                            ;;
+                    esac
+                }
 
-totp(){
-	local key sec
-	local keyfile=$(echo $secdir/totp-key/$1*)
+                totp(){
+                    local key sec
+                    local keyfile=$(echo $secdir/totp-key/$1*)
 
-	keyfile=${keyfile%% *}	# only first one
-	if [ -f $keyfile ];then
-		key=$(gpg -dq $keyfile)
-		[ "$key" ] || return
-		echo $keyfile
-		oathtool --totp -b "$key"
-		sec=$(date +%S)
-		sec=${sec#0}
-		[ $sec -ge 30 ] && let sec=60-sec || let sec=30-sec
-		echo $sec seconds left
-	else
-		echo $keyfile no found
-	fi
-}
+                    keyfile=${keyfile%% *}	# only first one
+                    if [ -f $keyfile ];then
+                        key=$(gpg -dq $keyfile)
+                        [ "$key" ] || return
+                        echo $keyfile
+                        oathtool --totp -b "$key"
+                        sec=$(date +%S)
+                        sec=${sec#0}
+                        [ $sec -ge 30 ] && let sec=60-sec || let sec=30-sec
+                        echo $sec seconds left
+                    else
+                        echo $keyfile no found
+                    fi
+                }
 
-t(){
-	if ! pidof transmission-daemon; then
-		transmission-daemon
-		sleep 0.5	# why
-	fi
-	if [ "$1" ];then
-		transmission-remote "$@"
-	else
-		transmission-remote -l
-	fi
-}
+                t(){
+                    if ! pidof transmission-daemon; then
+                        transmission-daemon
+                        sleep 0.5	# why
+                    fi
+                    if [ "$1" ];then
+                        transmission-remote "$@"
+                    else
+                        transmission-remote -l
+                    fi
+                }
 
-i(){
-	# if irssi is running
-	# are we in matrix?
-	# select irssi
-	# not running
-	# screen irssi
+                i(){
+                    # if irssi is running
+                    # are we in matrix?
+                    # select irssi
+                    # not running
+                    # screen irssi
 
-	# assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
-	local c=select
-	# assume we are in the matrix
-	if pgrep irssi; then
-		screen -S $screen -X $c irssi
-	else
-		screen -T screen 9 irssi
-	fi
+    # assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
+    local c=select
+    # assume we are in the matrix
+    if pgrep irssi; then
+        screen -S $screen -X $c irssi
+    else
+        screen -T screen 9 irssi
+    fi
 }
 
 c(){
-	# if cmus is running
-	# are we in matrix?
-	# select cmus
-	# not running
-	# screen cmus
+    # if cmus is running
+    # are we in matrix?
+    # select cmus
+    # not running
+    # screen cmus
 
-	# assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
-	local c=select
-	# assume we are in the matrix
-	if pgrep cmus; then
-		#screen -S $screen -X $c cmus
-		cmus-remote -u
-	else
-		screen -T screen 8 cmus
-		# don't need this anymore since we have setting 'resume'
-		#sleep 0.5
-		#cmus-remote -p
-		# cmus always start with the first song although shuffle is on
-		#cmus-remote -n
-	fi
+    # assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
+    local c=select
+    # assume we are in the matrix
+    if pgrep cmus; then
+        #screen -S $screen -X $c cmus
+        cmus-remote -u
+    else
+        screen -T screen 8 cmus
+        # don't need this anymore since we have setting 'resume'
+        #sleep 0.5
+        #cmus-remote -p
+        # cmus always start with the first song although shuffle is on
+        #cmus-remote -n
+    fi
 }
 
 s(){
-	local arg TERM
-	#TERM=screen
-	# we only use default command key (^Aa) in ssh
-	[ "$SSH_TTY" ] ||  arg='-e ^Ss'
+    local arg TERM
+    #TERM=screen
+    # we only use default command key (^Aa) in ssh
+    [ "$SSH_TTY" ] ||  arg='-e ^Ss'
 
-	# if we are in the matrix
-	if [ "${STY#*.}" = "$screen" ];then
-		screen "$@"
-	else
-		screen $arg -d -R -S $screen #-T $TERM
-	fi
+    # if we are in the matrix
+    if [ "${STY#*.}" = "$screen" ];then
+        screen "$@"
+    else
+        screen $arg -d -R -S $screen #-T $TERM
+    fi
 }
 
 mip(){
-	local ip
-	ip=$(curl -s 'https://api.ipify.org')
-	echo $ip
+    local ip
+    ip=$(curl -s 'https://api.ipify.org')
+    echo $ip
 }
 
 vpaste(){
-	uri="http://vpaste.net/"
-	if [ -f "$1" ]; then
-		out=`curl -s -F "text=<$1" "$uri?$2"`
-	else
-		out=`curl -s -F 'text=<-' "$uri?$1"`
-	fi
-	echo "$out"
-	if [ -x "`which xclip 2>/dev/null`" -a "$DISPLAY" ]; then
-		echo -n "$out" | xclip -i -selection primary
-		echo -n "$out" | xclip -i -selection clipboard
-	fi
+    uri="http://vpaste.net/"
+    if [ -f "$1" ]; then
+        out=`curl -s -F "text=<$1" "$uri?$2"`
+    else
+        out=`curl -s -F 'text=<-' "$uri?$1"`
+    fi
+    echo "$out"
+    if [ -x "`which xclip 2>/dev/null`" -a "$DISPLAY" ]; then
+        echo -n "$out" | xclip -i -selection primary
+        echo -n "$out" | xclip -i -selection clipboard
+    fi
 }
 
 # change gnome-terminal profile preferences
 gt(){
-	local id schema k v s
-	id=$(gsettings get org.gnome.Terminal.ProfilesList default)
-	id=${id:1:-1}
-	schema=org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${id}/
-	k=$2
-	v=$3
+    local id schema k v s
+    id=$(gsettings get org.gnome.Terminal.ProfilesList default)
+    id=${id:1:-1}
+    schema=org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${id}/
+    k=$2
+    v=$3
 
-	case "$1" in
-		""|l)
-			gsettings list-recursively $schema
-			;;
-		g)
-			gsettings get $schema $k
-			;;
-		s)
-			gsettings set $schema $k $v
-			;;
-		r)
-			gsettings range $schema $k
-			;;
-		p)	#change background transparency
-			k=background-transparency-percent
-			local pidfile=~/.gt_b_pid
+    case "$1" in
+        ""|l)
+            gsettings list-recursively $schema
+            ;;
+        g)
+            gsettings get $schema $k
+            ;;
+        s)
+            gsettings set $schema $k $v
+            ;;
+        r)
+            gsettings range $schema $k
+            ;;
+        p)	#change background transparency
+            k=background-transparency-percent
+            local pidfile=~/.gt_b_pid
 
-			# if "gterm b" is running, kill it and reset to 25
-			if [ -f "$pidfile" ]; then
-				kill $(cat $pidfile)
-				rm $pidfile
-				gsettings set $schema $k 25
-				[ "$2" ] || return 
-			fi
+            # if "gterm b" is running, kill it and reset to 25
+            if [ -f "$pidfile" ]; then
+                kill $(cat $pidfile)
+                rm $pidfile
+                gsettings set $schema $k 25
+                [ "$2" ] || return 
+            fi
 
-			# if $2 is given, use it as key value
-			[ "$2" ] && { gsettings set $schema $k $2; return; }
+            # if $2 is given, use it as key value
+            [ "$2" ] && { gsettings set $schema $k $2; return; }
 
-			# if no parameters is given
-			v=0 s=+
-			while :
-			do
-				gsettings set $schema $k $v
-				[ "$v" -eq 100 ] && s=-
-				[ "$v" -eq 0 ] && s=+
-				[ "$s" = - ] && let v-- || let v++
-			done &
-			echo $! > $pidfile
-			;;
-	esac
+            # if no parameters is given
+            v=0 s=+
+            while :
+            do
+                gsettings set $schema $k $v
+                [ "$v" -eq 100 ] && s=-
+                [ "$v" -eq 0 ] && s=+
+                [ "$s" = - ] && let v-- || let v++
+            done &
+            echo $! > $pidfile
+            ;;
+    esac
 }
 
 # a simple page crawler
 crawl(){
-	[ $1 ] || return
-	local i url l index=index.html
-	url=$1
-	[ "${url##*/}" != $index -a "${url##*/}" ] && index=${url##*/}
-	curl $url -o $index
-	url=${url%$index}
-	url=${url%/}
-	l=($(grep -io 'href="[^"]*"' $index | grep -o '[^"]*\.[^"#]*' | sort -u))
+    [ $1 ] || return
+    local i url l index=index.html
+    url=$1
+    [ "${url##*/}" != $index -a "${url##*/}" ] && index=${url##*/}
+    curl $url -o $index
+    url=${url%$index}
+    url=${url%/}
+    l=($(grep -io 'href="[^"]*"' $index | grep -o '[^"]*\.[^"#]*' | sort -u))
 
-	echo -e $red $bold
-	echo we have ${#l[@]} pages...
-	echo starting download
-	echo -e $end
+    echo -e $red $bold
+    echo we have ${#l[@]} pages...
+    echo starting download
+    echo -e $end
 
-	i=0
-	while [ $i -lt ${#l[@]} ]
-	do
-		echo -e $red $bold downloading ${l[$i]} $((i+1))/${#l[@]} $end
-		curl ${url}/${l[$i]} -o ${l[$i]}
-		let i++
-	done
+    i=0
+    while [ $i -lt ${#l[@]} ]
+    do
+        echo -e $red $bold downloading ${l[$i]} $((i+1))/${#l[@]} $end
+        curl ${url}/${l[$i]} -o ${l[$i]}
+        let i++
+    done
 }
 
 am(){
-	local start_target httpd web_server mariadb stop_target fpm i
+    local start_target httpd web_server mariadb stop_target fpm i
     mariadb=mariadb
     httpd=httpd
-	stop_target=nginx
-	case $ID in
-		debian)
+    stop_target=nginx
+    case $ID in
+        debian)
             pushd /etc/apache2/conf-enabled/
             fpm=$(echo php*)
             popd
             fpm=${fpm//.conf/}
-			httpd=apache2
-			mariadb=mysql
-			;;
-		fedora)
+            httpd=apache2
+            mariadb=mysql
+            ;;
+        fedora)
             fpm=php-fpm
-			;;
-	esac
+            ;;
+    esac
 
     web_server=$httpd
 
-	if [ "$1" = -n ]; then
+    if [ "$1" = -n ]; then
         web_server=nginx
-		stop_target=$httpd
-	fi
+        stop_target=$httpd
+    fi
 
-	# WSL do have systemctl but not working, so test with a sub-command rather than `which systemctl`
-	if systemctl list-jobs &> /dev/null; then
-		sudo systemctl stop $stop_target
-		sudo systemctl restart $web_server $mariadb $fpm
-	else
-		sudo service $stop_target stop
-		sudo service $web_server stop
-		sudo service $mariadb stop
-		sudo service $web_server start
-		sudo service $mariadb start
+    # WSL do have systemctl but not working, so test with a sub-command rather than `which systemctl`
+    if systemctl list-jobs &> /dev/null; then
+        sudo systemctl stop $stop_target
+        sudo systemctl restart $web_server $mariadb $fpm
+    else
+        sudo service $stop_target stop
+        sudo service $web_server stop
+        sudo service $mariadb stop
+        sudo service $web_server start
+        sudo service $mariadb start
         for i in $fpm
         do
             sudo service $i stop
             sudo service $i start
         done
-	fi
+    fi
 }
 
 mysqldir(){
-	local cnf=/etc/my.cnf.d/mariadb-server.cnf
-	[ "$1" ] || { grep datadir $cnf; return; }
+    local cnf=/etc/my.cnf.d/mariadb-server.cnf
+    [ "$1" ] || { grep datadir $cnf; return; }
 
-	local prefix=~/.mysql
-	local dir=$1
+    local prefix=~/.mysql
+    local dir=$1
 
-	# we need the fucking getopts
-	if [ $1 = -n ];then		# -n to create a new mysqldir
-		local dir=$2
+    # we need the fucking getopts
+    if [ $1 = -n ];then		# -n to create a new mysqldir
+        local dir=$2
 
-		mysql_install_db --datadir=${prefix}/$dir	# mysql_intall_db will do 'mkdir -p'
+        mysql_install_db --datadir=${prefix}/$dir	# mysql_intall_db will do 'mkdir -p'
 
-		cd $prefix
-		sudo chown -R mysql:mysql $dir
-		sudo chcon -R --reference=/var/lib/mysql $dir
-	fi
+        cd $prefix
+        sudo chown -R mysql:mysql $dir
+        sudo chcon -R --reference=/var/lib/mysql $dir
+    fi
 
-	sudo sed -i "/datadir=/s:/.*:${prefix}/$dir:" $cnf
-	grep datadir $cnf
+    sudo sed -i "/datadir=/s:/.*:${prefix}/$dir:" $cnf
+    grep datadir $cnf
 }
 
 smb(){
-	local sever share mountpoint user
+    local sever share mountpoint user
 
-	# -s to setup a samba service
-	# if not installed
-	sudo dnf install samba
-	sudo smbpasswd -a $user
-	# edit /etc/samba/smb.cnf
-	sudo systemctl restart smb
-	# firewalld
-	# selinux
+    # -s to setup a samba service
+    # if not installed
+    sudo dnf install samba
+    sudo smbpasswd -a $user
+    # edit /etc/samba/smb.cnf
+    sudo systemctl restart smb
+    # firewalld
+    # selinux
 
-	# client side
-	sudo mount.cifs //$server/$share $mountpoint -o guest,user=guest,uid=1000
+    # client side
+    sudo mount.cifs //$server/$share $mountpoint -o guest,user=guest,uid=1000
 
-	# if permission denied, should be selinux
+    # if permission denied, should be selinux
 }
 
 nfs(){
-	# server side
-	# sudo systemctl restart nfs
-	# edit /etc/exports
-	# man exports
+    # server side
+    # sudo systemctl restart nfs
+    # edit /etc/exports
+    # man exports
 
-	# exportfs -ra
+    # exportfs -ra
 
-	# client side
-	# mount server:share_dir somedir
-	:
+    # client side
+    # mount server:share_dir somedir
+    :
 }
 
 # assign array a to array b
 assign_array(){
-	local a=$1
-	unset b
-	# declare array b as associaitve if a is
-	declare -A $a 2> /dev/null && declare -A $b
+    local a=$1
+    unset b
+    # declare array b as associaitve if a is
+    declare -A $a 2> /dev/null && declare -A $b
 
-	for i in $(eval echo \${!$a[@]})
-	do
-		eval $b[$i]=\${$a[$i]}
-	done
+    for i in $(eval echo \${!$a[@]})
+    do
+        eval $b[$i]=\${$a[$i]}
+    done
 }
 
 # get key of the value in an array
 getkey(){
-	# $1 value, $2 array
-	local i v=$1 a=$2
-	# assign_array $2 $a
-	for i in $(eval echo \${!$a[@]})
-	do
-		#echo $i
-		eval [ "$v" == \${$a[$i]} ] && echo $i && return 0
-	done
-	return 1
+    # $1 value, $2 array
+    local i v=$1 a=$2
+    # assign_array $2 $a
+    for i in $(eval echo \${!$a[@]})
+    do
+        #echo $i
+        eval [ "$v" == \${$a[$i]} ] && echo $i && return 0
+    done
+    return 1
 }
 
 dedup(){
-	local i md5=$1 md5set=$2
-	for i in $md5set
-	do
-		[ $md5 == $i ] && return 1
-	done
-	return 0
+    local i md5=$1 md5set=$2
+    for i in $md5set
+    do
+        [ $md5 == $i ] && return 1
+    done
+    return 0
 }
 
 dlpages(){
-	[ -z $1 ] && return 1
-	local links url=$1 dlsum hashtable
-	[ ${url%/} == $url ] && url=$url/	# suffix '/' if it don't have one
+    [ -z $1 ] && return 1
+    local links url=$1 dlsum hashtable
+    [ ${url%/} == $url ] && url=$url/	# suffix '/' if it don't have one
 
-	mapfile links < <(curl "$url" | grep -o href=\".*\.html[^\"]*\")
-	total=${#links[@]}
+    mapfile links < <(curl "$url" | grep -o href=\".*\.html[^\"]*\")
+    total=${#links[@]}
 
-	# does not re-download the links which downloads fail
-	for i in ${links[@]}
-	do
-		i=${i#href=\"}
-		i=${i%#*}
-		md5=$(echo -n $i | md5sum | cut -d" " -f1)
-		dedup $md5 ${hashtable[@]} && curl "$url$i" -o $i && echo $((dlsum+1))/$total && hashtable+=($md5)
-		dlsum=${#hashtable[@]}
-	done
+    # does not re-download the links which downloads fail
+    for i in ${links[@]}
+    do
+        i=${i#href=\"}
+        i=${i%#*}
+        md5=$(echo -n $i | md5sum | cut -d" " -f1)
+        dedup $md5 ${hashtable[@]} && curl "$url$i" -o $i && echo $((dlsum+1))/$total && hashtable+=($md5)
+        dlsum=${#hashtable[@]}
+    done
 }
 
 itove(){
-	local i=15 j=0 p=0 c=255 cc=0
-	while :;
-	do
-		if [ $p -eq 0 ];then
-			let i-=1
-			[ $i -eq 1 ] && p=1
-		else
-			let i+=1
-			[ $i -eq 15 ] && p=0
-		fi
+    local i=15 j=0 p=0 c=255 cc=0
+    while :;
+    do
+        if [ $p -eq 0 ];then
+            let i-=1
+            [ $i -eq 1 ] && p=1
+        else
+            let i+=1
+            [ $i -eq 15 ] && p=0
+        fi
 
-		for j in `seq $i`
-		do
-			tput setaf $c
-			echo -ne ${bold}ITOVE${white}.\\t
-			if [ $cc -eq 0 ];then
-				let c-=1
-				[ $c -eq 1 ] && cc=1
-			else
-				let c+=1
-				[ $c -eq 255 ] && cc=0
-			fi
-		done
-		echo
-		#[] && c=1
-		sleep 0.3
+        for j in `seq $i`
+        do
+            tput setaf $c
+            echo -ne ${bold}ITOVE${white}.\\t
+            if [ $cc -eq 0 ];then
+                let c-=1
+                [ $c -eq 1 ] && cc=1
+            else
+                let c+=1
+                [ $c -eq 255 ] && cc=0
+            fi
+        done
+        echo
+        #[] && c=1
+        sleep 0.3
 
-	done
+    done
 
 }
 
 msg_every_pts(){
-	local i msg l=$(command ls /dev/pts/[0-9])
-	msg=${@:-"Let's take a break, see you later."}
-	for i in $l
-	do
-		echo $msg > $i
-	done
+    local i msg l=$(command ls /dev/pts/[0-9])
+    msg=${@:-"Let's take a break, see you later."}
+    for i in $l
+    do
+        echo $msg > $i
+    done
 }
 
 abreak(){
-	local i j k uptime
-	uptime=$(cut -d. -f1 /proc/uptime)
-	[ $uptime -lt 2400 ] && return # if uptime less than 40 min
-	# interval initialize to 2.5s, minus 0.1 every loop
-	#for ((i=2,j=5;i>0||j>0;j--))
-	for ((i=2,j=5;i+j>0;j--))
-	do
-		msg_every_pts
-		sleep $i.$j
+    local i j k uptime
+    uptime=$(cut -d. -f1 /proc/uptime)
+    [ $uptime -lt 2400 ] && return # if uptime less than 40 min
+    # interval initialize to 2.5s, minus 0.1 every loop
+    #for ((i=2,j=5;i>0||j>0;j--))
+    for ((i=2,j=5;i+j>0;j--))
+    do
+        msg_every_pts
+        sleep $i.$j
 
-		if [ $j == 0 ]; then
-			j=10
-			i=$((i-1))
-		fi
+        if [ $j == 0 ]; then
+            j=10
+            i=$((i-1))
+        fi
 
-		# when interval reduces to 0.5s, do 20 times and exit
-		if [ $i == 0 -a $j == 5 ]; then
-			for ((k=20;k>0;k--))
-			do
-				msg_every_pts
-				sleep $i.$j
-			done
-			#kill $(pidof vlc) &> /dev/null
-			$play $sound/break.mp3 < /dev/null &> /dev/null &
-			sleep 2.5
-			DISPLAY=:0 xset dpms force off
-			#sleep 2.3
-			#kill $(ps -C vlc | awk '/vlc/ {print $1}')
-			#kill $(pidof vlc)
-			return
-			#i=0;j=0
-		fi
-	done
+        # when interval reduces to 0.5s, do 20 times and exit
+        if [ $i == 0 -a $j == 5 ]; then
+            for ((k=20;k>0;k--))
+            do
+                msg_every_pts
+                sleep $i.$j
+            done
+            #kill $(pidof vlc) &> /dev/null
+            $play $sound/break.mp3 < /dev/null &> /dev/null &
+            sleep 2.5
+            DISPLAY=:0 xset dpms force off
+            #sleep 2.3
+            #kill $(ps -C vlc | awk '/vlc/ {print $1}')
+            #kill $(pidof vlc)
+            return
+            #i=0;j=0
+        fi
+    done
 }
 
 self_sign_cert(){
-	[ -z $1 ] && echo the key name, asshole! && return
-	local i=$1
-	local key=$i.key
-	local pem=$i.pem
-	local csr=$i.csr
-	local crt=$i.crt
+    [ -z $1 ] && echo the key name, asshole! && return
+    local i=$1
+    local key=$i.key
+    local pem=$i.pem
+    local csr=$i.csr
+    local crt=$i.crt
 
-	#openssl req -x509 -new -newkey rsa:4096 -sha256 -days 1000 -nodes -out freenode.pem -keyout freenode.pem
-	# or
-	#openssl req -nodes -newkey rsa:2048 -keyout user.pem -x509 -days 3650 -out user.pem -subj "/CN=YourNickname"
-	# or
-	# generate private key
-	openssl genrsa -des3 -out $pem 1024
-	# generate CSR
-	openssl req -new -key $pem -out $csr
-	# remove password
-	openssl rsa -in $pem -out $key
-	# issue a certificate signed with $key
-	openssl x509 -req -days 365 -in $csr -signkey $key -out $crt
+    #openssl req -x509 -new -newkey rsa:4096 -sha256 -days 1000 -nodes -out freenode.pem -keyout freenode.pem
+    # or
+    #openssl req -nodes -newkey rsa:2048 -keyout user.pem -x509 -days 3650 -out user.pem -subj "/CN=YourNickname"
+    # or
+    # generate private key
+    openssl genrsa -des3 -out $pem 1024
+    # generate CSR
+    openssl req -new -key $pem -out $csr
+    # remove password
+    openssl rsa -in $pem -out $key
+    # issue a certificate signed with $key
+    openssl x509 -req -days 365 -in $csr -signkey $key -out $crt
 }
 
 say(){
-	[ -z "$1" ] && echo "say what?" && return
-	set $@ # so we can use quotes
-	echo -en ${red}${bold}
-	while :; do
-		echo -n $1
-		shift
-		[ -z $1 ] && echo && break || echo -n " "
-		local r=`date +%N`
-		r=${r##*0}
-		local r=${r:0:1} # a 1~9 random number
-		sleep 0.$r
-	done
-	echo -en ${end}
+    [ -z "$1" ] && echo "say what?" && return
+    set $@ # so we can use quotes
+    echo -en ${red}${bold}
+    while :; do
+        echo -n $1
+        shift
+        [ -z $1 ] && echo && break || echo -n " "
+        local r=`date +%N`
+        r=${r##*0}
+        local r=${r:0:1} # a 1~9 random number
+        sleep 0.$r
+    done
+    echo -en ${end}
 }
 
 countdown(){
-	local i j from to interval
-	from=${1:-100}
-	echo -en ${red}${bold}
-	for i in `seq -w 0 $from | sort -rn`; do
-		for j in `seq ${#i}`; do
-			echo -ne \\b
-		done
-		echo -n $i
-		[ $i -gt 0 ] && sleep 1
-	done
-	echo -e ${end}
+    local i j from to interval
+    from=${1:-100}
+    echo -en ${red}${bold}
+    for i in `seq -w 0 $from | sort -rn`; do
+        for j in `seq ${#i}`; do
+            echo -ne \\b
+        done
+        echo -n $i
+        [ $i -gt 0 ] && sleep 1
+    done
+    echo -e ${end}
 }
 
 tor(){
-	local d=~/l/tor
-	$d/Browser/start-tor-browser --detach
+    local d=~/l/tor
+    $d/Browser/start-tor-browser --detach
 }
 
 grep(){
@@ -952,31 +953,31 @@ grep(){
 
 # git
 g(){
-	local comment i opt
-	case $1 in
-		"")
-			git status 2> /dev/null
-			[ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end && for i in $allrepos; do echo -e "${yellow}${bold}Checking ${italic}$i${end}"; git -C $i st; echo; done
-			;;
-		d)
-			[ "$?" -eq 128 ] && opt="-C $repoa"
-			shift
-			git $opt diff "$@"
-			;;
-		c)
-			[ "$?" -eq 128 ] && opt="-C $repoa"
-			git $opt add -A
-			shift
-			comment=${*:-nth}
-			git $opt commit -m "$comment"
-			read -p "press any key in 5 sec to git push..." -n 1 -t5 i
-			echo
-			[ -n "$i" ] && echo -e "\nstarting push..." && git $opt push
-			;;
-		*)
-			git "$@"
-			;;
-	esac
+    local comment i opt
+    case $1 in
+        "")
+            git status 2> /dev/null
+            [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end && for i in $allrepos; do echo -e "${yellow}${bold}Checking ${italic}$i${end}"; git -C $i st; echo; done
+            ;;
+        d)
+            [ "$?" -eq 128 ] && opt="-C $repoa"
+            shift
+            git $opt diff "$@"
+            ;;
+        c)
+            [ "$?" -eq 128 ] && opt="-C $repoa"
+            git $opt add -A
+            shift
+            comment=${*:-nth}
+            git $opt commit -m "$comment"
+            read -p "press any key in 5 sec to git push..." -n 1 -t5 i
+            echo
+            [ -n "$i" ] && echo -e "\nstarting push..." && git $opt push
+            ;;
+        *)
+            git "$@"
+            ;;
+    esac
 }
 
 githooks(){
@@ -990,234 +991,234 @@ githooks(){
 }
 
 splitkey(){
-	gpg -a --export-secret-keys $1 | sed -e /^-/d -e /^$/d > $1.asc
-	sleep 60
-	local x=1
-	#local y=19
-	local y=24
-	local linenum=`wc -l < $1.asc`
-	for i in {a..d}; do
-		[ $((linenum-z)) -lt 40 ] && z=$linenum || z=$((x+y-1))
-		sed -n "$x,$z"p $1.asc | qrencode -o $1.$i.png
-		x=$((x+y))
-		((y++))
-	done
-	#sed -n 1,19p $1.asc | qrencode -o $1.a.png
-	#sed -n 20,39p $1.asc | qrencode -o $1.b.png
-	#sed -n 40,60p $1.asc | qrencode -o $1.c.png
-	#sed -n 61,82p $1.asc | qrencode -o $1.d.png
-	#sed -n '83,$p' $1.asc | qrencode -o $1.e.png
-	rm $1.asc
+    gpg -a --export-secret-keys $1 | sed -e /^-/d -e /^$/d > $1.asc
+    sleep 60
+    local x=1
+    #local y=19
+    local y=24
+    local linenum=`wc -l < $1.asc`
+    for i in {a..d}; do
+        [ $((linenum-z)) -lt 40 ] && z=$linenum || z=$((x+y-1))
+        sed -n "$x,$z"p $1.asc | qrencode -o $1.$i.png
+        x=$((x+y))
+        ((y++))
+    done
+    #sed -n 1,19p $1.asc | qrencode -o $1.a.png
+    #sed -n 20,39p $1.asc | qrencode -o $1.b.png
+    #sed -n 40,60p $1.asc | qrencode -o $1.c.png
+    #sed -n 61,82p $1.asc | qrencode -o $1.d.png
+    #sed -n '83,$p' $1.asc | qrencode -o $1.e.png
+    rm $1.asc
 }
 
 # switch mouse left-right-hand
 lhand(){
-	# TODO use dconf instead of gsettings
-	# xinput xmodmap cause error if we are not in x
-	# we are in DE or WM?
-	# if we are in gnome, don't do the rest
-	local gget='gsettings get'
-	local lhand='org.gnome.desktop.peripherals.mouse left-handed'
-	local gset='gsettings set'
-	local batcent='org.gnome.desktop.interface show-battery-percentage' 
-	local toupad=$(xinput | grep -i touchpad | cut -f2 | cut -d'=' -f2)
-	local driver
-	[ "$toupad" ] &&
-		driver=$(xinput list-props $toupad | awk '{if(NR==8) print $1}')
+    # TODO use dconf instead of gsettings
+    # xinput xmodmap cause error if we are not in x
+    # we are in DE or WM?
+    # if we are in gnome, don't do the rest
+    local gget='gsettings get'
+    local lhand='org.gnome.desktop.peripherals.mouse left-handed'
+    local gset='gsettings set'
+    local batcent='org.gnome.desktop.interface show-battery-percentage' 
+    local toupad=$(xinput | grep -i touchpad | cut -f2 | cut -d'=' -f2)
+    local driver
+    [ "$toupad" ] &&
+        driver=$(xinput list-props $toupad | awk '{if(NR==8) print $1}')
 
-	if [ $($gget $lhand) = false -o "$1" = yes ]; then 
-		##### for gnome
-		$gset $batcent false
-		$gset $lhand true
+    if [ $($gget $lhand) = false -o "$1" = yes ]; then 
+        ##### for gnome
+        $gset $batcent false
+        $gset $lhand true
 
-		##### for other wm, if we are in gnome, stop
-		#xmodmap -e "pointer = 3 2 1" 2> /dev/null
-		# or
-		# xinput set-button-map $mouseid 3 2 1
-		# although, we probably don't want to use xinput because it's high
-		# level and device oriented which means we have to setup for each
-		#
-		## for touchbuttons
-		case "$driver" in
-			libinput)
-				# seems libinput don't have "TapButtonX" options
-				# but libinput has "LeftHanded" option which only affects to mouse
-				# buttons, we can do some trick with this
-				xinput set-prop $toupad 'libinput Tapping Enabled' 1
-				xinput set-prop $toupad 'libinput Left Handed Enabled' 1
-				;;
-			Synaptics)
-				xmodmap -e "pointer = 3 2 1" 2> /dev/null
-				# we can map tapbutton and mousebutton seperately using synclient
-				# for tap buttons
-				synclient TapButton1=3 TapButton2=1 TapButton3=2
-				;;
-		esac
-	else
-		$gset $batcent true
-		$gset $lhand false
+        ##### for other wm, if we are in gnome, stop
+        #xmodmap -e "pointer = 3 2 1" 2> /dev/null
+        # or
+        # xinput set-button-map $mouseid 3 2 1
+        # although, we probably don't want to use xinput because it's high
+        # level and device oriented which means we have to setup for each
+        #
+        ## for touchbuttons
+        case "$driver" in
+            libinput)
+                # seems libinput don't have "TapButtonX" options
+                # but libinput has "LeftHanded" option which only affects to mouse
+                # buttons, we can do some trick with this
+                xinput set-prop $toupad 'libinput Tapping Enabled' 1
+                xinput set-prop $toupad 'libinput Left Handed Enabled' 1
+                ;;
+            Synaptics)
+                xmodmap -e "pointer = 3 2 1" 2> /dev/null
+                # we can map tapbutton and mousebutton seperately using synclient
+                # for tap buttons
+                synclient TapButton1=3 TapButton2=1 TapButton3=2
+                ;;
+        esac
+    else
+        $gset $batcent true
+        $gset $lhand false
 
-		##### for other wm, if we are in gnome, stop
-		xmodmap -e "pointer = default"
-		case "$driver" in
-			libinput)
-				xinput set-prop $toupad 'libinput Left Handed Enabled' 0
-				;;
-			Synaptics)
-				synclient TapButton1=1 TapButton2=3 TapButton3=2
-				;;
-		esac
-	fi
+        ##### for other wm, if we are in gnome, stop
+        xmodmap -e "pointer = default"
+        case "$driver" in
+            libinput)
+                xinput set-prop $toupad 'libinput Left Handed Enabled' 0
+                ;;
+            Synaptics)
+                synclient TapButton1=1 TapButton2=3 TapButton3=2
+                ;;
+        esac
+    fi
 }
 
 idlast(){
-	#local id=${1::17}
-	local id=$1
-	[ ${#id} -lt 17 ] && echo 17 numbers, assohole! && return 69
-	local factor=(7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2)
-	local last=(1 0 X 9 8 7 6 5 4 3 2)
+    #local id=${1::17}
+    local id=$1
+    [ ${#id} -lt 17 ] && echo 17 numbers, assohole! && return 69
+    local factor=(7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2)
+    local last=(1 0 X 9 8 7 6 5 4 3 2)
 
-	local i sum=0
-	for i in `seq 0 16`
-	do
-		let sum+=$((${id:$i:1} * ${factor[$i]}))
-	done
+    local i sum=0
+    for i in `seq 0 16`
+    do
+        let sum+=$((${id:$i:1} * ${factor[$i]}))
+    done
 
-	echo ${last[$(($sum%11))]}
+    echo ${last[$(($sum%11))]}
 }
 
 shutthefuckdown(){
-	local i pids hour=$(date +%H)
-	[ "$1" == -c ] && { pkill -f shutthefuc; return; }
-	# 5 minutes countdown.
-	for i in $(ls -vr $sound | grep a.mp3)
-	do
-		$play $sound/$i < /dev/null &> /dev/null &
-		if [ ${i:0:2} -eq "60" ]; then
-			# push $allrepos to github 60s before shutdown
-			for i in $allrepos; do
-				cd $i;git add -A;git commit -m "auto commit by dotr";git push
-			done &
+    local i pids hour=$(date +%H)
+    [ "$1" == -c ] && { pkill -f shutthefuc; return; }
+    # 5 minutes countdown.
+    for i in $(ls -vr $sound | grep a.mp3)
+    do
+        $play $sound/$i < /dev/null &> /dev/null &
+        if [ ${i:0:2} -eq "60" ]; then
+            # push $allrepos to github 60s before shutdown
+            for i in $allrepos; do
+                cd $i;git add -A;git commit -m "auto commit by dotr";git push
+            done &
 
-			sleep 50
-		else
-			sleep 60
-		fi
-	done
+            sleep 50
+        else
+            sleep 60
+        fi
+    done
 
-	# 10 seconds countdown.
-	for i in $(ls -vr $sound | grep b.mp3)
-	do
-		$play $sound/$i < /dev/null &> /dev/null
-		sleep 0.1
-	done
+    # 10 seconds countdown.
+    for i in $(ls -vr $sound | grep b.mp3)
+    do
+        $play $sound/$i < /dev/null &> /dev/null
+        sleep 0.1
+    done
 
-	$play $sound/bye.mp3
+    $play $sound/bye.mp3
 
-	if [ $hour -eq 12 ]; then
-		$play $sound/lunch.mp3 < /dev/null &> /dev/null
-	elif [ $hour -eq $offtime ]; then
-		$play $sound/night.mp3 < /dev/null &> /dev/null
-	fi
+    if [ $hour -eq 12 ]; then
+        $play $sound/lunch.mp3 < /dev/null &> /dev/null
+    elif [ $hour -eq $offtime ]; then
+        $play $sound/night.mp3 < /dev/null &> /dev/null
+    fi
 
-	sudo shutdown now
+    sudo shutdown now
 }
 
 # obfuscate file size by compressing with a foo.padding file.
 obfus(){
-	local ifname=$1 ofname= siz=$2
-	read -p "what size you want to obfuscate?" siz
-	dd if=/dev/urandom of=$ifname.padding count=$siz
+    local ifname=$1 ofname= siz=$2
+    read -p "what size you want to obfuscate?" siz
+    dd if=/dev/urandom of=$ifname.padding count=$siz
 
-	read -p "output name?" ofname
-	tar Jcf $ofname.tar.xz $ifname{.padding,}
+    read -p "output name?" ofname
+    tar Jcf $ofname.tar.xz $ifname{.padding,}
 }
 
 # encrypt using gpg, put encrypted files into $gpgdir
 # take one upto two parameter(s), first is file name, compress before encrypt if $2 is -z
 encrypt(){
-	local i=$1 j
-	# can not be empty, can not be /
-	if [ -z "$i" -o "$i" == "/" ];then
-		echo "filename not illegal"
-	elif [ -e "$i" ]; then
-		j=`basename $i`
-		# strip "." if it starts the filename
-		j=${j#.}
+    local i=$1 j
+    # can not be empty, can not be /
+    if [ -z "$i" -o "$i" == "/" ];then
+        echo "filename not illegal"
+    elif [ -e "$i" ]; then
+        j=`basename $i`
+        # strip "." if it starts the filename
+        j=${j#.}
 
-		# compress if file is directory or -z is given
-		[ -d $i -o "$2" == "-z" ] && tar Jcf $j.tar.xz $i && j=$j.tar.xz && i=$j && k=$j
+        # compress if file is directory or -z is given
+        [ -d $i -o "$2" == "-z" ] && tar Jcf $j.tar.xz $i && j=$j.tar.xz && i=$j && k=$j
 
-		# obfuscate file size if -o is given
-		[ "$4" == "-o" ] && obfus $i $5
+        # obfuscate file size if -o is given
+        [ "$4" == "-o" ] && obfus $i $5
 
-		gpg -o $gpgdir/$j.gpg --recipient 13538519 -e $i
+        gpg -o $gpgdir/$j.gpg --recipient 13538519 -e $i
 
-		# remove temporary file foo.tar.xz after encrypt
-		[ -e "$k" ] && rm $k
-		# remove file after encrypt if -r is given
-		[ "$3" == "-r" ] && rm $1 -rf
-	else
-		echo  "$i: No such file or directory"
-	fi
+        # remove temporary file foo.tar.xz after encrypt
+        [ -e "$k" ] && rm $k
+        # remove file after encrypt if -r is given
+        [ "$3" == "-r" ] && rm $1 -rf
+    else
+        echo  "$i: No such file or directory"
+    fi
 }
 
 # some backups
 backup(){
-	local mysqlpass=`gpg -qd $gpgdir/mysqlpasswd.asc`
-	local time=`date +%y%m%d_%H%M`
-	# start mariadb if not running
-	while ! systemctl is-active mariadb &> /dev/null
-	do
-		sudo systemctl restart mariadb
-	done
+    local mysqlpass=`gpg -qd $gpgdir/mysqlpasswd.asc`
+    local time=`date +%y%m%d_%H%M`
+    # start mariadb if not running
+    while ! systemctl is-active mariadb &> /dev/null
+    do
+        sudo systemctl restart mariadb
+    done
 
-	# mysql backup
-	mysqldump -u root -p$mysqlpass --databases cm > cm.$time.sql
-	encrypt cm.$time.sql -z -r
-	mv $gpgdir/cm.$time.sql.* $backupdir/mysql
+    # mysql backup
+    mysqldump -u root -p$mysqlpass --databases cm > cm.$time.sql
+    encrypt cm.$time.sql -z -r
+    mv $gpgdir/cm.$time.sql.* $backupdir/mysql
 
-	mysqldump -u root -p$mysqlpass --databases grind > $backupdir/mysql/grind.$time.sql
+    mysqldump -u root -p$mysqlpass --databases grind > $backupdir/mysql/grind.$time.sql
 
-	find $backupdir/mysql -daystart -mtime +0 -delete
+    find $backupdir/mysql -daystart -mtime +0 -delete
 
-	# backup ~/.ssh/
-	encrypt ~/.ssh
-	mv $gpgdir/ssh* $backupdir/ssh
+    # backup ~/.ssh/
+    encrypt ~/.ssh
+    mv $gpgdir/ssh* $backupdir/ssh
 
-	tar Jcf db_ssh_$time.tar.xz $backupdir/{mysql,ssh}
-	scp db_ssh_$time.tar.xz $vps:dotbackup && rm db_ssh_$time.tar.xz
+    tar Jcf db_ssh_$time.tar.xz $backupdir/{mysql,ssh}
+    scp db_ssh_$time.tar.xz $vps:dotbackup && rm db_ssh_$time.tar.xz
 
-	cp /etc/hosts $repoa/conf
-	cp /etc/httpd/conf.d/vhosts.conf $repoa/conf/httpd
+    cp /etc/hosts $repoa/conf
+    cp /etc/httpd/conf.d/vhosts.conf $repoa/conf/httpd
 
-	# backup $backupdir/
+    # backup $backupdir/
 
-	# backup ~/.local/sound/
+    # backup ~/.local/sound/
 }
 
 m(){
-	[ $1 ] && { man $@; :; } || man bash
+    [ $1 ] && { man $@; :; } || man bash
 }
 
 ascii_of(){
-	if [ "$1" == -c ];then
-		[ "$2" -lt 256 ] || return 1
-		printf "\\$(printf '%03o' "$2")"
-		return 0
-	fi
-	printf '%d\n' "'$1"
+    if [ "$1" == -c ];then
+        [ "$2" -lt 256 ] || return 1
+        printf "\\$(printf '%03o' "$2")"
+        return 0
+    fi
+    printf '%d\n' "'$1"
 }
 
 v(){
-	if [ "$1" ];then
-		command vim "$@"
-	else
-		# $vim_default_file defined in .env
-		#command vim $vim_default_file
-		# $vim_default_session defined in .env
-		command vim -S $vim_default_session
-	fi
+    if [ "$1" ];then
+        command vim "$@"
+    else
+        # $vim_default_file defined in .env
+        #command vim $vim_default_file
+        # $vim_default_session defined in .env
+        command vim -S $vim_default_session
+    fi
 }
 
 p(){
@@ -1225,66 +1226,66 @@ p(){
 }
 
 vim(){
-	# sudo looks for external programs, not shell builtins, and not shell functions
-	# sudo command vim "$@"
-	# sudo $(which vim) "$@"
-	sudo vim "$@"
+    # sudo looks for external programs, not shell builtins, and not shell functions
+    # sudo command vim "$@"
+    # sudo $(which vim) "$@"
+    sudo vim "$@"
 }
 
 d(){
-	cd "$@"
+    cd "$@"
 }
 
 if [ "$ID" = FreeBSD ]; then
-	ll(){
-		command ls -l -G "$@"
-	}
-	l.(){
-		command ls -Gd .* "$@"
-	}
-	l(){
-		command ls -G "$@"
-	}
-	ls(){
-		# sudo command ls -G "$@"
-		# sudo $(which ls) -G "$@"
-		sudo ls -G "$@"
-	}
+    ll(){
+        command ls -l -G "$@"
+    }
+    l.(){
+    command ls -Gd .* "$@"
+}
+l(){
+    command ls -G "$@"
+}
+ls(){
+    # sudo command ls -G "$@"
+    # sudo $(which ls) -G "$@"
+    sudo ls -G "$@"
+}
 else
-	L(){
-		command ls -Z "$@"
-	}
-	ll(){
-		command ls -l --color=auto "$@"
-	}
-	LL(){
-		command ls -lZ "$@"
-	}
-	l.(){
-		command ls -d .* --color=auto "$@"
-	}
-	l(){
-		command ls --color=auto "$@"
-	}
-	ls(){
-		# sudo command ls --color=auto "$@"
-		# sudo $(which ls) --color=auto "$@"
-		sudo ls --color=auto "$@"
-	}
+    L(){
+        command ls -Z "$@"
+    }
+    ll(){
+        command ls -l --color=auto "$@"
+    }
+    LL(){
+        command ls -lZ "$@"
+    }
+    l.(){
+    command ls -d .* --color=auto "$@"
+}
+l(){
+    command ls --color=auto "$@"
+}
+ls(){
+    # sudo command ls --color=auto "$@"
+    # sudo $(which ls) --color=auto "$@"
+    sudo ls --color=auto "$@"
+}
 fi
 
 are_u_sure(){
-        read -n1 -p "Are you sure to exit? [y/N] "
-        [ "$REPLY" != y ] && { echo; history -a; bash; }
+    read -n1 -p "Are you sure to exit? [y/N] "
+    [ "$REPLY" != y ] && { echo; history -a; bash; }
 }
 #trap are_u_sure EXIT
 
 # reload ~/.{env,fun}
 rl(){
-	fun_exported=
-	env_exported=
-	. ~/.env
-	. ~/.fun
+    fun_exported=
+    env_exported=
+    . ~/.env
+    . ~/.fun
 }
 
 fun_exported=my_length_is_nonzero
