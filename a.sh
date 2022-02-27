@@ -377,6 +377,12 @@ misc() {
         chown $user:mail $mail
         chmod 660 $mail
 
+        # Uncomment these lines in /etc/apt/apt.conf.d/50unattended-upgrades
+        # "origin=Debian,codename=${distro_codename}-updates";
+        # "origin=Debian,codename=${distro_codename}-proposed-updates";
+        # Unattended-Upgrade::Mail "al";
+        # Unattended-Upgrade::Remove-Unused-Dependencies "true";
+
         # Generate /etc/apt/apt.conf.d/20auto-upgrades
         sudo dpkg-reconfigure -plow unattended-upgrades
     fi
@@ -405,6 +411,7 @@ misc() {
         # https://askubuntu.com/a/632189
         sudo setcap cap_net_raw,cap_net_admin=eip /sbin/tcpdump
 
+        # apply_updates = yes in /etc/dnf/automatic.conf
         sudo systemctl enable --now dnf-automatic.timer
     fi
 
