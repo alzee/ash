@@ -128,6 +128,7 @@ pkg_list() {
             # unixodbc unixodbc-dev selinux-basics selinux-policy-default auditd"
             # libapache2-mod-$php apache2-dev libssl-dev libxml2-dev libcurl3-dev libpng-dev pkg-config lsb-release
             # Run selinux-activate(as root) to configure GRUB and PAM and to create /.autorelabel
+            rlist="nano"
             ;;
         freebsd)
             php_ver=80
@@ -139,7 +140,6 @@ pkg_list() {
 }
 
 remove_pkg() {
-    [ $distro = debian ] && return
     say removing unneeded packages...
     for i in $rlist
     do
