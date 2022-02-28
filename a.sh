@@ -420,7 +420,7 @@ misc() {
 
 setup_auto_upgrade(){
     if [ "$distro" = debian ]; then
-        local file=/etc/apt/apt.conf.d/50unattended-upgrade
+        local file=/etc/apt/apt.conf.d/50unattended-upgrades
         # Uncomment these lines in /etc/apt/apt.conf.d/50unattended-upgrades
         a='origin=Debian,codename=${distro_codename}-updates'
         b='origin=Debian,codename=${distro_codename}-proposed-updates'
