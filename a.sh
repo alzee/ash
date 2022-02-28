@@ -418,6 +418,30 @@ misc() {
     crontab $scriptdir/conf/templates/$distro/cron
 }
 
+setup_auto_upgrade(){
+    if [ "$distro" = debian ]; then
+        local file=/etc/apt/apt.conf.d/50unattended-upgrade
+        # Uncomment these lines in /etc/apt/apt.conf.d/50unattended-upgrades
+        a='origin=Debian,codename=${distro_codename}-updates'
+        b='origin=Debian,codename=${distro_codename}-proposed-updates'
+        c='Unattended-Upgrade::Mail '
+        d='Unattended-Upgrade::Remove-Unused-Dependencies'
+
+        sudo sed -i "/$a\|$b\|$c\|$d/s://::" $file
+        sudo sed -i "/$c/s:\"\":\"$user\":" $file
+        sudo sed -i "/$d/s:false:true:" $file
+
+        # Generate /etc/apt/apt.conf.d/20auto-upgrades
+        sudo dpkg-reconfigure -plow unattended-upgrades
+    fi
+
+    if [ "$distro" = fedora ]; then
+        local file=/etc/dnf/automatic.conf
+        sudo sed -i '/apply_updates/s/no/yes/' $file
+        sudo systemctl enable --now dnf-automatic.timer
+    fi
+}
+
 _hardlinks(){
     local dotfiles
     # hard link ~/.foo to conf/home/foo
@@ -574,6 +598,9 @@ case $1 in
         ;;
     -r)
         add_repo
+        ;;
+    -U)
+        setup_auto_upgrade
         ;;
     *)
         ;;
