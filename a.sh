@@ -511,7 +511,7 @@ case $1 in
     -H)
         hardlinks
         ;;
-    -S)
+    -Y)
         _sysctl
         ;;
     -w)
