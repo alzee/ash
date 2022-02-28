@@ -432,7 +432,7 @@ setup_auto_upgrade(){
         sudo sed -i "/$d/s:false:true:" $file
 
         # Generate /etc/apt/apt.conf.d/20auto-upgrades
-        sudo dpkg-reconfigure -u -plow unattended-upgrades
+        sudo dpkg-reconfigure -plow unattended-upgrades
     fi
 
     if [ "$distro" = fedora ]; then
