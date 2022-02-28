@@ -1,0 +1,80 @@
+#!/bin/bash
+# some gnome settings
+
+main() {
+    # the only one I have not found is "Don't suspend on lid close"
+    sudo sed -i /HandleLidSwitch=/aHandleLidSwitch=ignore /etc/systemd/logind.conf
+    #sudo sed -i /IgnoreLid=/s/false/true/ /etc/UPower/UPower.conf
+
+    # disable all gnome extensions
+    #gsettings set org.gnome.shell enabled-extensions "@as []"
+
+    # get hidetopbar extension
+    local a=~/.local/share/gnome-shell/extensions
+    if [ ! -d "$a/hidetopbar@mathieu.bidon.ca" ];then
+        mkdir -p $a
+        git clone https://github.com/mlutfy/hidetopbar.git $a/hidetopbar@mathieu.bidon.ca
+        pushd hidetopbar@mathieu.bidon.ca
+        git pull
+        make schemas
+        popd
+    fi
+
+    # enable extension alternatetab and hidetopbar
+    gsettings set org.gnome.shell enabled-extensions "['alternate-tab@gnome-shell-extensions.gcampax.github.com', 'hidetopbar@mathieu.bidon.ca']"
+    # Substitute Alt-Tab with a window based switcher that does not group by application.
+    # 'thumbnail-only', 'app-icon-only' or 'both'
+    gsettings set org.gnome.shell.window-switcher app-icon-mode both
+    gsettings set org.gnome.shell.window-switcher current-workspace-only true
+
+    # don't dim sreen when inactive
+    gsettings set org.gnome.settings-daemon.plugins.power idle-dim false
+    #gsettings set org.gnome.settings-daemon.plugins.power power-button-action suspend
+
+    # show seconds in top bar clock
+    gsettings set org.gnome.desktop.interface clock-show-seconds true
+    gsettings set org.gnome.desktop.interface clock-format 12h
+    #gsettings set org.gnome.desktop.interface clock-show-date true
+    #gsettings set org.gnome.shell.calendar show-weekdate false
+
+    # mouse & touchpad setting
+    gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+    gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+    gsettings set org.gnome.desktop.peripherals.mouse natural-scroll false
+    gsettings set org.gnome.desktop.peripherals.mouse left-handed true
+    #gsettings set org.gnome.desktop.interface show-battery-percentage true
+    #gsettings set org.gnome.desktop.interface enable-animations true
+
+    # don't automount
+    gsettings set org.gnome.desktop.media-handling automount false
+
+    # don't show menubar for gnome-terminal
+    gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
+
+    # don't automaticly lock screen
+    gsettings set org.gnome.desktop.screensaver lock-enabled false
+
+    # don't dim when idle
+    gsettings set org.gnome.settings-daemon.plugins.power idle-dim false
+
+    # get default profile id
+    local id schema
+    id=$(gsettings get org.gnome.Terminal.ProfilesList default)
+    id=${id:1:-1}	# remove single quotes
+    schema=org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${id}/
+
+    gsettings set $schema scrollbar-policy never
+    gsettings set $schema use-theme-colors false
+    gsettings set $schema use-transparent-background true
+    gsettings set $schema background-transparency-percent 25
+    gsettings set $schema audible-bell false
+    gsettings set $schema foreground-color 'rgb(0,255,0)'
+    gsettings set $schema background-color 'rgb(0,0,0)'
+    gsettings set $schema cursor-shape 'block'
+    gsettings set $schema cursor-blink-mode 'off'
+
+    # change background and screensaver pic. aha, too trivial, I choose set it using gui :(
+    #gsettings get org.gnome.desktop.screensaver picture-uri 'file:////usr/share/gnome-control-center/pixmaps/noise-texture-light.png'
+}
+
+main
