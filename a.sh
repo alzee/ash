@@ -180,24 +180,23 @@ addgrp() {
 
     # add $USER into some groups
     # seems add to group kvm is not necessary
-    [ $distro = fedora ] &&
-        sudo usermod -a -G wireshark,libvirt $USER && say "added $USER to wireshark,libvirt"
-    }
+    [ $distro = fedora ] && sudo usermod -a -G wireshark,libvirt $USER && say "added $USER to wireshark,libvirt"
+}
 
-    mysqldir(){
-        # move mysql dir to home on fedora
-        [ $distro != fedora ] && return
-        # generate /var/lib/mysql/mysql.sock
-        sudo systemctl restart mariadb
-        say changing mysql datadir...
+mysqldir(){
+    # move mysql dir to home on fedora
+    [ $distro != fedora ] && return
+    # generate /var/lib/mysql/mysql.sock
+    sudo systemctl restart mariadb
+    say changing mysql datadir...
 
-        local prefix serverconf
-        prefix=~/.mysql
-        serverconf=/etc/my.cnf.d/mariadb-server.cnf
+    local prefix serverconf
+    prefix=~/.mysql
+    serverconf=/etc/my.cnf.d/mariadb-server.cnf
 
-        mkdir -p $prefix
-        sudo chcon -t mysqld_db_t $prefix
-        sudo chown mysql:mysql $prefix
+    mkdir -p $prefix
+    sudo chcon -t mysqld_db_t $prefix
+    sudo chown mysql:mysql $prefix
 
     # copy this line
     sudo sed -i "/^datadir/p" $serverconf
