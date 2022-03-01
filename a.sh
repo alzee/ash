@@ -290,13 +290,6 @@ misc() {
 
         # debain default using dash, change to bash
         sudo ln -sf bash /bin/sh
-
-        # create mail file
-        local mail
-        $mail=/var/mail/$user
-        touch $mail
-        chown $user:mail $mail
-        chmod 660 $mail
     fi
 
     if [ "$distro" = fedora ]; then
