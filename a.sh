@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# A script for quickly implementing softwares and settings after a Linux fresh installation. Mainly for Fedora semiannual upgrade purpose re-installation.
+# A script for quickly implementing softwares and settings after a Linux fresh installation.
+# Mainly for Fedora semiannual upgrade purpose re-installation.
 
 [ "$UID" -eq 0 ] && echo "Do NOT use root!" && exit
 ############### Variables ###############
@@ -270,7 +271,8 @@ misc() {
         # mod_http2 doesn't work with mpm_prefork'
         # and "event mpm is nowadays the best one"
         # https://httpd.apache.org/docs/2.4/howto/http2.html#mpm-config
-        sudo a2dismod php* mpm_prefork # disable all version of mod_php or mpm_prefork won't be disabled due to dependency
+        # Disable all version of mod_php or mpm_prefork won't be disabled due to dependency
+        sudo a2dismod php* mpm_prefork
         sudo a2enmod mpm_event http2 rewrite ssl socache_shmcb headers proxy_{fcgi,http,http2} setenvif
         sudo a2enconf $php-fpm
 
