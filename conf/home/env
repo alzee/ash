@@ -17,6 +17,7 @@ PS1="[\u@\h \W]\\$ "
 GTK_IM_MODULE=ibus
 XMODIFIERS=@im=ibus
 QT_IM_MODULE=ibus
+GPG_TTY=
 
 # MACHTYPE
 # OSTYPE
