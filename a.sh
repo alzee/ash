@@ -323,6 +323,7 @@ misc() {
 
 setup_auto_upgrade(){
     if [ "$distro" = debian ]; then
+        $yum install -y unattended-upgrades # In case not installed yet.
         local file=/etc/apt/apt.conf.d/50unattended-upgrades
         # Uncomment these lines in /etc/apt/apt.conf.d/50unattended-upgrades
         a='origin=Debian,codename=${distro_codename}-updates'
@@ -339,6 +340,7 @@ setup_auto_upgrade(){
     fi
 
     if [ "$distro" = fedora ]; then
+        $yum install -y dnf-automatic   # In case not installed yet.
         local file=/etc/dnf/automatic.conf
         sudo sed -i '/apply_updates/s/no/yes/' $file
         sudo systemctl enable --now dnf-automatic.timer
