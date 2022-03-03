@@ -98,8 +98,8 @@ add_repo() {
 }
 
 load_pkg() {
-    i_pkg="$(< pkg/general) $(< pkg/$distro/install_pkg)"
-    r_pkg=$(< pkg/$distro/remove_pkg)
+    i_pkg="$(< $scriptdir/pkg/general) $(< $scriptdir/pkg/$distro/install_pkg)"
+    r_pkg=$(< $scriptdir/pkg/$distro/remove_pkg)
     case $distro in
         fedora)
             php=php
