@@ -208,10 +208,10 @@ mysqldir(){
 }
 
 sethostname(){
-    # set hostname
     say changing hostname to $hostname
     sudo hostname $hostname
     sudo sed -i s/.*/$hostname/ /etc/hostname
+    # sudo hostnamectl set-hostname $hostname
 
     # add hostname to /etc/hosts
     say add hostname to /etc/hosts
@@ -221,7 +221,6 @@ sethostname(){
 }
 
 settimezone(){
-    # timezone
     local tz
     tz=$(date +%Z)
     if [ "$tz" != CST ];then
@@ -254,7 +253,7 @@ misc() {
 
     if [ "$distro" = debian ]; then
         # get rid of bash.bashrc
-        sudo mv /etc/bash.bashrc /etc/bash.bashrc.fuck
+        sudo mv /etc/bash.bashrc /etc/bash.bashrc.bak
 
         # mod_http2 doesn't work with mpm_prefork'
         # and "event mpm is nowadays the best one"
