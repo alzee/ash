@@ -21,19 +21,19 @@ fi
 
 case $distro in
     fedora)
-        yum=dnf
+        pkg=dnf
         ;;
     rhel)
         ;&
     centos)
-        yum=yum
+        pkg=yum
         distro=rhel
         ;;
     debian)
-        yum=apt
+        pkg=apt
         ;;
     freebsd)
-        yum=pkg
+        pkg=pkg
         :
         ;;
 esac
@@ -57,7 +57,7 @@ sudoer() {
         echo $user:$user | sudo chpasswd
     fi
 
-    $yum install -y sudo
+    $pkg install -y sudo
 
     say making $user sudoer...
     if [ "$distro" = debian ]; then
@@ -73,13 +73,13 @@ add_repo() {
 
     case $distro in
         fedora)
-            sudo $yum install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
-            sudo $yum config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+            sudo $pkg install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
+            sudo $pkg config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
             ;;
         rhel)
             # The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
             sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$distro_ver.noarch.rpm
-            sudo $yum install -y https://${distro}${distro_ver}.iuscommunity.org/ius-release.rpm
+            sudo $pkg install -y https://${distro}${distro_ver}.iuscommunity.org/ius-release.rpm
             ;;
         debian)
             # comment out default apt sources
@@ -88,7 +88,7 @@ add_repo() {
             # add testing repo (latest packages)
             sudo cp $scriptdir/conf/templates/debian/testing.list /etc/apt/sources.list.d/
 
-            sudo $yum update -y
+            sudo $pkg update -y
             ;;
         freebsd)
             ;;
@@ -145,22 +145,22 @@ remove_pkg() {
     for i in $rlist
     do
         say "Removing $i"
-        sudo $yum remove -y $i
+        sudo $pkg remove -y $i
     done
 
-    sudo $yum autoremove -y
-    #sudo $yum clean all # although debian don't have 'all'
+    sudo $pkg autoremove -y
+    #sudo $pkg clean all # although debian don't have 'all'
 }
 
 install_pkg() {
     say installing packages...
     for i in $ilist
     do
-        sudo $yum install -y $i > /dev/null && say "$i installed" || { echo "$i install failed" | tee -a $errlog; }
+        sudo $pkg install -y $i > /dev/null && say "$i installed" || { echo "$i install failed" | tee -a $errlog; }
     done
 
     say updating...
-    sudo $yum upgrade -y
+    sudo $pkg upgrade -y
 
 }
 
@@ -323,7 +323,7 @@ misc() {
 
 setup_auto_upgrade(){
     if [ "$distro" = debian ]; then
-        sudo $yum install -y unattended-upgrades # In case not installed yet.
+        sudo $pkg install -y unattended-upgrades # In case not installed yet.
         local file=/etc/apt/apt.conf.d/50unattended-upgrades
         # Uncomment these lines in /etc/apt/apt.conf.d/50unattended-upgrades
         a='origin=Debian,codename=${distro_codename}-updates'
@@ -340,7 +340,7 @@ setup_auto_upgrade(){
     fi
 
     if [ "$distro" = fedora ]; then
-        sudo $yum install -y dnf-automatic   # In case not installed yet.
+        sudo $pkg install -y dnf-automatic   # In case not installed yet.
         local file=/etc/dnf/automatic.conf
         sudo sed -i '/apply_updates/s/no/yes/' $file
         sudo systemctl enable --now dnf-automatic.timer
@@ -433,7 +433,7 @@ install_composer(){
 
 install_symfony(){
     if [ "$distro" = fedora ]; then
-        sudo cp $scriptdir/conf/templates/$distro/symfony-cli.repo /etc/yum.repos.d/
+        sudo $pkg config-manager --add-repo $scriptdir/conf/templates/$distro/symfony-cli.repo
         sudo dnf install symfony-cli -y
     fi
 }
