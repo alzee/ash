@@ -101,8 +101,8 @@ load_pkg() {
     pkg_general=$(< pkg/general)
     case $distro in
         fedora)
-            ilist="$pkg_general $(< pkg/fedora/install_pkg)"
-            rlist=$(< pkg/fedora/remove_pkg)
+            ilist="$pkg_general $(< pkg/$distro/install_pkg)"
+            rlist=$(< pkg/$distro/remove_pkg)
             ;;
         rhel)
             #nic=$(nmcli d | grep ethernet | cut -d" " -f1)
@@ -111,7 +111,7 @@ load_pkg() {
 
             # TODO, version
             php=php72u
-            php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx,bcmath} mod_$php)
+            php=$(echo $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx,bcmath} mod_$php)
             ilist="$pkg_general httpd24u httpd24u-mod_ssl $php mariadb101u-server psmisc xz bzip2"
             rlist="mariadb-libs"
             ;;
