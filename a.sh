@@ -443,6 +443,7 @@ case $1 in
         load_pkg
         install_pkg
         remove_pkg
+        setup_auto_upgrade
         sethostname
         addgrp
         mysqldir
