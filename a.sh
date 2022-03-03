@@ -78,7 +78,8 @@ add_repo() {
             sudo $pkg config-manager --add-repo $scriptdir/conf/templates/$distro/symfony-cli.repo
             ;;
         rhel)
-            # The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
+            # The epel-release package is available from the CentOS Extras repository (enabled by default)
+            # and will be pulled in as a dependency of ius-release automatically
             sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$distro_ver.noarch.rpm
             sudo $pkg install -y https://${distro}${distro_ver}.iuscommunity.org/ius-release.rpm
             ;;
