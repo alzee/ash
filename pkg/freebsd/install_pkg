@@ -1,0 +1,9 @@
+php-extensions
+php-phar
+php-mbstring
+php-openssl
+php-gd
+php-zip
+php-mysqli
+php-curl
+coreutils

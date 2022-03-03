@@ -86,10 +86,8 @@ add_repo() {
         debian)
             # comment out default apt sources
             sudo sed -i 's/^/#/' /etc/apt/sources.list
-
             # add testing repo (latest packages)
             sudo cp $scriptdir/conf/templates/debian/testing.list /etc/apt/sources.list.d/
-
             sudo $pkg update -y
             ;;
         freebsd)
@@ -98,37 +96,29 @@ add_repo() {
 }
 
 load_pkg() {
-    pkg_general=$(< pkg/general)
+    i_pkg="$(< pkg/general) $(< pkg/$distro/install_pkg)"
+    r_pkg=$(< pkg/$distro/remove_pkg)
     case $distro in
         fedora)
-            ilist="$pkg_general $(< pkg/$distro/install_pkg)"
-            rlist=$(< pkg/$distro/remove_pkg)
+            php=php
             ;;
         rhel)
-            #nic=$(nmcli d | grep ethernet | cut -d" " -f1)
-            #sudo sed -i /ONBOOT/s/=.*/=yes/ /etc/sysconfig/network-scripts/ifcfg-$nic
-            nmcli d connect $nic
-
-            # TODO, version
-            php=php72u
-            php=$(echo $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx,bcmath} mod_$php)
-            ilist="$pkg_general httpd24u httpd24u-mod_ssl $php mariadb101u-server psmisc xz bzip2"
-            rlist="mariadb-libs"
+            php=php
             ;;
         debian)
             php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
             php=php${php_ver%+*}
-            php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,apcu,mbstring,zip,mysql,curl,json,fpm,dev,uploadprogress,bcmath})
-            ilist="$pkg_general apache2 $php_with_exts pkg-php-tools mariadb-server redis-server python3-pip psmisc xz-utils bzip2 man-db mailutils unattended-upgrades"
-            rlist="nano"
             ;;
         freebsd)
             php_ver=80
             php=php${php_ver}
-            php_with_exts=$(echo $php-{extensions,phar,mbstring,openssl,gd,zip,mysqli,curl})
-            ilist="$pkg_general $php_with_exts coreutils"
             ;;
     esac
+
+    # TODO This will substitute something like `pkg-php-tools'
+    # An alternative is start pattern with a space ${i_pkg// php-/ $php-}
+    # but seems separators in foo=$(< bar) are not space
+    i_pkg=${i_pkg//php-/$php-}
 }
 
 active_selinux_on_debian(){
@@ -139,7 +129,7 @@ active_selinux_on_debian(){
 
 remove_pkg() {
     say removing unneeded packages...
-    for i in $rlist
+    for i in $r_pkg
     do
         say "Removing $i"
         sudo $pkg remove -y $i
@@ -151,7 +141,7 @@ remove_pkg() {
 
 install_pkg() {
     say installing packages...
-    for i in $ilist
+    for i in $i_pkg
     do
         sudo $pkg install -y $i > /dev/null && say "$i installed" || { echo "$i install failed" | tee -a $errlog; }
     done
@@ -492,9 +482,6 @@ case $1 in
         ;;
     -U)
         setup_auto_upgrade
-        ;;
-    -d)
-        load_pkg
         ;;
     *)
         ;;
