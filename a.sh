@@ -73,7 +73,9 @@ add_repo() {
 
     case $distro in
         fedora)
-            sudo $pkg install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
+            sudo $pkg install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm\
+                https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
             sudo $pkg config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
             sudo $pkg config-manager --add-repo $scriptdir/conf/templates/$distro/symfony-cli.repo
             ;;
