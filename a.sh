@@ -75,6 +75,7 @@ add_repo() {
         fedora)
             sudo $pkg install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm > /dev/null && say "rpmfusion repo installed" || say "rpmfusion repo install failed"
             sudo $pkg config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+            sudo $pkg config-manager --add-repo $scriptdir/conf/templates/$distro/symfony-cli.repo
             ;;
         rhel)
             # The epel-release package is available from the CentOS Extras repository (enabled by default) and will be pulled in as a dependency of ius-release automatically
@@ -103,7 +104,7 @@ pkg_list() {
     case $distro in
         fedora)
             php_with_exts=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,pecl-apcu,pecl-xdebug,mysqlnd,json,fpm,devel})
-            ilist="dnf-automatic alacritty rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie alsa-utils $ilist i3 xautolock lightdm-gtk feh httpd mod_ssl mariadb-server $php_with_exts ImageMagick nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm virt-manager oathtool chromium-freeworld firefox mpv unrar @Fonts rust cargo"
+            ilist="dnf-automatic alacritty rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie alsa-utils $ilist i3 xautolock lightdm-gtk feh httpd mod_ssl mariadb-server $php_with_exts ImageMagick nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm virt-manager oathtool chromium-freeworld firefox mpv unrar @Fonts rust cargo symfony-cli"
             # remmina
             # https://github.com/rdesktop/rdesktop/wiki/Network-Level-Authentication-(NLA))
             # rdesktop krb5-workstation
@@ -431,13 +432,6 @@ install_composer(){
     fi
 }
 
-install_symfony(){
-    if [ "$distro" = fedora ]; then
-        sudo $pkg config-manager --add-repo $scriptdir/conf/templates/$distro/symfony-cli.repo
-        sudo dnf install symfony-cli -y
-    fi
-}
-
 install_node(){
     node_tar='node-lts-linux.x64.tar.xz'
     node_url=$(curl -s https://nodejs.org/en/download/ | grep -o 'https://.*linux-x64.tar.xz')
@@ -471,7 +465,6 @@ case $1 in
         default_pool
         misc
         install_composer
-        install_symfony
         install_node
         hardlinks
         _sysctl
@@ -482,9 +475,6 @@ case $1 in
         ;;
     -C)
         install_composer
-        ;;
-    -S)
-        install_symfony
         ;;
     -N)
         install_node
