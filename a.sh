@@ -97,20 +97,12 @@ add_repo() {
     esac
 }
 
-pkg_list() {
-    #id $user &> /dev/null || { say user $user no exist, run $0 -s to create. ; exit; }
-
-    ilist="screen nginx vim openssh-server unzip curl wireguard-tools bash-completion git"
-    # mdadm
+load_pkg() {
+    pkg_general=$(< pkg/general)
     case $distro in
         fedora)
-            php_with_exts=$(echo php php-{common,cli,xml,gd,pdo,opcache,mbstring,pecl-apcu,pecl-xdebug,mysqlnd,json,fpm,devel})
-            ilist="dnf-automatic alacritty rsync xorg-x11-server-Xorg xorg-x11-xinit ibus-libpinyin cronie alsa-utils $ilist i3 xautolock lightdm-gtk feh httpd mod_ssl mariadb-server $php_with_exts ImageMagick nasm nmap samba wireshark irssi jq cmus whois transmission-common transmission-daemon libvirt qemu-kvm virt-manager oathtool chromium-freeworld firefox mpv unrar @Fonts rust cargo symfony-cli jmtpfs"
-            # remmina
-            # https://github.com/rdesktop/rdesktop/wiki/Network-Level-Authentication-(NLA))
-            # rdesktop krb5-workstation
-            #xorg-x11-drv-nvidia compton gcl aircrack-ng libpcap-devel pixiewps sway arandr tlp id3v2 dnsmap dnsenum arp-scan macchanger xdotool testdisk sysstat ffmpeg autoconf automake dosemu dsniff ettercap driftnet reaver freerdp chntpw qrencode zbar android-tools libnotify zenity wine-dxvk
-            rlist="azote @gnome-desktop @xfce-desktop xfce* xf* fpaste asunder atril claws-mail galculator geany xarchiver gnumeric pidgin xscreensaver-base ibus-cangjie pavucontrol @LibreOffice nano eog evince evince-nautilus evince-libs evince-djvu flatpak PackageKit-glib PackageKit-command-not-found tmux virtualbox-guest-additions simple-scan evolution-help evolution-ews evolution bijiben rhythmbox shotwell transmission-gtk orca empathy gedit devassistant-core vinagre totem-nautilus totem cheese file-roller baobab setroubleshoot yelp seahorse abrt jwhois esmtp gnome-disk-utility gnome-desktop3"
+            ilist="$pkg_general $(< pkg/fedora/install_pkg)"
+            rlist=$(< pkg/fedora/remove_pkg)
             ;;
         rhel)
             #nic=$(nmcli d | grep ethernet | cut -d" " -f1)
@@ -120,21 +112,21 @@ pkg_list() {
             # TODO, version
             php=php72u
             php=$(echo $php $php-{common,cli,xml,gd,pdo,opcache,mbstring,mysqlnd,json,fpm,fpm-nginx,bcmath} mod_$php)
-            ilist="$ilist httpd24u httpd24u-mod_ssl $php mariadb101u-server psmisc xz bzip2"
+            ilist="$pkg_general httpd24u httpd24u-mod_ssl $php mariadb101u-server psmisc xz bzip2"
             rlist="mariadb-libs"
             ;;
         debian)
             php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
             php=php${php_ver%+*}
             php_with_exts=$(echo $php-{common,cli,xml,gd,opcache,apcu,mbstring,zip,mysql,curl,json,fpm,dev,uploadprogress,bcmath})
-            ilist="$ilist apache2 $php_with_exts pkg-php-tools mariadb-server redis-server python3-pip psmisc xz-utils bzip2 man-db mailutils unattended-upgrades"
+            ilist="$pkg_general apache2 $php_with_exts pkg-php-tools mariadb-server redis-server python3-pip psmisc xz-utils bzip2 man-db mailutils unattended-upgrades"
             rlist="nano"
             ;;
         freebsd)
             php_ver=80
             php=php${php_ver}
             php_with_exts=$(echo $php-{extensions,phar,mbstring,openssl,gd,zip,mysqli,curl})
-            ilist="$ilist $php_with_exts coreutils"
+            ilist="$pkg_general $php_with_exts coreutils"
             ;;
     esac
 }
@@ -458,7 +450,7 @@ case $1 in
     -a)
         _mkswap
         add_repo
-        pkg_list
+        load_pkg
         install_pkg
         remove_pkg
         sethostname
@@ -483,7 +475,7 @@ case $1 in
     -N)
         install_node
         ;;
-    -d)
+    -D)
         default_pool
         ;;
     -H)
@@ -500,6 +492,9 @@ case $1 in
         ;;
     -U)
         setup_auto_upgrade
+        ;;
+    -d)
+        load_pkg
         ;;
     *)
         ;;
