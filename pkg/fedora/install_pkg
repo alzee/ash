@@ -23,6 +23,7 @@ jq
 cmus
 whois
 mailx
+postfix
 transmission-common
 transmission-daemon
 libvirt

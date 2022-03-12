@@ -331,7 +331,7 @@ setup_auto_upgrade(){
         sudo $pkg install -y dnf-automatic   # In case not installed yet.
         local file=/etc/dnf/automatic.conf
         sudo sed -i '/apply_updates/s/no/yes/' $file
-        sudo systemctl enable --now dnf-automatic.timer
+        sudo systemctl enable --now dnf-automatic.timer postfix
     fi
 }
 
