@@ -40,6 +40,7 @@ cargo
 symfony-cli
 gh
 jmtpfs
+android-tools
 php
 php-common
 php-cli
