@@ -8,13 +8,11 @@ php-mbstring
 php-zip
 php-mysql
 php-curl
-php-json
 php-fpm
 php-dev
 php-uploadprogress
 php-bcmath
 apache2
-pkg-php-tools
 mariadb-server
 redis-server
 python3-pip
