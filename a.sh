@@ -142,15 +142,16 @@ remove_pkg() {
 }
 
 install_pkg() {
+    say updating...
+    # upgrade first to avoid bug like libc6
+    # https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1866844
+    sudo $pkg upgrade -y
+
     say installing packages...
     for i in $i_pkg
     do
         sudo $pkg install -y $i > /dev/null && say "$i installed" || { echo "$i install failed" | tee -a $errlog; }
     done
-
-    say updating...
-    sudo $pkg upgrade -y
-
 }
 
 addgrp() {
