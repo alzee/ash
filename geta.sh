@@ -17,4 +17,4 @@ curl -O "$url"
 tar xf $f
 rm $f
 sudo mv ${f%%.*} /home/$user/.${f%-master*}
-sudo chown  $user:$user /home/$user/.${f%-master*}
+sudo chown -R $user:$user /home/$user/.${f%-master*}
