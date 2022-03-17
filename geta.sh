@@ -9,7 +9,7 @@ f=${url##*/}
 sudo useradd -m -s /bin/bash $user
 sudo usermod -aG sudo $user
 sudo cp .ssh/  /home/$user/ -a
-sudo chown -R $user:$user ~$user/.ssh
+sudo chown -R $user:$user /home/$user/.ssh
 echo $user:zee | sudo chpasswd
 
 # get a.sh
