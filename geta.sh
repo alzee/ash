@@ -1,12 +1,4 @@
 #!/bin/bash
-#
-# vim:ft=sh
-
-############### Variables ###############
-
-############### Functions ###############
-
-############### Main Part ###############
 
 # url=https://github.com/alzee/ash/archive/refs/heads/master.zip
 url=https://gitlab.com/alzee/ash/-/archive/master/ash-master.tar.gz
