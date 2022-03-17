@@ -16,5 +16,5 @@ echo $user:zee | sudo chpasswd
 curl -O "$url"
 tar xf $f
 rm $f
-sudo mv ${f%%.*} ~$user/.${f%-master*}
-sudo chown  $user:$user ~$user/.${f%-master*}
+sudo mv ${f%%.*} /home/$user/.${f%-master*}
+sudo chown  $user:$user /home/$user/.${f%-master*}
