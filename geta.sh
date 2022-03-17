@@ -8,7 +8,7 @@ f=${url##*/}
 # add user
 sudo useradd -m -s /bin/bash $user
 sudo usermod -aG sudo $user
-sudo cp .ssh/  ~$user/ -a
+sudo cp .ssh/  /home/$user/ -a
 sudo chown -R $user:$user ~$user/.ssh
 echo $user:zee | sudo chpasswd
 
@@ -16,5 +16,5 @@ echo $user:zee | sudo chpasswd
 curl -O "$url"
 tar xf $f
 rm $f
-mv ${f%%.*} ~$user/.${f%-master*}
+sudo mv ${f%%.*} ~$user/.${f%-master*}
 sudo chown  $user:$user ~$user/.${f%-master*}
