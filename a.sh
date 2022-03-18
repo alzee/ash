@@ -309,6 +309,10 @@ misc() {
     fi
 
     crontab $scriptdir/conf/templates/$distro/cron
+    
+    # https://forums.developer.nvidia.com/t/no-matching-gpu-found-with-510-47-03/202315/5
+    # nvidia-powerd is only for mobile gpus
+    # $pkg remove -y xorg-x11-drv-nvidia-power
 }
 
 setup_auto_upgrade(){
