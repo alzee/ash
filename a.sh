@@ -171,7 +171,7 @@ addgrp() {
 
     # add $USER into some groups
     # seems add to group kvm is not necessary
-    [ $distro = fedora ] && sudo usermod -a -G wireshark,libvirt $USER && say "added $USER to wireshark,libvirt"
+    [ $distro = fedora ] && sudo usermod -a -G wireshark,libvirt,docker $USER && say "added $USER to wireshark,libvirt,docker"
 }
 
 mysqldir(){

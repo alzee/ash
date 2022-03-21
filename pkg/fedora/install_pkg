@@ -29,6 +29,8 @@ transmission-daemon
 libvirt
 qemu-kvm
 virt-manager
+docker
+docker-compose
 oathtool
 chromium-freeworld
 firefox
