@@ -33,3 +33,6 @@ zbar
 libnotify
 zenity
 wine-dxvk
+docker-ce
+docker-ce-cli
+containerd.io
