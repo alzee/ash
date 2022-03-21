@@ -171,7 +171,11 @@ addgrp() {
 
     # add $USER into some groups
     # seems add to group kvm is not necessary
-    [ $distro = fedora ] && sudo usermod -a -G wireshark,libvirt,docker $USER && say "added $USER to wireshark,libvirt,docker"
+    if [ $distro = fedora ]
+        sudo usermod -a -G wireshark $USER && say "added $USER to wireshark"
+        sudo usermod -a -G libvirt $USER && say "added $USER to libvirt"
+        sudo usermod -a -G docker $USER && say "added $USER to docker"
+    fi
 }
 
 mysqldir(){
@@ -294,6 +298,10 @@ misc() {
         sudo firewall-cmd --runtime-to-permanent
         sudo systemctl disable libvirtd cups.socket
         sudo systemctl mask bluetooth
+
+        # start docker to initialize /etc/docker/
+        sudo systemctl start docker
+        sudo cp $scriptdir/conf/daemon.json /etc/docker/
 
         #sudo ln -s ~/.vhosts /etc/httpd/conf.d/
         sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/vhosts.conf
