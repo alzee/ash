@@ -331,7 +331,6 @@ setup_auto_upgrade(){
     if [ "$distro" = debian ]; then
         sudo $pkg install -y unattended-upgrades # In case not installed yet.
         file=/etc/apt/apt.conf.d/50unattended-upgrades
-        file=~/50unattended-upgrades
         # ${distro_codename}-updates & ${distro_codename}-proposed-updates
         o='origin=Debian,codename=${distro_codename}.*-updates'
         m='Unattended-Upgrade::Mail '
