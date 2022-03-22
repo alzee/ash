@@ -327,21 +327,24 @@ misc() {
 }
 
 setup_auto_upgrade(){
-    local file a b c d e
+    local file o m d r
     if [ "$distro" = debian ]; then
         sudo $pkg install -y unattended-upgrades # In case not installed yet.
         file=/etc/apt/apt.conf.d/50unattended-upgrades
-        # Uncomment these lines in /etc/apt/apt.conf.d/50unattended-upgrades
-        a='origin=Debian,codename=${distro_codename}-updates'
-        b='origin=Debian,codename=${distro_codename}-proposed-updates'
-        c='Unattended-Upgrade::Mail '
+        file=~/50unattended-upgrades
+        # ${distro_codename}-updates & ${distro_codename}-proposed-updates
+        o='origin=Debian,codename=${distro_codename}.*-updates'
+        m='Unattended-Upgrade::Mail '
         d='Unattended-Upgrade::Remove-Unused-Dependencies'
         # Automatic-Reboot & Automatic-Reboot-WithUsers
-        e='Unattended-Upgrade::Automatic-Reboot'
+        r='Unattended-Upgrade::Automatic-Reboot.*"\(false\|true\)"'
 
-        sudo sed -i "/$a\|$b\|$c\|$d\|$e/s://::" $file
-        sudo sed -i "/$c/s:\"\":\"$user\":" $file
-        sudo sed -i "/$d\|$e/s:false:true:" $file
+        # Set mail to
+        sudo sed -i "/$m/s:\"\":\"$user\":" $file
+        # Set Remove-Unused-Dependencies, Automatic-Reboot and Automatic-Reboot-WithUsers to true
+        sudo sed -i "/$d\|$r/s:false:true:" $file
+        # Uncomment these lines
+        sudo sed -i "/$o\|$m\|$d\|$r/s://::" $file
 
         # Generate /etc/apt/apt.conf.d/20auto-upgrades
         sudo dpkg-reconfigure -plow unattended-upgrades
