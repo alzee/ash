@@ -304,7 +304,7 @@ misc() {
 
         # start docker to initialize /etc/docker/
         sudo systemctl start docker
-        sudo cp $scriptdir/conf/daemon.json /etc/docker/
+        sudo cp $scriptdir/conf/templates/daemon.json /etc/docker/
 
         #sudo ln -s ~/.vhosts /etc/httpd/conf.d/
         sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/vhosts.conf
