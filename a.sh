@@ -174,7 +174,7 @@ addgrp() {
 
     # add $USER into some groups
     # seems add to group kvm is not necessary
-    if [ $distro = fedora ]
+    if [ $distro = fedora ]; then
         sudo usermod -a -G wireshark $USER && say "added $USER to wireshark"
         sudo usermod -a -G libvirt $USER && say "added $USER to libvirt"
         sudo usermod -a -G docker $USER && say "added $USER to docker"
@@ -327,18 +327,21 @@ misc() {
 }
 
 setup_auto_upgrade(){
+    local file a b c d e
     if [ "$distro" = debian ]; then
         sudo $pkg install -y unattended-upgrades # In case not installed yet.
-        local file=/etc/apt/apt.conf.d/50unattended-upgrades
+        file=/etc/apt/apt.conf.d/50unattended-upgrades
         # Uncomment these lines in /etc/apt/apt.conf.d/50unattended-upgrades
         a='origin=Debian,codename=${distro_codename}-updates'
         b='origin=Debian,codename=${distro_codename}-proposed-updates'
         c='Unattended-Upgrade::Mail '
         d='Unattended-Upgrade::Remove-Unused-Dependencies'
+        # Automatic-Reboot & Automatic-Reboot-WithUsers
+        e='Unattended-Upgrade::Automatic-Reboot'
 
-        sudo sed -i "/$a\|$b\|$c\|$d/s://::" $file
+        sudo sed -i "/$a\|$b\|$c\|$d\|$e/s://::" $file
         sudo sed -i "/$c/s:\"\":\"$user\":" $file
-        sudo sed -i "/$d/s:false:true:" $file
+        sudo sed -i "/$d\|$e/s:false:true:" $file
 
         # Generate /etc/apt/apt.conf.d/20auto-upgrades
         sudo dpkg-reconfigure -plow unattended-upgrades
