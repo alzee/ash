@@ -29,7 +29,7 @@ transmission-daemon
 libvirt
 qemu-kvm
 virt-manager
-docker
+moby-engine
 docker-compose
 oathtool
 chromium-freeworld

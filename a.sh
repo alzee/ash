@@ -79,7 +79,7 @@ add_repo() {
 
             sudo $pkg config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
             sudo $pkg config-manager --add-repo $scriptdir/conf/templates/$distro/symfony-cli.repo
-            # no need since fedora comes with moby-engine
+            # repo for docker-ce docker-ce-cli containerd.io, no need since fedora comes with moby-engine
             # sudo $pkg config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
             ;;
         rhel)
