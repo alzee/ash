@@ -1,9 +1,9 @@
+curl
+vim
 screen
 nginx
-vim
 openssh-server
 unzip
-curl
 wireguard-tools
 bash-completion
 git
