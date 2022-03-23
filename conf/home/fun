@@ -1012,7 +1012,7 @@ splitkey(){
 }
 
 # switch mouse left-right-hand
-lhand(){
+_lhand(){
     # TODO use dconf instead of gsettings
     # xinput xmodmap cause error if we are not in x
     # we are in DE or WM?
@@ -1069,6 +1069,24 @@ lhand(){
                 ;;
         esac
     fi
+}
+
+lhand(){
+    local lhanded
+    [ "$mouse" ] && lhanded=$(xinput list-props "$mouse" | grep  "Left Handed Enabled (" | cut -f3)
+    [ "$touchpad" ] && lhanded=$(xinput list-props "$touchpad" | grep  "Left Handed Enabled (" | cut -f3)
+
+    if [ "$lhanded" -eq 0 ]; then
+        [ "$mouse" ] && xinput set-prop "$mouse" 'libinput Left Handed Enabled' 1
+        [ "$touchpad" ] && xinput set-prop "$touchpad" 'libinput Left Handed Enabled' 1
+    else
+        [ "$mouse" ] && xinput set-prop "$mouse" 'libinput Left Handed Enabled' 0
+        [ "$touchpad" ] && xinput set-prop "$touchpad" 'libinput Left Handed Enabled' 0
+    fi
+
+    # use the bitwise XOR-equal operator to flip between 0 and 1
+    # https://unix.stackexchange.com/a/364489/274163
+    echo $((lhanded ^ 1))
 }
 
 idlast(){

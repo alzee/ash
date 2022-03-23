@@ -1,5 +1,6 @@
 dnf-automatic
 alacritty
+xinput
 rsync
 xorg-x11-server-Xorg
 xorg-x11-xinit

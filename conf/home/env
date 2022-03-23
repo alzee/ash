@@ -113,6 +113,8 @@ secdir=~/.sec
 # miscellaneous
 # DRI_PRIME=1
 # t="\t"
+mouse=
+touchpad=
 N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
 bg=~/.config/i3/bg.png
@@ -150,9 +152,6 @@ if [ "$domain" ];then
 		eval ${i%%.*}=$i
 	done
 fi
-
-mouse=
-touchpad=
 
 vps=$kr
 meg=10.5.0.6
