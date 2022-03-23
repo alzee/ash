@@ -1021,10 +1021,10 @@ lhand(){
     local lhand='org.gnome.desktop.peripherals.mouse left-handed'
     local gset='gsettings set'
     local batcent='org.gnome.desktop.interface show-battery-percentage' 
-    local toupad=$(xinput | grep -i touchpad | cut -f2 | cut -d'=' -f2)
+    local touchpad=$(xinput | grep -i touchpad | cut -f2 | cut -d'=' -f2)
     local driver
-    [ "$toupad" ] &&
-        driver=$(xinput list-props $toupad | awk '{if(NR==8) print $1}')
+    [ "$touchpad" ] &&
+        driver=$(xinput list-props $touchpad | awk '{if(NR==8) print $1}')
 
     if [ $($gget $lhand) = false -o "$1" = yes ]; then 
         ##### for gnome
@@ -1044,8 +1044,8 @@ lhand(){
                 # seems libinput don't have "TapButtonX" options
                 # but libinput has "LeftHanded" option which only affects to mouse
                 # buttons, we can do some trick with this
-                xinput set-prop $toupad 'libinput Tapping Enabled' 1
-                xinput set-prop $toupad 'libinput Left Handed Enabled' 1
+                xinput set-prop $touchpad 'libinput Tapping Enabled' 1
+                xinput set-prop $touchpad 'libinput Left Handed Enabled' 1
                 ;;
             Synaptics)
                 xmodmap -e "pointer = 3 2 1" 2> /dev/null
@@ -1062,7 +1062,7 @@ lhand(){
         xmodmap -e "pointer = default"
         case "$driver" in
             libinput)
-                xinput set-prop $toupad 'libinput Left Handed Enabled' 0
+                xinput set-prop $touchpad 'libinput Left Handed Enabled' 0
                 ;;
             Synaptics)
                 synclient TapButton1=1 TapButton2=3 TapButton3=2

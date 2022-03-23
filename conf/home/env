@@ -151,6 +151,9 @@ if [ "$domain" ];then
 	done
 fi
 
+mouse=
+touchpad=
+
 vps=$kr
 meg=10.5.0.6
 yq=10.5.0.5
