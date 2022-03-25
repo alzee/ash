@@ -299,7 +299,7 @@ misc() {
         sudo firewall-cmd --add-service samba --zone libvirt
         # sudo firewall-cmd --remove-service ssh
         sudo firewall-cmd --runtime-to-permanent
-        sudo systemctl disable libvirtd cups.socket
+        sudo systemctl disable libvirtd
         sudo systemctl mask bluetooth
 
         # start docker to initialize /etc/docker/
