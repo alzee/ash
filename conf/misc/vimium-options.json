@@ -1,15 +1,19 @@
 {
-  "settingsVersion": "1.66",
+  "settingsVersion": "1.67.1",
   "exclusionRules": [
     {
       "pattern": "https?://mail.google.com/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "https?://ecs.console.aliyun.com/*",
       "passKeys": ""
     }
   ],
   "filterLinkHints": false,
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
-  "keyMappings": "map s LinkHints.activateMode\nmap S LinkHints.activateModeWithQueue\nmap f scrollFullPageDown\nmap b scrollFullPageUp\nmap e scrollDown\nmap y scrollUp\nunmap F\nunmap <a-f>",
+  "keyMappings": "map s LinkHints.activateMode\nmap S LinkHints.activateModeWithQueue\nmap f scrollFullPageDown\nmap b scrollFullPageUp\nmap e scrollDown\nmap y scrollUp\nunmap F\nunmap o\nunmap O\nunmap r\nunmap <a-f>",
   "linkHintCharacters": "12345qwertadfgzxcvb",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "about:newtab",
