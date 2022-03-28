@@ -300,7 +300,6 @@ misc() {
         # sudo firewall-cmd --remove-service ssh
         sudo firewall-cmd --runtime-to-permanent
         sudo systemctl disable libvirtd
-        sudo systemctl mask bluetooth
 
         # start docker to initialize /etc/docker/
         sudo systemctl start docker
