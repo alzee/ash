@@ -35,3 +35,5 @@ zbar
 libnotify
 zenity
 wine-dxvk
+tigervnc-server
+x11vnc
