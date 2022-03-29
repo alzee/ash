@@ -299,7 +299,6 @@ misc() {
         sudo firewall-cmd --add-service http --zone libvirt
         sudo firewall-cmd --add-service https --zone libvirt
         sudo firewall-cmd --add-service samba --zone libvirt
-        # sudo firewall-cmd --remove-service ssh
         sudo firewall-cmd --runtime-to-permanent
         sudo systemctl disable libvirtd
 
