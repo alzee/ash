@@ -294,6 +294,7 @@ misc() {
         sudo firewall-cmd --add-service http
         sudo firewall-cmd --add-service https
         sudo firewall-cmd --add-service samba
+        sudo firewall-cmd --add-service vnc-server
         sudo firewall-cmd --add-service http --zone libvirt
         sudo firewall-cmd --add-service https --zone libvirt
         sudo firewall-cmd --add-service samba --zone libvirt
