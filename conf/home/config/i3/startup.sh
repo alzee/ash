@@ -18,5 +18,8 @@ touchpad=$(xinput --list --name-only | grep -i touchpad)
 
 [ -f ~/.config/i3/startup.local.sh ] && . ~/.config/i3/startup.local.sh
 
+# Why xinput not working if put it after i3-sensible-terminal?
+lhand
+
 #i3-msg workspace 1
 i3-sensible-terminal
