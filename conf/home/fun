@@ -429,57 +429,6 @@ vpaste(){
     fi
 }
 
-# change gnome-terminal profile preferences
-gt(){
-    local id schema k v s
-    id=$(gsettings get org.gnome.Terminal.ProfilesList default)
-    id=${id:1:-1}
-    schema=org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${id}/
-    k=$2
-    v=$3
-
-    case "$1" in
-        ""|l)
-            gsettings list-recursively $schema
-            ;;
-        g)
-            gsettings get $schema $k
-            ;;
-        s)
-            gsettings set $schema $k $v
-            ;;
-        r)
-            gsettings range $schema $k
-            ;;
-        p)	#change background transparency
-            k=background-transparency-percent
-            local pidfile=~/.gt_b_pid
-
-            # if "gterm b" is running, kill it and reset to 25
-            if [ -f "$pidfile" ]; then
-                kill $(cat $pidfile)
-                rm $pidfile
-                gsettings set $schema $k 25
-                [ "$2" ] || return 
-            fi
-
-            # if $2 is given, use it as key value
-            [ "$2" ] && { gsettings set $schema $k $2; return; }
-
-            # if no parameters is given
-            v=0 s=+
-            while :
-            do
-                gsettings set $schema $k $v
-                [ "$v" -eq 100 ] && s=-
-                [ "$v" -eq 0 ] && s=+
-                [ "$s" = - ] && let v-- || let v++
-            done &
-            echo $! > $pidfile
-            ;;
-    esac
-}
-
 # a simple page crawler
 crawl(){
     [ $1 ] || return
