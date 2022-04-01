@@ -659,45 +659,6 @@ idlast(){
     echo ${last[$(($sum%11))]}
 }
 
-# obfuscate file size by compressing with a foo.padding file.
-obfus(){
-    local ifname=$1 ofname= siz=$2
-    read -p "what size you want to obfuscate?" siz
-    dd if=/dev/urandom of=$ifname.padding count=$siz
-
-    read -p "output name?" ofname
-    tar Jcf $ofname.tar.xz $ifname{.padding,}
-}
-
-# encrypt using gpg, put encrypted files into $gpgdir
-# take one upto two parameter(s), first is file name, compress before encrypt if $2 is -z
-encrypt(){
-    local i=$1 j
-    # can not be empty, can not be /
-    if [ -z "$i" -o "$i" == "/" ];then
-        echo "filename not illegal"
-    elif [ -e "$i" ]; then
-        j=`basename $i`
-        # strip "." if it starts the filename
-        j=${j#.}
-
-        # compress if file is directory or -z is given
-        [ -d $i -o "$2" == "-z" ] && tar Jcf $j.tar.xz $i && j=$j.tar.xz && i=$j && k=$j
-
-        # obfuscate file size if -o is given
-        [ "$4" == "-o" ] && obfus $i $5
-
-        gpg -o $gpgdir/$j.gpg --recipient 13538519 -e $i
-
-        # remove temporary file foo.tar.xz after encrypt
-        [ -e "$k" ] && rm $k
-        # remove file after encrypt if -r is given
-        [ "$3" == "-r" ] && rm $1 -rf
-    else
-        echo  "$i: No such file or directory"
-    fi
-}
-
 # some backups
 backup(){
     local mysqlpass=`gpg -qd $gpgdir/mysqlpasswd.asc`
