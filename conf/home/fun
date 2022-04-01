@@ -429,31 +429,6 @@ vpaste(){
     fi
 }
 
-# a simple page crawler
-crawl(){
-    [ $1 ] || return
-    local i url l index=index.html
-    url=$1
-    [ "${url##*/}" != $index -a "${url##*/}" ] && index=${url##*/}
-    curl $url -o $index
-    url=${url%$index}
-    url=${url%/}
-    l=($(grep -io 'href="[^"]*"' $index | grep -o '[^"]*\.[^"#]*' | sort -u))
-
-    echo -e $red $bold
-    echo we have ${#l[@]} pages...
-    echo starting download
-    echo -e $end
-
-    i=0
-    while [ $i -lt ${#l[@]} ]
-    do
-        echo -e $red $bold downloading ${l[$i]} $((i+1))/${#l[@]} $end
-        curl ${url}/${l[$i]} -o ${l[$i]}
-        let i++
-    done
-}
-
 am(){
     local start_target httpd web_server mariadb stop_target fpm i
     mariadb=mariadb
