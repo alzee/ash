@@ -398,7 +398,7 @@ say(){
 
 _mkswap(){
     local swapfile
-    swapfile=/swapfile
+    swapfile=/var/swap
     [ $distro != debian -o "$is_WSL" -o -f "$swapfile" ] && return
     # dd, fallocate, truncate
     # https://stackoverflow.com/questions/257844/quickly-create-a-large-file-on-a-linux-system
