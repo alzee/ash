@@ -582,11 +582,6 @@ countdown(){
     echo -e ${end}
 }
 
-tor(){
-    local d=~/l/tor
-    $d/Browser/start-tor-browser --detach
-}
-
 grep(){
     command grep --color=auto "$@"
 }
