@@ -422,103 +422,44 @@ D(){
     s -X other
 }
 
-# switch sound output
-pa(){
-    # usage
-    # With no arg, switch between sinks
-    # With -s N, switch to sink N
-    # With -p N, switch to port N
-    # With vol N, change volume to N%
-    # With ls, list sinks and volume
+totp(){
+    local key keyfile sec secdir
+    secdir=~/.sec
+    keyfile=$(echo $secdir/totp-key/$1*)
 
-    local sink f
-    # f=~/.sinks
-    # [ -f "$f" ] || pactl list sinks short | awk '{print $1}' | tr -d '\n' > $f
-    # sinks=$(cat $f)
-    # sink=${sinks:0:1}
-    # sink=${sinks%%:*} # get the first sink's id
-    sink=${sinks%% *} # get the first sink name
+    keyfile=${keyfile%% *}	# only first one
+    if [ -f $keyfile ];then
+        key=$(gpg -dq $keyfile)
+        [ "$key" ] || return
+        echo $keyfile
+        oathtool --totp -b "$key"
+        sec=$(date +%S)
+        sec=${sec#0}
+        [ $sec -ge 30 ] && let sec=60-sec || let sec=30-sec
+        echo $sec seconds left
+    else
+        echo $keyfile no found
+    fi
+}
 
-    case "$1" in
-        ls|l|"")
-            pactl list sinks | awk\
-                'BEGIN {FS="#"}{if(NR==1)printf $2"\t"; FS=" ";if(NR==2) printf $2"\t"; if(NR==3) printf $2"\t"; if(NR==10) printf $5"\t"; if(NR==53) print $3}'
-                            ;;
-                        vol|vo|v)
-                            local vl
-                            if [ "$2" ]; then
-                                # vl=$((65536*$2/100))
-                                # pacmd set-sink-volume $sink $vl
-                                vl=$2
-                                pactl set-sink-volume $sink ${vl}%
-                            fi
-                            ;;
-                        m|mute)
-                            pactl set-sink-mute $sink toggle
-                            ;;
-                        sw|w)
-                            sink=$2
-                            sinks=${sink}${sinks/$sink/}
-                            echo $sinks > $f
+t(){
+    if ! pidof transmission-daemon; then
+        transmission-daemon
+        sleep 0.5	# why
+    fi
+    if [ "$1" ];then
+        transmission-remote "$@"
+    else
+        transmission-remote -l
+    fi
+}
 
-                            [ "$sink" ] || return
-                            # set sink
-                            pacmd set-default-sink $sink
-
-                            local sinkinputs
-                            sinkinputs=$(pactl list sink-inputs short | awk '{print $1}')
-                            for i in $sinkinputs
-                            do
-                                pacmd move-sink-input $i $sink
-                            done
-                            ;;
-                        port|por|po|p)
-                            # set port
-                            if [ "$2" ]; then
-                                :
-                            fi
-                            ;;
-                    esac
-                }
-
-                totp(){
-                    local key keyfile sec secdir
-                    secdir=~/.sec
-                    keyfile=$(echo $secdir/totp-key/$1*)
-
-                    keyfile=${keyfile%% *}	# only first one
-                    if [ -f $keyfile ];then
-                        key=$(gpg -dq $keyfile)
-                        [ "$key" ] || return
-                        echo $keyfile
-                        oathtool --totp -b "$key"
-                        sec=$(date +%S)
-                        sec=${sec#0}
-                        [ $sec -ge 30 ] && let sec=60-sec || let sec=30-sec
-                        echo $sec seconds left
-                    else
-                        echo $keyfile no found
-                    fi
-                }
-
-                t(){
-                    if ! pidof transmission-daemon; then
-                        transmission-daemon
-                        sleep 0.5	# why
-                    fi
-                    if [ "$1" ];then
-                        transmission-remote "$@"
-                    else
-                        transmission-remote -l
-                    fi
-                }
-
-                i(){
-                    # if irssi is running
-                    # are we in matrix?
-                    # select irssi
-                    # not running
-                    # screen irssi
+i(){
+    # if irssi is running
+    # are we in matrix?
+    # select irssi
+    # not running
+    # screen irssi
 
     # assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
     local c=select
