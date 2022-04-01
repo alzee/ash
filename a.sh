@@ -5,7 +5,7 @@
 
 [ "$UID" -eq 0 ] && echo "Do NOT use root!" && exit
 ############### Variables ###############
-user=al
+user=$(whoami)
 hostname=ash
 errlog=ash_error.log
 
@@ -472,6 +472,8 @@ enable_x11vnc(){
         cp conf/templates/x11vnc.service /etc/systemd/system/
     fi
     # vncpasswd
+    mkdir ~/.vnc
+    echo 111 | vncpasswd -f > ~/.vnc/passwd
     sudo systemctl enable --now x11vnc
 }
 
