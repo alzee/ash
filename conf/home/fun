@@ -659,43 +659,6 @@ idlast(){
     echo ${last[$(($sum%11))]}
 }
 
-shutthefuckdown(){
-    local i pids hour=$(date +%H)
-    [ "$1" == -c ] && { pkill -f shutthefuc; return; }
-    # 5 minutes countdown.
-    for i in $(ls -vr $sound | grep a.mp3)
-    do
-        $play $sound/$i < /dev/null &> /dev/null &
-        if [ ${i:0:2} -eq "60" ]; then
-            # push $allrepos to github 60s before shutdown
-            for i in $allrepos; do
-                cd $i;git add -A;git commit -m "auto commit by dotr";git push
-            done &
-
-            sleep 50
-        else
-            sleep 60
-        fi
-    done
-
-    # 10 seconds countdown.
-    for i in $(ls -vr $sound | grep b.mp3)
-    do
-        $play $sound/$i < /dev/null &> /dev/null
-        sleep 0.1
-    done
-
-    $play $sound/bye.mp3
-
-    if [ $hour -eq 12 ]; then
-        $play $sound/lunch.mp3 < /dev/null &> /dev/null
-    elif [ $hour -eq $offtime ]; then
-        $play $sound/night.mp3 < /dev/null &> /dev/null
-    fi
-
-    sudo shutdown now
-}
-
 # obfuscate file size by compressing with a foo.padding file.
 obfus(){
     local ifname=$1 ofname= siz=$2
