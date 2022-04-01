@@ -200,57 +200,6 @@ troubleshooting(){
     say Version?
 }
 
-vhost(){
-    [ "$1" ] || return
-    if [ "$1" = -r ]; then
-        site=$2
-        # modify /etc/hosts
-        # keep /w/$site
-        return
-    fi
-
-    # change default vhost
-    if [ "$1" = -d ]; then
-        site="$2"
-        pushd ~/w
-        if [ -d "$site" ]; then
-            # 0/ is the vhost dir set in ~/.vhosts/00.conf
-            # filename 00.conf first read, so be the default vhost
-            ln -sfn "$2" 0
-        else
-            echo "$site" not exist
-        fi
-        popd
-        return
-    fi
-
-
-    site=$1
-    user=z14
-
-    pushd ~/w
-    if [ ! -d $site ]; then
-        say Creating directory ...
-        mkdir -p $site/pub/{css,js}
-        cd $site
-        ln -s ../../../main/css/bootstrap.min.css pub/css/
-        touch TODO
-        say Initializing git ...
-        git init --quiet
-        git remote add origin git@github.com:$user/$site.git
-        # github api to create repo?
-    fi
-    popd
-
-    ### ~/w/vhost/$site.conf
-
-    ### /etc/hosts
-    if ! grep -wq $site /etc/hosts; then
-        say Editing /etc/hosts ...
-        sudo sed -i '$a'"127.0.0.1	$site" /etc/hosts
-    fi
-}
-
 acme(){
     # Iusse certs with acme.sh, using CloudFlare API and DNS alias mode
     local dom certdir acme cmd alias
