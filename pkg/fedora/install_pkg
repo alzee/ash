@@ -58,3 +58,6 @@ php-mysqlnd
 php-json
 php-fpm
 php-devel
+tigervnc-server
+x11vnc
+rpi-imager
