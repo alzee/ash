@@ -462,7 +462,8 @@ install_node(){
 }
 
 enable_networkmanager(){
-    sudo echo denyinterfaces wlan0 >> /etc/dhcpcd.conf
+    # Since we remove dhcpcd5
+    # sudo echo denyinterfaces wlan0 >> /etc/dhcpcd.conf
     sudo sed -i /managed/s/false/true/ /etc/NetworkManager/NetworkManager.conf
 }
 
