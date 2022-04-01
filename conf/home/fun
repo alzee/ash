@@ -558,38 +558,6 @@ dlpages(){
     done
 }
 
-itove(){
-    local i=15 j=0 p=0 c=255 cc=0
-    while :;
-    do
-        if [ $p -eq 0 ];then
-            let i-=1
-            [ $i -eq 1 ] && p=1
-        else
-            let i+=1
-            [ $i -eq 15 ] && p=0
-        fi
-
-        for j in `seq $i`
-        do
-            tput setaf $c
-            echo -ne ${bold}ITOVE${white}.\\t
-            if [ $cc -eq 0 ];then
-                let c-=1
-                [ $c -eq 1 ] && cc=1
-            else
-                let c+=1
-                [ $c -eq 255 ] && cc=0
-            fi
-        done
-        echo
-        #[] && c=1
-        sleep 0.3
-
-    done
-
-}
-
 self_sign_cert(){
     [ -z $1 ] && echo the key name, asshole! && return
     local i=$1
