@@ -530,34 +530,6 @@ getkey(){
     return 1
 }
 
-dedup(){
-    local i md5=$1 md5set=$2
-    for i in $md5set
-    do
-        [ $md5 == $i ] && return 1
-    done
-    return 0
-}
-
-dlpages(){
-    [ -z $1 ] && return 1
-    local links url=$1 dlsum hashtable
-    [ ${url%/} == $url ] && url=$url/	# suffix '/' if it don't have one
-
-    mapfile links < <(curl "$url" | grep -o href=\".*\.html[^\"]*\")
-    total=${#links[@]}
-
-    # does not re-download the links which downloads fail
-    for i in ${links[@]}
-    do
-        i=${i#href=\"}
-        i=${i%#*}
-        md5=$(echo -n $i | md5sum | cut -d" " -f1)
-        dedup $md5 ${hashtable[@]} && curl "$url$i" -o $i && echo $((dlsum+1))/$total && hashtable+=($md5)
-        dlsum=${#hashtable[@]}
-    done
-}
-
 self_sign_cert(){
     [ -z $1 ] && echo the key name, asshole! && return
     local i=$1
