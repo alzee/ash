@@ -457,6 +457,11 @@ install_node(){
     fi
 }
 
+enable_networkmanager(){
+    sudo echo denyinterfaces wlan0 >> /etc/dhcpcd.conf
+    sudo sed -i /managed/s/false/true/ /etc/NetworkManager/NetworkManager.conf
+}
+
 ############### Main ###############
 
 case $1 in
