@@ -74,42 +74,6 @@ image="\e[7m"
 conceal="\e[8m"
 cross="\e[9m"
 
-# dir structure
-#htdoc=~/w
-#media=~/m
-#video=$media/v
-#music="$(echo $media/*)"
-#music="${music/$video/}" # remove "/home/Dot/v" from list
-#document=~/d
-#download=~/l
-#picture=~/p
-#sound=~/.sound
-secdir=~/.sec
-#vmdir=~/.vm
-#LFS=/mnt/lfs
-
-# repo list
-#repo=(~/.misc ~/emma/jiei) # arrays won't be exported, why? see man bash BUGS
-#allrepos=	# clear $allrepos so rl() won't duplicate the value
-#repoa=~/.ash
-#repod=~/d
-#repoj=$htdoc/ji
-#repow=$htdoc/wow
-#reposi=$htdoc/sissy
-#repoi=$htdoc/it
-#repowx=$htdoc/wx
-#repocgi=$htdoc/cgi
-#for i in ${!repo*}
-#do
-#	allrepos+="${!i} "
-#done
-
-# path aliases
-#e=/var/log/httpd/error_log
-#h=/etc/httpd/conf/httpd.conf
-#v=/etc/httpd/conf.d/vhosts.conf
-#w=~/w
-
 # miscellaneous
 # DRI_PRIME=1
 # t="\t"
@@ -121,7 +85,6 @@ bg=~/.config/i3/bg.png
 t=$(uname -r)
 [ "${t##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
 screen=matrix
-# vim_default_file=$repod/note # use $vim_default_session instead
 vim_default_session=~/.vim/session/default.vim
 # local or private vars
 [ -f ~/.env.local ] && . ~/.env.local
@@ -139,9 +102,6 @@ if [ "$ID" = fedora ]; then
         # sink0=$(pactl get-default-sink)
         sink0=@DEFAULT_SINK@
 	fi
-	#offtime=18
-	#monitors=$(xrandr | awk '/connected/ {printf $1":";getline;print $1}')
-	#play="mpv --really-quiet --volume 100"
 fi
 
 if [ "$domain" ];then

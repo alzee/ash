@@ -482,8 +482,9 @@ pa(){
                 }
 
                 totp(){
-                    local key sec
-                    local keyfile=$(echo $secdir/totp-key/$1*)
+                    local key keyfile sec secdir
+                    secdir=~/.sec
+                    keyfile=$(echo $secdir/totp-key/$1*)
 
                     keyfile=${keyfile%% *}	# only first one
                     if [ -f $keyfile ];then
