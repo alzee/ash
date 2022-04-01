@@ -590,51 +590,6 @@ itove(){
 
 }
 
-msg_every_pts(){
-    local i msg l=$(command ls /dev/pts/[0-9])
-    msg=${@:-"Let's take a break, see you later."}
-    for i in $l
-    do
-        echo $msg > $i
-    done
-}
-
-abreak(){
-    local i j k uptime
-    uptime=$(cut -d. -f1 /proc/uptime)
-    [ $uptime -lt 2400 ] && return # if uptime less than 40 min
-    # interval initialize to 2.5s, minus 0.1 every loop
-    #for ((i=2,j=5;i>0||j>0;j--))
-    for ((i=2,j=5;i+j>0;j--))
-    do
-        msg_every_pts
-        sleep $i.$j
-
-        if [ $j == 0 ]; then
-            j=10
-            i=$((i-1))
-        fi
-
-        # when interval reduces to 0.5s, do 20 times and exit
-        if [ $i == 0 -a $j == 5 ]; then
-            for ((k=20;k>0;k--))
-            do
-                msg_every_pts
-                sleep $i.$j
-            done
-            #kill $(pidof vlc) &> /dev/null
-            $play $sound/break.mp3 < /dev/null &> /dev/null &
-            sleep 2.5
-            DISPLAY=:0 xset dpms force off
-            #sleep 2.3
-            #kill $(ps -C vlc | awk '/vlc/ {print $1}')
-            #kill $(pidof vlc)
-            return
-            #i=0;j=0
-        fi
-    done
-}
-
 self_sign_cert(){
     [ -z $1 ] && echo the key name, asshole! && return
     local i=$1
