@@ -625,27 +625,6 @@ githooks(){
     fi
 }
 
-splitkey(){
-    gpg -a --export-secret-keys $1 | sed -e /^-/d -e /^$/d > $1.asc
-    sleep 60
-    local x=1
-    #local y=19
-    local y=24
-    local linenum=`wc -l < $1.asc`
-    for i in {a..d}; do
-        [ $((linenum-z)) -lt 40 ] && z=$linenum || z=$((x+y-1))
-        sed -n "$x,$z"p $1.asc | qrencode -o $1.$i.png
-        x=$((x+y))
-        ((y++))
-    done
-    #sed -n 1,19p $1.asc | qrencode -o $1.a.png
-    #sed -n 20,39p $1.asc | qrencode -o $1.b.png
-    #sed -n 40,60p $1.asc | qrencode -o $1.c.png
-    #sed -n 61,82p $1.asc | qrencode -o $1.d.png
-    #sed -n '83,$p' $1.asc | qrencode -o $1.e.png
-    rm $1.asc
-}
-
 # switch mouse left-right-hand
 _lhand(){
     # TODO use dconf instead of gsettings
