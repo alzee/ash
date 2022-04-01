@@ -1,5 +1,8 @@
 # .bashrc
 
+[ -f ~/.env ] && . ~/.env
+[ -f ~/.fun ] && . ~/.fun
+
 # Source global definitions
 # Fedora
 # [ -f /etc/bashrc ] && . /etc/bashrc
