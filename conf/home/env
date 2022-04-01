@@ -11,7 +11,7 @@ set -a
 
 # sys
 
-PS1="[\u@\h \W]\\$ "
+# PS1="[\u@\h \W]\\$ "
 # https://wiki.archlinux.org/index.php/IBus#rxvt-unicode
 # Seems not necessary
 GTK_IM_MODULE=ibus
