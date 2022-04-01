@@ -297,54 +297,6 @@ b(){
     fi
 }
 
-mon(){
-    # monitors layout
-    # TODO monitors amount check
-    # determine if we are in DE or WM
-    # if in DE, stop
-    # if only one, should not do xrandr
-    local i
-    #local monitors o primary pos rotate output mode height width old_width old_height width_rotate pos_y
-    #local -A mon
-    #monitors=$(xrandr | awk '/ connected/ {printf $1":";getline;print $1}')
-    #set -- $monitors
-    #if [ "$#" -lt 2 ]; then
-    #	:
-    #fi
-    #for i in $monitors
-    #do
-    #	mon+=([${i%:*}]=${i#*:})
-    #	output=${i%:*}
-    #	mode=${i#*:}
-    #	width=${mode%x*}
-    #	if [ "$old_width" ];then #-a 
-    #		if [ "$width" -gt "$old_width" ];then
-    #			width_rotate=${mode#*x}
-    #			primary=--primary
-    #			rotate=right
-    #			pos=0x0
-    #			height=${mode%x*}
-    #			pos_y=$((old_height-height))
-    #		fi
-    #	else
-    #		# width_rotate=0
-    #		primary=
-    #		rotate=normal
-    #		height=${mode#*x}
-    #		pos=${width_rotate}x${pos_y#-}
-    #	fi
-    #	o+="--output $output $primary --mode $mode --pos $pos --rotate $rotate "
-    #	old_width=$width
-    #	old_height=$height
-    #done
-    #echo $o
-    #echo ${!mon[@]}
-    #echo ${mon[@]}
-    # default.sh is a symbolic link
-    i=~/.screenlayout/default.sh
-    . $i 2> /dev/null
-}
-
 cleanup(){
     # should i add a cron for this?
     ### vim undo file
