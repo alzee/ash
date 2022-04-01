@@ -165,30 +165,6 @@ php_mssql(){
     echo Okay, enjoy your fucking MSSQL with php.
 }
 
-z_ping(){
-    local c ip
-    # get ip address
-    ip=$(hostname -I)
-    if [ "$ip" = 127.0.0.1 ]; then
-        # https://stackoverflow.com/a/21336679/7714132
-        ip=$(ip route get 8.8.8.8 | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
-    fi
-    c=$(awk -F'.' '{print NF-1}' <<< "$1")
-    case "$c" in
-        0)
-            ping $(cut -d'.' -f1-3 <<< $ip)."$1"
-            ;;
-        1)
-            ping $(cut -d'.' -f1-2 <<< $ip)."$1"
-            ;;
-        2)
-            ;;
-        3)
-            ping "$1"
-            ;;
-    esac
-}
-
 e(){
     echo -e '\e[33;1m'$@'\e[m'
 }
