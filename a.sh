@@ -130,6 +130,10 @@ load_pkg() {
     # An alternative is start pattern with a space ${i_pkg// php-/ $php-}
     # but seems separators in foo=$(< bar) are not space
     i_pkg=${i_pkg//php-/$php-}
+    
+    if [ "$is_workstation" ]; then
+        i_pkg="$i_pkg $(< $scriptdir/pkg/$distro/gui)"
+    fi
 }
 
 active_selinux_on_debian(){
