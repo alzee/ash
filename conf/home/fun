@@ -473,28 +473,6 @@ am(){
     fi
 }
 
-mysqldir(){
-    local cnf=/etc/my.cnf.d/mariadb-server.cnf
-    [ "$1" ] || { grep datadir $cnf; return; }
-
-    local prefix=~/.mysql
-    local dir=$1
-
-    # we need the fucking getopts
-    if [ $1 = -n ];then		# -n to create a new mysqldir
-        local dir=$2
-
-        mysql_install_db --datadir=${prefix}/$dir	# mysql_intall_db will do 'mkdir -p'
-
-        cd $prefix
-        sudo chown -R mysql:mysql $dir
-        sudo chcon -R --reference=/var/lib/mysql $dir
-    fi
-
-    sudo sed -i "/datadir=/s:/.*:${prefix}/$dir:" $cnf
-    grep datadir $cnf
-}
-
 smb(){
     local sever share mountpoint user
 
