@@ -467,6 +467,14 @@ enable_networkmanager(){
     sudo sed -i /managed/s/false/true/ /etc/NetworkManager/NetworkManager.conf
 }
 
+enable_x11vnc(){
+    if [ "$is_workstation" ]; then
+        cp conf/templates/x11vnc.service /etc/systemd/system/
+    fi
+    # vncpasswd
+    sudo systemctl enable --now x11vnc
+}
+
 ############### Main ###############
 
 case $1 in
