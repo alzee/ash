@@ -659,40 +659,6 @@ idlast(){
     echo ${last[$(($sum%11))]}
 }
 
-# some backups
-backup(){
-    local mysqlpass=`gpg -qd $gpgdir/mysqlpasswd.asc`
-    local time=`date +%y%m%d_%H%M`
-    # start mariadb if not running
-    while ! systemctl is-active mariadb &> /dev/null
-    do
-        sudo systemctl restart mariadb
-    done
-
-    # mysql backup
-    mysqldump -u root -p$mysqlpass --databases cm > cm.$time.sql
-    encrypt cm.$time.sql -z -r
-    mv $gpgdir/cm.$time.sql.* $backupdir/mysql
-
-    mysqldump -u root -p$mysqlpass --databases grind > $backupdir/mysql/grind.$time.sql
-
-    find $backupdir/mysql -daystart -mtime +0 -delete
-
-    # backup ~/.ssh/
-    encrypt ~/.ssh
-    mv $gpgdir/ssh* $backupdir/ssh
-
-    tar Jcf db_ssh_$time.tar.xz $backupdir/{mysql,ssh}
-    scp db_ssh_$time.tar.xz $vps:dotbackup && rm db_ssh_$time.tar.xz
-
-    cp /etc/hosts $repoa/conf
-    cp /etc/httpd/conf.d/vhosts.conf $repoa/conf/httpd
-
-    # backup $backupdir/
-
-    # backup ~/.local/sound/
-}
-
 m(){
     [ $1 ] && { man $@; :; } || man bash
 }
