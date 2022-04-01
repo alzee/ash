@@ -23,7 +23,6 @@ bzip2
 man-db
 mailutils
 unattended-upgrades
-network-manager
 lightdm
 lightdm-gtk-greeter
 i3
@@ -31,5 +30,7 @@ cmus
 mpv
 feh
 chromium-browser
+ibus-libpinyin
+network-manager
 pipewire
 wireplumber
