@@ -469,12 +469,16 @@ enable_networkmanager(){
 
 enable_x11vnc(){
     if [ "$is_workstation" ]; then
-        cp conf/templates/x11vnc.service /etc/systemd/system/
+        cp $scriptdir/conf/templates/x11vnc.service /etc/systemd/system/
+        # vncpasswd
+        mkdir ~/.vnc
+        echo 111 | vncpasswd -f > ~/.vnc/passwd
+        sudo systemctl enable --now x11vnc
     fi
-    # vncpasswd
-    mkdir ~/.vnc
-    echo 111 | vncpasswd -f > ~/.vnc/passwd
-    sudo systemctl enable --now x11vnc
+}
+
+xorg_conf(){
+    sudo cp -a $scriptdir/conf/templates/xorg.conf.d/ /etc/X11/
 }
 
 ############### Main ###############
