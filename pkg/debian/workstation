@@ -11,4 +11,4 @@ ibus-libpinyin
 network-manager
 pulseaudio
 pipewire
-wireplumber
+pipewire-pulse
