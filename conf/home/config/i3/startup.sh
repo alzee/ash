@@ -10,9 +10,8 @@
 
 ibus-daemon -rxd
 
-feh --bg-fill $bg
+feh --bg-fill ~/.config/i3/bg.png
 
 [ -f ~/.config/i3/startup.local.sh ] && . ~/.config/i3/startup.local.sh
 
-#i3-msg workspace 1
 i3-sensible-terminal

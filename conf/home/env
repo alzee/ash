@@ -80,7 +80,6 @@ mouse=
 touchpad=
 N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
-bg=~/.config/i3/bg.png
 screen=matrix
 vim_default_session=~/.vim/session/default.vim
 # local or private vars
