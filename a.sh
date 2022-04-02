@@ -132,7 +132,7 @@ load_pkg() {
     i_pkg=${i_pkg//php-/$php-}
     
     if [ "$is_workstation" ]; then
-        i_pkg="$i_pkg $(< $scriptdir/pkg/$distro/gui)"
+        i_pkg="$i_pkg $(< $scriptdir/pkg/$distro/workstation)"
     fi
 }
 
