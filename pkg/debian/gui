@@ -1,6 +1,8 @@
 lightdm
 lightdm-gtk-greeter
 i3
+xinput
+x11vnc
 cmus
 mpv
 feh
@@ -9,4 +11,3 @@ ibus-libpinyin
 network-manager
 pipewire
 wireplumber
-x11vnc
