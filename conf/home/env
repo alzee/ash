@@ -11,6 +11,7 @@ set -a
 
 # sys
 
+# Reset PS1 only if it's an interactive shell(PS1 is already set)
 PS1=${PS1:+"[\u@\h \W]\\$ "}
 # https://wiki.archlinux.org/index.php/IBus#rxvt-unicode
 # Seems not necessary
