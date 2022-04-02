@@ -91,8 +91,7 @@ vim_default_session=~/.vim/session/default.vim
 [ -f ~/.env.sec ] && . ~/.env.sec
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
-# since I only use fedora as workstation
-if [ "$ID" = fedora ]; then
+if [ "$is_workstation" ]; then
 	if $(which pactl &> /dev/null) && [ -z $sink0 ]; then
         sink0=@DEFAULT_SINK@
 	fi
