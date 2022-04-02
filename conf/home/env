@@ -91,12 +91,6 @@ vim_default_session=~/.vim/session/default.vim
 [ -f ~/.env.sec ] && . ~/.env.sec
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
-#if [ "$is_workstation" ]; then
-#	if $(which pactl &> /dev/null) && [ -z $sink0 ]; then
-#        sink0=@DEFAULT_SINK@
-#	fi
-#fi
-
 if [ "$domain" ];then
 	for i in $(grep -o "\w*\.$domain" ~/.ssh/config)
 	do
