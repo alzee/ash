@@ -9,5 +9,6 @@ feh
 chromium-browser
 ibus-libpinyin
 network-manager
+pulseaudio
 pipewire
 wireplumber
