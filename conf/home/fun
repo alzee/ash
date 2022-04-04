@@ -111,26 +111,6 @@ f(){
     fi
 }
 
-wgz(){
-    local wg_if wg_ip wg_port wg_key wg_peer wg_allowdips wg_endpoint sec
-    wg_if=wg0
-    wg_ip=10.5.5.5/24
-    wg_port=51820
-    wg_peer=
-    wg_allowedips=
-    wg_endpoint=
-    wg_key=
-    sec=30
-
-    ip link add $wg_if type wireguard
-    ip addr add dev $wg_if $wg_ip
-    ip link set $wg_if up
-
-    wg set $wg_if private-key $wg_key
-    wg set $wg_if listen-port $wg_port
-    wg set $wg_if peer $wg_peer allowed-ips $wg_allowedips endpoint $wg_endpoint persistent-keepalive $sec
-}
-
 mouse_speed_by_ctm(){
     # xinput set-prop 8 156 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
     # id may change, use name instead
