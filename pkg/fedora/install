@@ -62,3 +62,4 @@ tigervnc-server
 x11vnc
 rpi-imager
 simple-scan
+qrencode
