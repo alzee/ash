@@ -379,9 +379,8 @@ _hardlinks(){
     popd
 }
 
-hardlinks(){
+mklinks(){
     # hard link conf/home/foo to ~/.foo
-
     for i in $(find $scriptdir/conf/home -type d)
     do
         mkdir -p ~/.${i#*home/}
@@ -502,7 +501,7 @@ case $1 in
         misc
         install_composer
         install_node
-        hardlinks
+        mklinks
         _sysctl
         setup_wg
         ;;
@@ -519,7 +518,7 @@ case $1 in
         default_pool
         ;;
     -L)
-        hardlinks
+        mklinks
         ;;
     -Y)
         _sysctl
