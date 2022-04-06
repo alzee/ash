@@ -352,25 +352,6 @@ is_int(){
 br(){
     brightnessctl "$@"
     #brightlight "$@"
-
-    # local i j k
-    # k=$(cat /sys/class/backlight/intel_backlight/max_brightness)
-
-    # if [ -z "$1" ]; then
-    #     # print brightness if no parameters
-    #     j=$(cat /sys/class/backlight/intel_backlight/brightness)
-    #     echo $j/$k
-    # else
-    #     i=$1
-    #     if is_int "$i"; then
-    #         [ "$i" -eq 0 ] && echo do not set to 0, you idiot! && return
-    #         [ "$i" -lt 0 ] && echo how can it be negative, you idiot! && return
-    #         [ "$i" -gt "$k" ] && echo can not bigger then "$k" && return
-    #         sudo sh -c "echo $i > /sys/class/backlight/intel_backlight/brightness"
-    #     else
-    #         echo give me an integer, idiot!
-    #     fi
-    # fi
 }
 
 cleanup(){
