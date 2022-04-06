@@ -16,6 +16,134 @@ unalias -a
 
 set -a
 
+c(){
+    cat "$@"
+}
+
+d(){
+    cd "$@"
+}
+
+e(){
+    echo "$@"
+}
+
+f(){
+    if [ "$1" ]; then
+        (feh -. "$@" &)
+    fi
+}
+
+g(){
+    local comment i opt
+    case $1 in
+        "")
+            git status 2> /dev/null
+            [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end && for i in $allrepos; do echo -e "${yellow}${bold}Checking ${italic}$i${end}"; git -C $i st; echo; done
+            ;;
+        d)
+            [ "$?" -eq 128 ] && opt="-C $repoa"
+            shift
+            git $opt diff "$@"
+            ;;
+        c)
+            [ "$?" -eq 128 ] && opt="-C $repoa"
+            git $opt add -A
+            shift
+            comment=${*:-nth}
+            git $opt commit -m "$comment"
+            read -p "press any key in 5 sec to git push..." -n 1 -t5 i
+            echo
+            [ -n "$i" ] && echo -e "\nstarting push..." && git $opt push
+            ;;
+        *)
+            git "$@"
+            ;;
+    esac
+}
+
+if [ "$ID" = FreeBSD ]; then
+    ll(){
+        command ls -l -G "$@"
+    }
+    l.(){
+        command ls -Gd .* "$@"
+    }
+    l(){
+        command ls -G "$@"
+    }
+    ls(){
+        # sudo command ls -G "$@"
+        # sudo $(which ls) -G "$@"
+        sudo ls -G "$@"
+    }
+else
+    L(){
+        command ls -Z "$@"
+    }
+    ll(){
+        command ls -l --color=auto "$@"
+    }
+    LL(){
+        command ls -lZ "$@"
+    }
+    l.(){
+        command ls -d .* --color=auto "$@"
+    }
+    l(){
+        command ls --color=auto "$@"
+    }
+    ls(){
+        # sudo command ls --color=auto "$@"
+        # sudo $(which ls) --color=auto "$@"
+        sudo ls --color=auto "$@"
+    }
+fi
+
+m(){
+    [ $1 ] && { man $@; :; } || man bash
+}
+
+p(){
+    mpv --really-quiet "$@" &
+}
+
+s(){
+    local arg TERM
+    #TERM=screen
+    # we only use default command key (^Aa) in ssh
+    [ "$SSH_TTY" ] ||  arg='-e ^Ss'
+
+    # if we are in the matrix
+    if [ "${STY#*.}" = "$screen" ];then
+        screen "$@"
+    else
+        screen $arg -d -R -S $screen #-T $TERM
+    fi
+}
+
+v(){
+    if [ "$1" ];then
+        command vim "$@"
+    else
+        # $vim_default_file defined in .env
+        #command vim $vim_default_file
+        # $vim_default_session defined in .env
+        command vim -S $vim_default_session
+    fi
+}
+
+vim(){
+    # sudo looks for external programs, not shell builtins, and not shell functions
+    # sudo command vim "$@"
+    # sudo $(which vim) "$@"
+    sudo vim "$@"
+}
+
+qr(){
+    qrencode -t ansiutf8 "$@"
+}
+
 warmane(){
     local interface
     interface=$(ip link | grep -o 'enp0s2\w*')
@@ -105,12 +233,6 @@ z(){
     wine ~/.wine/drive_c/Program\ Files/Plants\ vs\ Zombies/PlantsVsZombies.exe -changedir &> /dev/null &
 }
 
-f(){
-    if [ "$1" ]; then
-        (feh -. "$@" &)
-    fi
-}
-
 mouse_speed_by_ctm(){
     # xinput set-prop 8 156 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
     # id may change, use name instead
@@ -143,10 +265,6 @@ php_mssql(){
     echo and you will see libcrypto.so.1.0.2 and libssl.so.1.0.2 not found
     echo Now install libssl1.0.2, can not find in repo? Directly download from packages.debian.org
     echo Okay, enjoy your fucking MSSQL with php.
-}
-
-e(){
-    echo -e '\e[33;1m'$@'\e[m'
 }
 
 troubleshooting(){
@@ -231,26 +349,28 @@ is_int(){
     esac
 }
 
-# brightness
-b(){
-    local i j k
-    k=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+br(){
+    brightnessctl "$@"
+    #brightlight "$@"
 
-    if [ -z "$1" ]; then
-        # print brightness if no parameters
-        j=$(cat /sys/class/backlight/intel_backlight/brightness)
-        echo $j/$k
-    else
-        i=$1
-        if is_int "$i"; then
-            [ "$i" -eq 0 ] && echo do not set to 0, you idiot! && return
-            [ "$i" -lt 0 ] && echo how can it be negative, you idiot! && return
-            [ "$i" -gt "$k" ] && echo can not bigger then "$k" && return
-            sudo sh -c "echo $i > /sys/class/backlight/intel_backlight/brightness"
-        else
-            echo give me an integer, idiot!
-        fi
-    fi
+    # local i j k
+    # k=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+
+    # if [ -z "$1" ]; then
+    #     # print brightness if no parameters
+    #     j=$(cat /sys/class/backlight/intel_backlight/brightness)
+    #     echo $j/$k
+    # else
+    #     i=$1
+    #     if is_int "$i"; then
+    #         [ "$i" -eq 0 ] && echo do not set to 0, you idiot! && return
+    #         [ "$i" -lt 0 ] && echo how can it be negative, you idiot! && return
+    #         [ "$i" -gt "$k" ] && echo can not bigger then "$k" && return
+    #         sudo sh -c "echo $i > /sys/class/backlight/intel_backlight/brightness"
+    #     else
+    #         echo give me an integer, idiot!
+    #     fi
+    # fi
 }
 
 cleanup(){
@@ -299,7 +419,7 @@ totp(){
     fi
 }
 
-t(){
+transmission(){
     if ! pidof transmission-daemon; then
         transmission-daemon
         sleep 0.5	# why
@@ -311,7 +431,7 @@ t(){
     fi
 }
 
-i(){
+ir(){
     # if irssi is running
     # are we in matrix?
     # select irssi
@@ -328,7 +448,7 @@ i(){
     fi
 }
 
-c(){
+cmus(){
     # if cmus is running
     # are we in matrix?
     # select cmus
@@ -348,20 +468,6 @@ c(){
         #cmus-remote -p
         # cmus always start with the first song although shuffle is on
         #cmus-remote -n
-    fi
-}
-
-s(){
-    local arg TERM
-    #TERM=screen
-    # we only use default command key (^Aa) in ssh
-    [ "$SSH_TTY" ] ||  arg='-e ^Ss'
-
-    # if we are in the matrix
-    if [ "${STY#*.}" = "$screen" ];then
-        screen "$@"
-    else
-        screen $arg -d -R -S $screen #-T $TERM
     fi
 }
 
@@ -542,35 +648,6 @@ grep(){
     command grep --color=auto "$@"
 }
 
-# git
-g(){
-    local comment i opt
-    case $1 in
-        "")
-            git status 2> /dev/null
-            [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end && for i in $allrepos; do echo -e "${yellow}${bold}Checking ${italic}$i${end}"; git -C $i st; echo; done
-            ;;
-        d)
-            [ "$?" -eq 128 ] && opt="-C $repoa"
-            shift
-            git $opt diff "$@"
-            ;;
-        c)
-            [ "$?" -eq 128 ] && opt="-C $repoa"
-            git $opt add -A
-            shift
-            comment=${*:-nth}
-            git $opt commit -m "$comment"
-            read -p "press any key in 5 sec to git push..." -n 1 -t5 i
-            echo
-            [ -n "$i" ] && echo -e "\nstarting push..." && git $opt push
-            ;;
-        *)
-            git "$@"
-            ;;
-    esac
-}
-
 githooks(){
     # Run in root of working tree
     # then hooks in .githooks will be tracked and can be triggered whether or not "during a push",
@@ -615,10 +692,6 @@ idlast(){
     echo ${last[$(($sum%11))]}
 }
 
-m(){
-    [ $1 ] && { man $@; :; } || man bash
-}
-
 ascii_of(){
     if [ "$1" == -c ];then
         [ "$2" -lt 256 ] || return 1
@@ -627,70 +700,6 @@ ascii_of(){
     fi
     printf '%d\n' "'$1"
 }
-
-v(){
-    if [ "$1" ];then
-        command vim "$@"
-    else
-        # $vim_default_file defined in .env
-        #command vim $vim_default_file
-        # $vim_default_session defined in .env
-        command vim -S $vim_default_session
-    fi
-}
-
-p(){
-    mpv --really-quiet "$@" &
-}
-
-vim(){
-    # sudo looks for external programs, not shell builtins, and not shell functions
-    # sudo command vim "$@"
-    # sudo $(which vim) "$@"
-    sudo vim "$@"
-}
-
-d(){
-    cd "$@"
-}
-
-if [ "$ID" = FreeBSD ]; then
-    ll(){
-        command ls -l -G "$@"
-    }
-    l.(){
-    command ls -Gd .* "$@"
-}
-l(){
-    command ls -G "$@"
-}
-ls(){
-    # sudo command ls -G "$@"
-    # sudo $(which ls) -G "$@"
-    sudo ls -G "$@"
-}
-else
-    L(){
-        command ls -Z "$@"
-    }
-    ll(){
-        command ls -l --color=auto "$@"
-    }
-    LL(){
-        command ls -lZ "$@"
-    }
-    l.(){
-    command ls -d .* --color=auto "$@"
-}
-l(){
-    command ls --color=auto "$@"
-}
-ls(){
-    # sudo command ls --color=auto "$@"
-    # sudo $(which ls) --color=auto "$@"
-    sudo ls --color=auto "$@"
-}
-fi
 
 are_u_sure(){
     read -n1 -p "Are you sure to exit? [y/N] "
