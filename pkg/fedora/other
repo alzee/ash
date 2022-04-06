@@ -1,3 +1,6 @@
+libvirt
+qemu-kvm
+virt-manager
 lshw
 dmidecode
 mdadm
@@ -34,3 +37,4 @@ zbar
 libnotify
 zenity
 wine-dxvk
+rpi-imager

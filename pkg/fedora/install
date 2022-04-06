@@ -27,9 +27,6 @@ mailx
 postfix
 transmission-common
 transmission-daemon
-libvirt
-qemu-kvm
-virt-manager
 moby-engine
 docker-compose
 oathtool
@@ -60,6 +57,5 @@ php-fpm
 php-devel
 tigervnc-server
 x11vnc
-rpi-imager
 simple-scan
 qrencode
