@@ -18,10 +18,9 @@ PS1=${PS1:+"[\u@\h \W]\\$ "}
 GTK_IM_MODULE=ibus
 XMODIFIERS=@im=ibus
 QT_IM_MODULE=ibus
+
 GPG_TTY=
 
-# MACHTYPE
-# OSTYPE
 if [ -f /etc/os-release ]; then
 	. /etc/os-release
 else
@@ -77,8 +76,6 @@ cross="\e[9m"
 
 # miscellaneous
 # DRI_PRIME=1
-mouse=
-touchpad=
 N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
 screen=matrix
@@ -97,7 +94,7 @@ if [ "$domain" ];then
 	done
 fi
 
-vps=$kr
+vps=$azure
 
 # unset i
 env_exported=my_length_is_nonzero
