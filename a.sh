@@ -390,7 +390,12 @@ hardlinks(){
 
     for i in $(find . -xtype f)
     do
-        ln -f $i ~/.${i#./} && say "${i#./} linked"
+        if [ "$ANDROID_ROOT" ]; then
+            # Create symbolics instead if on a android device
+            ln -sf ~/$scriptdir/conf/home/${i#./} ~/.${i#./} && say "${i#./} linked"
+        else
+            ln -f $i ~/.${i#./} && say "${i#./} linked"
+        fi
     done
 
     popd
@@ -516,7 +521,7 @@ case $1 in
     -D)
         default_pool
         ;;
-    -H)
+    -L)
         hardlinks
         ;;
     -Y)
