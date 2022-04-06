@@ -24,6 +24,11 @@ d(){
     cd "$@"
 }
 
+D(){
+    s -t vps 5 ssh $vps -D7777
+    s -X other
+}
+
 e(){
     echo "$@"
 }
@@ -373,11 +378,6 @@ cmdnotfound(){
         # who_is her? OR Who is her?
         tts "${cmd//_/ }"
     fi
-}
-
-D(){
-    s -t vps 5 ssh $vps -D7777
-    s -X other
 }
 
 totp(){
