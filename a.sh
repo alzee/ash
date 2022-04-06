@@ -381,24 +381,21 @@ _hardlinks(){
 
 hardlinks(){
     # hard link conf/home/foo to ~/.foo
-    pushd $scriptdir/conf/home
 
-    for i in $(find . -type d)
+    for i in $(find $scriptdir/conf/home -type d)
     do
-        mkdir -p ~/.${i#./}
+        mkdir -p ~/.${i#*home/}
     done
 
-    for i in $(find . -xtype f)
+    for i in $(find $scriptdir/conf/home -xtype f)
     do
         if [ "$ANDROID_ROOT" ]; then
             # Create symbolics instead if on a android device
-            ln -sf ~/$scriptdir/conf/home/${i#./} ~/.${i#./} && say "${i#./} linked"
+            ln -sf $PWD/$i ~/.${i#*home/} && say "${i#./} linked"
         else
-            ln -f $i ~/.${i#./} && say "${i#./} linked"
+            ln -f $i ~/.${i#*home/} && say "${i#./} linked"
         fi
     done
-
-    popd
 }
 
 say(){
