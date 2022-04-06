@@ -9,8 +9,6 @@
 
 set -a
 
-# sys
-
 # Reset PS1 only if it's an interactive shell(PS1 is already set)
 # Do not set if on a android device (using termux)
 [ -z "$ANDROID_ROOT" ] && PS1=${PS1:+"[\u@\h \W]\\$ "}
