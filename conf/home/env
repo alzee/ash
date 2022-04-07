@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # My envs
-# Create hard link ~/.env when running ~/.ash/a.sh -H
+# Create hard link ~/.env when running ~/.ash/a.sh -L
 # and ~/.env will be sourced in ~/.bash_profile
 # Export all these envs and set $env_exported at the end of this file.
 
