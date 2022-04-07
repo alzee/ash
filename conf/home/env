@@ -31,12 +31,12 @@ TERMINAL=alacritty
 HISTTIMEFORMAT="%b %d %T "
 HISTCONTROL=ignoreboth
 LIBVIRT_DEFAULT_URI=qemu:///system
-http_proxy=
-https_proxy=
 #ftp_proxy=
-all_proxy=
-SOCKS_SERVER=
-SOCKS_VERSION=5
+#http_proxy=
+#https_proxy=
+#all_proxy=
+#SOCKS_SERVER=
+#SOCKS_VERSION=5
 if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
 	PATH=$PATH:$HOME/.local/bin
 fi
