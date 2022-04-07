@@ -109,10 +109,6 @@ m(){
     [ $1 ] && { man $@; :; } || man bash
 }
 
-p(){
-    mpv --really-quiet "$@" &
-}
-
 s(){
     local arg TERM
     #TERM=screen
@@ -143,6 +139,10 @@ vim(){
     # sudo command vim "$@"
     # sudo $(which vim) "$@"
     sudo vim "$@"
+}
+
+play(){
+    mpv --really-quiet "$@" &
 }
 
 qr(){
