@@ -110,7 +110,9 @@ m(){
 }
 
 p(){
-    [ $1 ] || ping 8.8.8.8
+    [ $1 ] || { ping 8.8.8.8 && return; }
+    # If not only contain numbers and ., take it as a domain
+    [[ $1 =~ ^[0-9.]+$ ]] || { ping $1 && return; }
 
     local c ip
     # get ip address
