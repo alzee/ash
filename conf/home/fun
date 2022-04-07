@@ -354,11 +354,6 @@ is_int(){
     esac
 }
 
-br(){
-    brightnessctl "$@"
-    #brightlight "$@"
-}
-
 cleanup(){
     # should i add a cron for this?
     ### vim undo file
@@ -412,7 +407,7 @@ transmission(){
     fi
 }
 
-ir(){
+irssi(){
     # if irssi is running
     # are we in matrix?
     # select irssi
@@ -425,7 +420,7 @@ ir(){
     if pgrep irssi; then
         screen -S $screen -X $c irssi
     else
-        screen -T screen 9 irssi
+        screen -t irssi -T screen 9 command irssi
     fi
 }
 
