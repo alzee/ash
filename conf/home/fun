@@ -109,6 +109,10 @@ m(){
     [ $1 ] && { man $@; :; } || man bash
 }
 
+p(){
+    ping "$@"
+}
+
 s(){
     local arg TERM
     #TERM=screen
