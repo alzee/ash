@@ -41,6 +41,8 @@ if [ -n "$PS1" ]; then
     complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
     _completion_loader man
     complete -F _man m
+    _completion_loader systemctl
+    complete -F _systemctl sy
 fi
 
 # man gpg-agent

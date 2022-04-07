@@ -160,6 +160,10 @@ v(){
     fi
 }
 
+sy(){
+    systemctl "$@"
+}
+
 vim(){
     # sudo looks for external programs, not shell builtins, and not shell functions
     # sudo command vim "$@"
