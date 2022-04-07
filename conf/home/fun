@@ -71,9 +71,8 @@ if [ "$ID" = FreeBSD ]; then
     ll(){
         command ls -l -G "$@"
     }
-    l.(){
-        command ls -Gd .* "$@"
-    }
+    # Put l.() { ...; } in one line to avoid vim wrong syntax indentation
+    l.(){ command ls -Gd .* "$@"; }
     l(){
         command ls -G "$@"
     }
@@ -92,9 +91,7 @@ else
     LL(){
         command ls -lZ "$@"
     }
-    l.(){
-        command ls -d .* --color=auto "$@"
-    }
+    l.(){ command ls -d .* --color=auto "$@"; }
     l(){
         command ls --color=auto "$@"
     }
