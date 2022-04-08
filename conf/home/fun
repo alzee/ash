@@ -16,6 +16,26 @@ unalias -a
 
 set -a
 
+b(){
+    # Restore my key sequences if have any argument
+    [ $1 ] && { bind -f ~/.inputrc; return; }
+
+    # Otherwise, clear custom key sequences
+    local i
+    for i in $(bind -S | awk '{print $1}')
+    do
+        if [ ${#i} -gt 1 ]; then
+            if [ $i = '\"' ]; then
+                bind '"\"":self-insert'
+            else
+                bind -r "$i"
+            fi
+        else
+            bind "$i":self-insert
+        fi
+    done
+}
+
 c(){
     cat "$@"
 }
