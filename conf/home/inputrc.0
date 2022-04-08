@@ -1,0 +1,12 @@
+set keyseq-timeout 500
+
+",,":
+",s":
+",m":
+",h":
+
+"(": self-insert
+"{": self-insert
+"[": self-insert
+"\"": self-insert
+"'":" self-insert
