@@ -3,6 +3,7 @@ set keyseq-timeout 300
 ",,":"$"
 ",s":"sudo "
 ",m":"m "
+",h":" --help"
 
 "(":"()OD"
 "{":"{}OD"
