@@ -9,4 +9,4 @@ set keyseq-timeout 500
 "{": self-insert
 "[": self-insert
 "\"": self-insert
-"'":" self-insert
+"'": self-insert
