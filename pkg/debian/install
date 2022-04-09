@@ -20,6 +20,9 @@ python3-pip
 psmisc
 xz-utils
 bzip2
+unrar
+transmission-daemon
+nfs-server
 man-db
 mailutils
 unattended-upgrades

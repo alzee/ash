@@ -287,8 +287,7 @@ misc() {
         sudo mysqladmin -u root password toor
         sudo mysql -e "FLUSH PRIVILEGES"
 
-        sudo systemctl stop nginx redis-server
-        sudo systemctl disable nginx redis-server
+        sudo systemctl disable --now nginx redis-server nfs-server transmission-daemon
 
         # debain default using dash, change to bash
         sudo ln -sf bash /bin/sh
