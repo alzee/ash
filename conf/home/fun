@@ -132,12 +132,8 @@ p(){
     [[ $1 =~ ^[0-9.]+$ ]] || { ping $1 && return; }
 
     local c ip
-    # get ip address
-    ip=$(hostname -I)
-    if [ "$ip" = 127.0.0.1 ]; then
-        # https://stackoverflow.com/a/21336679/7714132
-        ip=$(ip route get 8.8.8.8 | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
-    fi
+    # https://stackoverflow.com/a/21336679/7714132
+    ip=$(ip route get 8.8.8.8 | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
     c=$(awk -F'.' '{print NF}' <<< "$1")
     case "$c" in
         1)
