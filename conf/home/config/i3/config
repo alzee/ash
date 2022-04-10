@@ -48,7 +48,7 @@ bindsym $mod+c exec --no-startup-id cmus-remote -u
 bindsym $mod+Shift+plus exec --no-startup-id cmus-remote -v +5%
 bindsym $mod+Shift+minus exec --no-startup-id cmus-remote -v -5%
 
-bindsym $mod+slash exec i3lock -c 1a1a1a -e -u
+bindsym $mod+slash exec i3lock -c 000000 -e -u
 
 # bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+semicolon exec --no-startup-id i3-dmenu-desktop
