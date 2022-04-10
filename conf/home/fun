@@ -464,18 +464,30 @@ return
 
     if [ $1 = -d ]; then
         [ -d "$dir" ] || { echo directory "$dir" not exists; return; }
+        if rmdir "$dir" 2> /dev/null; then
+            # BUG: what about permission?
+            echo directory "$dir" is empty
+            mkdir $dir
+            return
+        fi
         mkdir -p $decrypt_dir
         for i in $dir/*
         do
-            gpg --yes -o $decrypt_dir/${i##*/} -d $i
+            gpg --yes -q -o $decrypt_dir/${i##*/} -d $i
         done
         return
     fi
 
     if [ $1 = -e ]; then
         [ -d "$decrypt_dir" ] || { echo decrypt directory "$decrypt_dir" not exists; return; }
-        [ "$2" ] || { echo "Usage: totp -e <recipient>"; return; }
+        if rmdir "$decrypt_dir" 2> /dev/null; then
+            # BUG: what about permission?
+            echo directory "$decrypt_dir" is empty
+            mkdir $decrypt_dir
+            return
+        fi
         mkdir -p $dir
+        [ "$2" ] || { echo "Usage: totp -e <recipient>"; return; }
         for i in $decrypt_dir/*
         do
             gpg --yes --trust-model always -a -r "$2" -o $dir/${i##*/} -e $i
