@@ -213,7 +213,30 @@ vim(){
 }
 
 play(){
-    mpv --really-quiet "$@" &
+    if [ $1 ]; then
+        mpv --really-quiet "$@" &
+    else
+        # if cmus is running
+        # are we in matrix?
+        # select cmus
+        # not running
+        # screen cmus
+
+        # assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
+        local c=select
+        # assume we are in the matrix
+        if pgrep cmus; then
+            #screen -S $screen -X $c cmus
+            cmus-remote -u
+        else
+            screen -T screen 8 cmus
+            # don't need this anymore since we have setting 'resume'
+            #sleep 0.5
+            #cmus-remote -p
+            # cmus always start with the first song although shuffle is on
+            #cmus-remote -n
+        fi
+    fi
 }
 
 qr(){
@@ -503,7 +526,7 @@ return
     fi
 }
 
-transmission(){
+bt(){
     if ! pidof transmission-daemon; then
         transmission-daemon
         sleep 0.5	# why
@@ -515,7 +538,7 @@ transmission(){
     fi
 }
 
-irssi(){
+irc(){
     # if irssi is running
     # are we in matrix?
     # select irssi
@@ -528,30 +551,7 @@ irssi(){
     if pgrep irssi; then
         screen -S $screen -X $c irssi
     else
-        screen -t irssi -T screen 9 command irssi
-    fi
-}
-
-cmus(){
-    # if cmus is running
-    # are we in matrix?
-    # select cmus
-    # not running
-    # screen cmus
-
-    # assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
-    local c=select
-    # assume we are in the matrix
-    if pgrep cmus; then
-        #screen -S $screen -X $c cmus
-        cmus-remote -u
-    else
-        screen -T screen 8 cmus
-        # don't need this anymore since we have setting 'resume'
-        #sleep 0.5
-        #cmus-remote -p
-        # cmus always start with the first song although shuffle is on
-        #cmus-remote -n
+        screen -t irssi -T screen 9 irssi
     fi
 }
 
