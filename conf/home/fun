@@ -176,6 +176,14 @@ v(){
     fi
 }
 
+py(){
+    python3 "$@"
+}
+
+wg(){
+    sudo wg "$@"
+}
+
 sy(){
     case $1 in
         e)
