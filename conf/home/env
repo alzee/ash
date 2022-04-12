@@ -92,6 +92,7 @@ if [ "$domain" ];then
 		eval ${i%%.*}=$i
 	done
 fi
+unset i
 
 vps=$azure
 
