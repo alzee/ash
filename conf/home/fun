@@ -793,6 +793,13 @@ ascii_of(){
     printf '%d\n' "'$1"
 }
 
+expecting_SSH2_MSG_KEX_ECDH_REPLY(){
+    local if
+    if=$1
+    # https://serverfault.com/a/670081
+    sudo ip li set mtu 1200 dev $if
+}
+
 are_u_sure(){
     read -n1 -p "Are you sure to exit? [y/N] "
     [ "$REPLY" != y ] && { echo; history -a; bash; }
