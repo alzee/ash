@@ -251,18 +251,6 @@ qr(){
     qrencode -t ansiutf8 "$@"
 }
 
-chk_conn(){
-    while :
-    do
-        sleep 15
-        # echo connection ok
-        if ! ping -c1 8.8.8.8 &> /dev/null; then
-            echo connection down, try to up
-            nmcli c up "Wired connection 1"
-        fi
-    done
-}
-
 warmane(){
     local interface
     interface=$(ip link | grep -o 'enp0s2\w*')
