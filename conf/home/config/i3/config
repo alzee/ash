@@ -188,4 +188,6 @@ bar {
 		#tray_output primary
 }
 
+# Will also start in a vncserver
+# exec xautolock -time 30 -locker "i3lock"
 exec ~/.config/i3/startup.sh
