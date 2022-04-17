@@ -10,8 +10,8 @@
 
 
 if ping -c1 8.8.8.8 &> /dev/null; then
-    echo connection ok
+    #echo connection ok
 else
-    echo connection down, try to up
+    #echo connection down, try to up
     sudo nmcli c up "Wired connection 1"
 fi
