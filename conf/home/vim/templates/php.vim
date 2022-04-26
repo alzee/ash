@@ -1,12 +1,12 @@
 <?php
 /**
  * vim:ft=php et ts=4 sts=4
- * @author z14 <z@arcz.ee>
+ * @author Al Zee <z@alz.ee>
  * @version
  * @todo
  */
 
-namespace Zee\Fuck;
+namespace Alzee\Fuck;
 
 // use What;
 
