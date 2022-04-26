@@ -6,6 +6,7 @@
 	s = show
 	i = init
 	st = status
+	t = tag
 	sw = switch
 	p = pull
 	l = log --format='%C(auto)%h %Cred%cd%Creset %s' --date=format:'%b %d %H:%M'
