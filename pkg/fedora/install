@@ -39,6 +39,7 @@ rust
 cargo
 symfony-cli
 gh
+git-lfs
 jmtpfs
 android-tools
 php

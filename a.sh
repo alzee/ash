@@ -81,6 +81,7 @@ add_repo() {
             sudo $pkg config-manager --add-repo $scriptdir/conf/templates/$distro/symfony-cli.repo
             # repo for docker-ce docker-ce-cli containerd.io. No need since fedora comes with moby-engine
             # sudo $pkg config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+            curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
             ;;
         rhel)
             # The epel-release package is available from the CentOS Extras repository (enabled by default)
@@ -93,6 +94,7 @@ add_repo() {
             sudo sed -i 's/^/#/' /etc/apt/sources.list
             # add testing repo (latest packages)
             sudo cp $scriptdir/conf/templates/debian/testing.list /etc/apt/sources.list.d/
+            # curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
             sudo $pkg update -y
             ;;
         freebsd)
