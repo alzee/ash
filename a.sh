@@ -382,7 +382,7 @@ _hardlinks(){
 
 mklinks(){
     # hard link conf/home/foo to ~/.foo
-    for i in $(find $scriptdir/conf/home -type d)
+    for i in $(find $scriptdir/conf/home/ -type d)
     do
         mkdir -p ~/.${i#*home/}
     done
