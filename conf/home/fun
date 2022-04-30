@@ -393,6 +393,7 @@ acme(){
     #export CF_Token=""
     #export CF_Account_ID=""
     #export CF_Zone_ID=""
+    echo we need CF_Token CF_Account_ID CF_Zone_ID
 
     [ -z "$1" ] && return
 
