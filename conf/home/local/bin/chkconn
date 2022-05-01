@@ -8,8 +8,10 @@
 
 ############### Main Part ###############
 
+# tar=8.8.8.8
+tar=223.5.5.5
 
-if ping -c1 8.8.8.8 &> /dev/null; then
+if ping -c1 $tar &> /dev/null; then
     #echo connection ok
     :
 else
