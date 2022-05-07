@@ -14,4 +14,6 @@ dir=~/.backup/gxb
 mkdir -p $dir
 
 # -avzRP no need -v and -P since it's in background
-time rsync -avzRP --delete $host:gxb.sql $host:.acme.sh $host:cert $host:.ssh $host:w $host:vhosts $dir 2> $dir/err.log
+time rsync -azR \
+    --exclude var/* \
+    --delete $host:gxb.sql $host:.acme.sh $host:cert $host:.ssh $host:w $host:vhosts $dir 2> $dir/err.log
