@@ -8,12 +8,36 @@
 
 ############### Main Part ###############
 
-host=10.5.5.1
-dir=~/.backup/gxb
+[ "$1" ] || exit
+
+host=$1
+
+case $host in
+    gxb)
+        databases="fgw fxkyss info_syzszz syzszz yunxi stamp"
+        ;;
+    kr)
+        databases="alzee"
+        ;;
+esac
+
+[ "$databases" ] && \
+    ssh $host.$domain "mysqldump -uroot -p$mysql_root_pw --databases $databases > $host.sql"
+
+dir=~/.backup/$host
 
 mkdir -p $dir
 
 # -avzRP no need -v and -P since it's in background
-time rsync -azR \
+time rsync -avzRP \
     --exclude var/* \
-    --delete $host:gxb.sql $host:.acme.sh $host:cert $host:.ssh $host:w $host:vhosts $dir 2> $dir/err.log
+    --delete \
+    $host.$domain:$host.sql \
+    :.acme.sh \
+    :cert \
+    :.ssh \
+    :w \
+    :vhosts \
+    :vhosts.conf \
+    $dir \
+    2> $dir/err.log
