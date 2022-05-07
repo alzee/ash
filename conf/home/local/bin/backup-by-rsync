@@ -32,12 +32,12 @@ mkdir -p $dir
 time rsync -avzRP \
     --exclude var/* \
     --delete \
-    $host.$domain:$host.sql \
-    :.acme.sh \
-    :cert \
-    :.ssh \
-    :w \
+    $host.$domain:w \
     :vhosts \
     :vhosts.conf \
+    :cert \
+    :.acme.sh \
+    :.ssh \
+    :$host.sql \
     $dir \
     2> $dir/err.log
