@@ -30,7 +30,7 @@ dir=~/.backup/$host
 mkdir -p $dir
 
 # -avzRP no need -v and -P since it's in background
-time rsync -avzRP \
+time rsync -azR \
     --exclude var/* \
     --delete \
     $host.$domain:w \
