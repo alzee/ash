@@ -176,6 +176,14 @@ v(){
     fi
 }
 
+console(){
+    bin/console "$@"
+}
+
+drush(){
+    bin/drush "$@"
+}
+
 py(){
     python3 "$@"
 }
