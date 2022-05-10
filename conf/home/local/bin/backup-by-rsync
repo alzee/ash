@@ -40,5 +40,4 @@ time rsync -azR \
     :.acme.sh \
     :.ssh \
     :$host.sql \
-    $dir \
-    2> $dir/err.log
+    $dir
