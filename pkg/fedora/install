@@ -56,6 +56,7 @@ php-mysqlnd
 php-json
 php-fpm
 php-devel
+php-pecl-redis
 tigervnc-server
 x11vnc
 simple-scan
