@@ -13,6 +13,7 @@ php-fpm
 php-dev
 php-uploadprogress
 php-bcmath
+php-redis
 apache2
 mariadb-server
 redis-server
