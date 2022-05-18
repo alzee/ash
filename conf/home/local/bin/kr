@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo wg set kr peer kE+mL5fcW1KMidbdih0fWhF2eLV4KqxMxtlQUD94jhI= endpoint kr.alz.ee:50$(date +%d)
