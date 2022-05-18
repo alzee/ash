@@ -1,3 +1,5 @@
 #!/bin/bash
 
-sudo wg set kr peer kE+mL5fcW1KMidbdih0fWhF2eLV4KqxMxtlQUD94jhI= endpoint kr.alz.ee:50$(date +%d)
+wg-quick down kr
+sudo sed -i /Endpoint/s/:50.*/:50$(date +%d)/ /etc/wireguard/kr.conf
+wg-quick up kr
