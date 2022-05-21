@@ -79,9 +79,11 @@ N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
 screen=matrix
 vim_default_session=~/.vim/session/default.vim
-# local or private vars
+# local envs
+# is_workstation=1
+# domain=
+# mysql_root_pw=
 [ -f ~/.env.local ] && . ~/.env.local
-[ -f ~/.env.sec ] && . ~/.env.sec
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
 if [ "$domain" ];then
