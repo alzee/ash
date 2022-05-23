@@ -11,7 +11,7 @@
 [ "$1" ] || exit
 
 host=$1
-. ~/.env.sec
+. ~/.env.local
 
 case $host in
     gxb)
