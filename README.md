@@ -38,16 +38,20 @@ $ git pull
 
 ## Have modified your dotfiles?
 ```bash
-## Let's say ~/.fun
-## Don't forget it's a hark link to ash/conf/home/fun
+# Let's say ~/.fun
+# Don't forget it's a hark link to ash/conf/home/fun
 $ cd ash
-## Commit change
+# Commit change
 $ git add conf/home/fun
 $ git commit -m 'added foo() in fun'
 $ git push
 
-## New codes in ~/.{env,fun,ali} need to be exported
+# New codes in ~/.{env,fun,ali} need to be exported
 $ # exit screen or tmux
 $ rl
 $ screen # tmux
 ```
+
+## Suggestion
+# Change dir of githooks so git can track them
+$ g config --global  core.hooksPath .githooks/
