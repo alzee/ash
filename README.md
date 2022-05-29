@@ -6,7 +6,7 @@ Restore your dotfiles, bash environment and configurations.
 * Fork it, clone, copy your dotfiles to ash/conf/home/ without leading dot.
 	```bash
     # Fork this repo
-    # Clone
+    # Clone forked repo
     git clone git@github.com:username/ash
 	# Choose dotfiles you want to backup.
     # For example, .fun, .env, .screenrc, .inputrc, .gitconfig, .vimrc, etc.
