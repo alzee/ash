@@ -19,7 +19,6 @@ Restore your dotfiles, bash environment and configurations.
 * Write your envs in ash/conf/home/env
 * Write you functions in ash/conf/home/fun
 * Write your local envs in ~/.env.local
-* Write your secret envs in ~/.env.sec 
 * Write you local functions in ~/.fun.local
 * Commit and push
 
