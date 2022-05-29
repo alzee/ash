@@ -24,12 +24,16 @@ Restore your dotfiles, bash environment and configurations.
 * Commit and push
 
 ## Restore on a new linux.
-Phoenix arising from the ashes.
 ```bash
+# For brand new
 $ git clone https://github.com/username/ash
-
 # Hard link all files in ash/conf/home to your home dir
-$ ash/a.sh -H
+$ ash/a.sh -L
+
+# For update
+$ cd ash
+$ git pull
+# githook `post-merge` will do the rest
 ```
 
 ## Have modified your dotfiles?
