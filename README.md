@@ -30,10 +30,10 @@ $ git clone https://github.com/username/ash
 # Hard link all files in ash/conf/home to your home dir
 $ ash/a.sh -L
 
-# For update
+# For updating
 $ cd ash
 $ git pull
-# githook `post-merge` will do the rest
+# githook post-merge will do the rest
 ```
 
 ## Have modified your dotfiles?
