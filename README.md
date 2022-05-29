@@ -23,7 +23,7 @@ Restore your dotfiles, bash environment and configurations.
 * Write you local functions in ~/.fun.local
 * Commit and push
 
-## Restore on a new linux.
+## Restore on other linux.
 ```bash
 # For brand new
 $ git clone https://github.com/username/ash
