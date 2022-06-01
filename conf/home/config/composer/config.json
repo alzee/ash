@@ -5,7 +5,8 @@
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
             "ocramius/package-versions": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "composer/package-versions-deprecated": true
         }
     },
     "repositories": {
