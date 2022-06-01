@@ -38,6 +38,7 @@ unrar
 @Fonts
 rust
 cargo
+pip
 symfony-cli
 gh
 git-lfs
