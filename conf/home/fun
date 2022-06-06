@@ -297,7 +297,7 @@ drupalnew(){
 
     composer cre drupal/recommended-project $name
     cd $name
-    composer req drush/drush drupal/{token,ctools,pathauto,metatag,admin_toolbar,adminimal_theme}
+    composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,admin_toolbar,adminimal_theme}
     composer req --dev drupal/devel
     mkdir bin
     ln -s ../vendor/bin/drush bin/
@@ -310,7 +310,7 @@ drupalnew(){
     bin/drush si --locale $locale  --db-url mysql://$db_user:$db_pass@localhost:3306/$name \
         --site-mail $mail --account-name $user --account-mail $mail --account-pass $pass -y
 
-    bin/drush pm:enable token ctools pathauto admin_toolbar metatag devel -y
+    bin/drush pm:enable token ctools pathauto easy_breadcrumb admin_toolbar metatag devel -y
     # bin/drush pm:enable language locale -y # no need since they will be enabled if not install as en
     bin/drush theme:enable adminimal_theme
 
