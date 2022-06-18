@@ -133,7 +133,7 @@ load_pkg() {
     # but seems separators in foo=$(< bar) are not space
     i_pkg=${i_pkg//php-/$php-}
     
-    if [ "$is_workstation" ]; then
+    if [ "$is_workstation" -a  -f $scriptdir/pkg/$distro/workstation ]; then
         i_pkg="$i_pkg $(< $scriptdir/pkg/$distro/workstation)"
     fi
 }
