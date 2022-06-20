@@ -325,6 +325,9 @@ misc() {
 
         # In case postfix warning: unable to look up public/pickup: No such file or directory
         sudo mkfifo /var/spool/postfix/public/pickup 2> /dev/null
+
+        # If nvidia on desktop
+        # sudo systemctl disable --now nvidia-powerd.service
     fi
 
     crontab $scriptdir/conf/templates/$distro/cron
