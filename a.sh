@@ -133,7 +133,7 @@ load_pkg() {
     # but seems separators in foo=$(< bar) are not space
     i_pkg=${i_pkg//php-/$php-}
     
-    if [ "$is_workstation" ]; then
+    if [ "$is_workstation" -a  -f $scriptdir/pkg/$distro/workstation ]; then
         i_pkg="$i_pkg $(< $scriptdir/pkg/$distro/workstation)"
     fi
 }
@@ -325,6 +325,9 @@ misc() {
 
         # In case postfix warning: unable to look up public/pickup: No such file or directory
         sudo mkfifo /var/spool/postfix/public/pickup 2> /dev/null
+
+        # If nvidia on desktop
+        # sudo systemctl disable --now nvidia-powerd.service
     fi
 
     crontab $scriptdir/conf/templates/$distro/cron
