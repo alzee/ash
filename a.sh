@@ -451,6 +451,11 @@ install_composer(){
 }
 
 install_node(){
+    # deno is the thing
+    curl -fsSL https://deno.land/install.sh | sh
+    mv ~/.deno/bin/deno ~/.local/bin/
+
+    # The fucking node
     node_tar='node-lts-linux.x64.tar.xz'
     node_url=$(curl -s https://nodejs.org/en/download/ | grep -o 'https://.*linux-x64.tar.xz')
     pushd $tempdir
