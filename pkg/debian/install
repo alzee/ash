@@ -28,3 +28,4 @@ nfs-server
 man-db
 mailutils
 unattended-upgrades
+docker-compose
