@@ -19,7 +19,7 @@ curl -L https://releases.rocket.chat/4.8.4/download -o /tmp/rocket.chat.tgz
 
 tar -xzf /tmp/rocket.chat.tgz -C /tmp
 
-cd /tmp/bundle/programs/server && npm install
+cd /tmp/bundle/programs/server && npm install 2> ~/err.log
 
 sudo mv /tmp/bundle /opt/Rocket.Chat
 
