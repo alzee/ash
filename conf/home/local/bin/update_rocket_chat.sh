@@ -12,7 +12,7 @@ sudo rm -rf /opt/Rocket.Chat
 sudo apt-get install -y build-essential graphicsmagick
 
 # sudo n install 14.0.0
-n install 14.0.0
+n install 14
 
 #curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz
 curl -L https://releases.rocket.chat/4.8.4/download -o /tmp/rocket.chat.tgz
