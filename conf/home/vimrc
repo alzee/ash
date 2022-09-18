@@ -85,9 +85,9 @@ au BufNewFile *.py 0r ~/.vim/templates/py.vim | $
 au FileType python source ~/.vim/map/py.vim
 
 au BufNewFile *.html 0r ~/.vim/templates/html.vim | let @/='body' | /
-au FileType html source ~/.vim/map/html.vim | set ts=2 sw=2
-au FileType css set ts=2 sw=2
-au FileType scss set ts=2 sw=2
+au FileType html source ~/.vim/map/html.vim | set ts=2 sw=2 sts=2
+au FileType css set ts=2 sw=2 sts=2
+au FileType scss set ts=2 sw=2 sts=2
 
 au BufNewFile *.twig 0r ~/.vim/templates/twig.vim | let @/='body' | /
 au FileType twig set ft=html
@@ -103,6 +103,10 @@ au BufNewFile *.asm 0r ~/.vim/templates/asm.vim | let @/='start' | /
 au BufNewFile md.js %d | 0r ~/.vim/templates/md.js.vim
 au FileType javascript source ~/.vim/map/javascript.vim
 au FileType typescript source ~/.vim/map/typescript.vim
+
+au FileType typescriptreact set ts=2 sw=2 sts=2
+au FileType typescript set ts=2 sw=2 sts=2
+au FileType javascript set ts=2 sw=2 sts=2
 
 au FileType sql source ~/.vim/map/sql.vim
 
