@@ -104,7 +104,7 @@ au BufNewFile md.js %d | 0r ~/.vim/templates/md.js.vim
 au FileType javascript source ~/.vim/map/javascript.vim
 au FileType typescript source ~/.vim/map/typescript.vim
 
-au FileType typescriptreact set ts=2 sw=2 sts=2
+au FileType typescriptreact set ts=2 sw=2 sts=2 ft=typescript
 au FileType typescript set ts=2 sw=2 sts=2
 au FileType javascript set ts=2 sw=2 sts=2
 
