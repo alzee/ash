@@ -1,0 +1,13 @@
+Host *
+    ServerAliveInterval 60
+Host github.com
+    IdentityFile ~/.ssh/github
+Host myvps.com 10.5.6.1
+    IdentityFile ~/.ssh/myvps
+
+# Host github.com-repo-0
+#     Hostname github.com
+#     IdentityFile=~/.ssh/repo-0_deploy_key
+# Host github.com-repo-1
+#     Hostname github.com
+#     IdentityFile=~/.ssh/repo-1_deploy_key
