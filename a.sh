@@ -39,7 +39,7 @@ case $distro in
 esac
 
 kernel=$(uname -r)
-[ "${kernel##*Microsoft*}" ] || is_WSL=my_length_is_nonzero
+[[ "$kernel" =~ [Mm]icrosoft ]] && is_WSL=my_length_is_nonzero
 
 ############### Functions ###############
 _clean(){
