@@ -1,2 +1,2 @@
 # Am I in wheel?
-al	ALL=(ALL)       NOPASSWD: /bin/nmcli c up *, /bin/wg
+al	ALL=(ALL)       NOPASSWD: /bin/wg, /bin/wg-quick

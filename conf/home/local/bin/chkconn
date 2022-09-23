@@ -16,5 +16,5 @@ if ping -c1 $tar &> /dev/null; then
     :
 else
     #echo connection down, try to up
-    sudo nmcli c up "Wired connection 1"
+    nmcli c up "Wired connection 1"
 fi
