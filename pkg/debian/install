@@ -11,6 +11,7 @@ php-mysql
 php-curl
 php-fpm
 php-dev
+php-intl
 php-uploadprogress
 php-bcmath
 php-redis
