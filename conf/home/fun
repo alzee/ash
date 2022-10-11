@@ -273,6 +273,8 @@ warmane(){
 
     # auth
     sudo ip route add 188.138.40.87 via $gateway dev $interface
+    # realm list
+    sudo ip route add 62.138.7.219 via $gateway dev $interface
     # Icecrown 8092
     sudo ip route add 51.91.106.148 via $gateway dev $interface
     # Blackrock 8095 & Lordaeron 8091
