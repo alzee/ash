@@ -29,3 +29,6 @@ nfs-server
 man-db
 mailutils
 unattended-upgrades
+python3-dev
+default-libmysqlclient-dev
+build-essential

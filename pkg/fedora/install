@@ -64,3 +64,5 @@ x11vnc
 simple-scan
 qrencode
 foliate
+python3-devel
+mysql-devel
