@@ -278,6 +278,9 @@ misc() {
         sudo a2enmod mpm_event http2 rewrite ssl socache_shmcb headers proxy_{fcgi,http,http2} setenvif
         sudo a2enconf $php-fpm
 
+        # Set apache default charset
+        sudo sed -i '/#AddDefaultCharset/s/#//' /etc/apache2/conf-available/charset.conf
+
         #sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
         sudo ln -s ~/vhosts.conf /etc/apache2/conf-enabled/
 
