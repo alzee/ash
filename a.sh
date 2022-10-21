@@ -96,6 +96,13 @@ add_repo() {
             # add testing repo (latest packages)
             sudo cp $scriptdir/conf/templates/debian/testing.list /etc/apt/sources.list.d/
             # curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+            
+            curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+            echo \
+                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+                https://download.docker.com/linux/debian \
+                $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
             sudo $pkg update -y
             ;;
         freebsd)
