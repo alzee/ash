@@ -79,9 +79,8 @@ add_repo() {
 
             sudo $pkg config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
             sudo $pkg config-manager --add-repo $scriptdir/conf/templates/$distro/symfony-cli.repo
-            # repo for docker-ce docker-ce-cli containerd.io. No need since fedora comes with moby-engine
-            # sudo $pkg config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-            # sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+            # fedora have moby-engine. Anyway, use docker repo can get docker-compose-plugin
+            sudo $pkg config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
             curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
             ;;
         rhel)

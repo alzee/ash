@@ -28,7 +28,6 @@ mailx
 postfix
 transmission-common
 transmission-daemon
-moby-engine
 oathtool
 chromium-freeworld
 firefox
@@ -66,3 +65,7 @@ foliate
 python3-devel
 mysql-devel
 ruby
+docker-ce
+docker-ce-cli
+containerd.io
+docker-compose-plugin
