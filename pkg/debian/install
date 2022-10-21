@@ -33,3 +33,7 @@ unattended-upgrades
 python3-dev
 default-libmysqlclient-dev
 build-essential
+docker-ce
+docker-ce-cli
+containerd.io
+docker-compose-plugin
