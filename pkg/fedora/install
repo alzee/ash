@@ -29,7 +29,6 @@ postfix
 transmission-common
 transmission-daemon
 moby-engine
-docker-compose
 oathtool
 chromium-freeworld
 firefox

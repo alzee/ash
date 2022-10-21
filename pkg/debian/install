@@ -1,4 +1,5 @@
 apt-utils
+ca-certificates
 php-common
 php-cli
 php-xml
