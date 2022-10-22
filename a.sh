@@ -428,7 +428,7 @@ _mkswap(){
     # sudo fallocate --length 3700MiB  $swapfile
     #dd if=/dev/zero of=$swapfile bs=1 count=0 seek=2G # pretty fast using seek, but have holes
     say Making swap file...
-    sudo dd if=/dev/zero of=$swapfile bs=4M count=500
+    sudo dd if=/dev/zero of=$swapfile bs=1M count=3700
     sudo chmod 600 $swapfile
     sudo mkswap $swapfile
     sudo swapon $swapfile
