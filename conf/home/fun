@@ -299,7 +299,7 @@ drupalnew(){
 
     composer cre drupal/recommended-project $name
     cd $name
-    composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,admin_toolbar,adminimal_theme}
+    composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,admin_toolbar}
     composer req --dev drupal/devel
     mkdir bin
     ln -s ../vendor/bin/drush bin/
@@ -314,7 +314,8 @@ drupalnew(){
 
     bin/drush pm:enable token ctools pathauto easy_breadcrumb admin_toolbar metatag devel -y
     # bin/drush pm:enable language locale -y # no need since they will be enabled if not install as en
-    bin/drush theme:enable adminimal_theme
+    bin/drush theme:enable claro
+    bin/drush theme:enable olivero
 
     # Setup development environment
     chmod 755 $site_path/
@@ -338,10 +339,9 @@ drupalnew(){
 
     # Custom config
     bin/drush cset metatag.metatag_defaults.front tags.title '[site:name]' -y
-    bin/drush cset system.theme admin adminimal_theme -y
+    bin/drush cset system.theme admin claro -y
     bin/drush cset system.date country.default CN -y
     bin/drush cset system.date first_day 1 -y
-    # bin/drush cset adminimal_theme.settings disable_google_fonts 1
 
     # TODO
     # menu settings can't export/import
