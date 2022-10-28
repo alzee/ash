@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+[ "$1" ] || exit
+
+cd "$1"
+composer update && bin/drush updb
