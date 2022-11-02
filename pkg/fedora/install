@@ -56,6 +56,8 @@ php-mysqlnd
 php-json
 php-fpm
 php-devel
+php-bcmath
+php-intl
 php-pecl-redis
 tigervnc-server
 x11vnc
