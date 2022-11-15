@@ -15,12 +15,25 @@ if (KEY === undefined) {
 const HOME = Deno.env.get("HOME")
 const dir = HOME + '/.di/'
 const audioDir = dir + 'audio/'
+const textDir = dir + 'text/'
 await Deno.mkdir(audioDir, { recursive: true });
+await Deno.mkdir(textDir, { recursive: true });
 
-let word = Deno.args[0]
-let resp = await fetch(`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${KEY}`)
-let d = JSON.parse(await resp.text())
+const word = Deno.args[0].toLowerCase()
+let text
+
+try {
+  text = await Deno.readTextFile(textDir + word)
+} catch (error) {
+  if (error instanceof Deno.errors.NotFound) {
+    let resp = await fetch(`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${KEY}`)
+    text = await resp.text()
+    await Deno.writeTextFile(textDir + word, text);
+  }
+}
+
 let audio
+const d = JSON.parse(text)
 
 if (d[0].meta === undefined) {
   console.log("The word you've entered isn't in the dictionary. Try a spelling suggestion below.")
