@@ -1,6 +1,8 @@
-#!/bin/env -S deno run --allow-net --allow-env --allow-run
+#!/bin/env -S deno run --allow-net --allow-env --allow-run --allow-write --allow-read
 
 // vim:ft=typescript
+
+// import { writableStreamFromWriter } from "https://deno.land/std@0.164.0/streams/mod.ts";
 
 if (Deno.args.length === 0) Deno.exit()
 
@@ -36,12 +38,26 @@ for (let i of d) {
 }
 
 if (audio) {
+  const HOME = Deno.env.get("HOME")
+  const dir = HOME + '/.di/'
+  await Deno.mkdir(dir, { recursive: true });
+
   let subdir = audio.substr(0, 1)
+  const audioFile = audio + '.mp3'
 
-  let audioUrl = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audio}.mp3`
+  try {
+    await Deno.stat(dir + audioFile)
+  } catch (error) {
+    if (error instanceof Deno.errors.NotFound) {
+      // throw error;
+      const fileResponse = await fetch(`https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audioFile}`)
+      const buffer = await fileResponse.arrayBuffer()
+      await Deno.writeFile(dir + audioFile, buffer)
+    }
+  }
 
-    const p = Deno.run({
-    cmd: ["mpv", "--really-quiet", audioUrl]
+  const p = Deno.run({
+    cmd: ["mpv", "--really-quiet", dir + audioFile]
   })
   const status = await p.status();
 }
