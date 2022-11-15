@@ -22,16 +22,16 @@ if (d[0].meta === undefined) {
 } 
 
 for (let i of d) {
-  if (i.hwi.prs) {
-    console.log(`%c${i.meta.id} %c${i.fl} ${i.hwi.prs[0].mw}` , "color:red", "color:white")
-    if (i.hwi.prs[0].sound && i.hwi.prs[0].sound.audio && !audio) {
-      audio = i.hwi.prs[0].sound.audio
-    }
-  } else {
-    console.log(`%c${i.meta.id} %c${i.fl}` , "color:red", "color:white")
-  }
+  let fl = ''
+  let mw = ''
+  if (i.fl) fl = i.fl
+  if (i.hwi.prs) mw = i.hwi.prs[0].mw
+  console.log(`%c${i.meta.id} %c${fl} ${mw}` , "color:red", "color:white")
   for (let j of i.shortdef) {
     console.log(`%c${j}`, "color: yellow")
+  }
+  if (i.hwi.prs && i.hwi.prs[0].sound && i.hwi.prs[0].sound.audio && !audio) {
+    audio = i.hwi.prs[0].sound.audio
   }
 }
 
