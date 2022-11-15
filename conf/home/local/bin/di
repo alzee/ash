@@ -14,20 +14,29 @@ let word = Deno.args[0]
 let resp = await fetch(`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${KEY}`)
 let d = JSON.parse(await resp.text())
 
-for (let i of d) {
-  console.log(i.meta.id)
-  console.log(i.fl)
-  console.log(i.hwi)
-  console.log(i.shortdef)
+if (d[0].meta === undefined) {
+  console.log("The word you've entered isn't in the dictionary. Try a spelling suggestion below.")
+    console.log(...d)
+} else {
+  for (let i of d) {
+    if (i.hwi.prs) {
+      console.log(`%c${i.meta.id} %c${i.fl} ${i.hwi.prs[0].mw}` , "color:red", "color:white")
+    } else {
+      console.log(`%c${i.meta.id} %c${i.fl}` , "color:red", "color:white")
+    }
+    for (let j of i.shortdef) {
+      console.log(`%c${j}`, "color: yellow")
+    }
+  }
+
+  const audio = d[0].hwi.prs[0].sound.audio
+  let subdir = audio.substr(0, 1)
+
+  let audioUrl = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audio}.mp3`
+
+    const p = Deno.run({
+    cmd: ["mpv", "--really-quiet", audioUrl]
+  })
+  const status = await p.status();
 }
 
-const audio = d[0].hwi.prs[0].sound.audio
-let subdir = audio.substr(0, 1)
-
-let audioUrl = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audio}.mp3`
-// console.log(audioUrl)
-  //
-const p = Deno.run({
-  cmd: ["mpv", "--really-quiet", audioUrl]
-})
-const status = await p.status();
