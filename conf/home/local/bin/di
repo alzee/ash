@@ -13,37 +13,35 @@ if (KEY === undefined) {
 let word = Deno.args[0]
 let resp = await fetch(`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${KEY}`)
 let d = JSON.parse(await resp.text())
+let audio
 
 if (d[0].meta === undefined) {
   console.log("The word you've entered isn't in the dictionary. Try a spelling suggestion below.")
-  // let suggestions = ''
-  // for (let i of d) {
-  //   suggestions += i + ' '
-  // }
-  // console.log(`%c${suggestions}`, "color: yellow")
   console.log(...d)
-} else {
-  for (let i of d) {
-    if (i.hwi.prs) {
-      console.log(`%c${i.meta.id} %c${i.fl} ${i.hwi.prs[0].mw}` , "color:red", "color:white")
-    } else {
-      console.log(`%c${i.meta.id} %c${i.fl}` , "color:red", "color:white")
+  Deno.exit()
+} 
+
+for (let i of d) {
+  if (i.hwi.prs) {
+    console.log(`%c${i.meta.id} %c${i.fl} ${i.hwi.prs[0].mw}` , "color:red", "color:white")
+    if (i.hwi.prs[0].sound && i.hwi.prs[0].sound.audio && !audio) {
+      audio = i.hwi.prs[0].sound.audio
     }
-    for (let j of i.shortdef) {
-      console.log(`%c${j}`, "color: yellow")
-    }
+  } else {
+    console.log(`%c${i.meta.id} %c${i.fl}` , "color:red", "color:white")
   }
-
-  if (d[0].hwi.prs) {
-    const audio = d[0].hwi.prs[0].sound.audio
-    let subdir = audio.substr(0, 1)
-
-    let audioUrl = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audio}.mp3`
-
-      const p = Deno.run({
-      cmd: ["mpv", "--really-quiet", audioUrl]
-    })
-    const status = await p.status();
+  for (let j of i.shortdef) {
+    console.log(`%c${j}`, "color: yellow")
   }
 }
 
+if (audio) {
+  let subdir = audio.substr(0, 1)
+
+  let audioUrl = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audio}.mp3`
+
+    const p = Deno.run({
+    cmd: ["mpv", "--really-quiet", audioUrl]
+  })
+  const status = await p.status();
+}
