@@ -235,7 +235,7 @@ vim(){
 
 play(){
     if [ "$1" ]; then
-        mpv --really-quiet "$@" &
+        (mpv --really-quiet "$@" &)
     else
         # if cmus is running
         # are we in matrix?
