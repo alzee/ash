@@ -1,4 +1,4 @@
-#!/bin/env -S deno run --allow-net --allow-env
+#!/bin/env -S deno run --allow-net --allow-env --allow-run
 
 // vim:ft=typescript
 
@@ -25,4 +25,9 @@ const audio = d[0].hwi.prs[0].sound.audio
 let subdir = audio.substr(0, 1)
 
 let audioUrl = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audio}.mp3`
-console.log(audioUrl)
+// console.log(audioUrl)
+  //
+const p = Deno.run({
+  cmd: ["mpv", "--really-quiet", audioUrl]
+})
+const status = await p.status();
