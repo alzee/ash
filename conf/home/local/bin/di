@@ -1,0 +1,28 @@
+#!/bin/env -S deno run --allow-net --allow-env
+
+// vim:ft=typescript
+
+if (Deno.args.length === 0) Deno.exit()
+
+const KEY = Deno.env.get("DICTIONARYAPI_KEY")
+if (KEY === undefined) {
+  console.log('ENV DICTIONARYAPI_KEY not found')
+  Deno.exit()
+}
+
+let word = Deno.args[0]
+let resp = await fetch(`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${KEY}`)
+let d = JSON.parse(await resp.text())
+
+for (let i of d) {
+  console.log(i.meta.id)
+  console.log(i.fl)
+  console.log(i.hwi)
+  console.log(i.shortdef)
+}
+
+const audio = d[0].hwi.prs[0].sound.audio
+let subdir = audio.substr(0, 1)
+
+let audioUrl = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audio}.mp3`
+console.log(audioUrl)

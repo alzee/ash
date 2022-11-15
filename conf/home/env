@@ -79,6 +79,7 @@ N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
 screen=matrix
 vim_default_session=~/.vim/session/default.vim
+DICTIONARYAPI_KEY=
 # local envs
 # is_workstation=1
 # domain=
