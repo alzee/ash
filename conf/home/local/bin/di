@@ -16,7 +16,12 @@ let d = JSON.parse(await resp.text())
 
 if (d[0].meta === undefined) {
   console.log("The word you've entered isn't in the dictionary. Try a spelling suggestion below.")
-    console.log(...d)
+  // let suggestions = ''
+  // for (let i of d) {
+  //   suggestions += i + ' '
+  // }
+  // console.log(`%c${suggestions}`, "color: yellow")
+  console.log(...d)
 } else {
   for (let i of d) {
     if (i.hwi.prs) {
