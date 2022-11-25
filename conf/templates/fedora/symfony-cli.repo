@@ -1,5 +1,0 @@
-[symfony-cli]
-name=Symfony CLI
-baseurl=https://repo.symfony.com/yum/
-enabled=1
-gpgcheck=0
