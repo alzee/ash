@@ -127,13 +127,14 @@ m(){
 }
 
 p(){
-    [ $1 ] || { ping 8.8.8.8 && return; }
+    local dns=1.1.1.1
+    [ $1 ] || { ping $dns && return; }
     # If not only contain numbers and ., take it as a domain
     [[ $1 =~ ^[0-9.]+$ ]] || { ping $1 && return; }
 
     local c ip
     # https://stackoverflow.com/a/21336679/7714132
-    ip=$(ip route get 8.8.8.8 | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
+    ip=$(ip route get $dns | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
     c=$(awk -F'.' '{print NF}' <<< "$1")
     case "$c" in
         1)
