@@ -120,26 +120,15 @@ load_pkg() {
     r_pkg=$(< $scriptdir/pkg/$distro/remove)
     case $distro in
         fedora)
-            php=php
             ;;
         rhel)
-            php=php
             ;;
         debian)
-            php_ver=$(apt list php -a | grep testing | cut -d':' -f2)
-            php=php${php_ver%+*}
             ;;
         freebsd)
-            php_ver=80
-            php=php${php_ver}
             ;;
     esac
 
-    # TODO This will substitute something like `pkg-php-tools'
-    # An alternative is start pattern with a space ${i_pkg// php-/ $php-}
-    # but seems separators in foo=$(< bar) are not space
-    i_pkg=${i_pkg//php-/$php-}
-    
     if [ "$is_workstation" -a  -f $scriptdir/pkg/$distro/workstation ]; then
         i_pkg="$i_pkg $(< $scriptdir/pkg/$distro/workstation)"
     fi
@@ -283,6 +272,8 @@ misc() {
         # Disable all version of mod_php or mpm_prefork won't be disabled due to dependency
         sudo a2dismod php* mpm_prefork
         sudo a2enmod mpm_event http2 rewrite ssl socache_shmcb headers proxy_{fcgi,http,http2} setenvif
+        local php
+        php=$(apt info php | grep Depends | cut -d' ' -f2)
         sudo a2enconf $php-fpm
 
         # Set apache default charset
