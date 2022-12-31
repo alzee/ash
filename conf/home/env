@@ -3,9 +3,9 @@
 # My envs
 # Create hard link ~/.env when running ~/.ash/a.sh -L
 # and ~/.env will be sourced in ~/.bash_profile
-# Export all these envs and set $env_exported at the end of this file.
+# Export all these envs and set $ENV_EXPORTED at the end of this file.
 
-[ "$env_exported" ] && return
+[ "$ENV_EXPORTED" ] && return
 
 set -a
 
@@ -38,11 +38,11 @@ LIBVIRT_DEFAULT_URI=qemu:///system
 #SOCKS_SERVER=
 #SOCKS_VERSION=5
 if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
-	PATH=$PATH:$HOME/.local/bin
+    PATH=$PATH:$HOME/.local/bin
 fi
 
-if  [ "$ID" = debian ]; then
-	[[ ! "$PATH" =~ "/usr/sbin:/sbin" ]] && PATH=/usr/sbin:/sbin:$PATH
+if  [[ "$ID" = debian && ! "$PATH" =~ "/usr/sbin:/sbin" ]]; then
+    PATH=/usr/sbin:/sbin:$PATH
 fi
 
 PATH=$PATH:$HOME/.cargo/bin
@@ -79,19 +79,19 @@ cross="\e[9m"
 # DRI_PRIME=1
 N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
-screen=matrix
-vim_default_session=~/.vim/session/default.vim
+SCREEN_SESSION=matrix
+VIM_DEFAULT_SESSION=~/.vim/session/default.vim
 # .env.local template
-# is_workstation=1
-# domain=
-# mysql_root_pw=
+# IS_WORKSTATION=1
+# DOMAIN=
+# MYSQL_ROOT_PW=
 # DICTIONARYAPI_KEY=
-# vps=
+# VPS=
 [ -f ~/.env.local ] && . ~/.env.local
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
-if [ "$domain" ];then
-	for i in $(grep -o "\w*\.$domain" ~/.ssh/config)
+if [ "$DOMAIN" ];then
+	for i in $(grep -o "\w*\.$DOMAIN" ~/.ssh/config)
 	do
 		# TODO can we not use eval here?
 		# export is good, but we already have set -a
@@ -100,6 +100,6 @@ if [ "$domain" ];then
 fi
 unset i
 
-env_exported=my_length_is_nonzero
+ENV_EXPORTED=my_length_is_nonzero
 
 set +a

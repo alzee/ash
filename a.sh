@@ -129,7 +129,7 @@ load_pkg() {
             ;;
     esac
 
-    if [ "$is_workstation" -a  -f $scriptdir/pkg/$distro/workstation ]; then
+    if [ "$IS_WORKSTATION" -a  -f $scriptdir/pkg/$distro/workstation ]; then
         i_pkg="$i_pkg $(< $scriptdir/pkg/$distro/workstation)"
     fi
 }
@@ -487,7 +487,7 @@ enable_networkmanager(){
 }
 
 setup_x11vnc(){
-    if [ "$is_workstation" ]; then
+    if [ "$IS_WORKSTATION" ]; then
         cp $scriptdir/conf/templates/x11vnc.service /etc/systemd/system/
         # vncpasswd
         mkdir ~/.vnc

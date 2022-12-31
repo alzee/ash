@@ -3,9 +3,9 @@
 # My functions
 # Create hard link ~/.fun when running ~/.ash/a.sh -L
 # and ~/.fun will be sourced in ~/.bash_profile
-# Export all these funcions and set $fun_exported at the end of this file.
+# Export all these funcions and set $FUN_EXPORTED at the end of this file.
 
-[ "$fun_exported" ] && return # since these functions have been exported, we don't need to soure this file anymore
+[ "$FUN_EXPORTED" ] && return # since these functions have been exported, we don't need to soure this file anymore
 
 # use some useless dconf keys to store info is a good idea.
 
@@ -45,7 +45,7 @@ d(){
 }
 
 D(){
-    s -t vps 5 ssh $vps -D7777
+    s -t vps 5 ssh $VPS -D7777
     s -X other
 }
 
@@ -159,10 +159,10 @@ s(){
     [ "$SSH_TTY" ] ||  arg='-e ^Ss'
 
     # if we are in the matrix
-    if [ "${STY#*.}" = "$screen" ];then
+    if [ "${STY#*.}" = "$SCREEN_SESSION" ];then
         screen "$@"
     else
-        screen $arg -d -R -S $screen #-T $TERM
+        screen $arg -d -R -S $SCREEN_SESSION #-T $TERM
     fi
 }
 
@@ -172,8 +172,8 @@ v(){
     else
         # $vim_default_file defined in .env
         #command vim $vim_default_file
-        # $vim_default_session defined in .env
-        command vim -S $vim_default_session
+        # $VIM_DEFAULT_SESSION defined in .env
+        command vim -S $VIM_DEFAULT_SESSION
     fi
 }
 
@@ -248,7 +248,7 @@ play(){
         local c=select
         # assume we are in the matrix
         if pgrep cmus; then
-            #screen -S $screen -X $c cmus
+            #screen -S $SCREEN_SESSION -X $c cmus
             cmus-remote -u
         else
             screen -T screen 8 cmus
@@ -574,7 +574,7 @@ irc(){
     local c=select
     # assume we are in the matrix
     if pgrep irssi; then
-        screen -S $screen -X $c irssi
+        screen -S $SCREEN_SESSION -X $c irssi
     else
         screen -t irssi -T screen 9 irssi
     fi
@@ -825,13 +825,13 @@ are_u_sure(){
 
 # reload ~/.{env,fun}
 rl(){
-    fun_exported=
-    env_exported=
+    FUN_EXPORTED=
+    ENV_EXPORTED=
     . ~/.env
     . ~/.fun
 }
 
-fun_exported=my_length_is_nonzero
+FUN_EXPORTED=my_length_is_nonzero
 
 [ -f ~/.fun.local ] && . ~/.fun.local
 
