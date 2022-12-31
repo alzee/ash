@@ -81,11 +81,12 @@ N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
 screen=matrix
 vim_default_session=~/.vim/session/default.vim
-DICTIONARYAPI_KEY=
-# local envs
+# .env.local template
 # is_workstation=1
 # domain=
 # mysql_root_pw=
+# DICTIONARYAPI_KEY=
+# vps=
 [ -f ~/.env.local ] && . ~/.env.local
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
@@ -98,8 +99,6 @@ if [ "$domain" ];then
 	done
 fi
 unset i
-
-vps=$azure
 
 env_exported=my_length_is_nonzero
 
