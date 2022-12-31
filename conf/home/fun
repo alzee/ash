@@ -351,7 +351,7 @@ drupalnew(){
     bin/drush cex -y
 }
 
-z(){
+pvz(){
     local p=/.wine/drive_c/Program\ Files/Plants\ vs\ Zombies/PlantsVsZombies.exe
     wine ~/.wine/drive_c/Program\ Files/Plants\ vs\ Zombies/PlantsVsZombies.exe -changedir &> /dev/null &
 }
@@ -372,7 +372,6 @@ enable_console(){
 }
 
 reset_mysql_root_pw(){
-    local i
     sudo mysqld_safe --skip-grant-tables --skip-networking
 }
 
@@ -391,10 +390,10 @@ php_mssql(){
 }
 
 troubleshooting(){
-    say Selinux?
-    say Any typo?
-    say Is this config file including other config files?
-    say Version?
+    echo Selinux?
+    echo Any typo?
+    echo Is this config file including other config files?
+    echo Version?
 }
 
 acme(){
@@ -434,43 +433,6 @@ ba(){
     echo charge_now/charge_full
     echo $n/$f=$(echo "scale=2;$n*100/$f" | bc)%
     echo $s
-}
-
-is_num(){
-    local i
-}
-
-is_float(){
-    local i
-}
-
-is_int(){
-    local i
-    i="$1"
-
-    #if [[ "$i" =~ ^[-+]?[0-9]+$ ]]; then
-    #	return 0
-    #else
-    #	return 1
-    #fi
-
-    # this solution has integer limit
-    # https://stackoverflow.com/a/19116862/7714132
-    #if [ "$i" -eq "$i" ] 2> /dev/null; then
-    #	return 0
-    #else
-    #	return 1
-    #fi
-
-    # https://stackoverflow.com/a/18620446/7714132
-    case ${i#[-+]} in
-        *[!0-9]* | '')
-            return 1
-            ;;
-        *)
-            return 0
-            ;;
-    esac
 }
 
 cleanup(){
@@ -600,50 +562,6 @@ vpaste(){
     fi
 }
 
-am(){
-    local start_target httpd web_server mariadb stop_target fpm i
-    mariadb=mariadb
-    httpd=httpd
-    stop_target=nginx
-    case $ID in
-        debian)
-            pushd /etc/apache2/conf-enabled/
-            fpm=$(echo php*)
-            popd
-            fpm=${fpm//.conf/}
-            httpd=apache2
-            mariadb=mysql
-            ;;
-        fedora)
-            fpm=php-fpm
-            ;;
-    esac
-
-    web_server=$httpd
-
-    if [ "$1" = -n ]; then
-        web_server=nginx
-        stop_target=$httpd
-    fi
-
-    # WSL do have systemctl but not working, so test with a sub-command rather than `which systemctl`
-    if systemctl list-jobs &> /dev/null; then
-        sudo systemctl stop $stop_target
-        sudo systemctl restart $web_server $mariadb $fpm
-    else
-        sudo service $stop_target stop
-        sudo service $web_server stop
-        sudo service $mariadb stop
-        sudo service $web_server start
-        sudo service $mariadb start
-        for i in $fpm
-        do
-            sudo service $i stop
-            sudo service $i start
-        done
-    fi
-}
-
 smb(){
     local sever share mountpoint user
 
@@ -675,32 +593,6 @@ nfs(){
     :
 }
 
-# assign array a to array b
-assign_array(){
-    local a=$1
-    unset b
-    # declare array b as associaitve if a is
-    declare -A $a 2> /dev/null && declare -A $b
-
-    for i in $(eval echo \${!$a[@]})
-    do
-        eval $b[$i]=\${$a[$i]}
-    done
-}
-
-# get key of the value in an array
-getkey(){
-    # $1 value, $2 array
-    local i v=$1 a=$2
-    # assign_array $2 $a
-    for i in $(eval echo \${!$a[@]})
-    do
-        #echo $i
-        eval [ "$v" == \${$a[$i]} ] && echo $i && return 0
-    done
-    return 1
-}
-
 self_sign_cert(){
     [ -z $1 ] && echo the key name, asshole! && return
     local i=$1
@@ -721,36 +613,6 @@ self_sign_cert(){
     openssl rsa -in $pem -out $key
     # issue a certificate signed with $key
     openssl x509 -req -days 365 -in $csr -signkey $key -out $crt
-}
-
-say(){
-    [ -z "$1" ] && echo "say what?" && return
-    set $@ # so we can use quotes
-    echo -en ${red}${bold}
-    while :; do
-        echo -n $1
-        shift
-        [ -z $1 ] && echo && break || echo -n " "
-        local r=`date +%N`
-        r=${r##*0}
-        local r=${r:0:1} # a 1~9 random number
-        sleep 0.$r
-    done
-    echo -en ${end}
-}
-
-countdown(){
-    local i j from to interval
-    from=${1:-100}
-    echo -en ${red}${bold}
-    for i in `seq -w 0 $from | sort -rn`; do
-        for j in `seq ${#i}`; do
-            echo -ne \\b
-        done
-        echo -n $i
-        [ $i -gt 0 ] && sleep 1
-    done
-    echo -e ${end}
 }
 
 grep(){
@@ -783,31 +645,6 @@ lhand(){
     # use the bitwise XOR-equal operator to flip between 0 and 1
     # https://unix.stackexchange.com/a/364489/274163
     echo $((lhanded ^ 1))
-}
-
-idlast(){
-    #local id=${1::17}
-    local id=$1
-    [ ${#id} -lt 17 ] && echo 17 numbers, assohole! && return 69
-    local factor=(7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2)
-    local last=(1 0 X 9 8 7 6 5 4 3 2)
-
-    local i sum=0
-    for i in `seq 0 16`
-    do
-        let sum+=$((${id:$i:1} * ${factor[$i]}))
-    done
-
-    echo ${last[$(($sum%11))]}
-}
-
-ascii_of(){
-    if [ "$1" == -c ];then
-        [ "$2" -lt 256 ] || return 1
-        printf "\\$(printf '%03o' "$2")"
-        return 0
-    fi
-    printf '%d\n' "'$1"
 }
 
 expecting_SSH2_MSG_KEX_ECDH_REPLY(){
