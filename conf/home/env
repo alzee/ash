@@ -89,6 +89,8 @@ VIM_DEFAULT_SESSION=~/.vim/session/default.vim
 # MYSQL_ROOT_PW=
 # DICTIONARYAPI_KEY=
 # VPS=
+# MOUSE=
+# TOUCHPAD=
 [ -f ~/.env.local ] && . ~/.env.local
 
 if [ "$DOMAIN" ];then

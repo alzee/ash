@@ -351,12 +351,14 @@ pvz(){
 }
 
 mouse_speed_by_ctm(){
+    local ctm
+    ctm="Coordinate Transformation Matrix"
     # xinput set-prop 8 156 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
     # id may change, use name instead
     local x y z
-    if is_num $1 && [ "$mouse" -a "$ctm" ]; then
+    if is_num $1 && [ "$MOUSE" -a "$ctm" ]; then
         x=$1 y=$1 z=$1
-        xinput set-prop "$mouse" "$ctm" $x, 0, 0, 0, $y, 0, 0, 0, $z
+        xinput set-prop "$MOUSE" "$ctm" $x, 0, 0, 0, $y, 0, 0, 0, $z
     fi
 }
 
@@ -625,15 +627,15 @@ githooks(){
 
 lhand(){
     local lhanded
-    [ "$mouse" ] && lhanded=$(xinput list-props "$mouse" | grep  "Left Handed Enabled (" | cut -f3)
-    [ "$touchpad" ] && lhanded=$(xinput list-props "$touchpad" | grep  "Left Handed Enabled (" | cut -f3)
+    [ "$MOUSE" ] && lhanded=$(xinput list-props "$MOUSE" | grep  "Left Handed Enabled (" | cut -f3)
+    [ "$TOUCHPAD" ] && lhanded=$(xinput list-props "$TOUCHPAD" | grep  "Left Handed Enabled (" | cut -f3)
 
     if [ "$lhanded" -eq 0 ]; then
-        [ "$mouse" ] && xinput set-prop "$mouse" 'libinput Left Handed Enabled' 1
-        [ "$touchpad" ] && xinput set-prop "$touchpad" 'libinput Left Handed Enabled' 1
+        [ "$MOUSE" ] && xinput set-prop "$MOUSE" 'libinput Left Handed Enabled' 1
+        [ "$TOUCHPAD" ] && xinput set-prop "$TOUCHPAD" 'libinput Left Handed Enabled' 1
     else
-        [ "$mouse" ] && xinput set-prop "$mouse" 'libinput Left Handed Enabled' 0
-        [ "$touchpad" ] && xinput set-prop "$touchpad" 'libinput Left Handed Enabled' 0
+        [ "$MOUSE" ] && xinput set-prop "$MOUSE" 'libinput Left Handed Enabled' 0
+        [ "$TOUCHPAD" ] && xinput set-prop "$TOUCHPAD" 'libinput Left Handed Enabled' 0
     fi
 
     # use the bitwise XOR-equal operator to flip between 0 and 1
