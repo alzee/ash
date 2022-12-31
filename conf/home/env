@@ -97,11 +97,10 @@ if [ "$DOMAIN" ];then
 	for i in $(grep -o "\w*\.$DOMAIN" ~/.ssh/config)
 	do
 		# TODO can we not use eval here?
-		# export is good, but we already have set -a
 		eval ${i%%.*}=$i
 	done
+    unset i
 fi
-unset i
 
 ENV_EXPORTED=my_length_is_nonzero
 
