@@ -60,26 +60,21 @@ f(){
 }
 
 g(){
-    local comment i opt
+    local comment i red bold end
+    red="\e[31m" bold="\e[1m" end="\e[m"
     case $1 in
         "")
             git status 2> /dev/null
-            [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end && for i in $allrepos; do echo -e "${yellow}${bold}Checking ${italic}$i${end}"; git -C $i st; echo; done
-            ;;
-        d)
-            [ "$?" -eq 128 ] && opt="-C $repoa"
-            shift
-            git $opt diff "$@"
+            [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end
             ;;
         c)
-            [ "$?" -eq 128 ] && opt="-C $repoa"
-            git $opt add -A
+            git add -A
             shift
             comment=${*:-nth}
-            git $opt commit -m "$comment"
+            git commit -m "$comment"
             read -p "press any key in 5 sec to git push..." -n 1 -t5 i
             echo
-            [ -n "$i" ] && echo -e "\nstarting push..." && git $opt push
+            [ -n "$i" ] && echo -e "\nstarting push..." && git push
             ;;
         *)
             git "$@"
