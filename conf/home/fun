@@ -60,8 +60,7 @@ f(){
 }
 
 g(){
-    local comment i red bold end
-    red="\e[31m" bold="\e[1m" end="\e[m"
+    local comment i
     case $1 in
         "")
             git status 2> /dev/null
