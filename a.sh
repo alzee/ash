@@ -476,6 +476,10 @@ install_node(){
     fi
 }
 
+install_rust(){
+    curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+}
+
 enable_networkmanager(){
     # Since we remove dhcpcd5
     # sudo echo denyinterfaces wlan0 >> /etc/dhcpcd.conf
@@ -527,6 +531,9 @@ case $1 in
         ;;
     -N)
         install_node
+        ;;
+    -R)
+        install_rust
         ;;
     -D)
         default_pool
