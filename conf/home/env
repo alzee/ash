@@ -45,6 +45,8 @@ if  [ "$ID" = debian ]; then
 	[[ ! "$PATH" =~ "/usr/sbin:/sbin" ]] && PATH=/usr/sbin:/sbin:$PATH
 fi
 
+PATH=$PATH:$HOME/.cargo/bin
+
 # ANSI escape code
 black="\e[30m"
 red="\e[31m"
