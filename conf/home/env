@@ -44,7 +44,6 @@ fi
 if  [[ "$ID" = debian && ! "$PATH" =~ "/usr/sbin:/sbin" ]]; then
     PATH=/usr/sbin:/sbin:$PATH
 fi
-
 PATH=$PATH:$HOME/.cargo/bin
 
 # ANSI escape code
@@ -81,6 +80,8 @@ N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
 SCREEN_SESSION=matrix
 VIM_DEFAULT_SESSION=~/.vim/session/default.vim
+#NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
+
 # .env.local template
 # IS_WORKSTATION=1
 # DOMAIN=
@@ -88,7 +89,6 @@ VIM_DEFAULT_SESSION=~/.vim/session/default.vim
 # DICTIONARYAPI_KEY=
 # VPS=
 [ -f ~/.env.local ] && . ~/.env.local
-#NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
 if [ "$DOMAIN" ];then
 	for i in $(grep -o "\w*\.$DOMAIN" ~/.ssh/config)
