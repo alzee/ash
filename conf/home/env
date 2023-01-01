@@ -45,7 +45,7 @@ fi
 if  [[ "$ID" = debian && ! "$PATH" =~ "/usr/sbin:/sbin" ]]; then
     PATH=/usr/sbin:/sbin:$PATH
 fi
-PATH=$PATH:$HOME/.cargo/bin
+# PATH=$PATH:$HOME/.cargo/bin
 
 # ANSI escape code
 black="\e[30m"
@@ -97,6 +97,7 @@ if [ "$DOMAIN" ];then
 	for i in $(grep -o "\w*\.$DOMAIN" ~/.ssh/config)
 	do
 		# TODO can we not use eval here?
+		# export ${i%%.*}=$i
 		eval ${i%%.*}=$i
 	done
     unset i
