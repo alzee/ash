@@ -81,6 +81,7 @@ VIM_DEFAULT_SESSION=~/.vim/session/default.vim
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
 # .env.local template
+# LIBGL_ALWAYS_SOFTWARE=1 # For ARM. See https://github.com/alacritty/alacritty/issues/3624#issuecomment-617428381
 # IS_WORKSTATION=1
 # DOMAIN=
 # MYSQL_ROOT_PW=
