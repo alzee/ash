@@ -18,9 +18,6 @@ GTK_IM_MODULE=ibus
 XMODIFIERS=@im=ibus
 QT_IM_MODULE=ibus
 
-# man gpg-agent
-GPG_TTY=$(tty)
-
 if [ -f /etc/os-release ]; then
 	. /etc/os-release
 else

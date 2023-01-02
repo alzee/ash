@@ -46,6 +46,9 @@ if [ -n "$PS1" ]; then
     complete -F _cargo c
 fi
 
+# man gpg-agent
+GPG_TTY=$(tty)
+
 #if [ -z "$STY" ]; then
 #    screen -R
 #fi
