@@ -307,6 +307,7 @@ misc() {
         sudo firewall-cmd --add-service samba --zone libvirt
         sudo firewall-cmd --runtime-to-permanent
         sudo systemctl disable libvirtd
+        sudo systemctl enable --now sshd
 
         # start docker to initialize /etc/docker/
         sudo systemctl start docker
@@ -552,6 +553,9 @@ case $1 in
         ;;
     -U)
         setup_auto_upgrade
+        ;;
+    -V)
+        setup_x11vnc
         ;;
     *)
         ;;
