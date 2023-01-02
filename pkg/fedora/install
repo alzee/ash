@@ -19,9 +19,7 @@ ImageMagick
 nasm
 nmap
 samba
-wireshark
 irssi
-jq
 cmus
 whois
 mailx
@@ -39,7 +37,6 @@ symfony-cli
 gh
 git-lfs
 jmtpfs
-android-tools
 php
 php-common
 php-cli
@@ -57,14 +54,9 @@ php-devel
 php-bcmath
 php-intl
 php-pecl-redis
-tigervnc-server
-x11vnc
-simple-scan
 qrencode
-foliate
 python3-devel
 mysql-devel
-ruby
 docker-ce
 docker-ce-cli
 containerd.io
