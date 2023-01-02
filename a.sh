@@ -479,6 +479,10 @@ install_node(){
 
 install_rust(){
     curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+    echo Generating tab-completion scripts for your shell.
+    mkdir -p ~/.local/share/bash-completion/completions/
+    rustup completions bash >> ~/.local/share/bash-completion/completions/rustup
+    rustup completions bash cargo >> ~/.local/share/bash-completion/completions/cargo
 }
 
 enable_networkmanager(){
