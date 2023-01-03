@@ -1,5 +1,7 @@
 Host *
     ServerAliveInterval 60
+    #HostkeyAlgorithms +ssh-rsa
+    #PubkeyAcceptedKeyTypes +ssh-rsa
 Host github.com
     IdentityFile ~/.ssh/github
 Host myvps.com 10.5.6.1
