@@ -1,6 +1,3 @@
-libvirt
-qemu-kvm
-virt-manager
 lshw
 dmidecode
 mdadm
