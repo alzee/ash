@@ -643,6 +643,42 @@ lhand(){
     echo $((lhanded ^ 1))
 }
 
+gen_ssh_keys_for_new_workstation() {
+    user=al
+    not_copy_list='github gitlab drupal'
+
+    if [ "$1" ]; then
+        station=$1
+    else
+        cat << EOF
+Usage:
+Generate hosts ssh keys for new workstation. It will generate all remote hosts keys that current workstation have access.
+$FUNCNAME <new_workstation>
+EOF
+return
+    fi
+
+    if [ -z "$DOMAIN" ]; then
+        echo env DOMAIN not set.
+        return
+    fi
+
+    for name in $(grep -o "\w*\.$DOMAIN" ~/.ssh/config)
+    do
+        i=${name%%.*}
+
+        ssh-keygen -t ed25519 -f $i -C $user@$station -N ''
+
+        scp $i $user@$station.$DOMAIN:.ssh/ && rm $i
+
+        if [[ ! "$not_copy_list" =~ "$i" ]]; then
+            ssh-copy-id -f -i $i.pub $i.$DOMAIN && rm $i.pub
+        fi
+    done
+
+    scp ~/.ssh/config $user@$station.$DOMAIN:.ssh/
+}
+
 expecting_SSH2_MSG_KEX_ECDH_REPLY(){
     local if
     if=$1
