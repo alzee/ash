@@ -2,7 +2,8 @@ Host *
     ServerAliveInterval 60
     #HostkeyAlgorithms +ssh-rsa
     #PubkeyAcceptedKeyTypes +ssh-rsa
-Host github.com
+Host github.com github.mydomain.com
+    # github.mydomain.com only for adding github to list in function gen_ssh_keys_for_new_workstation
     IdentityFile ~/.ssh/github
 Host myvps.com 10.5.6.1
     IdentityFile ~/.ssh/myvps
