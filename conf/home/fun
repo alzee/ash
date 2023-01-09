@@ -644,6 +644,7 @@ lhand(){
 }
 
 gen_ssh_keys_for_new_workstation() {
+    local user not_copy_list station name
     user=al
     not_copy_list='github gitlab drupal'
 
