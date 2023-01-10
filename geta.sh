@@ -12,6 +12,18 @@ if ! id $user &> /dev/null; then
     echo $user:zee | sudo chpasswd
 fi
 
-git clone https://github.com/alzee/ash
-sudo mv ash/ /home/$user/.ash
+
+# get a.sh
+# Get tarball
+# https://unix.stackexchange.com/a/669552
+url=https://github.com/alzee/ash/archive/master.tar.gz
+f=ash-master.tar.gz
+curl -L -o $f "$url"
+tar xf $f && rm $f
+mv ${f%%.*} .ash
+
+# Or using git
+# git clone https://github.com/alzee/ash .ash
+
+sudo mv .ash/ /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
