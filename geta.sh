@@ -20,10 +20,10 @@ url=https://github.com/alzee/ash/archive/master.tar.gz
 f=ash-master.tar.gz
 curl -L -o $f "$url"
 tar xf $f && rm $f
-mv ${f%%.*} .ash
+mv ${f%%.*} ash
 
 # Or using git
-# git clone https://github.com/alzee/ash .ash
+# git clone https://github.com/alzee/ash
 
-sudo mv .ash/ /home/$user/.ash
+sudo mv ash/ /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
