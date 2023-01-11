@@ -1,4 +1,5 @@
 Host *
+    User username
     ServerAliveInterval 60
     #HostkeyAlgorithms +ssh-rsa
     #PubkeyAcceptedKeyTypes +ssh-rsa
