@@ -89,6 +89,7 @@ VIM_DEFAULT_SESSION=~/.vim/session/default.vim
 # VPS=
 # MOUSE=
 # TOUCHPAD=
+# SCREENDIR=~/.screen   # for WSL issue: Cannot make directory '/run/screen': Permission denied
 [ -f ~/.env.local ] && . ~/.env.local
 
 if [ "$DOMAIN" ];then
