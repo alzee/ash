@@ -53,6 +53,7 @@ php-fpm
 php-devel
 php-bcmath
 php-intl
+php-zip
 php-pecl-redis
 qrencode
 python3-devel
