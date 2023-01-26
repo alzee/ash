@@ -12,3 +12,8 @@ nmap
 python
 php
 cmus
+rsync
+mariadb
+at
+iproute2
+screen
