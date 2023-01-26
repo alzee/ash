@@ -10,8 +10,8 @@
 set -a
 
 # Reset PS1 only if it's an interactive shell(PS1 is already set)
-# Do not set if on a android device (using termux)
-[ -z "$ANDROID_ROOT" ] && PS1=${PS1:+"[\u@\h \W]\\$ "}
+# Do not set if in termux
+[ -z "$TERMUX_VERSION" ] && PS1=${PS1:+"[\u@\h \W]\\$ "}
 # https://wiki.archlinux.org/index.php/IBus#rxvt-unicode
 # Seems not necessary
 GTK_IM_MODULE=ibus
