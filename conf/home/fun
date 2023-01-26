@@ -369,6 +369,9 @@ enable_console(){
 
 reset_mysql_root_pw(){
     sudo mysqld_safe --skip-grant-tables --skip-networking
+    # tell the database server to reload the grant tables
+    echo 'mysql> FLUSH PRIVILEGES;'
+    echo "mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';"
 }
 
 php_mssql(){
