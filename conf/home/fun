@@ -701,7 +701,7 @@ rl(){
     . ~/.fun
 }
 
-FUN_EXPORTED=my_length_is_nonzero
+let FUN_EXPORTED++
 
 [ -f ~/.fun.local ] && . ~/.fun.local
 

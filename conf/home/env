@@ -102,6 +102,6 @@ if [ "$DOMAIN" ];then
     unset i
 fi
 
-ENV_EXPORTED=my_length_is_nonzero
+let ENV_EXPORTED++
 
 set +a
