@@ -54,3 +54,9 @@ jwhois
 esmtp
 gnome-disk-utility
 gnome-desktop3
+mercurial
+python3-fb-re2
+re2
+libserf
+subversion
+subversion-libs
