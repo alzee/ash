@@ -624,7 +624,8 @@ githooks(){
     # as long as it's not a bare repo.
     if [ -d .git ]; then
         mkdir -p .githooks
-        ln -sf ../.githooks/ .git/
+        ln -sf ../.githooks .git/
+        echo Don\'t forget to run me on remote if you need to trigger push hooks.
     fi
 }
 

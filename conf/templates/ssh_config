@@ -3,6 +3,8 @@ Host *
     ServerAliveInterval 60
     #HostkeyAlgorithms +ssh-rsa
     #PubkeyAcceptedKeyTypes +ssh-rsa
+Host 192.168.2.4
+    Port 8022 # termux
 Host github.com github.mydomain.com
     # github.mydomain.com only for adding github to list in function gen_ssh_keys_for_new_workstation
     IdentityFile ~/.ssh/github
