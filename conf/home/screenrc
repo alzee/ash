@@ -8,7 +8,7 @@ screen 4 mysql -uroot -p$MYSQL_ROOT_PW
 source .screenrc.local
 ### .screenrc.local example
 # chdir w/jiu/
-# screen -t 1 jiu
+# screen -t jiu 1
 # chdir ../taro.jiu/src
 # screen -t taro 2
 # chdir ..
