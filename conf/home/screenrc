@@ -5,8 +5,20 @@ layout new
 # create windows
 screen 4 mysql -uroot -p$MYSQL_ROOT_PW
 #screen 8 cmus
+source .screenrc.local
+### .screenrc.local example
+# chdir w/jiu/
+# screen -t jiu
+# chdir ../taro.jiu/src
+# screen -t taro 1
+# chdir ..
+# screen -t build 2 npm run dev:weapp
+# chdir
+# screen -t gxb 3 ssh $gxb
+###
+chdir
 screen
-select 0
+# select 0
 
 #https://superuser.com/a/1013881/886777
 altscreen on
