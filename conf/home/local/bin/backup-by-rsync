@@ -23,17 +23,25 @@ case $host in
 esac
 
 [ "$databases" ] && \
-    ssh $host.$domain "mysqldump -uroot -p$mysql_root_pw --databases $databases > $host.sql"
+    ssh $host.$DOMAIN "mysqldump -uroot -p$MYSQL_ROOT_PW --databases $databases > $host.sql"
 
 dir=~/.backup/$host
 
 mkdir -p $dir
 
+# TODO: https://serverfault.com/questions/770728/rsync-exclude-all-directories-except-a-few
+#
 # -avzRP no need -v and -P since it's in background
+    # -vP\
 time rsync -azR \
-    --exclude var/* \
+    --exclude var/ \
+    --exclude vender/ \
+    --exclude node_modules/ \
+    --exclude web/core/ \
+    --exclude .git/ \
     --delete \
-    $host.$domain:w \
+    --delete-excluded \
+    $host.$DOMAIN:w \
     :vhosts \
     :vhosts.conf \
     :cert \
