@@ -19,3 +19,4 @@ iproute2
 screen
 wget
 file
+nfs-utils
