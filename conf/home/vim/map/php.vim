@@ -5,3 +5,5 @@ nnoremap <space>v ovar_dump();<esc>hi
 imap <buffer> .. ->
 imap <buffer> ,, $
 imap <buffer> ,. =>
+nnoremap o o;<esc>i
+nnoremap O O;<esc>i
