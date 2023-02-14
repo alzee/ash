@@ -51,8 +51,8 @@ nmap <space>i :set paste<cr>i
 nmap <space>I :set paste<cr>I
 nmap <space>a :set paste<cr>a
 nmap <space>A :set paste<cr>A
-nmap <space>o :set paste<cr>o
-nmap <space>O :set paste<cr>O
+nnoremap <space>o :set paste<cr>o
+nnoremap <space>O :set paste<cr>O
 "add <c-g>U before <left> to avoid escape, see :h ^gU
 inoremap ( ()<c-g>U<left>
 inoremap { {}<c-g>U<left>
