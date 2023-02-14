@@ -40,6 +40,11 @@ set nofoldenable
 
 
 """""""""""""""""""""""""""""" global mappings
+nnoremap <space>fo ofor () {<CR>}<c-g>U<up><esc>ci(
+nnoremap <space>fn ofunction () {<CR>}<esc>kf<space>a
+nnoremap <space>if oif () {<CR>}<c-g>U<up><esc>ci(
+nnoremap <buffer> // I// <Esc>
+
 nmap <space>h :h<CR>:only<CR>
 nmap <space>w :w<CR>
 nmap <space>q :q!<CR>
