@@ -505,6 +505,12 @@ setup_x11vnc(){
     fi
 }
 
+vim_gnupg(){
+    git clone https://github.com/jamessan/vim-gnupg ~/w/vim-gnupg
+    mkdir -p ~/.vim/pack/gnupg/start/
+    ln -s ~/w/vim-gnupg ~/.vim/pack/gnupg/start/
+}
+
 xorg_conf(){
     sudo cp -a $scriptdir/conf/templates/xorg.conf.d/ /etc/X11/
 }
@@ -564,6 +570,9 @@ case $1 in
         ;;
     -V)
         setup_x11vnc
+        ;;
+    -v)
+        vim_gnupg
         ;;
     *)
         ;;
