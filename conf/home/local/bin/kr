@@ -1,5 +1,5 @@
 #!/bin/bash
 
 wg-quick down kr
-sudo sed -i /Endpoint/s/:50.*/:50$(date +%d)/ /etc/wireguard/kr.conf
+sudo sed -i /Endpoint/s/..$/$(date +%d)/ /etc/wireguard/kr.conf
 wg-quick up kr
