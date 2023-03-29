@@ -25,7 +25,6 @@ xz-utils
 bzip2
 unrar
 oathtool
-transmission-daemon
 nfs-server
 man-db
 mailutils
