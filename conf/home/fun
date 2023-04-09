@@ -310,8 +310,6 @@ drupalnew(){
 
     bin/drush pm:enable token ctools pathauto easy_breadcrumb admin_toolbar metatag devel -y
     # bin/drush pm:enable language locale -y # no need since they will be enabled if not install as en
-    # bin/drush theme:enable claro
-    # bin/drush theme:enable olivero
 
     # Setup development environment
     chmod 755 $site_path/
@@ -335,7 +333,6 @@ drupalnew(){
 
     # Custom config
     bin/drush cset metatag.metatag_defaults.front tags.title '[site:name]' -y
-    # bin/drush cset system.theme admin claro -y
     bin/drush cset system.date country.default CN -y
     bin/drush cset system.date first_day 1 -y
 
