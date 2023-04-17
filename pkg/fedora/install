@@ -10,6 +10,7 @@ alsa-utils
 i3
 xautolock
 lightdm-gtk
+ctags
 feh
 httpd
 mod_ssl
