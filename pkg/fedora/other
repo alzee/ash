@@ -47,3 +47,5 @@ tigervnc-server
 x11vnc
 foliate
 cmatrix
+ruby
+ruby-devel

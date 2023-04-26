@@ -67,5 +67,3 @@ libvirt
 qemu-kvm
 virt-manager
 golang
-ruby
-ruby-devel
