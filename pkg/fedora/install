@@ -67,3 +67,7 @@ libvirt
 qemu-kvm
 virt-manager
 golang
+webkit2gtk4.0-devel
+openssl-devel
+libappindicator-gtk3-devel
+librsvg2-devel
