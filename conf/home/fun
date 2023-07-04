@@ -16,6 +16,10 @@ unalias -a
 
 set -a
 
+tauri(){
+    sh <(curl https://create.tauri.app/sh)
+}
+
 b(){
     # Restore my key sequences if have any argument
     [ $1 ] && { bind -f ~/.inputrc; return; }
