@@ -16,7 +16,7 @@ unalias -a
 
 set -a
 
-tauri(){
+tauri_new(){
     sh <(curl https://create.tauri.app/sh)
 }
 
@@ -282,7 +282,7 @@ warmane(){
     sudo ip route add 51.178.64.87 via $gateway dev $interface
 }
 
-drupalnew(){
+drupal_new(){
     [ -z "$1" ] && echo Please type directory name. && return
 
     local gitignore name locale user mail pass site_path
