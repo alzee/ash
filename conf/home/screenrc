@@ -8,9 +8,9 @@ screen 4 mysql -uroot -p$MYSQL_ROOT_PW
 source .screenrc.local
 ### .screenrc.local example
 # chdir w/jiu/
-# screen -t jiu 1
+# screen -t backend 1
 # chdir ../taro.jiu/src
-# screen -t taro 2
+# screen -t frontend 2
 # chdir ..
 # screen -t build 6 npm run dev:weapp
 # chdir
