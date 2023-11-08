@@ -270,8 +270,6 @@ warmane(){
 
     gateway=$(ip r show default dev $interface | awk '{print $3}')
 
-    # website
-    sudo ip route add 104.21.67.168 via $gateway dev $interface
     # auth
     sudo ip route add 188.138.40.87 via $gateway dev $interface
     # realm list
