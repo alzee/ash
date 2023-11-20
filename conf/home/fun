@@ -16,6 +16,20 @@ unalias -a
 
 set -a
 
+jq_aws_instance_ip(){
+    jq '.Reservations[0].Instances[0].PublicIpAddress'
+}
+
+append_to_hosts(){
+    # example, use xargs only for removing quotes
+    # append_to_hosts $(aws ec2 describe-instances --instance-id $PARIS_INSTANCE_ID | jq_aws_instance_ip | xargs) aws
+    local ip=$1
+    local hostname=$2
+    local hosts=/etc/hosts
+    sudo sed -i "/ $hostname$/d" $hosts
+    sudo sed -i "\$a$ip $hostname" $hosts
+}
+
 tauri_new(){
     sh <(curl https://create.tauri.app/sh)
 }
