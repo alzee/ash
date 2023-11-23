@@ -1,12 +1,19 @@
 #!/bin/bash
 
+#DEFAULT_USER=
+
 # add user
 user=al
+sudo_group=sudo
+
 if ! id $user &> /dev/null; then
     sudo useradd -m -s /bin/bash $user
-    sudo usermod -aG sudo $user
-    if [ -d .ssh/ ]; then
-        sudo cp .ssh/  /home/$user/ -a
+    sudo usermod -aG $sudo_group $user
+
+    [ $DEFAULT_USER ] || DEFAULT_USER=$(id -un)
+
+    if [ -d /home/$DEFAULT_USER/.ssh/ ]; then
+        sudo cp /home/$DEFAULT_USER/.ssh/  /home/$user/ -a
         sudo chown -R $user:$user /home/$user/.ssh
     fi
     echo $user:zee | sudo chpasswd
