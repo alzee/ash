@@ -35,5 +35,6 @@ mv ${f%%.*} ash
 sudo mv ash/ /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
 
-sudo -u $user /home/$user/.ash/a.sh -L
-sudo -u $user /home/$user/.ash/a.sh -Y
+cd /home/$user
+sudo -u $user .ash/a.sh -L
+sudo -u $DEFAULT_USER sudo .ash/a.sh -Y
