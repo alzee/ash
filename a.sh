@@ -11,7 +11,6 @@ errlog=ash_error.log
 
 # dir where this script in, no symbol link, so we don't need absolute path. Just don't cd to somewhere else.
 scriptdir=$(dirname $0)
-tempdir=$(mktemp -d XXXXX)
 
 if [ -f /etc/os-release ]; then
     . /etc/os-release
@@ -468,6 +467,7 @@ install_node(){
     # The fucking node
     node_tar='node-lts-linux.x64.tar.xz'
     node_url=$(curl -s https://nodejs.org/en/download/ | grep -o 'https://.*linux-x64.tar.xz')
+    tempdir=$(mktemp -d XXXXX)
     pushd $tempdir
     curl -o $node_tar $node_url
     tar xf $node_tar
