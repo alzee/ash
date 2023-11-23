@@ -37,4 +37,4 @@ sudo chown -R $user:$user /home/$user/.ash
 
 cd /home/$user
 sudo -u $user .ash/a.sh -L
-sudo -u $DEFAULT_USER sudo .ash/a.sh -Y
+sudo -u $DEFAULT_USER .ash/a.sh -Y
