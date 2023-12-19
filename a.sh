@@ -293,7 +293,7 @@ misc() {
         sudo mysqladmin -u root password toor
         sudo mysql -e "FLUSH PRIVILEGES"
 
-        sudo systemctl disable --now nginx redis-server nfs-server rpcbind transmission-daemon
+        sudo systemctl disable --now nginx redis-server nfs-server rpcbind #transmission-daemon
 
         # debain default using dash, change to bash
         sudo ln -sf bash /bin/sh
@@ -431,7 +431,7 @@ _mkswap(){
 }
 
 _sysctl(){
-    local f;
+    local f
     f=$scriptdir/conf/templates/$distro/z-sysctl.conf
     if [ -f $f ]; then
         sudo cp $scriptdir/conf/templates/$distro/z-sysctl.conf /etc/sysctl.d/
@@ -460,16 +460,19 @@ install_composer(){
 }
 
 install_node(){
-    # deno is the thing
+    local node_tar node_ver
+    # deno
     curl -fsSL https://deno.land/install.sh | sh
     mv ~/.deno/bin/deno ~/.local/bin/
 
-    # The fucking node
-    node_tar='node-lts-linux.x64.tar.xz'
-    node_url=$(curl -s https://nodejs.org/en/download/ | grep -o 'https://.*linux-x64.tar.xz')
+    # node
+    node_tar="$(curl -s https://nodejs.org/en/download/ | grep -Eo 'node-v([0-9]|\.)*-linux-x64.tar.xz')"
+    node_ver=${node_tar#*-}
+    node_ver=${node_ver%%-*}
+    
     tempdir=$(mktemp -d XXXXX)
     pushd $tempdir
-    curl -o $node_tar $node_url
+    curl -o $node_tar https://nodejs.org/dist/$node_ver/$node_tar
     tar xf $node_tar
     cp -a node-*/{bin/,include/,lib/,share/} ~/.local/
     popd
