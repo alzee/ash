@@ -10,9 +10,11 @@ if ! id $user &> /dev/null; then
 
     # env DEFAULT_USER
     default_user=${DEFAULT_USER:-$(id -un)}
+    default_user_home=/home/$default_user
+    [ default_user = root ] && $default_user_home=/root
 
-    if [ -d /home/$default_user/.ssh/ ]; then
-        sudo cp /home/$default_user/.ssh/  /home/$user/ -a
+    if [ -d $default_user_home/.ssh/ ]; then
+        sudo cp $default_user_home/.ssh/  /home/$user/ -a
         sudo chown -R $user:$user /home/$user/.ssh
     fi
     echo $user:zee | sudo chpasswd
