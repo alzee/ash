@@ -17,17 +17,35 @@ unalias -a
 set -a
 
 jq_aws_instance_ip(){
-    jq '.Reservations[0].Instances[0].PublicIpAddress'
+    # use xargs only for removing quotes
+    jq '.Reservations[0].Instances[0].PublicIpAddress' | xargs
+}
+
+jq_aws_instance_id(){
+    # use xargs only for removing quotes
+    jq '.Reservations[0].Instances[0].InstanceId' | xargs
 }
 
 append_to_hosts(){
-    # example, use xargs only for removing quotes
-    # append_to_hosts $(aws ec2 describe-instances --instance-id $PARIS_INSTANCE_ID | jq_aws_instance_ip | xargs) aws
+    # example
+    # append_to_hosts $(aws ec2 describe-instances | jq_aws_instance_ip) aws
     local ip=$1
     local hostname=$2
     local hosts=/etc/hosts
     sudo sed -i "/ $hostname$/d" $hosts
     sudo sed -i "\$a$ip $hostname" $hosts
+}
+
+run_a_aws_instance(){
+    local id
+    id=$(aws ec2 run-instances --launch-template LaunchTemplateName=min | jq '.Instances[0].InstanceId' | xargs)
+    append_to_hosts $(aws ec2 describe-instances --instance-ids $id | jq_aws_instance_ip) aws
+}
+
+terminate_a_aws_instance(){
+    local id
+    id=$(aws ec2 describe-instances | jq_aws_instance_id)
+    aws ec2 terminate-instances --instance-ids $id
 }
 
 tauri_new(){
