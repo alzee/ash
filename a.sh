@@ -544,6 +544,9 @@ case $1 in
     -s)
         sudoer
         ;;
+    -M)
+        misc
+        ;;
     -C)
         install_composer
         ;;
