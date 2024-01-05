@@ -1,2 +1,2 @@
 # Am I in wheel?
-al	ALL=(ALL)       NOPASSWD: /bin/wg, /bin/wg-quick, /usr/bin/systemctl suspend
+al	ALL=(ALL)       NOPASSWD: /bin/wg, /bin/wg-quick, /bin/psql, /usr/bin/systemctl suspend
