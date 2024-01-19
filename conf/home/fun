@@ -16,6 +16,10 @@ unalias -a
 
 set -a
 
+con(){
+    bin/console "$@"
+}
+
 jq_aws_instance_ip(){
     # use xargs only for removing quotes
     jq '.Reservations[0].Instances[0].PublicIpAddress' | xargs
