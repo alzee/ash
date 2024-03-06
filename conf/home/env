@@ -80,6 +80,8 @@ SCREEN_SESSION=matrix
 VIM_DEFAULT_SESSION=~/.vim/session/default.vim
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
+AWS_DEFAULT_REGION= # See https://docs.aws.amazon.com/general/latest/gr/rande.html
+
 # .env.local template
 # TERM
 # LIBGL_ALWAYS_SOFTWARE=1 # For ARM. See https://github.com/alacritty/alacritty/issues/3624#issuecomment-617428381
