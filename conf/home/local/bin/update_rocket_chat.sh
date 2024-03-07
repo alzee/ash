@@ -15,7 +15,7 @@ sudo apt-get install -y build-essential graphicsmagick
 n install 14
 
 #curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz
-curl -L https://releases.rocket.chat/4.8.4/download -o /tmp/rocket.chat.tgz
+curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz
 
 tar -xzf /tmp/rocket.chat.tgz -C /tmp
 
