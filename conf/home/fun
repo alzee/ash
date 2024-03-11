@@ -42,13 +42,14 @@ append_to_hosts(){
 
 run_a_aws_instance(){
     local id
-    id=$(aws ec2 run-instances --launch-template LaunchTemplateName=min | jq '.Instances[0].InstanceId' | xargs)
+    id=$(aws ec2 run-instances --launch-template LaunchTemplateName=min | jq '.Instances[0].InstanceId' | xargs | tee ~/.aws/instance_id)
     append_to_hosts $(aws ec2 describe-instances --instance-ids $id | jq_aws_instance_ip) aws
 }
 
 terminate_a_aws_instance(){
     local id
-    id=$(aws ec2 describe-instances | jq_aws_instance_id)
+    # id=$(aws ec2 describe-instances | jq_aws_instance_id)
+    id=$(< ~/.aws/instance_id)
     aws ec2 terminate-instances --instance-ids $id
 }
 
