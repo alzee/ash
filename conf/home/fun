@@ -16,6 +16,29 @@ unalias -a
 
 set -a
 
+t(){
+    local d
+    d=~/w/todo
+    case $1 in
+        "")
+            v $d/todo
+            ;;
+        s)
+            git -C $d status 2> /dev/null
+            [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end
+            ;;
+        c)
+            git -C $d add -A
+            shift
+            comment=${*:-nth}
+            git -C $d commit -m "$comment"
+            read -p "press any key in 5 sec to git push..." -n 1 -t5 i
+            echo
+            [ -n "$i" ] && echo -e "\nstarting push..." && git -C $d push
+            ;;
+    esac
+}
+
 con(){
     bin/console "$@"
 }
