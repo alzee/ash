@@ -45,6 +45,7 @@ nnoremap <space>fn ofunction () {<CR>}<esc>kf<space>a
 nnoremap <space>if oif () {<CR>}<c-g>U<up><esc>ci(
 nnoremap <buffer> // I// <Esc>
 
+nmap <space>d :!di <c-r><c-w><CR>
 nmap <space>h :h<CR>:only<CR>
 nmap <space>w :w<CR>
 nmap <space>q :q!<CR>
