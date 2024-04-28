@@ -17,6 +17,7 @@ php-uploadprogress
 php-bcmath
 php-redis
 apache2
+postgresql
 mariadb-server
 redis-server
 python3-pip
