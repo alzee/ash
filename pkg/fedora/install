@@ -49,6 +49,7 @@ php-mbstring
 php-pecl-apcu
 php-pecl-xdebug
 php-mysqlnd
+php-pgsql
 php-json
 php-fpm
 php-devel
