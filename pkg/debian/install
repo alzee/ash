@@ -16,6 +16,7 @@ php-intl
 php-uploadprogress
 php-bcmath
 php-redis
+php-pgsql
 apache2
 postgresql
 mariadb-server
