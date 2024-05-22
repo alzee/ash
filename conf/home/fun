@@ -16,6 +16,21 @@ unalias -a
 
 set -a
 
+sr(){
+    local rotate
+    # 'DP-4 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 527mm x 296mm'
+    rotate=$(xrandr | grep -w connected | cut -f4 -d' ')
+
+    if [ "$rotate" = '(normal' ]; then
+        rotate=left
+    else
+        rotate=normal
+    fi
+    echo to $rotate
+
+    xrandr --output DP-4 --rotate $rotate
+}
+
 t(){
     local d
     d=~/w/todo
