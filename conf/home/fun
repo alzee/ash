@@ -250,10 +250,6 @@ v(){
     fi
 }
 
-console(){
-    bin/console "$@"
-}
-
 drush(){
     bin/drush "$@"
 }
