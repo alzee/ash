@@ -1,0 +1,68 @@
+#!/bin/bash
+# vim:ft=sh
+
+[ -z "$1" ] && echo Please type directory name. && exit
+
+name=$1
+user=z
+db_user=root
+db_pass=toor
+mail=z@alz.ee
+pass=111
+# locale=zh-hans
+locale=en
+gitignore=~/w/gitignore/Drupal.gitignore
+site_path=web/sites/default
+
+composer cre drupal/recommended-project $name
+cd $name
+composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,admin_toolbar}
+# jsonapi_extras restui
+# composer require 'drupal/gin:^3.0@RC'
+# composer require 'drupal/gin_toolbar:^1.0@RC'
+# composer require 'drupal/gin_toolbar_custom_menu'
+composer req --dev drupal/devel
+mkdir bin
+ln -s ../vendor/bin/drush bin/
+git init
+cp "$gitignore" .gitignore
+
+# gitignore="https://raw.githubusercontent.com/alzee/gitignore/main/Drupal.gitignore"
+# wget "$gitignore" -O .gitignore
+
+bin/drush si --locale $locale  --db-url mysql://$db_user:$db_pass@localhost:3306/$name \
+        --site-mail $mail --account-name $user --account-mail $mail --account-pass $pass -y
+
+bin/drush pm:enable token ctools pathauto easy_breadcrumb admin_toolbar metatag devel -y
+bin/drush pm:enable language locale -y # no need since they will be enabled if not install as en
+
+# Setup development environment
+chmod 755 $site_path/
+chmod 644 $site_path/settings.php
+
+cp web/sites/example.settings.local.php $site_path/settings.local.php
+# Uncomment to load settings.local.php
+sed -i "/# if .*settings.local.php/,+2s/# //" $site_path/settings.php
+# Uncomment to disable render cache
+sed -i  "/^# \$settings.*render/s/# //" $site_path/settings.local.php
+# Uncomment to disable dynamic page cache
+sed -i  "/^# \$settings.*dynamic_page_cache/s/# //" $site_path/settings.local.php
+# Uncomment to disable **Internal page** cache
+sed -i  "/^# \$settings.*\<page\>/s/# //" $site_path/settings.local.php
+# debug true
+cp $site_path/default.services.yml $site_path/services.yml
+sed -i "/debug: false/s/false/true/" $site_path/services.yml
+
+chmod 555 $site_path/
+chmod 444 $site_path/{settings.php,settings.local.php,services.yml}
+
+# Custom config
+bin/drush cset metatag.metatag_defaults.front tags.title '[site:name]' -y
+# bin/drush cset system.date country.default CN -y
+bin/drush cset system.date first_day 1 -y
+
+# TODO
+# menu settings can't export/import
+
+# Export config
+bin/drush cex -y
