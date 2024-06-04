@@ -377,6 +377,8 @@ drupal_new(){
     composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,admin_toolbar}
     # composer require 'drupal/gin:^3.0@RC'
     # composer require 'drupal/gin_toolbar:^1.0@RC'
+    # Add possibility to use a different administration menu configurable per role as the Gin toolbar
+    # https://www.drupal.org/project/gin_toolbar/issues/3169570
     # composer require 'drupal/amswap:^3.2'
     composer req --dev drupal/devel
     mkdir bin
