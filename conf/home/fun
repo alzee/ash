@@ -250,10 +250,6 @@ v(){
     fi
 }
 
-drush(){
-    bin/drush "$@"
-}
-
 py(){
     python3 "$@"
 }
@@ -332,25 +328,6 @@ play(){
 
 qr(){
     qrencode -t ansiutf8 "$@"
-}
-
-warmane(){
-    local interface
-    interface=$(ip link | grep -o 'enp0s2\w*')
-    ip link show $interface > /dev/null || return
-
-    gateway=$(ip r show default dev $interface | awk '{print $3}')
-
-    # auth
-    sudo ip route add 188.138.40.87 via $gateway dev $interface
-    # realm list
-    sudo ip route add 62.138.7.219 via $gateway dev $interface
-    # Icecrown 8092
-    sudo ip route add 51.91.106.148 via $gateway dev $interface
-    # Blackrock 8095 & Lordaeron 8091
-    sudo ip route add 51.178.64.97 via $gateway dev $interface
-    # Frostmourne 8096
-    sudo ip route add 51.178.64.87 via $gateway dev $interface
 }
 
 pvz(){
