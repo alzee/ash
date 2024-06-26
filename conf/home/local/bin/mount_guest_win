@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+server=192.168.122.105
+share=w
+mountpoint=/mnt/w
+# options="guest,user=guest,uid=1000"
+options="user=al,uid=1000"
+
+sudo mount.cifs //$server/$share $mountpoint -o $options
