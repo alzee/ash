@@ -14,4 +14,16 @@ mountpoint=/mnt/w
 # options="guest,user=guest,uid=1000"
 options="user=al,uid=1000"
 
-sudo mount.cifs //$server/$share $mountpoint -o $options
+if [ "$1" = "start" ]; then
+    virsh start win
+
+    sleep 30
+
+    sudo mount.cifs //$server/$share $mountpoint -o $options
+fi
+
+if [ "$1" = "stop" ]; then
+    sudo umount $mountpoint
+
+    virsh stop win
+fi
