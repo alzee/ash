@@ -5,7 +5,6 @@ layout new
 # create windows
 screen 4 mysql -uroot -p$MYSQL_ROOT_PW
 screen -t psql 5 sudo -u postgres psql
-#screen 8 cmus
 source .screenrc.local
 ### .screenrc.local example
 # chdir w/jiu/
