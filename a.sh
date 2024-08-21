@@ -119,7 +119,7 @@ add_repo() {
 }
 
 load_pkg() {
-    i_pkg="$(< $scriptdir/pkg/general) $(< $scriptdir/pkg/$distro/install)"
+    i_pkg="$(< $scriptdir/pkg/generic) $(< $scriptdir/pkg/$distro/install)"
     r_pkg=$(< $scriptdir/pkg/$distro/remove)
     case $distro in
         fedora)
