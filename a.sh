@@ -187,26 +187,33 @@ addgrp() {
 }
 
 mysqldir(){
-    # move mysql dir to home on fedora
-    [ $distro != fedora ] && return
+    local prefix serverconf
+
     # generate /var/lib/mysql/mysql.sock
     sudo systemctl restart mariadb
     say changing mysql datadir...
 
-    local prefix serverconf
+    # move mysql dir to home on fedora
     prefix=~/.mysql
-    serverconf=/etc/my.cnf.d/mariadb-server.cnf
 
     mkdir -p $prefix
-    sudo chcon -R -t mysqld_db_t $prefix
     sudo chown mysql:mysql $prefix
+
+    if [ $distro = fedora ]; then
+        serverconf=/etc/my.cnf.d/mariadb-server.cnf
+        sudo chcon -R -t mysqld_db_t $prefix
+    fi
+
+    if [ $distro = debian ]; then
+        serverconf=/etc/mysql/mariadb.conf.d/50-server.cnf
+    fi
 
     # copy this line
     sudo sed -i "/^datadir/p" $serverconf
     # prepend # to comment this line
     sudo sed -i "1,/^datadir/s/^datadir/#datadir/" $serverconf
     sudo sed -i "/^datadir=/s:/.*:${prefix}/main:" $serverconf
-    sudo sed -i '/\[mysqld\]/a character-set-server = utf8mb4' $serverconf
+    # sudo sed -i '/\[mysqld\]/a character-set-server = utf8mb4' $serverconf
     # we better use the defaut mysql.sock path
     # copy this line
     #sudo sed -i "/^socket/p" $serverconf
@@ -214,10 +221,14 @@ mysqldir(){
     #sudo sed -i "1,/^socket/s/^socket/#socket/" $serverconf
     #sudo sed -i "/^socket=/s:/.*:${prefix}/mysql.sock:" $serverconf
 
-    sudo -u mysql mysql_install_db
+    sudo -u mysql mariadb-install-db
+    
+    # sudo systemctl edit mariadb.service
+    # [Service]
+    # ProtectHome=false
 
     sudo systemctl restart mariadb
-    #mysql_secure_installation
+    #mariadb-secure-installation
 
 }
 
