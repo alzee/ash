@@ -206,6 +206,13 @@ mysqldir(){
 
     if [ $distro = debian ]; then
         serverconf=/etc/mysql/mariadb.conf.d/50-server.cnf
+
+        # sudo systemctl edit mariadb.service
+        # [Service]
+        # ProtectHome=false
+        local overridedir=/etc/systemd/system/mariadb.service.d
+        sudo mkdir $overridedir
+        echo -e '[Service]\nProtectHome=false' | sudo tee $overridedir/override.conf # > /dev/null
     fi
 
     # copy this line
@@ -223,13 +230,8 @@ mysqldir(){
 
     sudo -u mysql mariadb-install-db
     
-    # sudo systemctl edit mariadb.service
-    # [Service]
-    # ProtectHome=false
-
     sudo systemctl restart mariadb
     #mariadb-secure-installation
-
 }
 
 sethostname(){
