@@ -21,12 +21,15 @@ if [ "$1" = "start" ]; then
 
     sleep 30
 
+    echo mount win share...
     sudo mount.cifs //$server/$share $mountpoint -o $options
 fi
 
 if [ "$1" = "stop" ]; then
+    echo umount win share...
     sudo umount $mountpoint
 
+    echo shutting down win... 
     virsh shutdown $domain
 
     pkill virt-manager
