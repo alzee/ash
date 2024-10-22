@@ -13,10 +13,11 @@ share=w
 mountpoint=/mnt/w
 # options="guest,user=guest,uid=1000"
 options="user=al,uid=1000"
+domain=win
 
 if [ "$1" = "start" ]; then
-    virsh start win
-    virt-manager
+    virsh start $domain
+    virt-manager -c 'qemu:///system' --show-domain-console $domain
 
     sleep 30
 
@@ -26,7 +27,7 @@ fi
 if [ "$1" = "stop" ]; then
     sudo umount $mountpoint
 
-    virsh shutdown win
+    virsh shutdown $domain
 
     pkill virt-manager
 fi
