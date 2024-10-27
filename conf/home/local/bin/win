@@ -15,7 +15,11 @@ mountpoint=/mnt/w
 options="user=al,uid=1000"
 domain=win
 
-if [ "$1" = "start" ]; then
+if [ "$1" = "" ]; then
+    echo 'win [up | down]'
+fi
+
+if [ "$1" = "up" ]; then
     virsh start $domain
     virt-manager -c 'qemu:///system' --show-domain-console $domain
 
@@ -25,7 +29,7 @@ if [ "$1" = "start" ]; then
     sudo mount.cifs //$server/$share $mountpoint -o $options
 fi
 
-if [ "$1" = "stop" ]; then
+if [ "$1" = "down" ]; then
     echo umount win share...
     sudo umount $mountpoint
 
