@@ -50,3 +50,6 @@ cmatrix
 ruby
 ruby-devel
 easytag
+tesseract
+img2pdf
+ocrmypdf

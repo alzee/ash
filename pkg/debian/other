@@ -3,3 +3,6 @@ zbar-tools
 docker-compose
 php-imagick
 transmission-daemon
+tesseract-ocr
+img2pdf
+ocrmypdf
