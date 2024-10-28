@@ -18,8 +18,9 @@ workspace 3 output primary
 workspace 4 output primary
 workspace 5 output primary
 
+# xprop
 #assign [class="Firefox"] $ws5
-assign [class="Wow.exe"] $ws3
+assign [class="wow.exe"] $ws3
 
 default_border none
 
