@@ -1,4 +1,5 @@
 # i3 config file (v4)
+# run `i3-msg reload` after edit
 #
 set $mod Mod4
 set $ws1 "1"
@@ -18,8 +19,9 @@ workspace 3 output primary
 workspace 4 output primary
 workspace 5 output primary
 
-# xprop
-#assign [class="Firefox"] $ws5
+# xprop to check wm class
+assign [class="Chromium-browser"] $ws2
+assign [class="firefox"] $ws3
 # see https://unix.stackexchange.com/questions/96798/i3wm-start-applications-on-specific-workspaces-when-i3-starts
 # assign [class="wow.exe"] $ws3 # not working
 for_window [class="wow.exe"] move to workspace $ws3
