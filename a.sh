@@ -478,24 +478,9 @@ install_deno(){
 }
 
 install_node(){
-    local node_tar node_ver
-
-    node_tar="$(curl -s https://nodejs.org/en/download/ | grep -Eo 'node-v([0-9]|\.)*-linux-x64.tar.xz')"
-    node_ver=${node_tar#*-}
-    node_ver=${node_ver%%-*}
-    
-    tempdir=$(mktemp -d XXXXX)
-    pushd $tempdir
-    curl -o $node_tar https://nodejs.org/dist/$node_ver/$node_tar
-    tar xf $node_tar
-    cp -a node-*/{bin/,include/,lib/,share/} ~/.local/
-    popd
-    PATH=$PATH:$HOME/.local/bin
-    N_PREFIX=~/.local npm -g install n
-    # if [ "$distro" = fedora ]; then
-    #     npm -g install sass @angular/cli @ionic/cli
-    #     # npm -g install cordova cordova-res
-    # fi
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+    nvm install node
+    nvm alias default node
 }
 
 install_rust(){
@@ -550,7 +535,7 @@ case $1 in
         default_pool
         misc
         install_composer
-        install_deno
+        # install_deno
         install_node
         mklinks
         _sysctl
