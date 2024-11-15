@@ -5,10 +5,10 @@ url=https://sk.cri.cn/am846.m3u8
 # see https://github.com/mpv-player/mpv/issues/13428
 # mpv --loop-playlist=force --no-resume-playback $url
 # see https://github.com/mpv-player/mpv/issues/13428
-# mpv --demuxer-lavf-o=max_reload=1000 --no-resume-playback $url
+mpv --demuxer-lavf-o=max_reload=1000 --no-resume-playback $url
 
 # see https://github.com/mpv-player/mpv/issues/11674
-mpv --demuxer=lavf --no-resume-playback $url
+# mpv --demuxer=lavf --no-resume-playback $url
 
 # see https://www.securitronlinux.com/debian-testing/how-to-record-a-stream-with-mpv-on-linux-this-works-for-recording-tv-and-other-streams/
 # mpv https://URL.m3u8 –stream-record=stream.ts
