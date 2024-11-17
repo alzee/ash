@@ -46,7 +46,6 @@ fi
 
 # miscellaneous
 # DRI_PRIME=1
-N_PREFIX=~/.local
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
 SCREEN_SESSION=matrix
 VIM_DEFAULT_SESSION=~/.vim/session/default.vim
