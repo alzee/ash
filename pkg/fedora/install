@@ -73,3 +73,4 @@ openssl-devel
 libappindicator-gtk3-devel
 librsvg2-devel
 postgresql-server
+pwgen
