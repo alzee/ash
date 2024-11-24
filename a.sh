@@ -517,6 +517,10 @@ xorg_conf(){
     sudo cp -a $scriptdir/conf/templates/xorg.conf.d/ /etc/X11/
 }
 
+install_zed(){
+    curl -f https://zed.dev/install.sh | sh
+}
+
 ############### Main ###############
 
 case $1 in
@@ -579,6 +583,9 @@ case $1 in
         ;;
     -v)
         vim_gnupg
+        ;;
+    -z)
+        install_zed
         ;;
     *)
         ;;
