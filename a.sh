@@ -298,13 +298,14 @@ misc() {
         #sudo ln -s ~/vhosts /etc/apache2/sites-enabled/
         sudo ln -s ~/vhosts.conf /etc/apache2/conf-enabled/
 
-        # use mysql native password insead of system user credentials
-        sudo mysql -e "use mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'"
+        # use mysql native password insead of system user credentials for root
+        # sudo mysql -e "use mysql; ALTER USER root@localhost IDENTIFIED VIA unix_socket"
+        # sudo mysql -e "use mysql; ALTER USER root@localhost IDENTIFIED VIA mysql_native_password"
         # This way will disallow `sudo mysql'
         # sudo mysql -e "alter user root@localhost identified by 'toor'"
         # This way will allow `sudo mysql'
-        sudo mysqladmin -u root password toor
-        sudo mysql -e "FLUSH PRIVILEGES"
+        # sudo mysqladmin -u root password toor
+        # sudo mysql -e "FLUSH PRIVILEGES"
 
         sudo systemctl disable --now nginx redis-server nfs-server rpcbind #transmission-daemon
 
