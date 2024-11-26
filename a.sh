@@ -481,6 +481,7 @@ install_rust(){
     mkdir -p ~/.local/share/bash-completion/completions/
     rustup completions bash >> ~/.local/share/bash-completion/completions/rustup
     rustup completions bash cargo >> ~/.local/share/bash-completion/completions/cargo
+    rustup component add rust-analyzer
 }
 
 enable_networkmanager(){
