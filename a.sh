@@ -533,7 +533,7 @@ case $1 in
         setup_auto_upgrade
         sethostname
         addgrp
-        mysqldir
+        # mysqldir
         settimezone
         dir_struct
         default_pool
@@ -548,6 +548,8 @@ case $1 in
     -s)
         sudoer
         ;;
+    -m)
+        mysqldir
     -M)
         misc
         ;;
@@ -559,6 +561,9 @@ case $1 in
         ;;
     -R)
         install_rust
+        ;;
+    -d)
+        install_deno
         ;;
     -D)
         default_pool
