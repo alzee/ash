@@ -86,7 +86,6 @@ AWS_DEFAULT_REGION=ap-east-1 # See https://docs.aws.amazon.com/general/latest/gr
 # LIBGL_ALWAYS_SOFTWARE=1 # For ARM. See https://github.com/alacritty/alacritty/issues/3624#issuecomment-617428381
 # IS_WORKSTATION=1
 # DOMAIN=
-# MYSQL_ROOT_PW=
 # DICTIONARYAPI_KEY=
 # VPS=
 # MOUSE=
