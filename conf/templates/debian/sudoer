@@ -1,2 +1,2 @@
 # Am I in wheel?
-al	ALL=(ALL)       NOPASSWD: /usr/bin/systemctl force-reload apache2, /usr/sbin/service apache2 force-reload, /usr/bin/wg 
+al	ALL=(ALL)       NOPASSWD: /usr/bin/systemctl force-reload apache2, /usr/sbin/service apache2 force-reload, /usr/bin/wg, /usr/bin/psql 
