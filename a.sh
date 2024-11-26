@@ -550,6 +550,7 @@ case $1 in
         ;;
     -m)
         mysqldir
+        ;;
     -M)
         misc
         ;;
