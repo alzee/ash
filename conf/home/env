@@ -92,6 +92,7 @@ AWS_DEFAULT_REGION=ap-east-1 # See https://docs.aws.amazon.com/general/latest/gr
 # MOUSE=
 # TOUCHPAD=
 # SCREENDIR=~/.screen   # for WSL issue: Cannot make directory '/run/screen': Permission denied
+# WG_INTERFACE=
 [ -f ~/.env.local ] && . ~/.env.local
 
 if [ "$DOMAIN" ];then

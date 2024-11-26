@@ -16,6 +16,17 @@ unalias -a
 
 set -a
 
+V(){
+    sudo wg show $WG_INTERFACE &> /dev/null;
+    if [ "$?" -eq 0 ]; then
+        sudo wg-quick down $WG_INTERFACE;
+    else
+        sudo sed -i /Endpoint/s/..$/$(date +%d)/ /etc/wireguard/$WG_INTERFACE.conf;
+        sudo wg-quick up $WG_INTERFACE;
+        sudo wg show;
+    fi
+}
+
 sr(){
     local rotate
     # 'DP-4 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 527mm x 296mm'
