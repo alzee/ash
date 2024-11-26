@@ -1,4 +1,5 @@
 #!/bin/bash
+# bash <(https://ash.alz.ee)
 
 # add user
 user=al
