@@ -18,8 +18,7 @@ if ! id $user &> /dev/null; then
         sudo cp $default_user_home/.ssh/  /home/$user/ -a
         sudo chown -R $user:$user /home/$user/.ssh
     fi
-    echo Set password for $user
-    sudo passwd $user
+    echo $user:zee | sudo chpasswd
 fi
 
 
