@@ -588,26 +588,13 @@ nfs(){
     :
 }
 
-self_sign_cert(){
-    [ -z $1 ] && echo the key name, asshole! && return
-    local i=$1
-    local key=$i.key
-    local pem=$i.pem
-    local csr=$i.csr
-    local crt=$i.crt
-
-    #openssl req -x509 -new -newkey rsa:4096 -sha256 -days 1000 -nodes -out freenode.pem -keyout freenode.pem
-    # or
-    #openssl req -nodes -newkey rsa:2048 -keyout user.pem -x509 -days 3650 -out user.pem -subj "/CN=YourNickname"
-    # or
-    # generate private key
-    openssl genrsa -des3 -out $pem 1024
-    # generate CSR
-    openssl req -new -key $pem -out $csr
-    # remove password
-    openssl rsa -in $pem -out $key
-    # issue a certificate signed with $key
-    openssl x509 -req -days 365 -in $csr -signkey $key -out $crt
+self_signed_cert(){
+    local n
+    n=nick
+    openssl req -nodes -newkey rsa:4096 -keyout $n.key -x509 -days 3650 -out $n.cer
+    cat $n.cer $n.key $n.pem
+    #or
+    #openssl req -nodes -x509 -newkey rsa:4096 -sha256 -days 3650 -out $n.pem -keyout $n.pem
 }
 
 grep(){
