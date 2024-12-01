@@ -270,6 +270,7 @@ default_pool(){
     sudo virsh pool-undefine default
     sudo virsh pool-define-as --name default --type dir --target ~/.vm
     sudo virsh pool-autostart default
+    virsh pool-start default
 }
 
 # create some customized scripts and confs
