@@ -76,9 +76,9 @@ add_repo() {
                 https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm\
                 https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-            sudo $pkg config-manager add-repo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
+            sudo $pkg config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
             # fedora have moby-engine. Anyway, use docker repo can get docker-compose-plugin
-            sudo $pkg config-manager add-repo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+            sudo $pkg config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
             curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
             ;;
         rhel)
