@@ -21,6 +21,7 @@ workspace 5 output primary
 
 # xprop to check wm class
 assign [class="Chromium-browser"] $ws2
+assign [class="google-chrome"] $ws2
 assign [class="firefox"] $ws3
 # see https://unix.stackexchange.com/questions/96798/i3wm-start-applications-on-specific-workspaces-when-i3-starts
 # assign [class="wow.exe"] $ws3 # not working

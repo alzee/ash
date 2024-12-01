@@ -28,7 +28,6 @@ postfix
 transmission-common
 transmission-daemon
 oathtool
-chromium
 firefox
 mpv
 unrar
