@@ -77,7 +77,6 @@ add_repo() {
                 https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
             sudo $pkg config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-            curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.rpm.sh' | sudo -E bash
             # fedora have moby-engine. Anyway, use docker repo can get docker-compose-plugin
             sudo $pkg config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
             curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
@@ -464,6 +463,13 @@ install_composer(){
     fi
 }
 
+install_symfony(){
+    if [ "$distro" = fedora ]; then
+        curl -sS https://get.symfony.com/cli/installer | bash
+        ln -s ../../.symfony5/bin/symfony .local/bin/
+    fi
+}
+
 install_deno(){
     curl -fsSL https://deno.land/install.sh | sh
     mv ~/.deno/bin/deno ~/.local/bin/
@@ -532,6 +538,7 @@ case $1 in
         default_pool
         misc
         install_composer
+        install_symfony
         # install_deno
         install_node
         mklinks
@@ -564,6 +571,9 @@ case $1 in
         ;;
     -L)
         mklinks
+        ;;
+    -y)
+        install_symfony
         ;;
     -Y)
         _sysctl
