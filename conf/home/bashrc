@@ -39,7 +39,7 @@ if [ -n "$PS1" ]; then
     _completion_loader git
     complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
     _completion_loader man
-    complete -F _man m
+    complete -F _comp_cmd_man m
     _completion_loader systemctl
     complete -F _systemctl sy
     _completion_loader cargo
