@@ -2,9 +2,6 @@ opensc
 initscripts
 azote
 @gnome-desktop
-@xfce-desktop
-xfce*
-xf*
 fpaste
 asunder
 atril
