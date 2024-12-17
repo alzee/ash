@@ -21,7 +21,7 @@ fi
 
 if [ "$1" = "up" ]; then
     virsh start $domain
-    virt-manager -c 'qemu:///system' --show-domain-console $domain
+    virt-manager -c 'qemu:///system' --show-domain-console $domain &
 
     sleep 30
 
