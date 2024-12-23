@@ -3,4 +3,4 @@ family = "Liberation Mono"
 style = "regular"
 
 [window]
-decorations = "none"
+#decorations = "none"
