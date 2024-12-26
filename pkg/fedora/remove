@@ -61,3 +61,8 @@ dnfdragora
 dnfdragora-updater
 dosbox-staging
 xfce4-terminal
+gnome-abrt
+gnome-disk-utility
+setroubleshoot-server
+firewall-config
+htop
