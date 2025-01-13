@@ -37,6 +37,7 @@ packadd! matchit
 set foldmethod=indent
 set foldlevel=1
 set nofoldenable
+set fileencodings=ucs-bom,utf-8,default,gb18030,latin1
 
 
 """""""""""""""""""""""""""""" global mappings
