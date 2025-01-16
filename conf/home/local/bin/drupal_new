@@ -4,9 +4,9 @@
 [ -z "$1" ] && echo Please type directory name. && exit
 
 name=$1
-user=z
-db_user=root
-db_pass=toor
+user=al
+db_user=$name
+db_pass=$name
 mail=z@alz.ee
 pass=111
 # locale=zh-hans
@@ -16,11 +16,9 @@ site_path=web/sites/default
 
 composer cre drupal/recommended-project $name
 cd $name
-composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,admin_toolbar}
+composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,gin,gin_toolbar,dashboard}
 # jsonapi_extras restui
-# composer require 'drupal/gin:^3.0@RC'
-# composer require 'drupal/gin_toolbar:^1.0@RC'
-# composer require 'drupal/gin_toolbar_custom_menu'
+# # composer require 'drupal/gin_toolbar_custom_menu'
 composer req --dev drupal/devel
 mkdir bin
 ln -s ../vendor/bin/drush bin/
@@ -30,11 +28,19 @@ cp "$gitignore" .gitignore
 # gitignore="https://raw.githubusercontent.com/alzee/gitignore/main/Drupal.gitignore"
 # wget "$gitignore" -O .gitignore
 
-bin/drush si --locale $locale  --db-url mysql://$db_user:$db_pass@localhost:3306/$name \
+sudo -u postgres psql -c "CREATE ROLE $name with login createdb password '$name';"
+sudo -u postgres psql -c "CREATE DATABASE $name owner $name;"
+
+# bin/drush si --locale $locale  --db-url mysql://$db_user:$db_pass@localhost:3306/$name \
+bin/drush si --locale $locale  --db-url pgsql://$db_user:$db_pass@127.0.0.1:5432/$name \
         --site-mail $mail --account-name $user --account-mail $mail --account-pass $pass -y
 
-bin/drush pm:enable token ctools pathauto easy_breadcrumb admin_toolbar metatag devel -y
-bin/drush pm:enable language locale -y # no need since they will be enabled if not install as en
+bin/drush theme:install gin
+bin/drush cset system.theme admin gin -y
+bin/drush pm:install token pathauto easy_breadcrumb metatag devel gin_toolbar media media_library responsive_image -y
+bin/drush pm:install language locale -y # no need since they will be enabled if not install as en
+# bin/drush pm:install layout_builder layout_discovery navigation -y
+bin/drush pm:uninstall announcements_feed history help
 
 # Setup development environment
 chmod 755 $site_path/
