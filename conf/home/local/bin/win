@@ -23,7 +23,7 @@ if [ "$1" = "up" ]; then
     virsh start $domain
     virt-manager -c 'qemu:///system' --show-domain-console $domain &
 
-    sleep 30
+    # sleep 30
 
     echo mount win share...
     sudo mount.cifs //$server/$share $mountpoint -o $options

@@ -8,7 +8,6 @@ php-opcache
 php-apcu
 php-mbstring
 php-zip
-php-mysql
 php-curl
 php-fpm
 php-dev
@@ -19,7 +18,6 @@ php-redis
 php-pgsql
 apache2
 postgresql
-mariadb-server
 redis-server
 python3-pip
 psmisc
