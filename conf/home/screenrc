@@ -3,7 +3,7 @@ setenv PS1 "[\[${yellow}${bold}\]\D{%I}\[${cyan}${bold}\]\D{%M}\[${end}${white}\
 layout new
 layout new
 # create windows
-screen -t mysql 4 sudo mysql
+# screen -t mysql 4 sudo mysql
 screen -t psql 5 sudo -u postgres psql
 source .screenrc.local
 ### .screenrc.local example
