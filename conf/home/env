@@ -94,16 +94,6 @@ AWS_DEFAULT_REGION=ap-east-1 # See https://docs.aws.amazon.com/general/latest/gr
 # WG_INTERFACE=
 [ -f ~/.env.local ] && . ~/.env.local
 
-if [ "$DOMAIN" ];then
-	for i in $(grep -o "\w*\.$DOMAIN" ~/.ssh/config)
-	do
-		# TODO can we not use eval here?
-		# export ${i%%.*}=$i
-		eval ${i%%.*}=$i
-	done
-    unset i
-fi
-
 let ENV_EXPORTED++
 
 set +a
