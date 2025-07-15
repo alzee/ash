@@ -16,8 +16,8 @@ site_path=web/sites/default
 
 composer cre drupal/recommended-project $name
 cd $name
-composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,honeypot,gin,gin_toolbar,dashboard}
-# jsonapi_extras restui imce
+composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,honeypot,gin,gin_toolbar,dashboard,smtp} league/commonmark:^1.0
+# jsonapi_extras restui imce markdown
 # # composer require 'drupal/gin_toolbar_custom_menu'
 composer req --dev drupal/devel
 mkdir bin
@@ -37,7 +37,7 @@ bin/drush si --locale $locale  --db-url pgsql://$db_user:$db_pass@127.0.0.1:5432
 
 bin/drush theme:install gin
 bin/drush cset system.theme admin gin -y
-bin/drush pm:install token pathauto easy_breadcrumb metatag honeypot devel gin_toolbar media media_library responsive_image -y
+bin/drush pm:install token pathauto easy_breadcrumb metatag honeypot devel gin_toolbar media media_library responsive_image smtp -y
 bin/drush pm:install language locale -y # no need since they will be enabled if not install as en
 # bin/drush pm:install layout_builder layout_discovery navigation -y
 bin/drush pm:uninstall announcements_feed history help
