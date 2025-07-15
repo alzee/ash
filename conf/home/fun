@@ -292,7 +292,7 @@ sy(){
             sudo systemctl restart "$@"
             ;;
         *)
-            systemctl "$@"
+            sudo systemctl "$@"
             ;;
 
     esac
