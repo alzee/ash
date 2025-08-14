@@ -544,7 +544,7 @@ case $1 in
         misc
         install_composer
         install_symfony
-        # install_deno
+        install_uv
         install_node
         mklinks
         _sysctl
