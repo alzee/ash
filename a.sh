@@ -477,7 +477,7 @@ install_deno(){
 }
 
 install_node(){
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
     nvm install node
     nvm alias default node
 }
