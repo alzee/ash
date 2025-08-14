@@ -521,6 +521,10 @@ install_zed(){
     curl -f https://zed.dev/install.sh | sh
 }
 
+install_uv(){
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+}
+
 ############### Main ###############
 
 case $1 in
@@ -596,6 +600,9 @@ case $1 in
         ;;
     -z)
         install_zed
+        ;;
+    -uv)
+        install_uv
         ;;
     *)
         ;;
