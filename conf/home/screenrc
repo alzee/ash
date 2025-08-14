@@ -5,8 +5,8 @@ layout new
 # create windows
 # screen -t mysql 4 sudo mysql
 screen -t psql 5 sudo -u postgres psql
-source .screenrc.local
-### .screenrc.local example
+source ~/.screenrc.local
+### ~/.screenrc.local example
 # chdir w/jiu/
 # screen -t backend 1
 # chdir ../taro.jiu/src
