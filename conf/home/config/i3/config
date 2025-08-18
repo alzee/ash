@@ -18,7 +18,7 @@ workspace 2 output primary
 workspace 3 output primary
 workspace 4 output primary
 workspace 5 output primary
-workspace 6 output primary
+#workspace 6 output primary
 
 # xprop to check wm class
 #assign [class="Chromium-browser"] $ws2
