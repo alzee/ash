@@ -476,12 +476,6 @@ install_deno(){
     mv ~/.deno/bin/deno ~/.local/bin/
 }
 
-install_node(){
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-    nvm install node
-    nvm alias default node
-}
-
 install_rust(){
     curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
     echo Generating tab-completion scripts for your shell.
@@ -525,6 +519,18 @@ install_uv(){
     curl -LsSf https://astral.sh/uv/install.sh | sh
 }
 
+install_nvm(){
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+    nvm install node
+    nvm alias default node
+}
+
+install_fnm(){
+    curl -fsSL https://fnm.vercel.app/install | bash
+    . ~/.bashrc
+    fnm i --latest
+}
+
 ############### Main ###############
 
 case $1 in
@@ -545,7 +551,7 @@ case $1 in
         install_composer
         install_symfony
         install_uv
-        install_node
+        install_fnm
         mklinks
         _sysctl
         setup_wg
@@ -562,8 +568,8 @@ case $1 in
     -C)
         install_composer
         ;;
-    -N)
-        install_node
+    -nvm)
+        install_nvm
         ;;
     -R)
         install_rust
@@ -603,6 +609,9 @@ case $1 in
         ;;
     -uv)
         install_uv
+        ;;
+    -fnm)
+        install_fnm
         ;;
     *)
         ;;
