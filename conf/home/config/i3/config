@@ -204,4 +204,3 @@ bar {
 # Will also start in a vncserver
 # exec xautolock -time 30 -locker "i3lock"
 exec ~/.config/i3/startup.sh
-exec ~/.config/i3/startup.local.sh
