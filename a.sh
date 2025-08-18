@@ -529,6 +529,9 @@ install_fnm(){
     curl -fsSL https://fnm.vercel.app/install | bash
     . ~/.bashrc
     fnm i --latest
+	#corepack enable yarn
+    #corepack enable pnpm
+
 }
 
 ############### Main ###############
