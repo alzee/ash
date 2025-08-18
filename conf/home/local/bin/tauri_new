@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+sh <(curl https://create.tauri.app/sh)

@@ -102,10 +102,6 @@ terminate_a_aws_instance(){
     aws ec2 terminate-instances --instance-ids $id
 }
 
-tauri_new(){
-    sh <(curl https://create.tauri.app/sh)
-}
-
 b(){
     # Restore my key sequences if have any argument
     [ $1 ] && { bind -f ~/.inputrc; return; }
