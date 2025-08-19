@@ -607,7 +607,7 @@ case $1 in
     -v)
         vim_gnupg
         ;;
-    -z)
+    -zed)
         install_zed
         ;;
     -uv)
