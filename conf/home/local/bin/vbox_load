@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+sudo rmmod kvm_intel
+sudo rmmod kvm
+sudo modprobe vboxdrv
