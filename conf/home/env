@@ -81,6 +81,8 @@ VIM_DEFAULT_SESSION=~/.vim/session/default.vim
 
 AWS_DEFAULT_REGION=ap-east-1 # See https://docs.aws.amazon.com/general/latest/gr/rande.html
 
+WIN_IP=192.168.122.119  # win guest ip
+
 # .env.local template
 # TERM
 # LIBGL_ALWAYS_SOFTWARE=1 # For ARM. See https://github.com/alacritty/alacritty/issues/3624#issuecomment-617428381
