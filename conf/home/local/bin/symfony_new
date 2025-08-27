@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+symfony new "$@"
+
+if [ $? -gt 0 ]; then
+    exit
+fi
+
+cd "$@"
+
+admin
+vich/uploader-bundle
+friendsofsymfony/ckeditor-bundle
+symfony/ux-chartjs
+
+overtrue/pinyin
+phpoffice/phpspreadsheet
+alibabacloud/dysmsapi-20170525
+
+comoposer req 
+
+composer require --dev orm-fixtures
