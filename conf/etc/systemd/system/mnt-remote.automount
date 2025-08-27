@@ -1,0 +1,8 @@
+[Unit]
+Description=Automount NFS share after VPN is up
+
+[Automount]
+Where=/mnt/remote
+
+[Install]
+WantedBy=multi-user.target
