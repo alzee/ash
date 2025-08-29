@@ -339,6 +339,8 @@ misc() {
 
         # If nvidia on desktop
         # sudo systemctl disable --now nvidia-powerd.service
+
+        gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control><Alt>e']"
     fi
 
     crontab $scriptdir/conf/templates/$distro/cron
