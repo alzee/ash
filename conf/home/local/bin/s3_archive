@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+aws s3 cp --storage-class DEEP_ARCHIVE "$@"
