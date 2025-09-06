@@ -316,6 +316,7 @@ misc() {
         sudo firewall-cmd --add-service samba --zone libvirt
         sudo firewall-cmd --runtime-to-permanent
         sudo systemctl disable libvirtd
+        sudo systemctl enable libvirtd.socket virtqemud.socket
         sudo systemctl enable --now sshd
 
         # start docker to initialize /etc/docker/
