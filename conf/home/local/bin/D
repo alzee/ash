@@ -12,5 +12,5 @@ port=1080
 
 [ "$1" ] && port=$1
 
-s -t socks 5 ssh $VPS -D$port
+s -t socks 5 ssh -N -D$port $VPS 
 s -X other
