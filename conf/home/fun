@@ -534,8 +534,13 @@ irc(){
 }
 
 mip(){
-    local ip
-    ip=$(curl -s 'https://api.ipify.org')
+    local ip url
+    # url='https://api.ipify.org'
+    # url='ifconfig.me/ip'
+    url='icanhazip.com'
+    # url='checkip.amazonaws.com'
+    # url='httpbin.org/ip'    # return json
+    ip=$(curl -s $url)
     echo $ip
 }
 
