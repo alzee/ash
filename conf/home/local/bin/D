@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+port=1080
+
+[ "$1" ] && port=$1
+
+s -t socks 5 ssh $VPS -D$port
+s -X other

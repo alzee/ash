@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+# url='https://api.ipify.org'
+# url='ifconfig.me/ip'
+url='icanhazip.com'
+# url='checkip.amazonaws.com'
+# url='httpbin.org/ip'    # return json
+ip=$(curl -s $url)
+echo $ip

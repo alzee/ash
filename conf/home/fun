@@ -130,11 +130,6 @@ d(){
     cd "$@"
 }
 
-D(){
-    s -t vps 5 ssh $VPS -D7777
-    s -X other
-}
-
 e(){
     echo "$@"
 }
@@ -530,31 +525,6 @@ irc(){
         screen -S $SCREEN_SESSION -X $c irssi
     else
         screen -t irssi -T screen 9 irssi
-    fi
-}
-
-mip(){
-    local ip url
-    # url='https://api.ipify.org'
-    # url='ifconfig.me/ip'
-    url='icanhazip.com'
-    # url='checkip.amazonaws.com'
-    # url='httpbin.org/ip'    # return json
-    ip=$(curl -s $url)
-    echo $ip
-}
-
-vpaste(){
-    uri="http://vpaste.net/"
-    if [ -f "$1" ]; then
-        out=`curl -s -F "text=<$1" "$uri?$2"`
-    else
-        out=`curl -s -F 'text=<-' "$uri?$1"`
-    fi
-    echo "$out"
-    if [ -x "`which xclip 2>/dev/null`" -a "$DISPLAY" ]; then
-        echo -n "$out" | xclip -i -selection primary
-        echo -n "$out" | xclip -i -selection clipboard
     fi
 }
 
