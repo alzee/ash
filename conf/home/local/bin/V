@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+IF=dante.$WG_INTERFACE
+[ $1 ] && IF=$WG_INTERFACE
+
+wg show $IF &> /dev/null
+if [ "$?" -eq 0 ]; then
+    sudo wg-quick down $IF
+else
+    sudo sed -i /Endpoint/s/..$/$(date +%d)/ /etc/wireguard/$IF.conf
+    sudo wg-quick up $IF
+    wg show
+fi
