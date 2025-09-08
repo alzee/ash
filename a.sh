@@ -377,7 +377,11 @@ setup_auto_upgrade(){
     if [ "$distro" = fedora ]; then
         sudo $pkg install -y dnf-automatic   # In case not installed yet.
         local file=/etc/dnf/automatic.conf
-        sudo sed -i '/apply_updates/s/no/yes/' $file
+        if [ -f $file ]; then
+            sudo sed -i '/apply_updates/s/no/yes/' $file
+        else
+            sudo echo -e '[commands]\napply_updates = yes' > $file
+        fi
         sudo systemctl enable --now dnf-automatic.timer postfix
     fi
 }
