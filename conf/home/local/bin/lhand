@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+[ "$MOUSE" ] && lhanded=$(xinput list-props "$MOUSE" | grep  "Left Handed Enabled (" | cut -f3)
+[ "$TOUCHPAD" ] && lhanded=$(xinput list-props "$TOUCHPAD" | grep  "Left Handed Enabled (" | cut -f3)
+
+if [ "$lhanded" -eq 0 ]; then
+    [ "$MOUSE" ] && xinput set-prop "$MOUSE" 'libinput Left Handed Enabled' 1
+    [ "$TOUCHPAD" ] && xinput set-prop "$TOUCHPAD" 'libinput Left Handed Enabled' 1
+else
+    [ "$MOUSE" ] && xinput set-prop "$MOUSE" 'libinput Left Handed Enabled' 0
+    [ "$TOUCHPAD" ] && xinput set-prop "$TOUCHPAD" 'libinput Left Handed Enabled' 0
+fi
+
+# use the bitwise XOR-equal operator to flip between 0 and 1
+# https://unix.stackexchange.com/a/364489/274163
+echo $((lhanded ^ 1))

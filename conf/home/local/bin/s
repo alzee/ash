@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+TERM=alacritty
+# we only use default command key (^Aa) in ssh
+[ "$SSH_TTY" ] ||  arg='-e ^Ss'
+
+# if we are in the matrix
+if [ "${STY#*.}" = "$SCREEN_SESSION" ];then
+    screen "$@"
+else
+    screen $arg -d -R -S $SCREEN_SESSION -T $TERM
+fi

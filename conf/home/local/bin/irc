@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# assume we are in the matrix
+if pgrep irssi; then
+    screen -X select irssi
+else
+    screen -t irssi 9 irssi
+fi

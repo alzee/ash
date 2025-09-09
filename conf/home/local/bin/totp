@@ -1,0 +1,62 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+if [ -z $1 ]; then
+    cat <<HERE
+Usage:
+totp <keyname>          Generate a totp code
+totp -d                 Decrypt keys in ~/.sec/totp-key/ and output to ~/totp-key/
+totp -e <recipient>     Encrypt keys in ~/totp-key/ and output to ~/.sec/totp-key/
+HERE
+
+return
+fi
+
+dir=~/.sec/totp-key
+decrypt_dir=~/totp-key
+
+if [ $1 = -d ]; then
+    [ -d "$dir" ] || { echo directory "$dir" not exists; return; }
+    # https://superuser.com/a/352367/886777
+    # No need -A here since `for i in *` don't include dot files
+    [ $(command ls "$dir" | wc -w) -eq 0 ] && { echo directory "$dir" is empty; return; }
+    mkdir -p $decrypt_dir
+    for i in $dir/*
+    do
+        gpg --yes -q -o $decrypt_dir/${i##*/} -d $i
+    done
+    return
+fi
+
+if [ $1 = -e ]; then
+    [ -d "$decrypt_dir" ] || { echo decrypt directory "$decrypt_dir" not exists; return; }
+    [ $(command ls "$decrypt_dir" | wc -w) -eq 0 ] && { echo directory "$decrypt_dir" is empty; return; }
+    mkdir -p $dir
+    [ "$2" ] || { echo "Usage: totp -e <recipient>"; return; }
+    for i in $decrypt_dir/*
+    do
+        gpg --yes --trust-model always -a -r "$2" -o $dir/${i##*/} -e $i
+    done
+    return
+fi
+
+keyfile=$(echo $dir/$1*)
+keyfile=${keyfile%% *}	# only first one
+if [ -f $keyfile ];then
+    key=$(gpg -dq $keyfile)
+    [ "$key" ] || return
+    echo $keyfile
+    oathtool --totp -b "$key"
+    sec=$(date +%S)
+    sec=${sec#0}
+    [ $sec -ge 30 ] && let sec=60-sec || let sec=30-sec
+    echo $sec seconds left
+else
+    echo $keyfile no found
+fi

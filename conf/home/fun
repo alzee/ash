@@ -16,21 +16,6 @@ unalias -a
 
 set -a
 
-sr(){
-    local rotate
-    # 'DP-4 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 527mm x 296mm'
-    rotate=$(xrandr | grep -w connected | cut -f4 -d' ')
-
-    if [ "$rotate" = '(normal' ]; then
-        rotate=$MONITOR_ROTATE
-    else
-        rotate=normal
-    fi
-    echo to $rotate
-
-    xrandr --output $MONITOR --rotate $rotate
-}
-
 t(){
     local d
     d=~/w/todo
@@ -214,20 +199,6 @@ p(){
             ping "$1"
             ;;
     esac
-}
-
-s(){
-    local arg TERM
-    #TERM=screen
-    # we only use default command key (^Aa) in ssh
-    [ "$SSH_TTY" ] ||  arg='-e ^Ss'
-
-    # if we are in the matrix
-    if [ "${STY#*.}" = "$SCREEN_SESSION" ];then
-        screen "$@"
-    else
-        screen $arg -d -R -S $SCREEN_SESSION #-T $TERM
-    fi
 }
 
 v(){
@@ -431,92 +402,6 @@ cmdnotfound(){
     fi
 }
 
-totp(){
-    if [ -z $1 ]; then
-        cat <<HERE
-Usage:
-totp <keyname>          Generate a totp code
-totp -d                 Decrypt keys in ~/.sec/totp-key/ and output to ~/totp-key/
-totp -e <recipient>     Encrypt keys in ~/totp-key/ and output to ~/.sec/totp-key/
-HERE
-
-return
-    fi
-
-    local key keyfile sec dir decrypt_dir
-    dir=~/.sec/totp-key
-    decrypt_dir=~/totp-key
-
-    if [ $1 = -d ]; then
-        [ -d "$dir" ] || { echo directory "$dir" not exists; return; }
-        # https://superuser.com/a/352367/886777
-        # No need -A here since `for i in *` don't include dot files
-        [ $(command ls "$dir" | wc -w) -eq 0 ] && { echo directory "$dir" is empty; return; }
-        mkdir -p $decrypt_dir
-        for i in $dir/*
-        do
-            gpg --yes -q -o $decrypt_dir/${i##*/} -d $i
-        done
-        return
-    fi
-
-    if [ $1 = -e ]; then
-        [ -d "$decrypt_dir" ] || { echo decrypt directory "$decrypt_dir" not exists; return; }
-        [ $(command ls "$decrypt_dir" | wc -w) -eq 0 ] && { echo directory "$decrypt_dir" is empty; return; }
-        mkdir -p $dir
-        [ "$2" ] || { echo "Usage: totp -e <recipient>"; return; }
-        for i in $decrypt_dir/*
-        do
-            gpg --yes --trust-model always -a -r "$2" -o $dir/${i##*/} -e $i
-        done
-        return
-    fi
-
-    keyfile=$(echo $dir/$1*)
-    keyfile=${keyfile%% *}	# only first one
-    if [ -f $keyfile ];then
-        key=$(gpg -dq $keyfile)
-        [ "$key" ] || return
-        echo $keyfile
-        oathtool --totp -b "$key"
-        sec=$(date +%S)
-        sec=${sec#0}
-        [ $sec -ge 30 ] && let sec=60-sec || let sec=30-sec
-        echo $sec seconds left
-    else
-        echo $keyfile no found
-    fi
-}
-
-bt(){
-    if ! pidof transmission-daemon; then
-        transmission-daemon
-        sleep 0.5	# why
-    fi
-    if [ "$1" ];then
-        transmission-remote "$@"
-    else
-        transmission-remote -l
-    fi
-}
-
-irc(){
-    # if irssi is running
-    # are we in matrix?
-    # select irssi
-    # not running
-    # screen irssi
-
-    # assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
-    local c=select
-    # assume we are in the matrix
-    if pgrep irssi; then
-        screen -S $SCREEN_SESSION -X $c irssi
-    else
-        screen -t irssi -T screen 9 irssi
-    fi
-}
-
 smb(){
     local sever share mountpoint user
 
@@ -570,24 +455,6 @@ githooks(){
         ln -sf ../.githooks .git/
         echo Don\'t forget to run me on remote if you need to trigger push hooks.
     fi
-}
-
-lhand(){
-    local lhanded
-    [ "$MOUSE" ] && lhanded=$(xinput list-props "$MOUSE" | grep  "Left Handed Enabled (" | cut -f3)
-    [ "$TOUCHPAD" ] && lhanded=$(xinput list-props "$TOUCHPAD" | grep  "Left Handed Enabled (" | cut -f3)
-
-    if [ "$lhanded" -eq 0 ]; then
-        [ "$MOUSE" ] && xinput set-prop "$MOUSE" 'libinput Left Handed Enabled' 1
-        [ "$TOUCHPAD" ] && xinput set-prop "$TOUCHPAD" 'libinput Left Handed Enabled' 1
-    else
-        [ "$MOUSE" ] && xinput set-prop "$MOUSE" 'libinput Left Handed Enabled' 0
-        [ "$TOUCHPAD" ] && xinput set-prop "$TOUCHPAD" 'libinput Left Handed Enabled' 0
-    fi
-
-    # use the bitwise XOR-equal operator to flip between 0 and 1
-    # https://unix.stackexchange.com/a/364489/274163
-    echo $((lhanded ^ 1))
 }
 
 gen_ssh_keys_for_new_workstation() {
