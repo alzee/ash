@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+if [ "$1" = s ]; then
+    symfony serve -d --allow-all-ip --allow-http
+    sudo systemctl restart redis
+    exit
+fi
+
+symfony "$@"
