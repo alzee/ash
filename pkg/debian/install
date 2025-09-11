@@ -39,3 +39,4 @@ docker-compose-plugin
 wamerican
 imagemagick
 apt-transport-https
+ncurses-term
