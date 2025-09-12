@@ -16,6 +16,10 @@ unalias -a
 
 set -a
 
+activate(){
+    [ -f .venv/bin/activate ] && . .venv/bin/activate
+}
+
 t(){
     local d
     d=~/w/todo
