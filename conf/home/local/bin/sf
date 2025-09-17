@@ -14,4 +14,9 @@ if [ "$1" = s ]; then
     exit
 fi
 
+if [ "$1" = S ]; then
+    symfony serve:stop
+    exit
+fi
+
 symfony "$@"

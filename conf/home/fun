@@ -16,6 +16,10 @@ unalias -a
 
 set -a
 
+activate(){
+    [ -f .venv/bin/activate ] && . .venv/bin/activate
+}
+
 t(){
     local d
     d=~/w/todo
@@ -37,10 +41,6 @@ t(){
             [ -n "$i" ] && echo -e "\nstarting push..." && git -C $d push
             ;;
     esac
-}
-
-con(){
-    bin/console "$@"
 }
 
 jq_aws_instance_ip(){
