@@ -1,8 +1,8 @@
 curl
+wget
 vim
 screen
 nginx
-openssh-server
 unzip
 wireguard-tools
 bash-completion

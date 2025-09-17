@@ -7,3 +7,7 @@ php-zip
 php-mysqli
 php-curl
 coreutils
+unrar
+redis
+bzip2
+apache24
