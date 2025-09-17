@@ -8,4 +8,9 @@
 
 ############### Main Part ###############
 
+# sudoers typically use absolute path
+# so can not use
+# al ALL=(ALL) NOPASSWD: bin/console c:c
+# mv function con this executable so I can add it to sudoers
+# al ALL=(ALL) NOPASSWD: /home/al/.local/bin/con
 bin/console "$@"
