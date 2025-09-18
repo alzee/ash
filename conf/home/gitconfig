@@ -17,7 +17,7 @@
     # mkdir .githooks; ln -s ../.githooks/ .git/
     # Now hooks in .githooks will be tracked and can be triggered whether or not "during a push",
     # as long as it's not a bare repo.
-    hooksPath = .githooks
+    hooksPath = githooks
 [commit]
 	gpgsign = true
 [pull]
