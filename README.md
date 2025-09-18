@@ -55,6 +55,6 @@ $ screen # tmux
 ```bash
 # Change dir of githooks so git can track them
 $ mkdir -p .githooks
-$ ln -sf ../.githooks .git/githooks
-$ g config --global core.hooksPath githooks
+$ ln -sf ../.githooks .git/
+$ g config --global core.hooksPath .githooks
 ```
