@@ -14,7 +14,7 @@
 	b = branch
 [core]
     # In root of working tree, issue
-    # mkdir .githooks; ln -s ../.githooks/ .git/
+    # mkdir .githooks; ln -s ../.githooks/ .git/githooks
     # Now hooks in .githooks will be tracked and can be triggered whether or not "during a push",
     # as long as it's not a bare repo.
     hooksPath = githooks
