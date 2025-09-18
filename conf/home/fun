@@ -455,10 +455,10 @@ githooks(){
     # then hooks in .githooks will be tracked and can be triggered whether or not "during a push",
     # as long as it's not a bare repo.
     if [ -d .git ]; then
-        echo ln .githooks to .git/githooks
         mkdir -p .githooks
         ln -sf ../.githooks .git/githooks
-        echo Done. Don\'t forget to run me on remote if you need to trigger push hooks.
+        echo Created .githooks/ and symlinked .git/githooks to it
+        echo Don\'t forget to run me on remote if you need to trigger push hooks.
     else
         echo Not a git dir
     fi
