@@ -9,13 +9,17 @@
 ############### Main Part ###############
 
 IF=dante.$WG_INTERFACE
-[ $1 ] && IF=$WG_INTERFACE
 
-wg show $IF &> /dev/null
-if [ "$?" -eq 0 ]; then
-    sudo wg-quick down $IF
-else
+if [ -z $1 ]; then
+    IF=$WG_INTERFACE
     sudo sed -i /Endpoint/s/..$/$(date +%d)/ /etc/wireguard/$IF.conf
-    sudo wg-quick up $IF
-    wg show
 fi
+
+# set Conflicts in systemd unit in one of them is enough
+# [Unit]
+# Conflicts=wg-quick@z.service
+# After=network-online.target nss-lookup.target wg-quick@z.service
+
+sudo systemctl start wg-quick@$IF
+
+wg show
