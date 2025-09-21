@@ -14,6 +14,6 @@ feh --bg-fill ~/.config/i3/bg.png
 
 i3-sensible-terminal
 
-mouseless
+~/.local/bin/mouseless &> ~/debug
 
 # [ -f ~/.config/i3/startup.local.sh ] && . ~/.config/i3/startup.local.sh
