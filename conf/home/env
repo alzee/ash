@@ -78,6 +78,9 @@ AWS_DEFAULT_REGION=ap-east-1 # See https://docs.aws.amazon.com/general/latest/gr
 #AWS_REGION=
 #AWS_PROFILE=
 
+RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+
 # .env.local template
 # ftp_proxy=
 # http_proxy=
