@@ -18,6 +18,6 @@ sudo sed -i /Endpoint/s/..$/$(date +%d)/ /etc/wireguard/$IF.conf
 # [Unit]
 # Conflicts=wg-quick@z.service
 # After=network-online.target nss-lookup.target wg-quick@z.service
-sudo systemctl start wg-quick@$IF
+sudo systemctl restart wg-quick@$IF
 
 wg show
