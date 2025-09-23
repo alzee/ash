@@ -549,8 +549,8 @@ case $1 in
         _mkswap
         add_repo
         load_pkg
-        install_pkg
         remove_pkg
+        install_pkg
         setup_auto_upgrade
         sethostname
         addgrp
