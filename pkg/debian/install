@@ -42,3 +42,4 @@ apt-transport-https
 ncurses-term
 openssh-server
 poppler-utils
+sysstat
