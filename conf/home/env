@@ -30,12 +30,6 @@ TERMINAL=alacritty
 HISTTIMEFORMAT="%b %d %T "
 HISTCONTROL=ignoreboth
 LIBVIRT_DEFAULT_URI=qemu:///system
-#ftp_proxy=
-#http_proxy=
-#https_proxy=
-#all_proxy=
-#SOCKS_SERVER=
-#SOCKS_VERSION=5
 if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
     PATH=$PATH:$HOME/.local/bin
 fi
@@ -85,7 +79,13 @@ AWS_DEFAULT_REGION=ap-east-1 # See https://docs.aws.amazon.com/general/latest/gr
 #AWS_PROFILE=
 
 # .env.local template
-# TERM
+# ftp_proxy=
+# http_proxy=
+# https_proxy=
+# all_proxy=
+# SOCKS_SERVER=
+# SOCKS_VERSION=5
+# TERM=
 # PROMPT_COMMAND=activate   # a function to activate python venv
 # LIBGL_ALWAYS_SOFTWARE=1 # For ARM. See https://github.com/alacritty/alacritty/issues/3624#issuecomment-617428381
 # IS_WORKSTATION=1
