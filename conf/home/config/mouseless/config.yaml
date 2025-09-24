@@ -15,25 +15,25 @@ layers:
   - name: mouse
     # when true, keys that are not mapped keep their original meaning
     passThrough: true
+    enterCommand: "notify-send -t 1000 'mouse layer entered'"
+    exitCommand: "notify-send -u low -t 1000 'mouse layer exited'"
     bindings:
       # quit mouse layer
       q: layer initial
+      # r: reload-config
       # keep the mouse layer active
       a: layer mouse
       l: move  1  0
       h: move -1  0
       j: move  0  1
       k: move  0 -1
-      y: move  -1 -1
-      p: move  1 -1
-      n: move  -1 1
-      m: move  1 1
       o: button left
       i: button right
       dot: button left
       comma: button right
       e: tap-hold e; toggle-layer scroll; 100
       space: speed 0.2
+      leftalt: speed 4
       #_: layer initial
 
   - name: scroll
