@@ -31,7 +31,7 @@ layers:
       i: button right
       dot: button left
       comma: button right
-      e: tap-hold e; toggle-layer scroll; 100
+      f: tap-hold e; toggle-layer scroll; 100
       space: speed 0.2
       leftalt: speed 4
       #_: layer initial
