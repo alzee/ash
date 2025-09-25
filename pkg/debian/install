@@ -44,3 +44,4 @@ terminfo
 openssh-server
 poppler-utils
 sysstat
+bc

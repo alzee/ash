@@ -8,9 +8,9 @@
 
 ############### Main Part ###############
 
-port=1080
+port=1088
 
 [ "$1" ] && port=$1
 
-s -t socks 5 ssh -N -D$port $VPS 
+s -t socks 5 ssh -N -D 0.0.0.0:$port $VPS 
 s -X other
