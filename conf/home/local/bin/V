@@ -12,7 +12,11 @@ IF=$WG_INTERFACE
 
 [ $1 ] && IF=dante.$WG_INTERFACE
 
-sudo sed -i /Endpoint/s/..$/$(date +%d)/ /etc/wireguard/$IF.conf
+# systemctl edit wg-quick@$IF and add:
+# [Service]
+# ExecStartPre=bash -c "/usr/bin/sed -i /Endpoint/s:..$:$(date +%%d): /etc/wireguard/%i.conf"
+# or do it here
+# sudo sed -i /Endpoint/s/..$/$(date +%d)/ /etc/wireguard/$IF.conf
 
 # set Conflicts in systemd unit in one of them is enough
 # [Unit]
