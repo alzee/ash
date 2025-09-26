@@ -90,7 +90,16 @@ case $cmd in
     rollback|down)
         if [ -z "${1:-}" ]; then
             echo "Usage: mig rollback <revision_id>"
-            echo "Example: mig rollback -1 (rollback one migration)"
+            echo "Examples:"
+            if [ "$tool_type" = "alembic" ]; then
+                echo "  mig rollback -1        (rollback one migration)"
+                echo "  mig rollback base      (rollback to beginning)"
+                echo "  mig rollback <revision> (rollback to specific revision)"
+            else
+                echo "  mig rollback prev      (rollback to previous version)"
+                echo "  mig rollback first     (rollback to first version)"
+                echo "  mig rollback <version> (rollback to specific version)"
+            fi
             exit 1
         fi
         $tool $cmd_downgrade "$1"
