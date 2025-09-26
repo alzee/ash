@@ -1,4 +1,4 @@
-setenv PS1 "[\[${yellow}${bold}\]\D{%I}\[${cyan}${bold}\]\D{%M}\[${end}${white}\]\D{%S}\[${end}\] \u@\h \[${red}${bold}\]\W\[${end}\]]\[${red}${bold}\]\$\[${end}\] "
+setenv PS1 "[\[${YELLOW}${BOLD}\]\D{%I}\[${CYAN}${BOLD}\]\D{%M}\[${END}${WHITE}\]\D{%S}\[${END}\] \u@\h \[${RED}${BOLD}\]\W\[${END}\]]\[${RED}${BOLD}\]\$\[${END}\] "
 # create a layout, otherwise the regions won't be remembered after reattach
 layout new
 layout new
