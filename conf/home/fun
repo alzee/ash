@@ -5,6 +5,13 @@
 # and ~/.fun will be sourced in ~/.bash_profile
 # Export all these funcions and set $FUN_EXPORTED at the end of this file.
 
+# Fedora /etc/bashrc will source /etc/profile.d/*.sh
+# and some of them will set aliases
+# functions names will be overriden by aliases, this is so sad
+# and it causes syntax error if the word is already a alias when define a fun
+# So remove all aliases
+unalias -a
+
 [ "$FUN_EXPORTED" ] && return # since these functions have been exported, we don't need to soure this file anymore
 
 # use some useless dconf keys to store info is a good idea.
