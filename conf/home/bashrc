@@ -48,4 +48,4 @@ GPG_TTY=$(tty)
 
 [ -f ~/.env ] && . ~/.env
 [ -f ~/.fun ] && . ~/.fun
-[ -f ~/.tools ] && . ~/.tools
+[ -f ~/.tool ] && . ~/.tool
