@@ -3,9 +3,9 @@
 
 dns=1.1.1.1
 
-[ $1 ] || { ping $dns && return; }
+[ $1 ] || { ping $dns && exit; }
 # If not only contain numbers and ., take it as a domain
-[[ $1 =~ ^[0-9.]+$ ]] || { ping $1 && return; }
+[[ $1 =~ ^[0-9.]+$ ]] || { ping $1 && exit; }
 
 # https://stackoverflow.com/a/21336679/7714132
 ip=$(ip route get $dns | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
