@@ -1,48 +1,74 @@
 #!/bin/bash
 #
 # vim:ft=sh
+# Universal migration tool wrapper
+# Supports Symfony/Doctrine and Alembic projects
+
+set -euo pipefail
 
 ############### Variables ###############
+cmd=${1:-help}
+shift 2>/dev/null || true
 
 ############### Functions ###############
+detect_tool() {
+    if [ -f composer.json -a -f bin/console ]; then
+        echo "symfony"
+    elif [ -d alembic -a -f .venv/bin/alembic ]; then
+        echo "alembic"
+    else
+        echo "unknown"
+    fi
+}
 
 ############### Main Part ###############
-cmd=$1
-shift
-# echo command is: $cmd
+tool_type=$(detect_tool)
 
-if [ -f composer.json -a -f bin/console ]; then
-    tool=bin/console
-    cmd_list=doctrine:migrations:list
-    cmd_gen=make:migration
-    cmd_mig=doctrine:migrations:migrate
-    cmd_status=doctrine:migrations:status
-    cmd_current=doctrine:migrations:current
-    cmd_latest=doctrine:migrations:latest
-    cmd_help='doctrine:migrations --help'
-fi
-
-if [ -d alembic -a -f .venv/bin/alembic ]; then
-    tool=alembic
-    cmd_list=history
-    cmd_gen='revision --autogenerate'
-    cmd_mig="upgrade head"
-    cmd_status=current
-    cmd_current=current
-    cmd_latest=heads
-    cmd_help='--help'
-fi
-
-# echo tool is: $tool
+case $tool_type in
+    symfony)
+        tool=bin/console
+        cmd_list=doctrine:migrations:list
+        cmd_gen=make:migration
+        cmd_mig=doctrine:migrations:migrate
+        cmd_status=doctrine:migrations:status
+        cmd_current=doctrine:migrations:current
+        cmd_latest=doctrine:migrations:latest
+        cmd_help='doctrine:migrations --help'
+        cmd_downgrade='doctrine:migrations:migrate'
+        ;;
+    alembic)
+        tool="uv run alembic"
+        cmd_list=history
+        cmd_gen='revision --autogenerate'
+        cmd_mig="upgrade head"
+        cmd_status=current
+        cmd_current=current
+        cmd_latest=heads
+        cmd_help='--help'
+        cmd_downgrade="downgrade"
+        ;;
+    *)
+        echo "Error: No migration tool detected (Symfony/Doctrine or Alembic)"
+        echo "Make sure you're in a project directory with:"
+        echo "  - composer.json + bin/console (Symfony)"
+        echo "  - alembic/ directory + .venv/bin/alembic (Alembic)"
+        exit 1
+        ;;
+esac
 
 case $cmd in
     l|list)
         $tool $cmd_list "$@"
         ;;
     gen|make)
-        $tool $cmd_gen "$@"
+        if [ -z "${1:-}" ]; then
+            echo "Usage: mig gen <migration_name>"
+            echo "Example: mig gen add_user_table"
+            exit 1
+        fi
+        $tool $cmd_gen -m "$1"
         ;;
-    mig)
+    mig|migrate)
         $tool $cmd_mig "$@"
         ;;
     current)
@@ -55,9 +81,39 @@ case $cmd in
         $tool $cmd_status "$@"
         ;;
     show)
-        $tool $cmd_show "$@"
+        if [ -z "${1:-}" ]; then
+            echo "Usage: mig show <revision_id>"
+            exit 1
+        fi
+        $tool show "$1"
+        ;;
+    rollback|down)
+        if [ -z "${1:-}" ]; then
+            echo "Usage: mig rollback <revision_id>"
+            echo "Example: mig rollback -1 (rollback one migration)"
+            exit 1
+        fi
+        $tool $cmd_downgrade "$1"
         ;;
     h|help)
+        echo "Universal Migration Tool"
+        echo "Usage: mig <command> [options]"
+        echo ""
+        echo "Commands:"
+        echo "  l, list     - List all migrations"
+        echo "  gen, make    - Generate new migration"
+        echo "  mig, migrate - Run migrations"
+        echo "  current     - Show current migration"
+        echo "  latest      - Show latest migration"
+        echo "  status      - Show migration status"
+        echo "  show        - Show specific migration"
+        echo "  rollback    - Rollback migrations"
+        echo "  h, help     - Show this help"
+        echo "  --help      - Show tool's native help"
+        echo ""
+        echo "Detected tool: $tool_type"
+        ;;
+    --help)
         $tool $cmd_help
         ;;
     *)

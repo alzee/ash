@@ -447,7 +447,14 @@ self_signed_cert(){
 }
 
 grep(){
-    command grep --color=auto "$@"
+    # Safety check for Cursor's tool environment
+    if [ -z "$PS1" ] || [ -n "$CURSOR_TOOL_MODE" ]; then
+        # In non-interactive mode or Cursor tool mode, use basic grep
+        command grep "$@"
+    else
+        # In interactive mode, use colored grep
+        command grep --color=auto "$@"
+    fi
 }
 
 githooks(){
