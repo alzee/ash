@@ -81,7 +81,7 @@ add_repo() {
             sudo $pkg config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
             # fedora have moby-engine. Anyway, use docker repo can get docker-compose-plugin
             sudo $pkg config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
-            curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
+            # curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
             ;;
         rhel)
             # The epel-release package is available from the CentOS Extras repository (enabled by default)
