@@ -123,11 +123,6 @@ qr(){
     qrencode -t ansiutf8 "$@"
 }
 
-pvz(){
-    local p=/.wine/drive_c/Program\ Files/Plants\ vs\ Zombies/PlantsVsZombies.exe
-    wine ~/.wine/drive_c/Program\ Files/Plants\ vs\ Zombies/PlantsVsZombies.exe -changedir &> /dev/null &
-}
-
 cmdnotfound(){
     # if last command return 127 (not found), do something with it
     # TODO how to deal with HISTCONTROL ignored command which don't have history?
