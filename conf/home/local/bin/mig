@@ -35,6 +35,9 @@ case $tool_type in
         cmd_latest=doctrine:migrations:latest
         cmd_help='doctrine:migrations --help'
         cmd_downgrade='doctrine:migrations:migrate'
+        rollback_examples="  mig rollback prev      (rollback to previous version)
+  mig rollback first     (rollback to first version)
+  mig rollback <version> (rollback to specific version)"
         ;;
     alembic)
         tool="alembic"
@@ -46,6 +49,9 @@ case $tool_type in
         cmd_latest=heads
         cmd_help='--help'
         cmd_downgrade="downgrade"
+        rollback_examples="  mig rollback -1        (rollback one migration)
+  mig rollback base      (rollback to beginning)
+  mig rollback <revision> (rollback to specific revision)"
         ;;
     *)
         echo "Error: No migration tool detected (Symfony/Doctrine or Alembic)"
@@ -91,15 +97,7 @@ case $cmd in
         if [ -z "${1:-}" ]; then
             echo "Usage: mig rollback <revision_id>"
             echo "Examples:"
-            if [ "$tool_type" = "alembic" ]; then
-                echo "  mig rollback -1        (rollback one migration)"
-                echo "  mig rollback base      (rollback to beginning)"
-                echo "  mig rollback <revision> (rollback to specific revision)"
-            else
-                echo "  mig rollback prev      (rollback to previous version)"
-                echo "  mig rollback first     (rollback to first version)"
-                echo "  mig rollback <version> (rollback to specific version)"
-            fi
+            echo "$rollback_examples"
             exit 1
         fi
         $tool $cmd_downgrade "$1"
