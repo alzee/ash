@@ -48,11 +48,4 @@ GPG_TTY=$(tty)
 
 [ -f ~/.env ] && . ~/.env
 [ -f ~/.fun ] && . ~/.fun
-
-# fnm
-FNM_PATH="/home/al/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  # eval "$(fnm env)"
-  eval "$(fnm env --use-on-cd)"
-fi
+[ -f ~/.tools ] && . ~/.tools
