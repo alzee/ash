@@ -1,0 +1,8 @@
+#!/bin/bash
+# vim:ft=sh
+
+sudo mysqld_safe --skip-grant-tables --skip-networking
+# tell the database server to reload the grant tables
+echo 'mysql> FLUSH PRIVILEGES;'
+echo "mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';"
+

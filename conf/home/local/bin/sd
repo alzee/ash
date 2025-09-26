@@ -1,0 +1,29 @@
+#!/bin/bash
+# vim:ft=sh
+
+case $1 in
+    e)
+        shift
+        sudo systemctl enable --now "$@"
+        ;;
+    d)
+        shift
+        sudo systemctl disable --now "$@"
+        ;;
+    s)
+        shift
+        systemctl status "$@"
+        ;;
+    S)
+        shift
+        sudo systemctl stop "$@"
+        ;;
+    r)
+        shift
+        sudo systemctl restart "$@"
+        ;;
+    *)
+        sudo systemctl "$@"
+        ;;
+
+esac

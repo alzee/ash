@@ -1,0 +1,16 @@
+#!/bin/bash
+# vim:ft=sh
+
+# -s to setup a samba service
+# if not installed
+sudo dnf install samba
+sudo smbpasswd -a $user
+# edit /etc/samba/smb.cnf
+sudo systemctl restart smb
+# firewalld
+# selinux
+
+# client side
+sudo mount.cifs //$server/$share $mountpoint -o guest,user=guest,uid=1000
+
+# if permission denied, should be selinux

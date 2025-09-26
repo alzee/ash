@@ -1,0 +1,14 @@
+#!/bin/bash
+# vim:ft=sh
+
+if [ -z $1 ]; then
+    echo usage: addhost 127.0.0.1 backend
+    exit
+fi
+
+ip=$1
+host=$2
+hosts=/etc/hosts
+
+sudo sed -i "/ $host$/d" $hosts
+sudo sed -i "\$a$ip $host" $hosts

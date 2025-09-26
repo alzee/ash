@@ -1,0 +1,27 @@
+#!/bin/bash
+# vim:ft=sh
+
+if [ "$1" ]; then
+    (mpv --really-quiet "$@" &)
+else
+    # if cmus is running
+    # are we in matrix?
+    # select cmus
+    # not running
+    # screen cmus
+
+    # assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
+    c=select
+    # assume we are in the matrix
+    if pgrep cmus; then
+        #screen -S $SCREEN_SESSION -X $c cmus
+        cmus-remote -u
+    else
+        screen -T screen 8 cmus
+        # don't need this anymore since we have setting 'resume'
+        #sleep 0.5
+        #cmus-remote -p
+        # cmus always start with the first song although shuffle is on
+        #cmus-remote -n
+    fi
+fi

@@ -1,0 +1,13 @@
+#!/bin/bash
+# vim:ft=sh
+
+# print battery info
+fd=$(cat /sys/class/power_supply/BAT1/charge_full_design)
+f=$(cat /sys/class/power_supply/BAT1/charge_full)
+n=$(cat /sys/class/power_supply/BAT1/charge_now)
+s=$(cat /sys/class/power_supply/BAT1/status)
+echo charge_full/charge_full_design
+echo $f/$fd=$(echo "scale=2;$f*100/$fd" | bc)%
+echo charge_now/charge_full
+echo $n/$f=$(echo "scale=2;$n*100/$f" | bc)%
+echo $s

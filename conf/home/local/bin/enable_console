@@ -1,0 +1,6 @@
+#!/bin/bash
+# vim:ft=sh
+
+sudo systemctl enable serial-getty@ttyS0.service
+sudo systemctl start serial-getty@ttyS0.service
+

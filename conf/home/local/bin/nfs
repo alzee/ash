@@ -1,0 +1,13 @@
+#!/bin/bash
+# vim:ft=sh
+
+# server side
+# sudo systemctl restart nfs
+# edit /etc/exports
+# man exports
+
+# exportfs -ra
+
+# client side
+# mount server:share_dir somedir
+:

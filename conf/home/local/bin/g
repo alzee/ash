@@ -1,0 +1,25 @@
+#!/bin/bash
+# vim:ft=sh
+
+case $1 in
+    "")
+        git status 2> /dev/null
+        [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end
+        ;;
+    c)
+        git add -A
+        shift
+        comment=${*:-nth}
+        git commit -m "$comment"
+        read -p "press any key in 5 sec to git push..." -n 1 -t5 i
+        echo
+        [ -n "$i" ] && echo -e "\nstarting push..." && git push
+        ;;
+    i)
+        git init
+        githooks
+        ;;
+    *)
+        git "$@"
+        ;;
+esac

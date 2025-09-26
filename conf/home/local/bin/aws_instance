@@ -1,0 +1,36 @@
+#!/bin/bash
+# vim:ft=sh
+
+idfile=~/.aws/instance_id
+
+jq_aws_instance_ip(){
+    # use xargs only for removing quotes
+    jq '.Reservations[0].Instances[0].PublicIpAddress' | xargs
+}
+
+jq_aws_instance_id(){
+    # use xargs only for removing quotes
+    jq '.Reservations[0].Instances[0].InstanceId' | xargs
+}
+
+run(){
+    local id
+    id=$(aws ec2 run-instances --launch-template LaunchTemplateName=min | jq '.Instances[0].InstanceId' | xargs | tee $idfile)
+    addhost $(aws ec2 describe-instances --instance-ids $id | jq_aws_instance_ip) aws
+}
+
+terminate(){
+    local id
+    # id=$(aws ec2 describe-instances | jq_aws_instance_id)
+    id=$(< $idfile)
+    aws ec2 terminate-instances --instance-ids $id
+}
+
+case $1 in
+    r|run)
+        run
+        ;;
+    t|terminate)
+        terminate
+        ;;
+esac

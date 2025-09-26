@@ -1,0 +1,7 @@
+#!/bin/bash
+# vim:ft=sh
+
+echo Selinux?
+echo Any typo?
+echo Is this config file including other config files?
+echo Version?

@@ -22,62 +22,6 @@ activate(){
     [ -f .venv/bin/activate ] && . .venv/bin/activate
 }
 
-t(){
-    local d
-    d=~/w/todo
-    case $1 in
-        "")
-            v $d/todo
-            ;;
-        s)
-            git -C $d status 2> /dev/null
-            [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end
-            ;;
-        c)
-            git -C $d add -A
-            shift
-            comment=${*:-nth}
-            git -C $d commit -m "$comment"
-            read -p "press any key in 5 sec to git push..." -n 1 -t5 i
-            echo
-            [ -n "$i" ] && echo -e "\nstarting push..." && git -C $d push
-            ;;
-    esac
-}
-
-jq_aws_instance_ip(){
-    # use xargs only for removing quotes
-    jq '.Reservations[0].Instances[0].PublicIpAddress' | xargs
-}
-
-jq_aws_instance_id(){
-    # use xargs only for removing quotes
-    jq '.Reservations[0].Instances[0].InstanceId' | xargs
-}
-
-append_to_hosts(){
-    # example
-    # append_to_hosts $(aws ec2 describe-instances | jq_aws_instance_ip) aws
-    local ip=$1
-    local hostname=$2
-    local hosts=/etc/hosts
-    sudo sed -i "/ $hostname$/d" $hosts
-    sudo sed -i "\$a$ip $hostname" $hosts
-}
-
-run_a_aws_instance(){
-    local id
-    id=$(aws ec2 run-instances --launch-template LaunchTemplateName=min | jq '.Instances[0].InstanceId' | xargs | tee ~/.aws/instance_id)
-    append_to_hosts $(aws ec2 describe-instances --instance-ids $id | jq_aws_instance_ip) aws
-}
-
-terminate_a_aws_instance(){
-    local id
-    # id=$(aws ec2 describe-instances | jq_aws_instance_id)
-    id=$(< ~/.aws/instance_id)
-    aws ec2 terminate-instances --instance-ids $id
-}
-
 b(){
     # Restore my key sequences if have any argument
     [ $1 ] && { bind -f ~/.inputrc; return; }
@@ -114,32 +58,6 @@ f(){
     if [ "$1" ]; then
         (feh -. "$@" &)
     fi
-}
-
-g(){
-    local comment i
-    case $1 in
-        "")
-            git status 2> /dev/null
-            [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end
-            ;;
-        c)
-            git add -A
-            shift
-            comment=${*:-nth}
-            git commit -m "$comment"
-            read -p "press any key in 5 sec to git push..." -n 1 -t5 i
-            echo
-            [ -n "$i" ] && echo -e "\nstarting push..." && git push
-            ;;
-        i)
-            git init
-            githooks
-            ;;
-        *)
-            git "$@"
-            ;;
-    esac
 }
 
 if [ "$ID" = FreeBSD ]; then
@@ -181,78 +99,12 @@ m(){
     [ $1 ] && { man $@; :; } || man bash
 }
 
-p(){
-    local dns=1.1.1.1
-    [ $1 ] || { ping $dns && return; }
-    # If not only contain numbers and ., take it as a domain
-    [[ $1 =~ ^[0-9.]+$ ]] || { ping $1 && return; }
-
-    local c ip
-    # https://stackoverflow.com/a/21336679/7714132
-    ip=$(ip route get $dns | awk -F'src ' 'NR==1 {split($2,a," ");print a[1]}')
-    c=$(awk -F'.' '{print NF}' <<< "$1")
-    case "$c" in
-        1)
-            ping $(cut -d'.' -f1-3 <<< $ip)."$1"
-            ;;
-        2)
-            ping $(cut -d'.' -f1-2 <<< $ip)."$1"
-            ;;
-        3)
-            ping 10."$1"
-            ;;
-        4)
-            ping "$1"
-            ;;
-    esac
-}
-
-v(){
-    if [ "$1" ];then
-        command vim "$@"
-    else
-        # $vim_default_file defined in .env
-        #command vim $vim_default_file
-        # $VIM_DEFAULT_SESSION defined in .env
-        command vim -S $VIM_DEFAULT_SESSION
-    fi
-}
-
 py(){
     python3 "$@"
 }
 
 wg(){
     sudo wg "$@"
-}
-
-sy(){
-    case $1 in
-        e)
-            shift
-            sudo systemctl enable --now "$@"
-            ;;
-        d)
-            shift
-            sudo systemctl disable --now "$@"
-            ;;
-        s)
-            shift
-            systemctl status "$@"
-            ;;
-        S)
-            shift
-            sudo systemctl stop "$@"
-            ;;
-        r)
-            shift
-            sudo systemctl restart "$@"
-            ;;
-        *)
-            sudo systemctl "$@"
-            ;;
-
-    esac
 }
 
 dockertag(){
@@ -265,33 +117,6 @@ vim(){
     # sudo command vim "$@"
     # sudo $(which vim) "$@"
     sudo vim "$@"
-}
-
-play(){
-    if [ "$1" ]; then
-        (mpv --really-quiet "$@" &)
-    else
-        # if cmus is running
-        # are we in matrix?
-        # select cmus
-        # not running
-        # screen cmus
-
-        # assign 'select' to a var just to void vim syntax check error. because 'select' is a bash builtin
-        local c=select
-        # assume we are in the matrix
-        if pgrep cmus; then
-            #screen -S $SCREEN_SESSION -X $c cmus
-            cmus-remote -u
-        else
-            screen -T screen 8 cmus
-            # don't need this anymore since we have setting 'resume'
-            #sleep 0.5
-            #cmus-remote -p
-            # cmus always start with the first song although shuffle is on
-            #cmus-remote -n
-        fi
-    fi
 }
 
 qr(){
@@ -315,88 +140,6 @@ mouse_speed_by_ctm(){
     fi
 }
 
-enable_console(){
-    sudo systemctl enable serial-getty@ttyS0.service
-    sudo systemctl start serial-getty@ttyS0.service
-}
-
-reset_mysql_root_pw(){
-    sudo mysqld_safe --skip-grant-tables --skip-networking
-    # tell the database server to reload the grant tables
-    echo 'mysql> FLUSH PRIVILEGES;'
-    echo "mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';"
-}
-
-php_mssql(){
-    echo apt install pear
-    echo pecl channel-update pecl.php.net
-    echo pecl install pdo_sqlsrv
-    echo apt install unixodbc{,-dev}
-    echo Remember the fucking ln in /etc/php/...
-    echo dpkg -i msodbcsql17.... where to find? the fucing microsoft.com
-    echo See some libmsodbcsql-17.3.so.1.1 file not found shit?
-    echo ldd /opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.3.so.1.1
-    echo and you will see libcrypto.so.1.0.2 and libssl.so.1.0.2 not found
-    echo Now install libssl1.0.2, can not find in repo? Directly download from packages.debian.org
-    echo Okay, enjoy your fucking MSSQL with php.
-}
-
-troubleshooting(){
-    echo Selinux?
-    echo Any typo?
-    echo Is this config file including other config files?
-    echo Version?
-}
-
-acme(){
-    # Iusse certs with acme.sh, using CloudFlare API and DNS alias mode
-    local dom certdir acme cmd alias
-    #local CF_Token CF_Account_ID CF_Zone_ID
-    #export CF_Token=""
-    #export CF_Account_ID=""
-    #export CF_Zone_ID=""
-    echo we need CF_Token CF_Account_ID CF_Zone_ID
-
-    [ -z "$1" ] && return
-
-    dom="$1"
-    alias="jiei.xyz"
-    acme=~/.acme.sh/acme.sh
-    cmd="sudo service apache2 force-reload"
-    certdir=${3:-~/cert}
-
-    $acme --issue -d "$dom" -d '*.'"$dom" --dns dns_cf --challenge-alias $alias
-    $acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd "$cmd"
-
-    #$acme --renew -d "$dom"
-    #$acme --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
-    #$acme --renew -d "$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
-}
-
-# print battery info
-ba(){
-    local f fd n s
-    fd=$(cat /sys/class/power_supply/BAT1/charge_full_design)
-    f=$(cat /sys/class/power_supply/BAT1/charge_full)
-    n=$(cat /sys/class/power_supply/BAT1/charge_now)
-    s=$(cat /sys/class/power_supply/BAT1/status)
-    echo charge_full/charge_full_design
-    echo $f/$fd=$(echo "scale=2;$f*100/$fd" | bc)%
-    echo charge_now/charge_full
-    echo $n/$f=$(echo "scale=2;$n*100/$f" | bc)%
-    echo $s
-}
-
-cleanup(){
-    # should i add a cron for this?
-    ### vim undo file
-    local d=~/.vim/undo/
-    find $d -mtime +15 -delete
-    ### ~/.cache 
-    ### /var/cache
-    ### /var/log
-}
-
 cmdnotfound(){
     # if last command return 127 (not found), do something with it
     # TODO how to deal with HISTCONTROL ignored command which don't have history?
@@ -406,37 +149,6 @@ cmdnotfound(){
         # who_is her? OR Who is her?
         tts "${cmd//_/ }"
     fi
-}
-
-smb(){
-    local sever share mountpoint user
-
-    # -s to setup a samba service
-    # if not installed
-    sudo dnf install samba
-    sudo smbpasswd -a $user
-    # edit /etc/samba/smb.cnf
-    sudo systemctl restart smb
-    # firewalld
-    # selinux
-
-    # client side
-    sudo mount.cifs //$server/$share $mountpoint -o guest,user=guest,uid=1000
-
-    # if permission denied, should be selinux
-}
-
-nfs(){
-    # server side
-    # sudo systemctl restart nfs
-    # edit /etc/exports
-    # man exports
-
-    # exportfs -ra
-
-    # client side
-    # mount server:share_dir somedir
-    :
 }
 
 self_signed_cert(){
