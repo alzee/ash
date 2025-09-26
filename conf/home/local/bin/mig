@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# vim:ft=sh
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+cmd=$1
+shift
+# echo command is: $cmd
+
+if [ -f composer.json -a -f bin/console ]; then
+    tool=bin/console
+    cmd_list=doctrine:migrations:list
+    cmd_gen=make:migration
+    cmd_mig=doctrine:migrations:migrate
+    cmd_status=doctrine:migrations:status
+    cmd_current=doctrine:migrations:current
+    cmd_latest=doctrine:migrations:latest
+    cmd_help='doctrine:migrations --help'
+fi
+
+if [ -d alembic -a -f .venv/bin/alembic ]; then
+    tool=alembic
+    cmd_list=history
+    cmd_gen='revision --autogenerate'
+    cmd_mig="upgrade head"
+    cmd_status=current
+    cmd_current=current
+    cmd_latest=heads
+    cmd_help='--help'
+fi
+
+# echo tool is: $tool
+
+case $cmd in
+    l|list)
+        $tool $cmd_list "$@"
+        ;;
+    gen|make)
+        $tool $cmd_gen "$@"
+        ;;
+    mig)
+        $tool $cmd_mig "$@"
+        ;;
+    current)
+        $tool $cmd_current "$@"
+        ;;
+    latest)
+        $tool $cmd_latest "$@"
+        ;;
+    status)
+        $tool $cmd_status "$@"
+        ;;
+    show)
+        $tool $cmd_show "$@"
+        ;;
+    h|help)
+        $tool $cmd_help
+        ;;
+    *)
+        $tool $cmd "$@"
+        ;;
+esac
+
