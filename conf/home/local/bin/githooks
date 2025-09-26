@@ -1,0 +1,14 @@
+#!/bin/bash
+# vim:ft=sh
+
+# Run in root of working tree
+# then hooks in .githooks/ will be tracked and can be triggered whether or not "during a push",
+# as long as it's not a bare repo.
+if [ -d .git ]; then
+    mkdir -p .githooks
+    ln -sf ../.githooks .git/
+    echo Created .githooks/ and symlinked .git/.githooks to it
+    echo Don\'t forget to run me on remote if you need to trigger push hooks.
+else
+    echo Not a git dir
+fi

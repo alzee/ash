@@ -1,0 +1,6 @@
+#!/bin/bash
+# vim:ft=sh
+
+if=$1
+# https://serverfault.com/a/670081
+sudo ip li set mtu 1200 dev $if

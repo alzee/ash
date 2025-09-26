@@ -1,0 +1,8 @@
+#!/bin/bash
+# vim:ft=sh
+
+n=nick
+openssl req -nodes -newkey rsa:4096 -keyout $n.key -x509 -days 3650 -out $n.cer
+cat $n.cer $n.key $n.pem
+#or
+#openssl req -nodes -x509 -newkey rsa:4096 -sha256 -days 3650 -out $n.pem -keyout $n.pem

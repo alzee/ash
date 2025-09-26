@@ -1,0 +1,10 @@
+#!/bin/bash
+# vim:ft=sh
+
+ctm="Coordinate Transformation Matrix"
+# xinput set-prop 8 156 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+# id may change, use name instead
+if is_num $1 && [ "$MOUSE" -a "$ctm" ]; then
+    x=$1 y=$1 z=$1
+    xinput set-prop "$MOUSE" "$ctm" $x, 0, 0, 0, $y, 0, 0, 0, $z
+fi
