@@ -35,12 +35,13 @@ case $tool_type in
         cmd_latest=doctrine:migrations:latest
         cmd_help='doctrine:migrations --help'
         cmd_downgrade='doctrine:migrations:migrate'
+        cmd_show='doctrine:migrations:execute'
         rollback_examples="  mig rollback prev      (rollback to previous version)
   mig rollback first     (rollback to first version)
   mig rollback <version> (rollback to specific version)"
         ;;
     alembic)
-        tool="alembic"
+        tool=".venv/bin/alembic"
         cmd_list=history
         cmd_gen='revision --autogenerate'
         cmd_mig="upgrade head"
@@ -49,6 +50,7 @@ case $tool_type in
         cmd_latest=heads
         cmd_help='--help'
         cmd_downgrade="downgrade"
+        cmd_show="show"
         rollback_examples="  mig rollback -1        (rollback one migration)
   mig rollback base      (rollback to beginning)
   mig rollback <revision> (rollback to specific revision)"
@@ -91,7 +93,7 @@ case $cmd in
             echo "Usage: mig show <revision_id>"
             exit 1
         fi
-        $tool show "$1"
+        $tool $cmd_show "$1"
         ;;
     rollback|down)
         if [ -z "${1:-}" ]; then
