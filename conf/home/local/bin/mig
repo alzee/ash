@@ -35,7 +35,7 @@ case $tool_type in
         cmd_latest=doctrine:migrations:latest
         cmd_help='doctrine:migrations --help'
         cmd_downgrade='doctrine:migrations:migrate'
-        cmd_show='doctrine:migrations:execute'
+        cmd_show='doctrine:migrations:list'
         rollback_examples="  mig rollback prev      (rollback to previous version)
   mig rollback first     (rollback to first version)
   mig rollback <version> (rollback to specific version)"
