@@ -4,6 +4,8 @@
 # Mainly for Fedora semiannual upgrade purpose re-installation.
 
 [ "$UID" -eq 0 ] && echo "Do NOT use root!" && exit
+
+set -eu
 ############### Variables ###############
 user=$(whoami)
 hostname=ash
