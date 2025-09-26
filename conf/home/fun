@@ -9,11 +9,6 @@
 
 # use some useless dconf keys to store info is a good idea.
 
-# functions names will be overriden by aliases, this is so sad
-# Causes syntax error if the word is already a alias
-# So remove all aliases
-unalias -a
-
 set -a
 
 activate(){
@@ -447,14 +442,7 @@ self_signed_cert(){
 }
 
 grep(){
-    # Safety check for Cursor's tool environment
-    if [ -z "$PS1" ] || [ -n "$CURSOR_TOOL_MODE" ]; then
-        # In non-interactive mode or Cursor tool mode, use basic grep
-        command grep "$@"
-    else
-        # In interactive mode, use colored grep
-        command grep --color=auto "$@"
-    fi
+    command grep --color=auto "$@"
 }
 
 githooks(){
