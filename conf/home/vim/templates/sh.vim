@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# vim:ft=sh
+# vim:ft=bash
 
 ############### Variables ###############
 
