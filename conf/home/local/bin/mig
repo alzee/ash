@@ -37,7 +37,7 @@ case $tool_type in
         cmd_downgrade='doctrine:migrations:migrate'
         ;;
     alembic)
-        tool="uv run alembic"
+        tool="alembic"
         cmd_list=history
         cmd_gen='revision --autogenerate'
         cmd_mig="upgrade head"
