@@ -74,7 +74,7 @@ case $cmd in
             echo "Example: mig gen add_user_table"
             exit 1
         fi
-        $tool $cmd_gen -m "$1"
+        $tool $cmd_gen "$@"
         ;;
     mig|migrate)
         $tool $cmd_mig "$@"
@@ -93,7 +93,7 @@ case $cmd in
             echo "Usage: mig show <revision_id>"
             exit 1
         fi
-        $tool $cmd_show "$1"
+        $tool $cmd_show "$@"
         ;;
     rollback|down)
         if [ -z "${1:-}" ]; then
@@ -102,7 +102,7 @@ case $cmd in
             echo "$rollback_examples"
             exit 1
         fi
-        $tool $cmd_downgrade "$1"
+        $tool $cmd_downgrade "$@"
         ;;
     h|help)
         echo "Universal Migration Tool"
