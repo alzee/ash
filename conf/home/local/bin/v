@@ -1,16 +1,13 @@
 #!/bin/bash
 # vim:ft=sh
 
-if [ -z $1 ]; then
-    # $vim_default_file defined in .env
-    #command vim $vim_default_file
-    # $VIM_DEFAULT_SESSION defined in .env
-    command vim -S $VIM_DEFAULT_SESSION
-    exit
-fi
-
-
 case $1 in
+    '')
+        # $vim_default_file defined in .env
+        #command vim $vim_default_file
+        # $VIM_DEFAULT_SESSION defined in .env
+        command vim -S $VIM_DEFAULT_SESSION
+        ;;
     cleanup)
         # should i add a cron for this?
         ### vim undo file

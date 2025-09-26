@@ -5,7 +5,7 @@
 
 [ "$UID" -eq 0 ] && echo "Do NOT use root!" && exit
 
-set -eu
+set -e
 ############### Variables ###############
 user=$(whoami)
 hostname=ash
