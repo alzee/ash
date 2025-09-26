@@ -29,7 +29,7 @@ unset i
 # Fedora /etc/bashrc will source /etc/profile.d/*.sh
 # and some of them will set aliases
 # functions names will be overriden by aliases, this is so sad
-# Causes syntax error if the word is already a alias
+# and it causes syntax error if the word is already a alias when define a fun
 # So remove all aliases
 unalias -a
 
