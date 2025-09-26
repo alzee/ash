@@ -39,34 +39,6 @@ if  [[ "$ID" = debian && ! "$PATH" =~ "/usr/sbin:/sbin" ]]; then
 fi
 # PATH=$PATH:$HOME/.cargo/bin
 
-# ANSI escape code
-black="\e[30m"
-red="\e[31m"
-green="\e[32m"
-yellow="\e[33m"
-blue="\e[34m"
-magenta="\e[35m"
-cyan="\e[36m"
-white="\e[37m"
-bg_black="\e[40m"
-bg_red="\e[41m"
-bg_green="\e[42m"
-bg_yellow="\e[43m"
-bg_blue="\e[44m"
-bg_magenta="\e[45m"
-bg_cyan="\e[46m"
-bg_white="\e[47m"
-end="\e[m"
-bold="\e[1m"
-faint="\e[2m"
-italic="\e[3m"
-underline="\e[4m"
-blinks="\e[5m"
-blindr="\e[6m"
-image="\e[7m"
-conceal="\e[8m"
-cross="\e[9m"
-
 # miscellaneous
 # DRI_PRIME=1
 ANDROID_SDK_ROOT=~/l/android-studio-sdk
@@ -102,6 +74,7 @@ RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 # MONITOR=
 # MONITOR_ROTATE=
 # TERM=xterm-256color # to fix screen 5.0.0 video
+# . ~/.ansi_escape_code
 [ -f ~/.env.local ] && . ~/.env.local
 
 let ENV_EXPORTED++
