@@ -83,6 +83,11 @@ zone="$1"
 acme=~/.acme.sh/acme.sh
 
 ############### Main Part ###############
+# if [ ! -f "$acme" ]; then
+#     echo -e $acme: Not found, to install it, run: acme get '<email>'
+#     exit
+# fi
+
 [ -z "$1" ] && help_msg
 
 case $1 in
