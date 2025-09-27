@@ -48,6 +48,7 @@ install_cert() {
     local certdir cmd
     certdir=${2:-~/cert}
     cmd="sudo service apache2 force-reload"
+    mkdir -p $certdir
     $acme --install-cert -d "$zone" --key-file $certdir/$zone.key --cert-file $certdir/$zone.cer --fullchain-file $certdir/$zone.fullchain.cer --reloadcmd "$cmd"
 }
 
