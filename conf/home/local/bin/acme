@@ -77,8 +77,11 @@ case $1 in
     info)
         $acme --info
         ;;
-    list|l)
+    l|list)
         $acme --list
+        ;;
+    h|help)
+        $acme --help | less
         ;;
     *)
         $acme "$@"
