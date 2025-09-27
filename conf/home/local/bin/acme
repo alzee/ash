@@ -58,6 +58,10 @@ renew_cert() {
     # $acme --renew -d "$zone" --yes-I-know-dns-manual-mode-enough-go-ahead-please
 }
 
+remove_cert() {
+    $acme --remove -d "$zone"
+}
+
 case $1 in
     install)
         install_cert
@@ -67,6 +71,9 @@ case $1 in
         ;;
     renew)
         renew_cert
+        ;;
+    rm|remove)
+        remove_cert
         ;;
     upgrade)
         $acme --upgrade
