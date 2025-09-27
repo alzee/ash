@@ -66,6 +66,18 @@ case $1 in
     renew)
         renew_cert
         ;;
+    upgrade)
+        $acme --upgrade
+        ;;
+    autoupgrade)
+        $acme --upgrade --auto-upgrade
+        ;;
+    info)
+        $acme --info
+        ;;
+    list|l)
+        $acme --list
+        ;;
     *)
         $acme "$@"
         ;;
