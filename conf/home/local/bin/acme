@@ -62,7 +62,28 @@ remove_cert() {
     $acme --remove -d "$zone"
 }
 
+install_acme() {
+    local email
+    email=$1
+
+    if [ -z $email ]; then
+        echo 'acme get <email>'
+        exit
+    fi
+
+    curl https://get.acme.sh | sh -s email=$email
+
+    # wget -O -  https://get.acme.sh | sh -s email=$email
+
+    # git clone https://github.com/acmesh-official/acme.sh.git
+    # cd ./acme.sh
+    # ./acme.sh --install -m $email
+}
+
 case $1 in
+    get)
+        install_acme $2
+        ;;
     install)
         install_cert
         ;;
