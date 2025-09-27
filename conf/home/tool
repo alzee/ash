@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim:ft=sh
 
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # fnm
 FNM_PATH="/home/al/.local/share/fnm"
