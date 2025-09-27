@@ -9,6 +9,8 @@
 #export CF_Zone_ID=""
 # echo we need CF_Token CF_Account_ID CF_Zone_ID
 
+set -e
+
 [ -z "$1" ] && exit
 
 zone="$1"
