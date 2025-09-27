@@ -1,20 +1,15 @@
 #!/bin/bash
-# vim:ft=sh
+# vim:ft=bash
 
-# Iusse certs with acme.sh, using CloudFlare API and DNS alias mode
-
-# CF_Token CF_Account_ID CF_Zone_ID
-#export CF_Token=""
-#export CF_Account_ID=""
-#export CF_Zone_ID=""
-# echo we need CF_Token CF_Account_ID CF_Zone_ID
+# Wrap acme.sh to simplify common usage
 
 set -e
 
-[ -z "$1" ] && exit
-
-zone="$1"
-acme=~/.acme.sh/acme.sh
+############### Functions ###############
+help_msg(){
+    echo test help
+    exit
+}
 
 issue_cert() {
     local server wwwroot zone_list mode mode_param
@@ -79,6 +74,13 @@ install_acme() {
     # cd ./acme.sh
     # ./acme.sh --install -m $email
 }
+
+############### Variables ###############
+zone="$1"
+acme=~/.acme.sh/acme.sh
+
+############### Main Part ###############
+[ -z "$1" ] && help_msg
 
 case $1 in
     get)
