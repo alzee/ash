@@ -26,15 +26,18 @@ issue_cert() {
             mode_param="-w $wwwroot"
             ;;
         dns_alias)
-            local dns_alias
-            mode_param="--dns dns_cf --challenge-alias $dns_alias"
+            local zone_alias provider
+            provider=${provider:-cf} # default cloudflare
+            mode_param="--dns dns_$provider --challenge-alias $zone_alias"
             ;;
         dns_manual)
             mode_param="--dns --yes-I-know-dns-manual-mode-enough-go-ahead-please"
             ;;
-        dnf_cf|*)
+        dns|*)
+            local provider
+            provider=${provider:-cf} # default cloudflare
             # zone_list="-d $zone -d '*.'$zone"
-            mode_param='--dns dns_cf'
+            mode_param="--dns dns_$provider"
             ;;
     esac
 
