@@ -9,17 +9,64 @@
 #export CF_Zone_ID=""
 echo we need CF_Token CF_Account_ID CF_Zone_ID
 
-[ -z "$1" ] && return
+[ -z "$1" ] && exit
 
-dom="$1"
-alias="jiei.xyz"
+zone="$1"
 acme=~/.acme.sh/acme.sh
-cmd="sudo service apache2 force-reload"
-certdir=${3:-~/cert}
 
-$acme --issue -d "$dom" -d '*.'"$dom" --dns dns_cf --challenge-alias $alias
-$acme --install-cert -d "$dom" --key-file $certdir/$dom.key --cert-file $certdir/$dom.cer --fullchain-file $certdir/$dom.fullchain.cer --reloadcmd "$cmd"
+issue_cert() {
+    local server wwwroot zone_list mode mode_param
+    server=${server:-zerossl}
 
-#$acme --renew -d "$dom"
-#$acme --issue -d "$dom" -d '*.'"$dom" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please
-#$acme --renew -d "$dom" --yes-I-know-dns-manual-mode-enough-go-ahead-please
+    for z in $zones
+    do
+        zone_list+=" -d $z"
+    done
+
+    case $mode in
+        wwwroot)
+            local z wwwroot
+            mode_param="-w $wwwroot"
+            ;;
+        dns_alias)
+            local dns_alias
+            mode_param="--dns dns_cf --challenge-alias $dns_alias"
+            ;;
+        dns_manual)
+            mode_param="--dns --yes-I-know-dns-manual-mode-enough-go-ahead-please"
+            ;;
+        dnf_cf|*)
+            # zone_list="-d $zone -d '*.'$zone"
+            mode_param='--dns dns_cf'
+            ;;
+    esac
+
+    $acme --issue $zone_list --server $server $mode_param
+}
+
+install_cert() {
+    local certdir cmd
+    certdir=${2:-~/cert}
+    cmd="sudo service apache2 force-reload"
+    $acme --install-cert -d "$zone" --key-file $certdir/$zone.key --cert-file $certdir/$zone.cer --fullchain-file $certdir/$zone.fullchain.cer --reloadcmd "$cmd"
+}
+
+renew_cert() {
+    $acme --renew -d "$zone"
+    # $acme --renew -d "$zone" --yes-I-know-dns-manual-mode-enough-go-ahead-please
+}
+
+case $1 in
+    install)
+        install_cert
+        ;;
+    issue)
+        issue_cert
+        ;;
+    renew)
+        renew_cert
+        ;;
+    *)
+        $acme "$@"
+        ;;
+esac
