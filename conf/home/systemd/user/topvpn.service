@@ -1,0 +1,20 @@
+[Unit]
+Description=TopVPN auto login
+After=network-online.target topvpnhelper.service
+Wants=network-online.target topvpnhelper.service
+#Requires=topvpnhelper.service
+#PartOf=topvpnhelper.service
+
+[Service]
+Type=simple
+# Host and user are read from ~/.topvpn.conf (sourced by the script)
+# Optional debug: uncomment to enable
+# Environment=TOPVPN_DEBUG=1
+#WorkingDirectory=/home/al/.topvpn
+ExecStart=/home/al/.local/bin/topvpn
+ExecStartPost=/home/al/.local/bin/update_gx_hosts
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
