@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+ip=$(ip -4 addr show dev tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+
+/usr/bin/ssh gx "sudo .local/bin/addhost $ip btn"
+/usr/bin/ssh gx9 "sudo .local/bin/addhost $ip btn"
