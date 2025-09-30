@@ -69,11 +69,6 @@ case $cmd in
         $tool $cmd_list "$@"
         ;;
     gen|make)
-        if [ -z "${1:-}" ]; then
-            echo "Usage: mig gen <migration_name>"
-            echo "Example: mig gen add_user_table"
-            exit 1
-        fi
         $tool $cmd_gen "$@"
         ;;
     mig|migrate)

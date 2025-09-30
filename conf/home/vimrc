@@ -120,6 +120,8 @@ au FileType sql source ~/.vim/map/sql.vim
 au BufNewFile *.cmd 0r ~/.vim/templates/cmd.vim
 au FileType dosbatch source ~/.vim/map/cmd.vim
 
+au FileType markdown source ~/.vim/map/md.vim
+
 "au WinEnter * resize
 
 au InsertLeave * set nopaste
