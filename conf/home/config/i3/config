@@ -31,7 +31,7 @@ workspace 10 output DP-1
 assign [class="Virt-manager"] $ws10
 # see https://unix.stackexchange.com/questions/96798/i3wm-start-applications-on-specific-workspaces-when-i3-starts
 # assign [class="wow.exe"] $ws3 # not working
-for_window [class="wow.exe"] move to workspace $ws9
+for_window [class="wow.exe"] move to workspace $ws3
 
 default_border none
 
