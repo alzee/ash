@@ -543,6 +543,9 @@ install_fnm(){
     #corepack enable pnpm
 
 }
+install_ollama(){
+    curl -fsSL https://ollama.com/install.sh | sh
+}
 
 ############### Main ###############
 
@@ -625,6 +628,9 @@ case $1 in
         ;;
     -fnm)
         install_fnm
+        ;;
+    -ollama)
+        install_ollama
         ;;
     *)
         ;;
