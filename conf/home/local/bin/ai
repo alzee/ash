@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+MODEL=deepseek-v3.1:671b-cloud
+
+ollama run $MODEL "$@"
