@@ -8,6 +8,11 @@
 
 ############### Main Part ###############
 
+# deepseek-v3.1:671b-cloud
+# gpt-oss:20b-cloud
+# gpt-oss:120b-cloud
+# kimi-k2:1t-cloud
+# qwen3-coder:480b-cloud
 MODEL=deepseek-v3.1:671b-cloud
 
 ollama run $MODEL "$@"
