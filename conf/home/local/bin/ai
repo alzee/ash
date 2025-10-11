@@ -9,6 +9,7 @@
 ############### Main Part ###############
 
 # see https://docs.ollama.com/cloud
+# https://docs.ollama.com/quickstart#curl
 # deepseek-v3.1:671b-cloud
 # gpt-oss:20b-cloud
 # gpt-oss:120b-cloud
