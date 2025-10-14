@@ -91,6 +91,9 @@ acme=~/.acme.sh/acme.sh
 
 [ -z "$1" ] && help_msg
 
+params=$(getopt -o d: "$@")
+# eval set -- "$p"
+
 case $1 in
     get)
         install_acme $2
