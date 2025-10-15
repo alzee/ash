@@ -80,7 +80,6 @@ install_acme() {
 }
 
 ############### Variables ###############
-zone="$1"
 acme=~/.acme.sh/acme.sh
 
 ############### Main Part ###############
