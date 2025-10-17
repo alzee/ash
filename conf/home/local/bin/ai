@@ -16,6 +16,8 @@
 # kimi-k2:1t-cloud
 # qwen3-coder:480b-cloud
 # qwen3-vl:235b-cloud
+# glm-4.6:cloud
+# qwen3-coder:30b
 
 if [ $OLLAMA_MODEL ]; then
     MODEL=$OLLAMA_MODEL
