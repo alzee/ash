@@ -529,6 +529,10 @@ install_uv(){
     curl -LsSf https://astral.sh/uv/install.sh | sh
 }
 
+install_fastapi(){
+    uv add fastapi --extra standard
+}
+
 install_nvm(){
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
     nvm install node
@@ -625,6 +629,9 @@ case $1 in
         ;;
     -uv)
         install_uv
+        ;;
+    -fastapi)
+        install_fastapi
         ;;
     -fnm)
         install_fnm
