@@ -8,6 +8,8 @@
 
 ############### Main Part ###############
 
+[ $(hostname) = btn ] || exit 0
+
 sleep 2
 
 ip=$(ip -4 addr show dev tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
