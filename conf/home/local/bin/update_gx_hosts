@@ -12,5 +12,7 @@ sleep 2
 
 ip=$(ip -4 addr show dev tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 
-/usr/bin/ssh gx "sudo .local/bin/addhost $ip btn"
-/usr/bin/ssh gx9 "sudo .local/bin/addhost $ip btn"
+/usr/bin/ssh gx1 "sudo .local/bin/addhost $ip btn"
+/usr/bin/ssh gx2 "sudo .local/bin/addhost $ip btn"
+/usr/bin/ssh gx3 "sudo .local/bin/addhost $ip btn"
+#/usr/bin/ssh gx4 "sudo .local/bin/addhost $ip btn"
