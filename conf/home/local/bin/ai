@@ -8,6 +8,8 @@
 
 ############### Main Part ###############
 
+hist=~/.ai_history
+
 # see https://docs.ollama.com/cloud
 # https://docs.ollama.com/quickstart#curl
 # deepseek-v3.1:671b-cloud
@@ -25,4 +27,10 @@ else
     MODEL=deepseek-v3.1:671b-cloud
 fi
 
-ollama run $MODEL "$@"
+echo User: >> $hist
+echo "$@" >> $hist
+date >> $hist
+echo >> $hist
+echo AI: >> $hist
+
+ollama run $MODEL "$@" | tee -a $hist
