@@ -547,8 +547,13 @@ install_fnm(){
     #corepack enable pnpm
 
 }
+
 install_ollama(){
     curl -fsSL https://ollama.com/install.sh | sh
+}
+
+install_huggingface(){
+    uv tool install huggingface_hub
 }
 
 ############### Main ###############
@@ -638,6 +643,9 @@ case $1 in
         ;;
     -ollama)
         install_ollama
+        ;;
+    -huggingface)
+        install_huggingface
         ;;
     *)
         ;;
