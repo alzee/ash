@@ -21,16 +21,12 @@ hist=~/.ai_history
 # glm-4.6:cloud
 # qwen3-coder:30b
 
-if [ $OLLAMA_MODEL ]; then
-    MODEL=$OLLAMA_MODEL
-else
-    MODEL=deepseek-v3.1:671b-cloud
-fi
+MODEL=${OLLAMA_MODEL:-deepseek-v3.1:671b-cloud}
 
 echo User: >> $hist
 echo "$@" >> $hist
 date >> $hist
 echo >> $hist
-echo AI: >> $hist
+echo AI $MODEL: >> $hist
 
 ollama run $MODEL "$@" | tee -a $hist
