@@ -553,7 +553,8 @@ install_ollama(){
 }
 
 install_huggingface(){
-    uv tool install huggingface_hub
+    curl -LsSf https://hf.co/cli/install.sh | bash
+    # uv tool install huggingface_hub
 }
 
 ############### Main ###############
