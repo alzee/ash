@@ -1,5 +1,8 @@
+screen
 iotop
 sysstat
 bc
 jq
 cmake
+httpd
+mod_ssl

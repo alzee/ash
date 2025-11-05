@@ -4,4 +4,5 @@
 
 ip=$(ip -4 addr show dev tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 
-ssh -N -R 1080:$ip:1080 gx
+screen -t R ssh -N -R 1080:$ip:1080 gx
+screen -X other
