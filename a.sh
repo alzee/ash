@@ -600,7 +600,7 @@ case $1 in
     -R)
         install_rust
         ;;
-    -d)
+    -deno)
         install_deno
         ;;
     -D)
