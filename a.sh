@@ -483,7 +483,7 @@ install_symfony(){
 
 install_deno(){
     curl -fsSL https://deno.land/install.sh | sh
-    mv ~/.deno/bin/deno ~/.local/bin/
+    ln -s ../../.deno/bin/deno ~/.local/bin/
 }
 
 install_rust(){
