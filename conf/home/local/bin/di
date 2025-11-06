@@ -66,7 +66,8 @@ if (audio) {
       // throw error;
       const fileResponse = await fetch(`https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${audioFile}`)
       const buffer = await fileResponse.arrayBuffer()
-      await Deno.writeFile(audioDir + audioFile, buffer)
+      // console.log(buffer.constructor.name)
+      await Deno.writeFile(audioDir + audioFile, new Uint8Array(buffer))
     }
   }
 
