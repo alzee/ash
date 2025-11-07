@@ -1,12 +1,12 @@
 setenv PS1 "[\[${YELLOW}${BOLD}\]\D{%I}\[${CYAN}${BOLD}\]\D{%M}\[${END}${WHITE}\]\D{%S}\[${END}\] \u@\h \[${RED}${BOLD}\]\W\[${END}\]]\[${RED}${BOLD}\]\$\[${END}\] "
 # create a layout, otherwise the regions won't be remembered after reattach
-layout new
-layout new
+#layout new
+#layout new
 # create windows
 # screen -t mysql 4 sudo mysql
-screen -t psql 5 sudo -u postgres psql
 source ~/.screenrc.local
 ### ~/.screenrc.local example
+# screen -t psql 5 sudo -u postgres psql
 # chdir w/jiu/
 # screen -t backend 1
 # chdir ../taro.jiu/src
@@ -17,7 +17,7 @@ source ~/.screenrc.local
 # screen -t gxb 3 ssh $gxb
 # screen 8 cmus
 ###
-chdir
+#chdir
 screen
 # select 0
 
