@@ -609,7 +609,7 @@ case $1 in
     -L)
         mklinks
         ;;
-    -y)
+    -symfony)
         install_symfony
         ;;
     -Y)
