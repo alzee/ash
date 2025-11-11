@@ -557,6 +557,11 @@ install_huggingface(){
     # uv tool install huggingface_hub
 }
 
+install_claude(){
+    npm install -g @anthropic-ai/claude-code
+    # curl -fsSL https://claude.ai/install.sh | bash
+}
+
 ############### Main ###############
 
 case $1 in
@@ -647,6 +652,9 @@ case $1 in
         ;;
     -huggingface)
         install_huggingface
+        ;;
+    -claude)
+        install_claude
         ;;
     *)
         ;;
