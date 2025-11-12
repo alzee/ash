@@ -13,4 +13,7 @@ filecount=5
 # tcpdump -U -w - | tee $dir/$file | tcpdump -r - -n -l
 tcpdump -n -C $filesize -W $filecount -w $dir/$file --print "$@"
 
-[ $? -eq 0 ] && echo 'Saved file(s):' $dir/$file*
+if [ $? -eq 0 ]; then
+    echo 'Saved file(s):'
+    command ls $dir/$file*
+fi
