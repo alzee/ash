@@ -278,7 +278,7 @@ default_pool(){
 
 # create some customized scripts and confs
 misc() {
-    [ "$distro" = rhel ] && sudo systemctl enable httpd mariadb
+    # [ "$distro" = rhel ] && sudo systemctl enable httpd mariadb
     # debian will auto start and enable apache2 and mariadb-server
 
     if [ "$distro" = debian ]; then
@@ -333,10 +333,6 @@ misc() {
 
         sudo chcon -Rt httpd_sys_content_t ~/w
 
-        # run tcpdump as non-root, seems no need to add user to group
-        # https://askubuntu.com/a/632189
-        sudo setcap cap_net_raw,cap_net_admin=eip $(which tcpdump)
-
         # In case postfix warning: unable to look up public/pickup: No such file or directory
         sudo mkfifo /var/spool/postfix/public/pickup 2> /dev/null
 
@@ -347,6 +343,10 @@ misc() {
     fi
 
     crontab $scriptdir/conf/templates/$distro/cron
+
+    # run tcpdump as non-root, seems no need to add user to group
+    # https://askubuntu.com/a/632189
+    sudo setcap cap_net_raw,cap_net_admin=eip $(which tcpdump)
     
     # https://forums.developer.nvidia.com/t/no-matching-gpu-found-with-510-47-03/202315/5
     # nvidia-powerd is only for mobile gpus
