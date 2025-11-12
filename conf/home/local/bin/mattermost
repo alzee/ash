@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# vim:ft=bash
+#
+# see https://docs.mattermost.com/deployment-guide/server/deploy-containers.html
+
+dir=/home/al/w/mattermost-docker
+cd $dir
+
+deploy(){
+
+    git clone https://github.com/mattermost/docker $dir
+
+    cp env.example .env
+
+    # Edit .env
+    #
+    
+    mkdir -p ./volumes/app/mattermost/{config,data,logs,plugins,client/plugins,bleve-indexes}
+    sudo chown -R 2000:2000 ./volumes/app/mattermost
+}
+
+up(){
+    docker compose -f docker-compose.yml -f docker-compose.without-nginx.yml up -d
+}
+
+down(){
+    docker compose -f docker-compose.yml -f docker-compose.nginx.yml down
+}
+
+case "$1" in
+    deploy)
+        deploy
+        ;;
+    up)
+        up
+        ;;
+    down)
+        down
+        ;;
+esac

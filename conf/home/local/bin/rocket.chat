@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# vim:ft=bash
+#
+# see https://docs.rocket.chat/docs/deploy-with-docker-docker-compose
+
+dir=/home/al/w/rocketchat-compose
+cd $dir
+
+deploy(){
+    git clone --depth 1 https://github.com/RocketChat/rocketchat-compose.git $dir
+
+    cp .env.example .env
+
+    # Edit .env
+    #
+    
+    mkdir -p ./volumes/app/mattermost/{config,data,logs,plugins,client/plugins,bleve-indexes}
+    sudo chown -R 2000:2000 ./volumes/app/mattermost
+}
+
+up(){
+    docker compose -f compose.database.yml -f compose.monitoring.yml -f compose.traefik.yml -f compose.yml up -d
+    #docker compose -f compose.database.yml -f compose.yml up -d
+}
+
+down(){
+    docker compose -f compose.database.yml -f compose.monitoring.yml -f compose.traefik.yml -f compose.yml down
+    #docker compose -f compose.database.yml -f compose.yml down
+}
+
+case "$1" in
+    deploy)
+        deploy
+        ;;
+    up)
+        up
+        ;;
+    down)
+        down
+        ;;
+esac
