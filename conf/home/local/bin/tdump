@@ -4,6 +4,10 @@
 
 
 dir=~/.tcpdump
+file=$(date +%Y%m%d-%H%M%S).pcap
 [ -d "$dir" ] || mkdir $dir
 
-tcpdump -l -w - | tee $dir/$(date +%Y%m%d-%H%M%S).pcap | tcpdump -r - -n
+# tcpdump -U -w - | tee $dir/$file | tcpdump -r - -n -l
+tcpdump -w $dir/$file --print
+
+echo Saved file: $dir/$file
