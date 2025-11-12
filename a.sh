@@ -335,7 +335,7 @@ misc() {
 
         # run tcpdump as non-root, seems no need to add user to group
         # https://askubuntu.com/a/632189
-        sudo setcap cap_net_raw,cap_net_admin=eip /sbin/tcpdump
+        sudo setcap cap_net_raw,cap_net_admin=eip $(which tcpdump)
 
         # In case postfix warning: unable to look up public/pickup: No such file or directory
         sudo mkfifo /var/spool/postfix/public/pickup 2> /dev/null

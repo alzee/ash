@@ -7,3 +7,4 @@ unzip
 wireguard-tools
 bash-completion
 git
+tcpdump
