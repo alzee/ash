@@ -9,6 +9,6 @@ file=$(date +%Y%m%d-%H%M%S).pcap
 
 # see https://stackoverflow.com/questions/25603831/how-can-i-have-tcpdump-write-to-file-and-standard-output-the-appropriate-data
 # tcpdump -U -w - | tee $dir/$file | tcpdump -r - -n -l
-tcpdump -w $dir/$file --print
+tcpdump -n -w $dir/$file --print "$@"
 
 echo Saved file: $dir/$file
