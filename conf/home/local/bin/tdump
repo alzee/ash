@@ -7,6 +7,7 @@ dir=~/.tcpdump
 file=$(date +%Y%m%d-%H%M%S).pcap
 [ -d "$dir" ] || mkdir $dir
 
+# see https://stackoverflow.com/questions/25603831/how-can-i-have-tcpdump-write-to-file-and-standard-output-the-appropriate-data
 # tcpdump -U -w - | tee $dir/$file | tcpdump -r - -n -l
 tcpdump -w $dir/$file --print
 
