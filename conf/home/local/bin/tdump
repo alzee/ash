@@ -5,10 +5,12 @@
 
 dir=~/.tcpdump
 file=$(date +%Y%m%d-%H%M%S).pcap
+filesize=5
+filecount=5
 [ -d "$dir" ] || mkdir $dir
 
 # see https://stackoverflow.com/questions/25603831/how-can-i-have-tcpdump-write-to-file-and-standard-output-the-appropriate-data
 # tcpdump -U -w - | tee $dir/$file | tcpdump -r - -n -l
-tcpdump -n -w $dir/$file --print "$@"
+tcpdump -n -C $filesize -W $filecount -w $dir/$file --print "$@"
 
-echo Saved file: $dir/$file
+[ $? -eq 0 ] && echo 'Saved file(s):' $dir/$file*
