@@ -6,3 +6,4 @@ jq
 cmake
 httpd
 mod_ssl
+git-lfs
