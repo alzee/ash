@@ -562,6 +562,10 @@ install_claude(){
     # curl -fsSL https://claude.ai/install.sh | bash
 }
 
+install_cursor(){
+    curl https://cursor.com/install -fsS | bash
+}
+
 ############### Main ###############
 
 case $1 in
@@ -655,6 +659,9 @@ case $1 in
         ;;
     -claude)
         install_claude
+        ;;
+    -cursor)
+        install_cursor
         ;;
     *)
         ;;
