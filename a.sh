@@ -266,7 +266,7 @@ settimezone(){
 dir_struct(){
     [ $UID -eq 0 ] && exit
     mkdir -p ~/w
-    rmdir ~/{Downloads,Documents,Pictures,Music,Videos,Desktop,Public,Templates} 2>/dev/null
+    rm -df ~/{Downloads,Documents,Pictures,Music,Videos,Desktop,Public,Templates}
 }
 
 default_pool(){
