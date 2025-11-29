@@ -50,23 +50,21 @@ _clean(){
 trap _clean EXIT
 
 sudoer() {
-    [ $UID -ne 0 ] && say "$0: Permission denied" && exit
+    # [ $UID -ne 0 ] && say "$0: Permission denied" && exit
     if ! id $user &> /dev/null ; then
         say user $user not exist, now creating...
-        useradd -m $user -s /bin/bash	# debian need to specify shell
+        sudo useradd -m $user -s /bin/bash	# debian need to specify shell
         #echo $user | sudo passwd --stdin $user # debian have no --stdin option
         echo $user:$user | sudo chpasswd
     fi
 
-    $pkg install -y sudo
+    sudo $pkg install -y sudo
 
     say making $user sudoer...
-    if [ "$distro" = debian ]; then
-        usermod -aG sudo $user
-    else
-        usermod -aG wheel $user
-    fi
-    cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
+    local group=wheel
+    [ "$distro" = debian ] && group=sudo
+    sudo usermod -aG $group $user
+    sudo cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
 }
 
 add_repo() {
