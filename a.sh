@@ -278,11 +278,23 @@ default_pool(){
 
 add_firewall_rules(){
     if [ "$distro" = debian ]; then
-        sudo ufw allow ssh
-        sudo ufw allow http
-        sudo ufw allow https
+        sudo ufw allow 22/tcp
+        sudo ufw allow 80/tcp
+        sudo ufw allow 443/tcp
         sudo ufw allow 16384/udp    # wireguard
         sudo ufw allow 1080/tcp     # danted
+    fi
+
+    if [ "$distro" = fedora ]; then
+        sudo firewall-cmd --add-service http
+        sudo firewall-cmd --add-service https
+        sudo firewall-cmd --add-service samba
+        sudo firewall-cmd --add-service vnc-server
+        sudo firewall-cmd --add-service nfs
+        sudo firewall-cmd --add-service http --zone libvirt
+        sudo firewall-cmd --add-service https --zone libvirt
+        sudo firewall-cmd --add-service samba --zone libvirt
+        sudo firewall-cmd --runtime-to-permanent
     fi
 }
 
@@ -318,15 +330,6 @@ misc() {
     fi
 
     if [ "$distro" = fedora ]; then
-        sudo firewall-cmd --add-service http
-        sudo firewall-cmd --add-service https
-        sudo firewall-cmd --add-service samba
-        sudo firewall-cmd --add-service vnc-server
-        sudo firewall-cmd --add-service nfs
-        sudo firewall-cmd --add-service http --zone libvirt
-        sudo firewall-cmd --add-service https --zone libvirt
-        sudo firewall-cmd --add-service samba --zone libvirt
-        sudo firewall-cmd --runtime-to-permanent
         sudo systemctl disable libvirtd
         sudo systemctl enable libvirtd.socket virtqemud.socket
         sudo systemctl enable --now sshd
