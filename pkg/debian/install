@@ -1,3 +1,4 @@
+ufw
 apt-utils
 ca-certificates
 php-common
