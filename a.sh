@@ -278,8 +278,8 @@ default_pool(){
 
 add_firewall_rules(){
     if [ "$distro" = debian ]; then
-        sudo ufw allow 22/tcp
-        sudo ufw allow 80/tcp
+        sudo ufw allow ssh
+        sudo ufw allow http
         sudo ufw allow 443/tcp
         sudo ufw allow 16384/udp    # wireguard
         sudo ufw allow 1080/tcp     # danted
