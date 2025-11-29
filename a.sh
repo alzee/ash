@@ -276,6 +276,16 @@ default_pool(){
     virsh pool-start default
 }
 
+add_firewall_rules(){
+    if [ "$distro" = debian ]; then
+        sudo ufw allow ssh
+        sudo ufw allow http
+        sudo ufw allow https
+        sudo ufw allow 16384/udp    # wireguard
+        sudo ufw allow 1080/tcp     # danted
+    fi
+}
+
 # create some customized scripts and confs
 misc() {
     # [ "$distro" = rhel ] && sudo systemctl enable httpd mariadb
@@ -583,6 +593,7 @@ case $1 in
         dir_struct
         default_pool
         misc
+        add_firewall_rules
         install_composer
         install_symfony
         install_uv
@@ -614,6 +625,9 @@ case $1 in
         ;;
     -D)
         default_pool
+        ;;
+    -firewall)
+        add_firewall_rules
         ;;
     -L)
         mklinks
