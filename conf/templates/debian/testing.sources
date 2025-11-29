@@ -1,5 +1,7 @@
 Types: deb
-URIs: http://mirrors.ustc.edu.cn/debian/
+#URIs: http://mirrors.ustc.edu.cn/debian/
+#URIs: http://deb.debian.org/debian/
+URIs: http://ftp.debian.org/debian/
 Suites: testing
 Components: main contrib non-free
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
@@ -11,7 +13,9 @@ Components: main contrib non-free
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 
 Types: deb
-URIs: http://mirrors.ustc.edu.cn/debian/
+#URIs: http://mirrors.ustc.edu.cn/debian/
+#URIs: http://deb.debian.org/debian/
+URIs: http://ftp.debian.org/debian/
 Suites: testing-updates
 Components: main contrib non-free
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
