@@ -583,6 +583,10 @@ install_cursor(){
     curl https://cursor.com/install -fsS | bash
 }
 
+install_cursor(){
+    npm i -g @openai/codex
+}
+
 install_copilot(){
     npm install -g @github/copilot
 }
@@ -687,6 +691,9 @@ case $1 in
         ;;
     -cursor)
         install_cursor
+        ;;
+    -cursor)
+        install_codex
         ;;
     -copilot)
         install_copilot
