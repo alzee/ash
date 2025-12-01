@@ -35,10 +35,10 @@ if [ $current_user = $user ]; then
     cd /home/$user
     .ash/a.sh -L
 else
-    sudo cp ash /home/$user/.ash
+    echo $current_user > ash/current_user
+    sudo cp -a ash /home/$user/.ash
     sudo chown -R $user:$user /home/$user/.ash
     cd /home/$user
     sudo -u $user .ash/a.sh -L
     sudo -u $current_user .ash/a.sh -Y
 fi
-
