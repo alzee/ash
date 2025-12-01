@@ -566,6 +566,10 @@ install_cursor(){
     curl https://cursor.com/install -fsS | bash
 }
 
+install_copilot(){
+    npm install -g @github/copilot
+}
+
 ############### Main ###############
 
 case $1 in
@@ -662,6 +666,9 @@ case $1 in
         ;;
     -cursor)
         install_cursor
+        ;;
+    -copilot)
+        install_copilot
         ;;
     *)
         ;;
