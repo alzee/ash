@@ -657,7 +657,7 @@ case $1 in
     -w)
         _mkswap
         ;;
-    -r)
+    -repo)
         add_repo
         ;;
     -U)
