@@ -692,7 +692,7 @@ case $1 in
     -cursor)
         install_cursor
         ;;
-    -cursor)
+    -codex)
         install_codex
         ;;
     -copilot)
