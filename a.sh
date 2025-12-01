@@ -574,8 +574,8 @@ install_huggingface(){
 }
 
 install_claude(){
-    #npm install -g @anthropic-ai/claude-code
-    curl -fsSL https://claude.ai/install.sh | bash
+    npm install -g @anthropic-ai/claude-code
+    #curl -fsSL https://claude.ai/install.sh | bash
 }
 
 install_cursor(){
