@@ -10,7 +10,7 @@
 
 IF=$WG_INTERFACE
 
-[ $1 ] && IF=dante.$WG_INTERFACE
+[ $1 ] && IF=$WG_INTERFACE-0
 
 # systemctl edit wg-quick@$IF and add:
 # [Service]
