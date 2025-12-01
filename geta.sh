@@ -9,11 +9,8 @@ if ! id $user &> /dev/null; then
     sudo useradd -m -s /bin/bash $user
     sudo usermod -aG $sudo_group $user
 
-    current_user_home=/home/$current_user
-    [ current_user = root ] && $current_user_home=/root
-
-    if [ -d $current_user_home/.ssh/ ]; then
-        sudo cp $current_user_home/.ssh/  /home/$user/ -a
+    if [ -d ~/.ssh/ ]; then
+        sudo cp ~/.ssh/  /home/$user/ -a
         sudo chown -R $user:$user /home/$user/.ssh
     fi
     echo $user:zee | sudo chpasswd
@@ -38,7 +35,7 @@ if [ $current_user = $user ]; then
     cd /home/$user
     .ash/a.sh -L
 else
-    sudo mv ash /home/$user/.ash
+    sudo cp ash /home/$user/.ash
     sudo chown -R $user:$user /home/$user/.ash
     cd /home/$user
     sudo -u $user .ash/a.sh -L
