@@ -5,7 +5,7 @@ user=${MY_USER:-al} # env MY_USER
 PASSWD=${PASSWD:-zee}
 current_user=${DEFAULT_USER:-$(id -un)}
 default_user=${DEFAULT_USER:-$current_user}
-if ! id $DEFAULT_USER &> /dev/null; then
+if ! id $default_user &> /dev/null; then
     default_user=$current_user
 fi
 sudo_group=sudo # only for debian
