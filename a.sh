@@ -115,15 +115,14 @@ add_repo() {
         freebsd)
             ;;
     esac
+}
 
+load_pkg() {
     say updating...
     # upgrade first to avoid bug like libc6
     # https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1866844
     sudo $pkg upgrade -y
 
-}
-
-load_pkg() {
     i_pkg="$(< $scriptdir/pkg/generic) $(< $scriptdir/pkg/$distro/install)"
     r_pkg=$(< $scriptdir/pkg/$distro/remove)
     case $distro in
