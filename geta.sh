@@ -1,19 +1,27 @@
 #!/bin/bash
 
 # add user
-user=al
-current_user=$(id -un)
+user=${MY_USER:-al} # env MY_USER
+PASSWD=${PASSWD:-zee}
+current_user=${DEFAULT_USER:-$(id -un)}
+default_user=${DEFAULT_USER:-$current_user}
+if ! id $DEFAULT_USER &> /dev/null; then
+    default_user=$current_user
+fi
 sudo_group=sudo # only for debian
 
 if ! id $user &> /dev/null; then
     sudo useradd -m -s /bin/bash $user
     sudo usermod -aG $sudo_group $user
 
-    if [ -d ~/.ssh/ ]; then
-        sudo cp ~/.ssh/  /home/$user/ -a
+    default_user_home=/home/$default_user
+    [ $current_user = root ] && $default_user_home=/root
+
+    if [ -d $default_user_home/.ssh/ ]; then
+        sudo cp -a $default_user_home/.ssh/  /home/$user/
         sudo chown -R $user:$user /home/$user/.ssh
     fi
-    echo $user:zee | sudo chpasswd
+    sudo usermod --password $(openssl passwd -6 "$PASSWD") $user
 fi
 
 
@@ -30,10 +38,12 @@ else
     mv ${f%%.*} ash
 fi
 
-sudo sysctl -o ash/conf/templates/debian/z-sysctl.conf
-sudo cp ash/conf/templates/debian/z-sysctl.conf /etc/sysctl.d/
+echo "net.ipv4.ip_forward = 1" | sudo tee /etc/sysctl.d/ip_forward.conf
+sudo sysctl -p /etc/sysctl.d/ip_forward.conf
 
-echo $current_user > ash/init_user
+echo "default_user: $default_user" > ash/init_user
+echo "current_user: $current_user" >> ash/init_user
+
 sudo mv ash /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
 cd /home/$user
