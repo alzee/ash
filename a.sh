@@ -581,6 +581,7 @@ install_claude(){
 
 install_cursor(){
     curl https://cursor.com/install -fsS | bash
+    ln -s cursor-agent ~/.local/bin/cursor
 }
 
 install_codex(){
