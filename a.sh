@@ -50,23 +50,21 @@ _clean(){
 trap _clean EXIT
 
 sudoer() {
-    [ $UID -ne 0 ] && say "$0: Permission denied" && exit
+    # [ $UID -ne 0 ] && say "$0: Permission denied" && exit
     if ! id $user &> /dev/null ; then
         say user $user not exist, now creating...
-        useradd -m $user -s /bin/bash	# debian need to specify shell
+        sudo useradd -m $user -s /bin/bash	# debian need to specify shell
         #echo $user | sudo passwd --stdin $user # debian have no --stdin option
         echo $user:$user | sudo chpasswd
     fi
 
-    $pkg install -y sudo
+    sudo $pkg install -y sudo
 
     say making $user sudoer...
-    if [ "$distro" = debian ]; then
-        usermod -aG sudo $user
-    else
-        usermod -aG wheel $user
-    fi
-    cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
+    local group=wheel
+    [ "$distro" = debian ] && group=sudo
+    sudo usermod -aG $group $user
+    sudo cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
 }
 
 add_repo() {
@@ -90,10 +88,15 @@ add_repo() {
             sudo $pkg install -y https://${distro}${distro_ver}.iuscommunity.org/ius-release.rpm
             ;;
         debian)
-            # comment out default apt sources
-            sudo sed -i 's/^/#/' /etc/apt/sources.list
+            if [ -f /etc/apt/sources.list ]; then
+                # comment out default apt sources
+                #sudo sed -i 's/^/#/' /etc/apt/sources.list
+                sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
+            fi
             # add testing repo (latest packages)
-            sudo cp $scriptdir/conf/templates/debian/testing.list /etc/apt/sources.list.d/
+            sudo mkdir /etc/apt/sources.list.d/disabled
+            sudo mv /etc/apt/sources.list.d/*.* /etc/apt/sources.list.d/disabled
+            sudo cp $scriptdir/conf/templates/debian/testing.sources /etc/apt/sources.list.d/
             # curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
             # github cli
             # curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
@@ -261,7 +264,7 @@ settimezone(){
 dir_struct(){
     [ $UID -eq 0 ] && exit
     mkdir -p ~/w
-    rmdir ~/{Downloads,Documents,Pictures,Music,Videos,Desktop,Public,Templates} 2>/dev/null
+    rm -df ~/{Downloads,Documents,Pictures,Music,Videos,Desktop,Public,Templates}
 }
 
 default_pool(){
@@ -274,6 +277,29 @@ default_pool(){
     sudo virsh pool-define-as --name default --type dir --target ~/.vm
     sudo virsh pool-autostart default
     virsh pool-start default
+}
+
+add_firewall_rules(){
+    if [ "$distro" = debian ]; then
+        sudo ufw allow ssh
+        sudo ufw allow http
+        sudo ufw allow 443/tcp
+        sudo ufw allow 16384/udp # wireguard
+        sudo ufw allow in on wg-server to any port 1080 proto tcp # danted
+        #sudo ufw allow in on wg-server to 10.5.3.0/24 port 1080 proto tcp
+    fi
+
+    if [ "$distro" = fedora ]; then
+        sudo firewall-cmd --add-service http
+        sudo firewall-cmd --add-service https
+        sudo firewall-cmd --add-service samba
+        sudo firewall-cmd --add-service vnc-server
+        sudo firewall-cmd --add-service nfs
+        sudo firewall-cmd --add-service http --zone libvirt
+        sudo firewall-cmd --add-service https --zone libvirt
+        sudo firewall-cmd --add-service samba --zone libvirt
+        sudo firewall-cmd --runtime-to-permanent
+    fi
 }
 
 # create some customized scripts and confs
@@ -308,15 +334,6 @@ misc() {
     fi
 
     if [ "$distro" = fedora ]; then
-        sudo firewall-cmd --add-service http
-        sudo firewall-cmd --add-service https
-        sudo firewall-cmd --add-service samba
-        sudo firewall-cmd --add-service vnc-server
-        sudo firewall-cmd --add-service nfs
-        sudo firewall-cmd --add-service http --zone libvirt
-        sudo firewall-cmd --add-service https --zone libvirt
-        sudo firewall-cmd --add-service samba --zone libvirt
-        sudo firewall-cmd --runtime-to-permanent
         sudo systemctl disable libvirtd
         sudo systemctl enable libvirtd.socket virtqemud.socket
         sudo systemctl enable --now sshd
@@ -587,6 +604,7 @@ case $1 in
         dir_struct
         default_pool
         misc
+        add_firewall_rules
         install_composer
         install_symfony
         install_uv
@@ -618,6 +636,9 @@ case $1 in
         ;;
     -D)
         default_pool
+        ;;
+    -firewall)
+        add_firewall_rules
         ;;
     -L)
         mklinks
