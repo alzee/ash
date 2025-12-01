@@ -43,6 +43,7 @@ sudo sysctl -p /etc/sysctl.d/ip_forward.conf
 
 echo "default_user: $default_user" > ash/init_user
 echo "current_user: $current_user" >> ash/init_user
+echo "pwd: $PWD" >> ash/init_user
 
 sudo mv ash /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
