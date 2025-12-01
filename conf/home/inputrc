@@ -5,6 +5,7 @@ set keyseq-timeout 300
 ",m":"m "
 ",p":"proxy "
 ",h":" --help"
+",v":" --version"
 
 "(":"()OD"
 "{":"{}OD"
