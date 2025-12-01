@@ -2,7 +2,7 @@
 
 # add user
 user=al
-current_user=${DEFAULT_USER:-$(id -un)} # env DEFAULT_USER
+current_user=$(id -un)
 sudo_group=sudo # only for debian
 
 if ! id $user &> /dev/null; then
@@ -30,15 +30,11 @@ else
     mv ${f%%.*} ash
 fi
 
-if [ $current_user = $user ]; then
-    mv ash ~/.ash
-    cd /home/$user
-    .ash/a.sh -L
-else
-    echo $current_user > ash/current_user
-    sudo cp -a ash /home/$user/.ash
-    sudo chown -R $user:$user /home/$user/.ash
-    cd /home/$user
-    sudo -u $user .ash/a.sh -L
-    sudo -u $current_user .ash/a.sh -Y
-fi
+sudo sysctl -o ash/conf/templates/debian/z-sysctl.conf
+sudo cp ash/conf/templates/debian/z-sysctl.conf /etc/sysctl.d/
+
+echo $current_user > ash/init_user
+sudo mv ash /home/$user/.ash
+sudo chown -R $user:$user /home/$user/.ash
+cd /home/$user
+sudo -u $user .ash/a.sh -L
