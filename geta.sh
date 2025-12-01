@@ -3,7 +3,7 @@
 # add user
 user=${MY_USER:-al} # env MY_USER
 PASSWD=${PASSWD:-zee}
-current_user=${DEFAULT_USER:-$(id -un)}
+current_user=$(id -un)
 default_user=${DEFAULT_USER:-$current_user}
 if ! id $default_user &> /dev/null; then
     default_user=$current_user
@@ -14,8 +14,10 @@ if ! id $user &> /dev/null; then
     sudo useradd -m -s /bin/bash $user
     sudo usermod -aG $sudo_group $user
 
-    if [ -d ~$default_user/.ssh/ ]; then
-        sudo cp -a ~$default_user/.ssh/  /home/$user/
+    default_user_home=$(eval echo ~$default_user)
+
+    if [ -d $default_user_home/.ssh/ ]; then
+        sudo cp -a $default_user_home/.ssh/  /home/$user/
         sudo chown -R $user:$user /home/$user/.ssh
     fi
     sudo usermod --password $(openssl passwd -6 "$PASSWD") $user
