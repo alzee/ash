@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+qrencode -t ansiutf8 "$@"

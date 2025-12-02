@@ -107,20 +107,11 @@ wg(){
     sudo wg "$@"
 }
 
-dockertag(){
-    [ "$1" ] || return
-    wget -q https://registry.hub.docker.com/v1/repositories/$1/tags -O -  | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $3}' | less
-}
-
 vim(){
     # sudo looks for external programs, not shell builtins, and not shell functions
     # sudo command vim "$@"
     # sudo $(which vim) "$@"
     sudo vim "$@"
-}
-
-qr(){
-    qrencode -t ansiutf8 "$@"
 }
 
 cmdnotfound(){
