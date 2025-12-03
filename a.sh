@@ -557,7 +557,6 @@ install_fnm(){
     fnm i --latest
     #corepack enable yarn
     #corepack enable pnpm
-
 }
 
 install_ollama(){
