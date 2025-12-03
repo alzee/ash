@@ -463,15 +463,11 @@ _mkswap(){
 
 _sysctl(){
     local f
-    f=$scriptdir/conf/templates/$distro/z-sysctl.conf
+    f=$scriptdir/conf/templates/sysctl.d/ip_forward.conf
     if [ -f $f ]; then
-        sudo cp $scriptdir/conf/templates/$distro/z-sysctl.conf /etc/sysctl.d/
+        sudo cp $f /etc/sysctl.d/
         sudo sysctl -p $f
     fi
-}
-
-setup_wg(){
-    :
 }
 
 install_composer(){
@@ -603,7 +599,6 @@ case $1 in
         setup_auto_upgrade
         sethostname
         addgrp
-        # mysqldir
         settimezone
         dir_struct
         default_pool
@@ -615,7 +610,6 @@ case $1 in
         install_fnm
         mklinks
         _sysctl
-        setup_wg
         ;;
     -s)
         sudoer
