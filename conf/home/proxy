@@ -1,5 +1,5 @@
 SCHEME=socks5h
-SERVER=10.5.1.1
+SERVER=v
 PORT=1080
 # ftp_proxy=
 export http_proxy=$SCHEME://$SERVER:$PORT
