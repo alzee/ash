@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+if [ -z "$1" ]; then
+    echo "Usage: $(basename $0) <user> <password>"
+    exit
+fi
+
+sudo usermod --password $(openssl passwd -6 "$2") $1
+# or
+#echo "your_password" | sudo passwd --stdin username
