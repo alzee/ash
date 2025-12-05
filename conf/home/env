@@ -56,34 +56,7 @@ RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 
 OLLAMA_MODEL=
 
-# .env.local template
-# [ -f ~/.proxy ] && . ~/.proxy
-# PROMPT_COMMAND=activate   # a function to activate python venv
-# LIBGL_ALWAYS_SOFTWARE=1 # For ARM. See https://github.com/alacritty/alacritty/issues/3624#issuecomment-617428381
-# IS_WORKSTATION=1
-# DOMAIN=
-# DICTIONARYAPI_KEY=
-# VPS=
-# WIN_IP=192.168.122.119  # win guest ip
-# MOUSE=
-# TOUCHPAD=
-# SCREENDIR=~/.screen   # for WSL issue: Cannot make directory '/run/screen': Permission denied
-# WG_INTERFACE=
-# MONITOR=
-# MONITOR_ROTATE=
-# TERM=xterm-256color # to fix screen 5.0.0 video
-#
-# # ANTHROPIC
-# ANTHROPIC_AUTH_TOKEN=
-# ANTHROPIC_BASE_URL="https://api.minimaxi.com/anthropic"
-# API_TIMEOUT_MS=3000000
-# CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
-# ANTHROPIC_MODEL="MiniMax-M2"
-# ANTHROPIC_SMALL_FAST_MODEL=MiniMax-M2
-# ANTHROPIC_DEFAULT_SONNET_MODEL=MiniMax-M2
-# ANTHROPIC_DEFAULT_OPUS_MODEL=MiniMax-M2
-# ANTHROPIC_DEFAULT_HAIKU_MODEL=MiniMax-M2
-
+# cp ~/.env.local.example ~/.env.local
 [ -f ~/.env.local ] && . ~/.env.local
 
 let ENV_EXPORTED++
