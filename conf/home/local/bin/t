@@ -19,4 +19,7 @@ case $1 in
         echo
         [ -n "$i" ] && echo -e "\nstarting push..." && git -C $d push
         ;;
+    p|pull)
+        git -C $d pull
+        ;;
 esac
