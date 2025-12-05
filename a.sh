@@ -591,6 +591,10 @@ install_copilot(){
     npm install -g @github/copilot
 }
 
+install_gemini(){
+    npm install -g @google/gemini-cli
+}
+
 ############### Main ###############
 
 case $1 in
@@ -697,6 +701,9 @@ case $1 in
         ;;
     -copilot)
         install_copilot
+        ;;
+    -gemini)
+        install_gemini
         ;;
     *)
         ;;
