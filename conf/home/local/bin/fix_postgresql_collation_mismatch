@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+db=$1
+
+sudo -u postgres psql -c "REINDEX DATABASE $db;";
+sudo -u postgres psql -c "ALTER DATABASE $db REFRESH COLLATION VERSION;";
