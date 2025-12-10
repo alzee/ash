@@ -45,7 +45,8 @@ issue_cert() {
 }
 
 install_cert() {
-    local certdir cmd
+    local certdir cmd zone
+    zone="$1"
     certdir=${2:-~/cert}
     cmd="sudo service apache2 force-reload"
     mkdir -p $certdir
@@ -95,19 +96,24 @@ params=$(getopt -o d: "$@")
 
 case $1 in
     get)
-        install_acme $2
+        shift
+        install_acme "$@"
         ;;
     install)
-        install_cert
+        shift
+        install_cert "$@"
         ;;
     issue)
-        issue_cert
+        shift
+        issue_cert "$@"
         ;;
     renew)
-        renew_cert
+        shift
+        renew_cert "$@"
         ;;
     rm|remove)
-        remove_cert
+        shift
+        remove_cert "$@"
         ;;
     upgrade)
         $acme --upgrade
