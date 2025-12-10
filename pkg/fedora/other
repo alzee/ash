@@ -30,7 +30,6 @@ driftnet
 reaver
 freerdp
 chntpw
-zbar
 libnotify
 zenity
 wine-dxvk
@@ -40,7 +39,6 @@ inkscape
 mediawriter
 arm-image-installer
 wireshark
-jq
 android-tools
 simple-scan
 tigervnc-server
@@ -54,8 +52,10 @@ tesseract
 img2pdf
 ocrmypdf
 @xfce-desktop
+@xfce-desktop-environment
 thunar-archive-plugin
 thunar-media-tags-plugin
 thunar-volman
 postgresql-contrib
 gparted
+i3

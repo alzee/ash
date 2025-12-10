@@ -7,7 +7,6 @@ xorg-x11-xinit
 ibus-libpinyin
 cronie
 alsa-utils
-i3
 xautolock
 lightdm-gtk
 ctags
@@ -70,8 +69,9 @@ libappindicator-gtk3-devel
 librsvg2-devel
 postgresql-server
 pwgen
-@xfce-desktop-environment
 awscli2
 x265
 libavcodec-freeworld
 yq
+jq
+zbar
