@@ -54,11 +54,15 @@ install_cert() {
 }
 
 renew_cert() {
+    local zone
+    zone="$1"
     $acme --renew -d "$zone"
     # $acme --renew -d "$zone" --yes-I-know-dns-manual-mode-enough-go-ahead-please
 }
 
 remove_cert() {
+    local zone
+    zone="$1"
     $acme --remove -d "$zone"
 }
 
@@ -91,7 +95,7 @@ acme=~/.acme.sh/acme.sh
 
 [ -z "$1" ] && help_msg
 
-params=$(getopt -o d: "$@")
+#params=$(getopt -o d: "$@")
 # eval set -- "$p"
 
 case $1 in
