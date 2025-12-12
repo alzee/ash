@@ -5,6 +5,7 @@
 
 set -e
 
+zones=()
 ############### Functions ###############
 help_msg(){
     echo test help
@@ -12,13 +13,8 @@ help_msg(){
 }
 
 issue_cert() {
-    local server wwwroot zone_list mode mode_param
+    local server wwwroot mode mode_param
     server=${server:-zerossl}
-
-    for z in $zones
-    do
-        zone_list+=" -d $z"
-    done
 
     case $mode in
         wwwroot)
@@ -36,12 +32,11 @@ issue_cert() {
         dns|*)
             local provider
             provider=${provider:-cf} # default cloudflare
-            # zone_list="-d $zone -d '*.'$zone"
             mode_param="--dns dns_$provider"
             ;;
     esac
 
-    $acme --issue $zone_list --server $server $mode_param
+    $acme --issue $zone_opts --server $server $mode_param
 }
 
 install_cert() {
@@ -95,46 +90,54 @@ acme=~/.acme.sh/acme.sh
 
 [ -z "$1" ] && help_msg
 
-#params=$(getopt -o d: "$@")
-# eval set -- "$p"
+opts=$(getopt -o d: -- "$@")
+eval set -- "$opts"
+zone_opts=${opts% --*}
 
-case $1 in
-    get)
-        shift
-        install_acme "$@"
-        ;;
-    install)
-        shift
-        install_cert "$@"
-        ;;
-    issue)
-        shift
-        issue_cert "$@"
-        ;;
-    renew)
-        shift
-        renew_cert "$@"
-        ;;
-    rm|remove)
-        shift
-        remove_cert "$@"
-        ;;
-    upgrade)
-        $acme --upgrade
-        ;;
-    autoupgrade)
-        $acme --upgrade --auto-upgrade
-        ;;
-    info)
-        $acme --info
-        ;;
-    l|list)
-        $acme --list
-        ;;
-    h|help)
-        $acme --help | less
-        ;;
-    *)
-        $acme "$@"
-        ;;
-esac
+while :; do
+    case $1 in
+        -d)
+            zones+=("$2")
+            shift
+            ;;
+        get)
+            install_acme "$2"
+            ;;
+        install)
+            install_cert "${zones[0]}"
+            ;;
+        issue)
+            issue_cert "${zones[@]}"
+            ;;
+        renew)
+            renew_cert "${zones[0]}"
+            ;;
+        rm|remove)
+            remove_cert "${zones[0]}"
+            ;;
+        upgrade)
+            $acme --upgrade
+            ;;
+        autoupgrade)
+            $acme --upgrade --auto-upgrade
+            ;;
+        info)
+            $acme --info
+            ;;
+        l|list)
+            $acme --list
+            ;;
+        h|help)
+            $acme --help | less
+            ;;
+        --)
+            :
+            ;;
+        *)
+            # $acme "$@"
+            break
+            ;;
+    esac
+
+    shift
+done
