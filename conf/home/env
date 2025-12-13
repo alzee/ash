@@ -58,6 +58,7 @@ OLLAMA_MODEL=
 
 # cp ~/.env.local.example ~/.env.local
 [ -f ~/.env.local ] && . ~/.env.local
+[ -f ~/.tool ] && . ~/.tool
 
 let ENV_EXPORTED++
 
