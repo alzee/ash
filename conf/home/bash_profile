@@ -11,8 +11,8 @@ stty -ixon
 
 # https://wiki.gentoo.org/wiki/X_without_Display_Manager
 # https://wiki.gentoo.org/wiki/Start_X_on_login
-# if [ -z "$DISPLAY" -a "$(tty)" = /dev/tty1 ]; then
-# 	#exec startx
-# 	exec i3
-# 	#exec sway
-# fi
+if [ -z "$DISPLAY" -a "$(tty)" = /dev/tty1 ]; then
+	exec startx
+	#exec i3
+	#exec sway
+fi

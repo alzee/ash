@@ -8,7 +8,6 @@ ibus-libpinyin
 cronie
 alsa-utils
 xautolock
-lightdm-gtk
 ctags
 feh
 httpd
