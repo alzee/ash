@@ -3,5 +3,5 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 #MAILTO=root
 
 12 3 * * * "/home/al/.acme.sh"/acme.sh --cron --home "/home/al/.acme.sh" > /dev/null
-0 0 * * * sudo wg set z listen-port 167$(date +\%d)
+0 0 * * * sudo wg set wg-server listen-port 164$(date +\%d)
 32 5 */3 * * .local/bin/composer -d w/drupal/ update
