@@ -23,6 +23,8 @@ if ! id $user &> /dev/null; then
     sudo usermod --password $(openssl passwd -6 "$PASSWD") $user
 fi
 
+sudo apt update
+sudo apt install -y git screen
 
 if which git &> /dev/null; then
     git clone https://github.com/alzee/ash
