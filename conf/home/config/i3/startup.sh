@@ -14,4 +14,4 @@ feh --bg-fill ~/.config/i3/bg.png
 
 i3-sensible-terminal
 
-# [ -f ~/.config/i3/startup.local.sh ] && . ~/.config/i3/startup.local.sh
+[ -x ~/.config/i3/startup.local.sh ] && ~/.config/i3/startup.local.sh

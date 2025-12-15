@@ -7,4 +7,6 @@
 # userresources=$HOME/.Xresources
 # [ -r "$userresources" ] && xrdb -merge "$userresources"
 
+[ -x ~/.monitors.sh ] && ~/.monitors.sh
+
 exec i3
