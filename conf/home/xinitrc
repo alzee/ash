@@ -10,3 +10,4 @@
 [ -x ~/.monitors.sh ] && ~/.monitors.sh
 
 exec i3
+#exec startxfce4

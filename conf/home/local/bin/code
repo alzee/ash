@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+agent="$1"
+
+case "$agent" in
+    copilot)
+        : 
+        ;;
+    gemini)
+        : 
+        ;;
+    codex)
+        :
+        ;;
+    cursor)
+        agent=cursor-agent
+        ;;
+    claude|*)
+        agent=claude
+        ;;
+esac
+
+$agent
