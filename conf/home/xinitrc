@@ -9,5 +9,8 @@
 
 [ -x ~/.monitors.sh ] && ~/.monitors.sh
 
+# Start daemon, fix file dialog fails in chrome
+/usr/libexec/xdg-desktop-portal-gtk &
+
 exec i3
 #exec startxfce4
