@@ -106,3 +106,5 @@ URxvt.color14: #34E2E2
 !! white dark/light
 URxvt.color7: #D3D7CF
 URxvt.color15: #EEEEEC
+
+Xcursor.size: 48
