@@ -26,8 +26,14 @@ unset i
 # Avoid scp error "stty: 'standard input': Inappropriate ioctl for device"
 # [ "$SHLVL" -le 2 ] && stty -ixon
 #if [ -z "$STY" -a -z "$SSH_TTY" -a -n "$PS1" ]; then
-if [ -n "$PS1" ]; then
-	stty -ixon
+if [[ $- == *i* && -t 0 ]]; then
+	stty -ixon # Disable Ctrl-S / Ctrl-Q flow control
+fi
+
+# if [ -n "$PS1" ]; then # -n $PS1 unreliable
+if [[ $- == *i* && -z ${__MY_COMPLETIONS_LOADED:-} ]]; then
+    __MY_COMPLETIONS_LOADED=1
+
     # re-use completions
     _completion_loader git
     complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g

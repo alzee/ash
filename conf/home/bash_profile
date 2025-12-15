@@ -7,12 +7,16 @@ if [ "$ID" = debian ]; then
     eval $(dircolors -b <(dircolors -p))
 fi
 
-stty -ixon
+if [[ $- == *i* && -t 0 ]]; then
+	stty -ixon # Disable Ctrl-S / Ctrl-Q flow control
+fi
 
 # https://wiki.gentoo.org/wiki/X_without_Display_Manager
 # https://wiki.gentoo.org/wiki/Start_X_on_login
+# if [[ -z "$DISPLAY" && "$XDG_VTNR" == 1 ]]; then
+# or
+# VT=${XDG_VTNR:-$(tty | sed 's:/dev/tty::')}
+# if [[ -z "$DISPLAY" && "$VT" == 1 ]]; then
 if [ -z "$DISPLAY" -a "$(tty)" = /dev/tty1 ]; then
 	exec startx
-	#exec i3
-	#exec sway
 fi
