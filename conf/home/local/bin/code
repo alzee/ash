@@ -2,6 +2,9 @@
 #
 # vim:ft=bash
 
+# opts=$(getopt -o a: -- "$@")
+# eval set -- "$opts"
+
 agent="$1"
 
 case "$agent" in
