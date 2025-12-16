@@ -15,7 +15,6 @@ mod_ssl
 mariadb-server
 redis
 ImageMagick
-nasm
 nmap
 samba
 irssi
@@ -70,7 +69,6 @@ postgresql-server
 pwgen
 awscli2
 x265
-libavcodec-freeworld
 yq
 jq
 zbar
