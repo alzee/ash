@@ -15,42 +15,42 @@ totp -d                 Decrypt keys in ~/.sec/totp-key/ and output to ~/totp-ke
 totp -e <recipient>     Encrypt keys in ~/totp-key/ and output to ~/.sec/totp-key/
 HERE
 
-return
+exit
 fi
 
 dir=~/.sec/totp-key
 decrypt_dir=~/totp-key
 
 if [ $1 = -d ]; then
-    [ -d "$dir" ] || { echo directory "$dir" not exists; return; }
+    [ -d "$dir" ] || { echo directory "$dir" not exists; exit; }
     # https://superuser.com/a/352367/886777
     # No need -A here since `for i in *` don't include dot files
-    [ $(command ls "$dir" | wc -w) -eq 0 ] && { echo directory "$dir" is empty; return; }
+    [ $(command ls "$dir" | wc -w) -eq 0 ] && { echo directory "$dir" is empty; exit; }
     mkdir -p $decrypt_dir
     for i in $dir/*
     do
         gpg --yes -q -o $decrypt_dir/${i##*/} -d $i
     done
-    return
+    exit
 fi
 
 if [ $1 = -e ]; then
-    [ -d "$decrypt_dir" ] || { echo decrypt directory "$decrypt_dir" not exists; return; }
-    [ $(command ls "$decrypt_dir" | wc -w) -eq 0 ] && { echo directory "$decrypt_dir" is empty; return; }
+    [ -d "$decrypt_dir" ] || { echo decrypt directory "$decrypt_dir" not exists; exit; }
+    [ $(command ls "$decrypt_dir" | wc -w) -eq 0 ] && { echo directory "$decrypt_dir" is empty; exit; }
     mkdir -p $dir
-    [ "$2" ] || { echo "Usage: totp -e <recipient>"; return; }
+    [ "$2" ] || { echo "Usage: totp -e <recipient>"; exit; }
     for i in $decrypt_dir/*
     do
         gpg --yes --trust-model always -a -r "$2" -o $dir/${i##*/} -e $i
     done
-    return
+    exit
 fi
 
 keyfile=$(echo $dir/$1*)
 keyfile=${keyfile%% *}	# only first one
 if [ -f $keyfile ];then
     key=$(gpg -dq $keyfile)
-    [ "$key" ] || return
+    [ "$key" ] || exit
     echo $keyfile
     oathtool --totp -b "$key"
     sec=$(date +%S)
