@@ -2,24 +2,19 @@
 #
 # vim:ft=sh
 
-############### Variables ###############
+dir=~/.totp-key
+decrypt_dir=~/totp-key
 
-############### Functions ###############
-
-############### Main Part ###############
 if [ -z $1 ]; then
     cat <<HERE
 Usage:
 totp <keyname>          Generate a totp code
-totp -d                 Decrypt keys in ~/.sec/totp-key/ and output to ~/totp-key/
-totp -e <recipient>     Encrypt keys in ~/totp-key/ and output to ~/.sec/totp-key/
+totp -d                 Decrypt keys in $dir and output to $decrypt_dir
+totp -e <recipient>     Encrypt keys in $decrypt_dir and output to $dir
 HERE
 
 exit
 fi
-
-dir=~/.sec/totp-key
-decrypt_dir=~/totp-key
 
 if [ $1 = -d ]; then
     [ -d "$dir" ] || { echo directory "$dir" not exists; exit; }
