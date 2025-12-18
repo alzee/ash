@@ -96,7 +96,7 @@ add_repo() {
             # add testing repo (latest packages)
             sudo mkdir /etc/apt/sources.list.d/disabled
             sudo mv /etc/apt/sources.list.d/*.* /etc/apt/sources.list.d/disabled
-            sudo cp $scriptdir/conf/templates/debian/testing.sources /etc/apt/sources.list.d/
+            sudo cp $scriptdir/conf/etc/apt/sources.list.d/testing.sources /etc/apt/sources.list.d/
             # curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
             # github cli
             # curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
