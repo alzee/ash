@@ -68,6 +68,7 @@ librsvg2-devel
 postgresql-server
 pwgen
 awscli2
+vultr-cli
 x265
 yq
 jq
