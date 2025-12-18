@@ -1,2 +1,0 @@
-# Am I in wheel?
-al	ALL=(ALL)       NOPASSWD: /bin/yum update -y
