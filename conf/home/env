@@ -45,15 +45,10 @@ ANDROID_SDK_ROOT=~/l/android-studio-sdk
 VIM_DEFAULT_SESSION=~/.vim/session/default.vim
 #NETHACKOPTIONS='pickup_types:$"?+!=/*, !pickup_thrown, time, color'
 
-AWS_REGION=ap-east-1 # See https://docs.aws.amazon.com/general/latest/gr/rande.html
-#AWS_PROFILE=
-
 RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 
 [ -f ~/.ansi_escape_code ] && . ~/.ansi_escape_code
-
-OLLAMA_MODEL=
 
 # cp ~/.env.local.example ~/.env.local
 [ -f ~/.env.local ] && . ~/.env.local
