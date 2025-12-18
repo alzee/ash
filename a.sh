@@ -64,7 +64,7 @@ sudoer() {
     local group=wheel
     [ "$distro" = debian ] && group=sudo
     sudo usermod -aG $group $user
-    sudo cp $scriptdir/conf/templates/$distro/sudoer /etc/sudoers.d/
+    sudo cp $scriptdir/conf/etc/sudoers.d/al /etc/sudoers.d/
 }
 
 add_repo() {

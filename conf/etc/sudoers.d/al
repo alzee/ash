@@ -1,0 +1,8 @@
+al	ALL=(ALL)       NOPASSWD: /usr/bin/systemctl force-reload apache2, /usr/sbin/service apache2 force-reload
+al	ALL=(ALL)       NOPASSWD: /usr/bin/wg, /usr/bin/wg-quick
+al	ALL=(ALL)       NOPASSWD: /usr/bin/psql
+al	ALL=(ALL)       NOPASSWD: /usr/bin/mysql
+al	ALL=(ALL)       NOPASSWD: /usr/bin/mount.cifs, /usr/bin/umount /mnt/w
+al	ALL=(ALL)       NOPASSWD: /home/al/.local/bin/con
+al	ALL=(ALL)       NOPASSWD: /home/al/.local/bin/addhost
+# al	ALL=(ALL)       NOPASSWD: /usr/bin/systemctl suspend # Only for workstations
