@@ -2,7 +2,13 @@
 #
 # vim:ft=bash
 
-ip=$(ip -4 addr show dev tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+#host=$(ip -4 addr show dev tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+port=1080
+host=localhost
+hostport=1088
+dest="$1"
 
-screen -t R ssh -N -R 1080:$ip:1080 gx
-screen -X other
+#screen -t R ssh -N -T -R $port:$host:$hostport $dest
+#screen -X other
+
+ssh -R $port:$host:$hostport $dest
