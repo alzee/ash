@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+dir=${1:-z}
+prefix=~/.chromium
+# prefix=~/.config/google-chrome
+chrome=chromium-browser
+# chrome=google-chrome
+
+# $chrome --profile-directory=$profile
+$chrome --user-data-dir=$prefix/$dir &
