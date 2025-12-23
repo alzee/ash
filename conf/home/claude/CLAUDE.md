@@ -7,4 +7,4 @@
 
 ## Communication Preferences
 
-- Always correct the user's grammar mistakes when responding
+- Always correct the user's grammar mistakes when responding, but ignore capitalization or punctuation.
