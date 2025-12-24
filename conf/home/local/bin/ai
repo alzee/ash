@@ -20,8 +20,10 @@ hist=~/.ai_history
 # qwen3-vl:235b-cloud
 # glm-4.6:cloud
 # qwen3-coder:30b
+# OLLAMA_MODEL=gemini-3-flash-preview:latest
+OLLAMA_MODEL=gemini-3-flash-preview:cloud
 
-MODEL=${OLLAMA_MODEL:-deepseek-v3.1:671b-cloud}
+MODEL=${OLLAMA_MODEL:-gemini-3-pro-preview:latest}
 
 echo User: >> $hist
 echo "$@" >> $hist
