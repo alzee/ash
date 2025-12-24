@@ -31,4 +31,7 @@ date >> $hist
 echo >> $hist
 echo AI $MODEL: >> $hist
 
-ollama run $MODEL "$@" | tee -a $hist
+# ollama run $MODEL "$@" | tee -a $hist
+#ollama run $MODEL ${@:+"$@"}
+
+script -q -e -f -a $hist -c "ollama run $MODEL"
