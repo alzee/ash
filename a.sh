@@ -583,7 +583,8 @@ install_codex(){
 }
 
 install_copilot(){
-    npm install -g @github/copilot
+    curl -fsSL https://gh.io/copilot-install | bash
+    # npm install -g @github/copilot
 }
 
 install_gemini(){
