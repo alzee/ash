@@ -43,5 +43,5 @@
     "light": "One Dark",
     "dark": "One Dark"
   },
-  "proxy": "socks5://v:1080"
+  "proxy": "socks5://s:1080"
 }
