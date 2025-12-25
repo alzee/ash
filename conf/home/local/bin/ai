@@ -20,8 +20,8 @@ hist=~/.ai_history
 # qwen3-vl:235b-cloud
 # glm-4.6:cloud
 # qwen3-coder:30b
-# OLLAMA_MODEL=gemini-3-flash-preview:latest
-OLLAMA_MODEL=gemini-3-flash-preview:cloud
+OLLAMA_MODEL=gemini-3-flash-preview:latest
+# OLLAMA_MODEL=gemini-3-flash-preview:cloud
 
 MODEL=${OLLAMA_MODEL:-gemini-3-pro-preview:latest}
 
@@ -33,5 +33,5 @@ echo AI $MODEL: >> $hist
 
 # ollama run $MODEL "$@" | tee -a $hist
 #ollama run $MODEL ${@:+"$@"}
-
-script -q -e -f -a $hist -c "ollama run $MODEL"
+# script -q -e -f -a $hist -c "ollama run $MODEL"
+ollama run $MODEL "$@"
