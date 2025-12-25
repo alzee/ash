@@ -113,7 +113,8 @@ _uninstall(){
     :
 }
 
-tools=$(declare -F | awk '/install_/{sub(/.*install_/, ""); print $1}' | xargs)
+#tools=$(declare -F | awk '/install_/{sub(/.*install_/, ""); print $1}' | xargs)
+tools=$(grep -oP '^install_\K\w+' "$0" | xargs)
 
 _help(){
     echo 'Usage: tool i <tool_name>'
