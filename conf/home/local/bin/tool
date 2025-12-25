@@ -112,7 +112,7 @@ install_taro(){
     npm install -g @tarojs/cli
 }
 
-install_vim-gnupg(){
+install_vim_gnupg(){
     git clone https://github.com/jamessan/vim-gnupg ~/w/vim-gnupg
     mkdir -p ~/.vim/pack/gnupg/start/
     ln -s ~/w/vim-gnupg ~/.vim/pack/gnupg/start/
