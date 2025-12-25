@@ -141,12 +141,6 @@ load_pkg() {
     fi
 }
 
-active_selinux_on_debian(){
-    # selinux-basics selinux-policy-default auditd"
-    # Run selinux-activate(as root) to configure GRUB and PAM and to create /.autorelabel
-    :
-}
-
 remove_pkg() {
     say removing unneeded packages...
     for i in $r_pkg
@@ -516,18 +510,6 @@ case $1 in
     -M)
         misc
         ;;
-    -C)
-        install_composer
-        ;;
-    -nvm)
-        install_nvm
-        ;;
-    -R)
-        install_rust
-        ;;
-    -deno)
-        install_deno
-        ;;
     -D)
         default_pool
         ;;
@@ -536,9 +518,6 @@ case $1 in
         ;;
     -L)
         mklinks
-        ;;
-    -symfony)
-        install_symfony
         ;;
     -Y)
         _sysctl
