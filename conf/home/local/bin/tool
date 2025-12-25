@@ -2,31 +2,34 @@
 #
 # vim:ft=bash
 
+set -euo pipefail
+
 ############### Variables ###############
+
+#tools=$(declare -F | awk '/install_/{sub(/.*install_/, ""); print $1}' | xargs)
+tools=$(grep -oP '^install_\K\w+' "$0" | xargs)
 
 ############### Functions ###############
 
-############### Main Part ###############
-
 install_composer(){
     if [ ! -x ~/.local/bin/composer ];then
-        say Installing composer...
+        echo Installing composer...
         local a=composer-setup.php
-        curl -L https://getcomposer.org/installer -o $a
+        curl -L https://getcomposer.org/installer -o "$a"
         # TODO not return
-        if echo -n $(curl -s https://composer.github.io/installer.sig) $a | sha384sum -c --status;then
-            php $a && rm $a
+        if echo -n "$(curl -s https://composer.github.io/installer.sig) $a" | sha384sum -c --status;then
+            php "$a" && rm "$a"
             mkdir ~/.local/bin -p
             mv composer.phar ~/.local/bin/composer
         else
-            say checksum fail!
+            echo checksum fail!
         fi
     fi
 }
 
 install_symfony(){
     curl -sS https://get.symfony.com/cli/installer | bash
-    ln -sf ../../.symfony5/bin/symfony .local/bin/
+    ln -sf ../../.symfony5/bin/symfony ~/.local/bin/
 }
 
 install_deno(){
@@ -106,15 +109,23 @@ install_taro(){
 }
 
 _install(){
-    install_$1
+    if [ -z "$1" ]; then
+        echo "Error: No tool specified"
+        _help
+        return 1
+    fi
+    if declare -f "install_$1" > /dev/null; then
+        install_"$1"
+    else
+        echo "Error: Unknown tool '$1'"
+        echo "Available tools: $tools"
+        return 1
+    fi
 }
 
 _uninstall(){
     :
 }
-
-#tools=$(declare -F | awk '/install_/{sub(/.*install_/, ""); print $1}' | xargs)
-tools=$(grep -oP '^install_\K\w+' "$0" | xargs)
 
 _help(){
     echo 'Usage: tool i <tool_name>'
@@ -122,12 +133,20 @@ _help(){
     echo $tools
 }
 
-case $1 in
+############### Main Part ###############
+
+case ${1:-} in
     i)
-        _install "$2"
+        _install "${2:-}"
         ;;
     u)
-        _uninstall "$2"
+        _uninstall "${2:-}"
+        ;;
+    l|list)
+        echo "Available tools:"
+        for tool in $tools; do
+            echo "  - $tool"
+        done
         ;;
     *)
         _help
