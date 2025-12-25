@@ -72,6 +72,10 @@ install_fnm(){
     #corepack enable pnpm
 }
 
+install_angular(){
+    npm install -g @angular/cli
+}
+
 install_ollama(){
     curl -fsSL https://ollama.com/install.sh | sh
 }
@@ -106,6 +110,12 @@ install_gemini(){
 
 install_taro(){
     npm install -g @tarojs/cli
+}
+
+install_vim-gnupg(){
+    git clone https://github.com/jamessan/vim-gnupg ~/w/vim-gnupg
+    mkdir -p ~/.vim/pack/gnupg/start/
+    ln -s ~/w/vim-gnupg ~/.vim/pack/gnupg/start/
 }
 
 _install(){

@@ -470,42 +470,6 @@ _sysctl(){
     fi
 }
 
-install_composer(){
-    if [ ! -x ~/.local/bin/composer ];then
-        say Installing composer...
-        local a=composer-setup.php
-        curl -L https://getcomposer.org/installer -o $a
-        # TODO not return
-        if echo -n $(curl -s https://composer.github.io/installer.sig) $a | sha384sum -c --status;then
-            php $a && rm $a
-            mkdir ~/.local/bin -p
-            mv composer.phar ~/.local/bin/composer
-        else
-            say checksum fail!
-        fi
-    fi
-}
-
-install_symfony(){
-    if [ "$distro" = fedora ]; then
-        curl -sS https://get.symfony.com/cli/installer | bash
-        ln -s ../../.symfony5/bin/symfony .local/bin/
-    fi
-}
-
-install_deno(){
-    curl -fsSL https://deno.land/install.sh | sh
-    ln -s ../../.deno/bin/deno ~/.local/bin/
-}
-
-install_rust(){
-    curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
-    echo Generating tab-completion scripts for your shell.
-    mkdir -p ~/.local/share/bash-completion/completions/
-    rustup completions bash >> ~/.local/share/bash-completion/completions/rustup
-    rustup completions bash cargo >> ~/.local/share/bash-completion/completions/cargo
-    rustup component add rust-analyzer
-}
 
 enable_networkmanager(){
     # Since we remove dhcpcd5
@@ -521,74 +485,6 @@ setup_x11vnc(){
         echo 111 | vncpasswd -f > ~/.vnc/passwd
         # sudo systemctl enable --now x11vnc
     fi
-}
-
-vim_gnupg(){
-    git clone https://github.com/jamessan/vim-gnupg ~/w/vim-gnupg
-    mkdir -p ~/.vim/pack/gnupg/start/
-    ln -s ~/w/vim-gnupg ~/.vim/pack/gnupg/start/
-}
-
-xorg_conf(){
-    sudo cp -a $scriptdir/conf/templates/xorg.conf.d/ /etc/X11/
-}
-
-install_zed(){
-    curl -f https://zed.dev/install.sh | sh
-}
-
-install_uv(){
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-}
-
-install_fastapi(){
-    uv add fastapi --extra standard
-}
-
-install_nvm(){
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-    nvm install node
-    nvm alias default node
-}
-
-install_fnm(){
-    curl -fsSL https://fnm.vercel.app/install | bash
-    . ~/.bashrc
-    fnm i --latest
-    #corepack enable yarn
-    #corepack enable pnpm
-}
-
-install_ollama(){
-    curl -fsSL https://ollama.com/install.sh | sh
-}
-
-install_huggingface(){
-    curl -LsSf https://hf.co/cli/install.sh | bash
-    # uv tool install huggingface_hub
-}
-
-install_claude(){
-    curl -fsSL https://claude.ai/install.sh | bash
-    #npm install -g @anthropic-ai/claude-code
-}
-
-install_cursor(){
-    curl https://cursor.com/install -fsS | bash
-    ln -sf cursor-agent ~/.local/bin/cursor
-}
-
-install_codex(){
-    npm i -g @openai/codex
-}
-
-install_copilot(){
-    curl -fsSL https://gh.io/copilot-install | bash
-    # npm install -g @github/copilot
-}
-
-install_gemini(){
-    npm install -g @google/gemini-cli
 }
 
 ############### Main ###############
@@ -608,10 +504,6 @@ case $1 in
         default_pool
         misc
         add_firewall_rules
-        install_composer
-        install_symfony
-        install_uv
-        install_fnm
         mklinks
         _sysctl
         ;;
@@ -662,42 +554,6 @@ case $1 in
         ;;
     -V)
         setup_x11vnc
-        ;;
-    -v)
-        vim_gnupg
-        ;;
-    -zed)
-        install_zed
-        ;;
-    -uv)
-        install_uv
-        ;;
-    -fastapi)
-        install_fastapi
-        ;;
-    -fnm)
-        install_fnm
-        ;;
-    -ollama)
-        install_ollama
-        ;;
-    -huggingface)
-        install_huggingface
-        ;;
-    -claude)
-        install_claude
-        ;;
-    -cursor)
-        install_cursor
-        ;;
-    -codex)
-        install_codex
-        ;;
-    -copilot)
-        install_copilot
-        ;;
-    -gemini)
-        install_gemini
         ;;
     *)
         ;;
