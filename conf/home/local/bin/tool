@@ -26,12 +26,12 @@ install_composer(){
 
 install_symfony(){
     curl -sS https://get.symfony.com/cli/installer | bash
-    ln -s ../../.symfony5/bin/symfony .local/bin/
+    ln -sf ../../.symfony5/bin/symfony .local/bin/
 }
 
 install_deno(){
     curl -fsSL https://deno.land/install.sh | sh
-    ln -s ../../.deno/bin/deno ~/.local/bin/
+    ln -sf ../../.deno/bin/deno ~/.local/bin/
 }
 
 install_rust(){
@@ -113,7 +113,7 @@ _uninstall(){
     :
 }
 
-tools=
+tools=$(declare -F | awk '/install_/{sub(/.*install_/, ""); print $1}' | xargs)
 
 _help(){
     echo 'Usage: tool i <tool_name>'
