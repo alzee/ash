@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+cmd="$1"
+# shift
+
+detect_pkg(){
+    if which dnf &> /dev/null; then
+        pkg=dnf
+    elif which apt &> /dev/null; then
+        pkg=apt
+    else
+        pkg=pkg
+    fi
+}
+
+_install(){
+    sudo $pkg install "$1"
+}
+
+_remove(){
+    sudo $pkg remove "$1"
+}
+
+_search(){
+    $pkg search "$1"
+}
+
+_update(){
+    sudo $pkg update "$1"
+}
+
+_upgrade(){
+    sudo $pkg upgrade "$1"
+}
+
+_info(){
+    $pkg info "$1"
+}
+
+detect_pkg
+
+if [ "$pkg" = pkg ]; then
+    pkg "$@"
+else
+    case $cmd in
+        i|install)
+            _install "$2"
+            ;;
+        d|delete|r|remove)
+            _remove "$2"
+            ;;
+        s|search)
+            _search "$2"
+            ;;
+        u|update)
+            _update "$2"
+            ;;
+        upgrade)
+            _upgrade "$2"
+            ;;
+        info)
+            _info "$2"
+            ;;
+    esac
+fi
+
