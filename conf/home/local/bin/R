@@ -2,11 +2,23 @@
 #
 # vim:ft=bash
 
+_help(){
+    echo 'Usage: R <dest> [hostpost]'
+    echo 'ssh -R 1080:localhost:hostport dest'
+}
+
+if [ -z "$1" ]; then
+    _help
+    exit
+fi
+
 #host=$(ip -4 addr show dev tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 port=1080
 host=localhost
-hostport=1088
+hostport=1080
 dest="$1"
+
+[ "$2" ] && hostport=$2
 
 #screen -t R ssh -N -T -R $port:$host:$hostport $dest
 #screen -X other

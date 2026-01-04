@@ -6,7 +6,8 @@
 
 ############### Functions ###############
 _help(){
-    echo 'Usage: D <dest> [1080]'
+    echo 'Usage: D <dest> [port]'
+    echo 'ssh -N -T -D 0.0.0.0:port dest'
 }
 
 ############### Main Part ###############
