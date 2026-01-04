@@ -5,8 +5,16 @@
 ############### Variables ###############
 
 ############### Functions ###############
+_help(){
+    echo 'Usage: D <dest> [1080]'
+}
 
 ############### Main Part ###############
+
+if [ -z "$1" ]; then
+    _help
+    exit
+fi
 
 port=1080
 dest="$1"
