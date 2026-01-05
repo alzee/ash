@@ -280,6 +280,7 @@ add_firewall_rules(){
         sudo ufw allow 16384:16999/udp # wireguard
         sudo ufw allow in on wg-server to any port 1080 proto tcp # danted
         #sudo ufw allow in on wg-server to 10.5.3.0/24 port 1080 proto tcp
+		sudo ufw enable
     fi
 
     if [ "$distro" = fedora ]; then
