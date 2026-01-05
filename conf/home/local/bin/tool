@@ -8,8 +8,15 @@ set -euo pipefail
 
 #tools=$(declare -F | awk '/install_/{sub(/.*install_/, ""); print $1}' | xargs)
 tools=$(grep -oP '^install_\K\w+' "$0" | xargs)
+tmpdir=$(mktemp -d)
 
 ############### Functions ###############
+
+_clean(){
+    # echo clean $tmpdir
+    rm -rf "$tmpdir"
+}
+trap _clean EXIT
 
 install_composer(){
     if [ ! -x ~/.local/bin/composer ];then
@@ -113,7 +120,25 @@ install_taro(){
 }
 
 install_wstunnel(){
-    :
+    # output example: v10.5.1
+    tag=$(curl -s https://api.github.com/repos/erebe/wstunnel/releases/latest | jq -r .tag_name)
+    # tag=$(gh release view --repo erebe/wstunnel  --json tagName -q .tagName)
+    echo latest release: $tag
+    arch=$(arch)
+    case $arch in
+        x86_64)
+            arch=amd64
+            ;;
+        aarch64)
+            arch=arm64
+            ;;
+    esac
+    filename=wstunnel_${tag#v}_linux_${arch}.tar.gz
+	url="https://github.com/erebe/wstunnel/releases/download/${tag}/$filename"
+    curl -L -o $tmpdir/$filename $url
+    tar xf $tmpdir/$filename -C $tmpdir
+    chmod +x $tmpdir/wstunnel
+    sudo mv $tmpdir/wstunnel /usr/local/bin/
 }
 
 install_vim_gnupg(){
