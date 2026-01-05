@@ -10,10 +10,13 @@ Host github.com github.mydomain.com
     IdentityFile ~/.ssh/github
 Host myvps.com 10.5.6.1
     IdentityFile ~/.ssh/myvps
-
-# Host github.com-repo-0
-#     Hostname github.com
-#     IdentityFile=~/.ssh/repo-0_deploy_key
-# Host github.com-repo-1
-#     Hostname github.com
-#     IdentityFile=~/.ssh/repo-1_deploy_key
+Host ai
+    Hostname 127.0.0.1
+    # Prot Only for: wstunnel client -L 'tcp://2222:localhost:22' wss://ai.zxaicc.com
+    # then connect: ssh -p 2222 127.0.0.1
+    #Port 2222 # no need for stdio://
+    ProxyCommand wstunnel client -L stdio://%h:%p wss://ai.zxaicc.com
+    IdentityFile ~/.ssh/ai
+Host repo1.github
+    Hostname github.com
+    IdentityFile=~/.ssh/repo1_deploy_key
