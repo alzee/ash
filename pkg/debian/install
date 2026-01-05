@@ -1,7 +1,9 @@
 ufw
+fail2ban
 apt-utils
 ca-certificates
 apache2
+libapache2-mod-security2
 postgresql
 redis-server
 python3-pip
