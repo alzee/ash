@@ -16,8 +16,9 @@ Environment="no_proxy=127.0.0.1,localhost"
 
 # Path to your binary and the exact working command
 # Adjust /usr/local/bin/wstunnel to the actual path of your binary
-#ExecStart=/usr/local/bin/wstunnel server --restrict-to 127.0.0.1:22 ws://127.0.0.1:8888
-ExecStart=/usr/local/bin/wstunnel server ws://127.0.0.1:8888
+#ExecStart=/usr/local/bin/wstunnel server --restrict-to 127.0.0.1:16384 ws://127.0.0.1:8888
+#ExecStart=/usr/local/bin/wstunnel server ws://127.0.0.1:8888
+ExecStart=/usr/local/bin/wstunnel server --restrict-to 127.0.0.1:16384 --restrict-to 127.0.0.100:22 ws://127.0.0.1:8888
 
 # Security and Reliability
 Restart=always
