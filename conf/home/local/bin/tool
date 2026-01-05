@@ -138,7 +138,7 @@ install_wstunnel(){
     curl -L -o $tmpdir/$filename $url
     tar xf $tmpdir/$filename -C $tmpdir
     chmod +x $tmpdir/wstunnel
-    sudo mv $tmpdir/wstunnel /usr/local/bin/
+    sudo cp $tmpdir/wstunnel /usr/local/bin/ # cp will have the right selinux context, mv will not
 }
 
 install_vim_gnupg(){
