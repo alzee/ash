@@ -304,6 +304,7 @@ misc() {
         # get rid of bash.bashrc
         sudo mv /etc/bash.bashrc /etc/bash.bashrc.bak
 
+        sudo cp /etc/modsecurity/modsecurity.conf{-recommended,}
         # mod_http2 doesn't work with mpm_prefork'
         # and "event mpm is nowadays the best one"
         # https://httpd.apache.org/docs/2.4/howto/http2.html#mpm-config
