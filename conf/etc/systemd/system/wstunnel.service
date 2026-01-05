@@ -1,0 +1,28 @@
+[Unit]
+Description=WSTunnel Server - WebSocket Proxy for SSH
+After=network.target nginx.service
+
+[Service]
+Type=simple
+# Replace 'al' with your actual server username
+#User=al
+#Group=al
+
+# Completely unsets the proxy variables for this process
+UnsetEnvironment=HTTP_PROXY HTTPS_PROXY http_proxy https_proxy
+
+# Alternatively, explicitly set no_proxy just in case
+Environment="no_proxy=127.0.0.1,localhost"
+
+# Path to your binary and the exact working command
+# Adjust /usr/local/bin/wstunnel to the actual path of your binary
+#ExecStart=/usr/local/bin/wstunnel server --restrict-to 127.0.0.1:22 ws://127.0.0.1:8888
+ExecStart=/usr/local/bin/wstunnel server ws://127.0.0.1:8888
+
+# Security and Reliability
+Restart=always
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
