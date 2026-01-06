@@ -1,9 +1,12 @@
 [Unit]
 Description=WSTunnel Server - WebSocket Proxy for SSH
-After=network.target nginx.service
+#After=network.target nginx.service
+After=network-online.target
+Wants=network-online.target
 
 [Service]
-Type=simple
+#Type=simple
+Type=exec
 # Replace 'al' with your actual server username
 #User=al
 #Group=al
@@ -22,6 +25,7 @@ ExecStart=/usr/local/bin/wstunnel server --restrict-to 127.0.0.1:16384 --restric
 
 # Security and Reliability
 Restart=always
+#Restart=on-failure
 RestartSec=5
 LimitNOFILE=65536
 
