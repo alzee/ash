@@ -34,4 +34,6 @@ echo AI $MODEL: >> $hist
 # ollama run $MODEL "$@" | tee -a $hist
 #ollama run $MODEL ${@:+"$@"}
 # script -q -e -f -a $hist -c "ollama run $MODEL"
-ollama run $MODEL "$@"
+# ollama run $MODEL "$@"
+
+expect -f $(dirname $0)/ollama.exp

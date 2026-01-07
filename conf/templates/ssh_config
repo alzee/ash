@@ -12,10 +12,10 @@ Host myvps.com 10.5.6.1
     IdentityFile ~/.ssh/myvps
 Host ai
     Hostname 127.0.0.100
-    # Prot Only for: wstunnel client -L 'tcp://2222:localhost:22' wss://ai.zxaicc.com
+    # Prot Only for: wstunnel client -L 'tcp://2222:localhost:22' wss://ai.example.com
     # then connect: ssh -p 2222 127.0.0.1
     #Port 2222 # no need for stdio://
-    ProxyCommand wstunnel client -L stdio://%h:%p wss://ai.zxaicc.com
+    ProxyCommand wstunnel client -L stdio://%h:%p wss://ai.example.com
     IdentityFile ~/.ssh/ai
 Host repo1.github
     Hostname github.com
