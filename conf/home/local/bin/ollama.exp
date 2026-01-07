@@ -4,7 +4,7 @@
 set system_prompt "/set system Always correct the user's grammar mistakes when responding, but ignore capitalization or punctuation."
 
 # Start the Ollama interactive session
-spawn ollama run gemini-3-flash-preview:latest
+spawn ollama run --hidethinking gemini-3-flash-preview:latest
 
 # Wait a tiny bit for Ollama to be ready (optional, may adjust)
 #sleep 0.2

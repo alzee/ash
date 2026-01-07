@@ -171,6 +171,10 @@ install_vim_gnupg(){
     ln -s ~/w/vim-gnupg ~/.vim/pack/gnupg/start/
 }
 
+install_wafw00f(){
+    uv tool install wafw00f
+}
+
 _install(){
     if [ -z "$1" ]; then
         echo "Error: No tool specified"
