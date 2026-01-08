@@ -396,7 +396,7 @@ setup_auto_upgrade(){
         if [ -f $file ]; then
             sudo sed -i '/apply_updates/s/no/yes/' $file
         else
-            sudo echo -e '[commands]\napply_updates = yes' > $file
+            echo -e '[commands]\napply_updates = yes' | sudo tee $file > /dev/null
         fi
         sudo systemctl enable --now dnf-automatic.timer postfix
     fi
