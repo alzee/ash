@@ -27,6 +27,8 @@ layers:
       h: move -1  0
       j: move  0  1
       k: move  0 -1
+      d: button left
+      f: button right
       o: button left
       i: button right
       dot: button left
