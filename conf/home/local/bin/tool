@@ -162,6 +162,7 @@ install_wireguard_compile(){
     make -C wireguard-tools/src -j$(nproc)
     sudo make -C wireguard-tools/src install
     sudo modprobe wireguard
+    echo 'wireguard' | sudo tee /etc/modules-load.d/wireguard.conf > /dev/null
     lsmod | grep wireguard
 }
 
