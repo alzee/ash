@@ -121,6 +121,14 @@ install_opencode(){
     # npm i -g opencode-ai@latest
 }
 
+install_aichat(){
+    cargo install aichat
+}
+
+install_shell_gpt(){
+    uv tool install shell-gpt
+}
+
 install_taro(){
     npm install -g @tarojs/cli
 }
