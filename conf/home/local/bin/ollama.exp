@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 
 # The system prompt you want
-set system_prompt "/set system Always correct the user's grammar mistakes when responding, but ignore capitalization or punctuation."
+set system_prompt "/set system Always correct the user's grammar mistakes when responding, while ignoring capitalization or punctuation errors."
 
 # Start the Ollama interactive session
 spawn ollama run --hidethinking gemini-3-flash-preview:latest
