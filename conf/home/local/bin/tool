@@ -115,6 +115,12 @@ install_gemini(){
     npm install -g @google/gemini-cli
 }
 
+install_opencode(){
+    curl -fsSL https://opencode.ai/install | env -u VERSION bash
+    ln -s ../../.opencode/bin/opencode ~/.local/bin/
+    # npm i -g opencode-ai@latest
+}
+
 install_taro(){
     npm install -g @tarojs/cli
 }
