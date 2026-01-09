@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+unset ls
+
+agent="$1"
+options=
+
+case "$agent" in
+    copilot)
+        : 
+        ;;
+    gemini)
+        : 
+        ;;
+    codex)
+        :
+        ;;
+    cursor)
+        agent=cursor-agent
+        ;;
+    claude)
+        ;;
+    opencode)
+        ;;
+    aichat|*)
+        options="-s -r chat"
+        ;;
+esac
+
+$agent $options

@@ -3,7 +3,6 @@
 ## Important Notes
 
 ### command aliases
-- Always use `l` instead of `ls` to list files
 
 ## Communication Preferences
 
