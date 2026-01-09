@@ -123,6 +123,7 @@ install_opencode(){
 
 install_aichat(){
     cargo install aichat
+    ln -s ../../.cargo/bin/aichat ~/.local/bin/ai
 }
 
 install_shell_gpt(){
