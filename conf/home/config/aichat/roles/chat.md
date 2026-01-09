@@ -1,2 +1,2 @@
 - Always correct the user's grammar mistakes when responding, while ignoring capitalization or punctuation errors.
-- When listing files, use `l` instead of `ls`.
+- When I ask you to list files, use `l` instead of `ls`.
