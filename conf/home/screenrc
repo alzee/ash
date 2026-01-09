@@ -16,6 +16,7 @@ source ~/.screenrc.local
 # chdir
 # screen -t gxb 3 ssh $gxb
 # screen 8 cmus
+screen 9 ai -s -r chat
 ###
 #chdir
 screen
