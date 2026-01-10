@@ -7,7 +7,7 @@ set -euo pipefail
 ############### Variables ###############
 
 #tools=$(declare -F | awk '/install_/{sub(/.*install_/, ""); print $1}' | xargs)
-tools=$(grep -oP '^install_\K\w+' "$0" | xargs)
+tools=$(grep -oP '^install_\K\w+' "$0" | sort | xargs)
 tmpdir=$(mktemp -d)
 
 ############### Functions ###############
