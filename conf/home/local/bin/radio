@@ -4,6 +4,13 @@ case "$1" in
     cri)
         url=https://sk.cri.cn/am846.m3u8
         ;;
+    hln)
+        url="https://tunein.cdnstream1.com/3519_96.mp3?aw_0_1st.playerid=SLb0WwgW&aw_0_1st.skey=1768011568&aw_0_1st.abtest=&partnerId=SLb0WwgW&aw_0_1st.stationId=s292162&aw_0_1st.premium=false&source=TuneIn&aw_0_1st.platform=tunein&aw_0_1st.genre_id=g3125&aw_0_1st.class=talk&aw_0_1st.ads_partner_alias=emb.CNN&aw_0_azn.planguage=en&aw_0_1st.is_ondemand=false&aw_0_1st.topicId=na&aw_0_1st.affiliateIds=a33291%2ca39100%2ca40075%2ca39163&aw_0_1st.bandId=16"
+        ;;
+    cnn_intl)
+        url="https://tunein.cdnstream1.com/3519_96.mp3?aw_0_1st.playerid=SLb0WwgW&aw_0_1st.skey=1768011568&aw_0_1st.abtest=&partnerId=SLb0WwgW&aw_0_1st.stationId=s292162&aw_0_1st.premium=false&source=TuneIn&aw_0_1st.platform=tunein&aw_0_1st.genre_id=g3125&aw_0_1st.class=talk&aw_0_1st.ads_partner_alias=emb.CNN&aw_0_azn.planguage=en&aw_0_1st.is_ondemand=false&aw_0_1st.topicId=na&aw_0_1st.affiliateIds=a33291%2ca39100%2ca40075%2ca39163&aw_0_1st.bandId=16"
+    cnn_es)
+        url="https://tunein.cdnstream1.com/3517_96.mp3?aw_0_1st.playerid=SLb0WwgW&aw_0_1st.skey=1768012198&aw_0_1st.abtest=&partnerId=SLb0WwgW&aw_0_1st.stationId=s20409&aw_0_1st.premium=false&source=TuneIn&aw_0_1st.platform=tunein&aw_0_1st.genre_id=g3125&aw_0_1st.class=talk&aw_0_1st.ads_partner_alias=emb.CNN&aw_0_azn.planguage=%5ben%2c+es%5d&aw_0_1st.is_ondemand=false&aw_0_1st.topicId=na&aw_0_1st.programId=p1153603&aw_0_1st.affiliateIds=a38460%2ca33291%2ca39100%2ca40075&aw_0_1st.bandId=16"
     cnn|*)
         url="https://tunein.cdnstream1.com/2868_96.mp3?aw_0_1st.playerid=SLb0WwgW&aw_0_1st.skey=1767842151&aw_0_1st.abtest=&partnerId=SLb0WwgW&aw_0_1st.stationId=s20407&aw_0_1st.premium=false&source=TuneIn&aw_0_1st.platform=tunein&aw_0_1st.genre_id=g3124&aw_0_1st.class=talk&aw_0_1st.ads_partner_alias=emb.CNN&aw_0_azn.planguage=en&aw_0_1st.is_ondemand=false&aw_0_1st.topicId=na&aw_0_1st.affiliateIds=a38460%2ca33291%2ca39100%2ca40075%2ca39163&aw_0_1st.bandId=16"
         ;;
