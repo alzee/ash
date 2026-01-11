@@ -36,3 +36,8 @@ clients:
   - name: kimi-k2:1t-cloud
   - name: kimi-k2-thinking:cloud
   - name: mistral-large-3:675b-cloud
+- type: openai-compatible
+  name: ai
+  api_base: https://ai.zxaicc.com/api/v1
+  models:
+  - name: DeepSeek-R1-0528
