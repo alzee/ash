@@ -6,7 +6,9 @@ dir=${1:-z}
 prefix=~/.chromium
 # prefix=~/.config/google-chrome
 chrome=chromium-browser
-# chrome=google-chrome
+if ! which $chrome &> /dev/null; then
+    chrome=google-chrome
+fi
 
 # $chrome --profile-directory=$profile
-$chrome --user-data-dir=$prefix/$dir &
+$chrome --user-data-dir=$prefix/$dir 2> /dev/null &
