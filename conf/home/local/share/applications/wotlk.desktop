@@ -1,0 +1,13 @@
+[Desktop Entry]
+# https://specifications.freedesktop.org/desktop-entry-spec/
+Type=Application
+Categories=Game
+Version=1.0
+Name=wotlk
+GenericName=wotlk
+TryExec=/home/al/.games/wotlk/Wow.exe
+Exec=env LANG=zh_CN.UTF8 wine /home/al/.games/wotlk/Wow.exe
+Icon= /home/al/.local/share/icons/hicolor/24x24/apps/5298_World\ of\ Warcraft\ Launcher.0.png
+Terminal=false
+# Category entry according to:
+# https://specifications.freedesktop.org/menu-spec/

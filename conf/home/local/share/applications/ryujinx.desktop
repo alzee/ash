@@ -1,0 +1,13 @@
+[Desktop Entry]
+# https://specifications.freedesktop.org/desktop-entry-spec/
+Type=Application
+Categories=Game
+
+Version=1.0
+Name=ryujinx
+GenericName=ryujinx
+TryExec=/home/al/l/ryujinx/Ryujinx
+Exec=/home/al/l/ryujinx/Ryujinx
+Terminal=false
+# Category entry according to:
+# https://specifications.freedesktop.org/menu-spec/
