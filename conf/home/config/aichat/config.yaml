@@ -40,4 +40,4 @@ clients:
   name: ai
   api_base: https://ai.zxaicc.com/api/v1
   models:
-  - name: DeepSeek-R1-0528
+  - name: deepseek-r1-0528
