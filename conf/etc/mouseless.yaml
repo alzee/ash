@@ -22,7 +22,7 @@ layers:
       q: layer initial
       # r: reload-config
       # keep the mouse layer active
-      a: layer mouse
+      m: layer mouse
       l: move  1  0
       h: move -1  0
       j: move  0  1
