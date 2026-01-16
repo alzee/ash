@@ -8,8 +8,9 @@ User=ollama
 Group=ollama
 Restart=always
 RestartSec=3
+#Environment=OLLAMA_HOST=0.0.0.0
 # For which gcc version lower than 8
-#Environment="LD_LIBRARY_PATH=/usr/local/lib/preload"
+#Environment=LD_LIBRARY_PATH=/usr/local/lib/preload
 
 [Install]
 WantedBy=default.target
