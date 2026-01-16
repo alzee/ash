@@ -1,0 +1,13 @@
+[Desktop Entry]
+# https://specifications.freedesktop.org/desktop-entry-spec/
+Type=Application
+Categories=Game
+
+Version=1.0
+Name=cemu
+GenericName=cemu
+TryExec=/home/al/l/cemu.AppImage
+Exec=/home/al/l/cemu.AppImage
+Terminal=false
+# Category entry according to:
+# https://specifications.freedesktop.org/menu-spec/
