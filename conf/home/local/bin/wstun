@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+_help(){
+    echo Establish a wstunnel for wireguard.
+    echo 'Usage: wstun <server> [hostport]'
+}
+
+if [ -z "$1" ]; then
+    _help
+    exit
+fi
+
+server="$1"
+hostport=51820
+port=16384
+
+[ "$2" ] && hostport="$2"
+
+wstunnel client -L udp://$hostport:127.0.0.1:$port?timeout_sec=0 wss://$server
+
+# for: ssh -p 2222 127.0.0.1
+# wstunnel client -L 'tcp://2222:localhost:22' wss://$server
