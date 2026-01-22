@@ -41,3 +41,5 @@ clients:
   api_base: https://ai.zxaicc.com/api/v1
   models:
   - name: deepseek-r1-0528
+  - name: qwen3-30b-a3B-instruct-2507
+  - name: jennifer
