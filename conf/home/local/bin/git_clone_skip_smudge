@@ -1,1 +1,5 @@
-.local/bin/git_clone_skip_smudge
+#!/bin/bash
+#
+# vim:ft=bash
+
+GIT_LFS_SKIP_SMUDGE=1 git clone "$@"
