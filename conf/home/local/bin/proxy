@@ -2,13 +2,12 @@
 #
 # vim:ft=bash
 
-############### Variables ###############
-
-############### Functions ###############
-
-############### Main Part ###############
-
 # eval $(< ~/.proxy)
 . ~/.proxy
 
-"$@"
+if [ "$1" = "sudo" ]; then
+    shift
+    exec sudo -E "$@"
+else
+    exec "$@"
+fi
