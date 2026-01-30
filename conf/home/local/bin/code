@@ -5,6 +5,8 @@
 # opts=$(getopt -o a: -- "$@")
 # eval set -- "$opts"
 
+unset ls
+
 agent="$1"
 
 case "$agent" in
@@ -25,4 +27,4 @@ case "$agent" in
         ;;
 esac
 
-$agent
+exec "$agent"
