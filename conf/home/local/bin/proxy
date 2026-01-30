@@ -2,7 +2,6 @@
 #
 # vim:ft=bash
 
-# eval $(< ~/.proxy)
 . ~/.proxy
 
 if [ "$1" = "sudo" ]; then
