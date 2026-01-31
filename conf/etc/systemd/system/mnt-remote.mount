@@ -1,7 +1,9 @@
 [Unit]
 Description=Mount NFS share after VPN is up
 After=network-online.target wg-quick@itove.service
+Before=wg-quick@itove.service
 Requires=wg-quick@itove.service
+Wants=wg-quick@itove.service
 PartOf=wg-quick@itove.service
 
 [Mount]
@@ -10,7 +12,8 @@ PartOf=wg-quick@itove.service
 What=remote:/home/al/m
 Where=/mnt/remote
 Type=nfs
-Options=ro,_netdev
+Options=rw,_netdev
+#Options=ro,_netdev,x-systemd.mount-timeout=10
 
 [Install]
 WantedBy=multi-user.target
