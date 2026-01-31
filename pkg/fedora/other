@@ -64,3 +64,4 @@ libavcodec-freeworld
 nasm
 autossh
 easy-rsa
+proxychains-ng
