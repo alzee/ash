@@ -166,6 +166,9 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exit
 
+# https://i3wm.org/docs/userguide.html#mousebindings
+#bindsym --release button3 kill
+
 bindsym $mod+r mode "resize"
 # resize window (you can also use the mouse for that)
 mode "resize" {
