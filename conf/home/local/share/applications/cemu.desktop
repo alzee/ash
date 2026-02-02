@@ -6,8 +6,8 @@ Categories=Game
 Version=1.0
 Name=cemu
 GenericName=cemu
-TryExec=/home/al/l/cemu.AppImage
-Exec=/home/al/l/cemu.AppImage
+TryExec=/home/al/l/cemu
+Exec=/home/al/l/cemu
 Terminal=false
 # Category entry according to:
 # https://specifications.freedesktop.org/menu-spec/
