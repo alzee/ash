@@ -7,8 +7,8 @@ Categories=Game
 Version=1.0
 Name=pes2010
 GenericName=pes2010
-TryExec=/home/al/.pes2010/pes2010.exe
-Exec=wine /home/al/.pes2010/pes2010.exe
+TryExec=/home/al/.games/pes2010/pes2010.exe
+Exec=wine /home/al/.games/pes2010/pes2010.exe
 Icon=/home/al/.local/share/icons/hicolor/256x256/apps/4360_pes2013.0.png
 Terminal=false
 # Category entry according to:
