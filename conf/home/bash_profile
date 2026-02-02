@@ -17,6 +17,19 @@ fi
 # or
 # VT=${XDG_VTNR:-$(tty | sed 's:/dev/tty::')}
 # if [[ -z "$DISPLAY" && "$VT" == 1 ]]; then
-if [ -z "$DISPLAY" -a "$(tty)" = /dev/tty1 ]; then
-	exec startx
+
+# if [ -z "$DISPLAY" -a "$(tty)" = /dev/tty1 ]; then
+# 	exec startx
+# fi
+
+# Start X only on tty1 or tty2
+if [ -z "$DISPLAY" ]; then
+    case "$(tty)" in
+        /dev/tty1)
+            exec startx ~/.xinitrc-i3
+            ;;
+        /dev/tty2)
+            exec startx ~/.xinitrc-xfce
+            ;;
+    esac
 fi

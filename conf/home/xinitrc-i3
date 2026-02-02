@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# vim:ft=sh
+# Run by startx
+
+# Since we don't use urxvt anymore
+# userresources=$HOME/.Xresources
+# [ -r "$userresources" ] && xrdb -merge "$userresources"
+
+[ -x ~/.monitors.sh ] && ~/.monitors.sh
+
+# Start daemon, fix file dialog fails in chrome
+/usr/libexec/xdg-desktop-portal-gtk &
+
+exec i3
