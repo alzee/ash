@@ -214,4 +214,5 @@ bar {
 
 # Will also start in a vncserver
 # exec xautolock -time 30 -locker "i3lock"
+#exec --no-startup-id ibus-daemon -rxd
 exec ~/.config/i3/startup.sh
