@@ -1,5 +1,4 @@
 opensc
-initscripts
 azote
 @gnome-desktop
 fpaste
@@ -13,7 +12,6 @@ gnumeric
 pidgin
 xscreensaver-base
 ibus-cangjie
-pavucontrol
 @LibreOffice
 nano
 eog
