@@ -1,0 +1,13 @@
+[Desktop Entry]
+# https://specifications.freedesktop.org/desktop-entry-spec/
+Type=Application
+Categories=Game
+
+Version=1.0
+Name=ps3
+GenericName=ps3
+TryExec=/home/al/l/bin/ps3
+Exec=/home/al/l/bin/ps3
+Terminal=false
+# Category entry according to:
+# https://specifications.freedesktop.org/menu-spec/

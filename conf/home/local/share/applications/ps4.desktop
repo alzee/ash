@@ -1,0 +1,13 @@
+[Desktop Entry]
+# https://specifications.freedesktop.org/desktop-entry-spec/
+Type=Application
+Categories=Game
+
+Version=1.0
+Name=ps4
+GenericName=ps4
+TryExec=/home/al/l/bin/ps4
+Exec=sh -c "unset ls; /home/al/l/bin/ps4"
+Terminal=false
+# Category entry according to:
+# https://specifications.freedesktop.org/menu-spec/
