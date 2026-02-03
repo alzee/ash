@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=IBus Daemon
+Comment=Start IBus Daemon
+Exec=ibus-daemon -rxd
+Icon=ibus
+Path=
+Terminal=false
+StartupNotify=false
