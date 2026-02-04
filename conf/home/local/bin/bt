@@ -7,7 +7,7 @@
 ############### Functions ###############
 
 ############### Main Part ###############
-if ! pidof transmission-daemon; then
+if ! pidof transmission-daemon > /dev/null; then
     transmission-daemon
     sleep 0.5	# why
 fi
