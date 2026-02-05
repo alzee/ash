@@ -8,7 +8,12 @@
 
 new(){
     local pkgs i opt
-    pkgs="admin vich/uploader-bundle symfony/ux-chartjs overtrue/pinyin phpoffice/phpspreadsheet --dev orm-fixtures fuck1 fuck2"
+    pkgs="admin
+    vich/uploader-bundle
+    symfony/ux-chartjs
+    overtrue/pinyin
+    phpoffice/phpspreadsheet
+    --dev orm-fixtures"
     # friendsofsymfony/ckeditor-bundle
     symfony new --webapp "$1"
 
