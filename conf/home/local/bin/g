@@ -3,11 +3,11 @@
 
 case $1 in
     "")
-        git status 2> /dev/null
+        git status -- . ':!CLAUDE.md' 2> /dev/null
         [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end
         ;;
     c)
-        git add -A
+        git add -A -- . ':!CLAUDE.md'
         shift
         comment=${*:-nth}
         git commit -m "$comment"
