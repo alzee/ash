@@ -1,10 +1,13 @@
 #!/bin/bash
 # vim:ft=sh
 
-d=~/w/todo
+d=~/w/d
 case $1 in
     "")
         v $d/todo
+        ;;
+    l)
+        l $d/
         ;;
     s)
         git -C $d status 2> /dev/null
@@ -21,5 +24,8 @@ case $1 in
         ;;
     p|pull)
         git -C $d pull
+        ;;
+    *)
+        v $d/"$1"
         ;;
 esac
