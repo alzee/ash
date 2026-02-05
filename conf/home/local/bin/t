@@ -13,6 +13,10 @@ case $1 in
         git -C $d status 2> /dev/null
         [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end
         ;;
+    d)
+        git -C $d diff 2> /dev/null
+        [ "$?" -eq 128 ] && echo -e $red${bold}Not a git repo $end
+        ;;
     c)
         git -C $d add -A
         shift
