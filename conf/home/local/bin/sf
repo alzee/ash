@@ -57,7 +57,8 @@ new(){
 
     echo -e \\n*** Make user
     bin/console make:user
-    git add -A; git commit -m "make user"
+    bin/console make:migration
+    git add -A; git commit -m "entity User"
 
     echo -e \\n*** Copy boilerplates...
     for i in $(find $boilerplates_dir/symfony/ -type f -printf '%P\n')
