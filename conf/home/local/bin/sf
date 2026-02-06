@@ -3,6 +3,7 @@
 # vim:ft=sh
 
 ############### Variables ###############
+boilerplates_dir=~/w/boilerplates/
 
 ############### Functions ###############
 
@@ -31,10 +32,21 @@ new(){
         fi
         echo -e \\n***Installing: "$opt" "$i"
         composer req $opt "$i"
-        git add -A
-        git commit -m "$i"
+        git add -A; git commit -m "$i"
         unset opt
     done
+
+    echo Create Admin Dashboard
+    bin/console make:admin:dashboard
+    ln -s src/Controller/Admin/ admin
+    git add -A; git commit -m "admin dashboard"
+
+    echo Init mdbook
+    mdbook init docs
+    ln -s ../docs/book/ public/docs
+    git add -A; git commit -m "docs"
+
+    # l=$(find $boilerplates_dir/symfony/)
 }
 
 ############### Main Part ###############
