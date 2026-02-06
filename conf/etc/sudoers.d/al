@@ -8,4 +8,4 @@ al	ALL=(ALL)       NOPASSWD: /home/al/.local/bin/addhost
 
 # Only for workstations
 # al	ALL=(ALL)       NOPASSWD: /usr/bin/systemctl suspend
-# al	ALL=(ALL)       NOPASSWD: /usr/bin/systemctl restart
+# al	ALL=(ALL)       NOPASSWD: /usr/bin/systemctl restart *
