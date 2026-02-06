@@ -29,7 +29,7 @@ new(){
     cp .env .env.local
     sed -i '/^#/d' .env.local
     sed -i "/^DATABASE_URL/s/app/$project/g; /^DATABASE/s/\!ChangeMe\!/$project/g" .env.local
-    echo -e \\n*** Create database user
+    echo -e '\n*** Create database user'
     sudo -u postgres psql -c "create role $project with login createdb password '$project'"
     bin/console doc:data:create
 
@@ -39,35 +39,35 @@ new(){
             opt="$i"
             continue
         fi
-        echo -e \\n*** Installing: "$opt" "$i"
+        echo -e '\n*** Installing:' "$opt" "$i"
         composer req $opt "$i"
         git add -A; git commit -m "$i"
         unset opt
     done
 
-    echo -e \\n*** Create Admin Dashboard
+    echo -e '\n*** Create Admin Dashboard'
     bin/console make:admin:dashboard
     ln -s src/Controller/Admin/ admin
     git add -A; git commit -m "admin dashboard"
 
-    echo -e \\n*** Init mdbook
+    echo -e '\n*** Init mdbook'
     mdbook init docs
     ln -s ../docs/book/ public/docs
     git add -A; git commit -m "docs"
 
-    echo -e \\n*** Make user
+    echo -e '\n*** Make user'
     bin/console make:user
     bin/console make:migration
     git add -A; git commit -m "entity User"
 
-    echo -e \\n*** Copy boilerplates...
+    echo -e '\n*** Copy boilerplates...'
     for i in $(find $boilerplates_dir/symfony/ -type f -printf '%P\n')
     do
         mkdir -p $(dirname $i)
         ln -f $boilerplates_dir/symfony/$i $i
     done
-    echo -e \\n*** Boilerplates copied.
-    echo *** DO review, remove files that you don\'t need.
+    echo -e '\n*** Boilerplates copied.'
+    echo DO review, remove files that you don\'t need.
 }
 
 ############### Main Part ###############
