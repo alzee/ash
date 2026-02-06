@@ -3,7 +3,8 @@
 # vim:ft=sh
 
 ############### Variables ###############
-boilerplates_dir=~/w/boilerplates/
+
+boilerplates_dir=~/w/boilerplates
 
 ############### Functions ###############
 
@@ -24,29 +25,43 @@ new(){
 
     cd "$1"
 
+    cp .env .env.local
+
     for i in $pkgs
     do
         if [ "$i" = --dev ]; then
             opt="$i"
             continue
         fi
-        echo -e \\n***Installing: "$opt" "$i"
+        echo -e \\n*** Installing: "$opt" "$i"
         composer req $opt "$i"
         git add -A; git commit -m "$i"
         unset opt
     done
 
-    echo Create Admin Dashboard
+    echo -e \\n*** Create Admin Dashboard
     bin/console make:admin:dashboard
     ln -s src/Controller/Admin/ admin
     git add -A; git commit -m "admin dashboard"
 
-    echo Init mdbook
+    echo -e \\n*** Init mdbook
     mdbook init docs
     ln -s ../docs/book/ public/docs
     git add -A; git commit -m "docs"
 
-    # l=$(find $boilerplates_dir/symfony/)
+    echo -e \\n*** Make user
+    bin/console make:user
+    git add -A; git commit -m "make user"
+
+    echo -e \\n*** Copy boilerplates...
+    for i in $(find $boilerplates_dir/symfony/ -type f -printf '%P\n')
+    do
+        mkdir -p $(dirname $i)
+        ln -f $boilerplates_dir/symfony/$i $i
+    done
+    echo -e \\n*** Boilerplates copied.
+    echo -e \\n*** DO review, remove files that you don\'t need.
+    echo -e \\n*** Next, modify .env.local and create database.
 }
 
 ############### Main Part ###############
