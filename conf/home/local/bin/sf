@@ -30,7 +30,7 @@ new(){
     sed -i '/^#/d' .env.local
     sed -i "/^DATABASE_URL/s/app/$project/g; /^DATABASE/s/\!ChangeMe\!/$project/g" .env.local
     echo -e \\n*** Create database user
-    sudo -u postgres psql -c "create role $project with login createdb password '$project'";
+    sudo -u postgres psql -c "create role $project with login createdb password '$project'"
     bin/console doc:data:create
 
     for i in $pkgs
