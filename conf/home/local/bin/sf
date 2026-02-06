@@ -9,7 +9,8 @@ boilerplates_dir=~/w/boilerplates
 ############### Functions ###############
 
 new(){
-    local pkgs i opt
+    local pkgs i opt project
+    project="$1"
     pkgs="admin
     vich/uploader-bundle
     symfony/ux-chartjs
@@ -17,7 +18,7 @@ new(){
     phpoffice/phpspreadsheet
     --dev orm-fixtures"
     # friendsofsymfony/ckeditor-bundle
-    symfony new --webapp "$1"
+    symfony new --webapp "$project"
 
     if [ $? -gt 0 ]; then
         exit
@@ -26,6 +27,11 @@ new(){
     cd "$1"
 
     cp .env .env.local
+    sed -i '/^#/d' .env.local
+    sed -i "/^DATABASE_URL/s/app/$project/g; /^DATABASE/s/\!ChangeMe\!/$project/g" .env.local
+    echo -e \\n*** Create database user
+    sudo -u postgres psql -c "create role $project with login createdb password '$project'";
+    bin/console doc:data:create
 
     for i in $pkgs
     do
@@ -60,8 +66,7 @@ new(){
         ln -f $boilerplates_dir/symfony/$i $i
     done
     echo -e \\n*** Boilerplates copied.
-    echo -e \\n*** DO review, remove files that you don\'t need.
-    echo -e \\n*** Next, modify .env.local and create database.
+    echo *** DO review, remove files that you don\'t need.
 }
 
 ############### Main Part ###############
