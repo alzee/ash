@@ -1,14 +1,15 @@
 {
+  "env": {
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
+    "AWS_REGION": "us-west-2",
+    "API_TIMEOUT_MS": "3000000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "DISABLE_TELEMETRY": "1",
+    "OTEL_METRICS_EXPORTER": "otlp"
+  },
   "attribution": {
     "commit": "",
     "pr": ""
-  },
-  "env":{
-      "AWS_REGION": "us-west-2",
-      "API_TIMEOUT_MS": 3000000,
-      "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
-      "DISABLE_TELEMETRY": 1,
-      "OTEL_METRICS_EXPORTER": "otlp"
   },
   "alwaysThinkingEnabled": true
 }
