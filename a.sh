@@ -347,7 +347,7 @@ misc() {
         sudo setsebool -P httpd_can_network_connect 1   # so php-fpm can access mysql port
         sudo setsebool -P samba_enable_home_dirs 1
 
-        sudo chcon -Rt httpd_sys_content_t ~/w
+        sudo chcon -Rt httpd_sys_rw_content_t ~/w
 
         # In case postfix warning: unable to look up public/pickup: No such file or directory
         sudo mkfifo /var/spool/postfix/public/pickup 2> /dev/null

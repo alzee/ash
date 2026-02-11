@@ -2,6 +2,8 @@
 
 ## Important Notes
 
+- DO NOT generate documents unless I ask for it.
+
 ### command aliases
 
 ## Communication Preferences
