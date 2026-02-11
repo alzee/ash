@@ -1,0 +1,15 @@
+[Unit]
+Description=Joycond-cemuhook Service
+#After=joycond.service
+#Requires=joycond.service
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/sleep 3
+ExecStart=/home/al/.local/bin/joycond-cemuhook
+Restart=always
+RestartSec=2
+#User=al
+
+[Install]
+WantedBy=default.target
