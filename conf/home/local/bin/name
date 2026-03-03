@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Rename filename, replace space with _, and remove ' [ ]
+#
+# vim:ft=bash
+
+name=${@// /_}
+name=${name//[/}
+name=${name//]/}
+name=${name//\'/}
+
+mv "$@" "$name"
