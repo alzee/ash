@@ -18,6 +18,8 @@ clients:
   - name: ministral-3:3b-cloud
   - name: ministral-3:8b-cloud
   - name: ministral-3:14b-cloud
+  - name: qwen3.5:cloud
+  - name: qwen3.5:397b-cloud
   - name: qwen3-vl:235b-cloud
   - name: qwen3-vl:235b-instruct-cloud
   - name: gpt-oss:20b-cloud
