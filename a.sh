@@ -358,7 +358,7 @@ misc() {
         gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control><Alt>e']"
     fi
 
-    crontab $scriptdir/conf/templates/$distro/cron
+    #crontab $scriptdir/conf/templates/$distro/cron
 
     # run tcpdump as non-root, seems no need to add user to group
     # https://askubuntu.com/a/632189
