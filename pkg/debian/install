@@ -1,3 +1,5 @@
+gpg
+cron
 ufw
 fail2ban
 apt-utils
