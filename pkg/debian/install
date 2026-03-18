@@ -34,4 +34,5 @@ openssh-server
 poppler-utils
 sysstat
 bc
+jq
 wtmpdb
