@@ -94,7 +94,7 @@ add_repo() {
                 sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
             fi
             # add testing repo (latest packages)
-            sudo mkdir /etc/apt/sources.list.d/disabled
+            sudo mkdir -p /etc/apt/sources.list.d/disabled
             sudo mv /etc/apt/sources.list.d/*.* /etc/apt/sources.list.d/disabled
             sudo cp $scriptdir/conf/etc/apt/sources.list.d/testing.sources /etc/apt/sources.list.d/
             # curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
