@@ -463,7 +463,7 @@ _mkswap(){
 
 _sysctl(){
     local f
-    f=$scriptdir/conf/templates/sysctl.d/ip_forward.conf
+    f=$scriptdir/conf/etc/sysctl.d/ip_forward.conf
     if [ -f $f ]; then
         sudo cp $f /etc/sysctl.d/
         sudo sysctl -p $f
