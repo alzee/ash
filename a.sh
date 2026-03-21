@@ -339,7 +339,7 @@ misc() {
 
         # start docker to initialize /etc/docker/
         sudo systemctl start docker
-        sudo cp $scriptdir/conf/templates/daemon.json /etc/docker/
+        sudo cp $scriptdir/conf/etc/docker/daemon.json /etc/docker/
 
         #sudo ln -s ~/.vhosts /etc/httpd/conf.d/
         sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/vhosts.conf
@@ -358,11 +358,13 @@ misc() {
         gsettings set org.freedesktop.ibus.panel.emoji hotkey "['<Control><Alt>e']"
     fi
 
-    #crontab $scriptdir/conf/templates/$distro/cron
+    #crontab $scriptdir/conf/templates/cron
 
     # run tcpdump as non-root, seems no need to add user to group
     # https://askubuntu.com/a/632189
     sudo setcap cap_net_raw,cap_net_admin=eip $(which tcpdump)
+
+    sudo cp $scriptdir/conf/etc/systemd/journald.conf /etc/systemd/
     
     # https://forums.developer.nvidia.com/t/no-matching-gpu-found-with-510-47-03/202315/5
     # nvidia-powerd is only for mobile gpus

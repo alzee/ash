@@ -31,8 +31,7 @@ clients:
   - name: qwen3-next:80b-cloud
   - name: glm-4.6:cloud
   - name: glm-4.7:cloud
-  - name: minimax-m2:cloud
-  - name: minimax-m2.1:cloud
+  - name: minimax-m2.7:cloud
   - name: cogito-2.1:671b-cloud
   - name: rnj-1:8b-cloud
   - name: kimi-k2:1t-cloud
