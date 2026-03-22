@@ -67,7 +67,7 @@ bindsym $mod+F8 exec --no-startup-id mouseless
 bindsym $mod+slash exec i3lock -c 000000 -e -u
 
 # bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod+semicolon exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+semicolon exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -fn 'DejaVu Sans Mono-18'" # https://unix.stackexchange.com/a/287482
 
 # To switch back to the previously focused workspace
 bindsym $mod+Tab workspace back_and_forth
@@ -210,7 +210,7 @@ bar {
     hidden_state hide
     status_command i3status -c ~/.config/i3/i3status.conf
     #tray_output primary
-    font pango:monospace 8
+    font pango:monospace 18
 }
 
 # Will also start in a vncserver
