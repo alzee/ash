@@ -74,5 +74,6 @@ yq
 jq
 zbar
 chromium
+libavcodec-freeworld
 pandoc
 xrandr
