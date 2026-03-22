@@ -65,3 +65,13 @@ setroubleshoot-server
 firewall-config
 htop
 xfce4-about
+ffmpeg-free
+libavcodec-free
+libavcodec-free
+libavdevice-free
+libavfilter-free
+libavformat-free
+libavutil-free
+libpostproc-free
+libswresample-free
+libswscale-free
