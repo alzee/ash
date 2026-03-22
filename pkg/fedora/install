@@ -77,3 +77,5 @@ chromium
 ffmpeg
 pandoc
 xrandr
+gvfs-mtp
+gvfs-gphoto2
