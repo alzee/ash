@@ -28,8 +28,8 @@ if [ -z "$DISPLAY" ]; then
         /dev/tty1)
             exec startx ~/.xinitrc-i3
             ;;
-        /dev/tty2)
-            exec startx ~/.xinitrc-xfce
-            ;;
+        #/dev/tty2)
+        #    exec startx ~/.xinitrc-xfce
+        #    ;;
     esac
 fi
