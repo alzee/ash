@@ -22,6 +22,7 @@ layers:
       q: layer initial
       # r: reload-config
       # keep the mouse layer active
+      a: layer mouse
       m: layer mouse
       l: move  1  0
       h: move -1  0
@@ -34,6 +35,7 @@ layers:
       dot: button left
       comma: button right
       semicolon: tap-hold e; toggle-layer scroll; 100
+      s: tap-hold e; toggle-layer scroll; 100
       space: speed 0.2
       leftalt: speed 4
       #_: layer initial
