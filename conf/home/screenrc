@@ -15,8 +15,9 @@ source ~/.screenrc.local
 # screen -t build 6 npm run dev:weapp
 # chdir
 # screen -t gxb 3 ssh $gxb
+# screen 7 irssi
 # screen 8 cmus
-screen -t ai 9
+# screen -t ai 9
 ###
 #chdir
 screen
