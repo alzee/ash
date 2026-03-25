@@ -219,6 +219,21 @@ install_wafw00f(){
     uv tool install wafw00f
 }
 
+install_joycond(){
+    sudo dnf install libevdev-devel libudev-devel
+    cd w
+    git clone https://github.com/DanielOgorchock/joycond
+    cd joycond
+    cmake .
+    sudo make install
+    # Fix `use motion` uncheckable issue
+    # after this fix, there will be only one NS pro controller instead of two in API > SDL Controller,
+    # and everything will work properly. Need joycond-cemuhook NO MORE.
+    # https://github.com/cemu-project/Cemu/issues/1097#issuecomment-2638385818
+    sudo sed -i 's/0600/0666/' /usr/lib/udev/rules.d/89-joycond.rules
+    sudo systemctl enable --now joycond
+}
+
 _install(){
     if [ -z "$1" ]; then
         echo "Error: No tool specified"
