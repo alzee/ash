@@ -150,6 +150,18 @@ install_mdbook(){
     cp $tmpdir/mdbook ~/.local/bin/ # cp will have the right selinux context, mv will not
 }
 
+install_mouseless(){
+    # output example: v0.3.0
+    tag=$(curl -s https://api.github.com/repos/jbensmann/mouseless/releases/latest | jq -r .tag_name)
+    echo latest release: $tag
+    filename=mouseless_linux_amd64.tar.gz
+	url="https://github.com/jbensmann/mouseless/releases/download/${tag}/$filename"
+    curl -L -o $tmpdir/$filename $url
+    tar xf $tmpdir/$filename -C $tmpdir
+    chmod +x $tmpdir/mouseless
+    sudo cp $tmpdir/mouseless /usr/local/bin/
+}
+
 install_wstunnel(){
     # output example: v10.5.1
     tag=$(curl -s https://api.github.com/repos/erebe/wstunnel/releases/latest | jq -r .tag_name)
