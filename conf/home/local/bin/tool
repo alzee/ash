@@ -150,6 +150,29 @@ install_mdbook(){
     cp $tmpdir/mdbook ~/.local/bin/ # cp will have the right selinux context, mv will not
 }
 
+get_github_latest_tag(){
+    local repo tag
+    repo="$1" # namespace/repo
+
+    tag=$(curl -s https://api.github.com/repos/${repo}/releases/latest | jq -r .tag_name)
+}
+
+download_from_github(){
+    local repo tag filename install_dir url exe_name
+    repo="$1" # namespace/repo
+    exe_name=${1#*/}
+    filename="$2"
+    install_dir="${3:-~/.local/bin/}"
+
+    tag=$(curl -s https://api.github.com/repos/${repo}/releases/latest | jq -r .tag_name)
+    echo latest release: $tag
+    filename=mouseless_linux_amd64.tar.gz
+	url="https://github.com/${repo}/releases/download/${tag}/$filename"
+    curl -L -o $tmpdir/$filename $url
+    tar xf $tmpdir/$filename -C $tmpdir
+    chmod +x $tmpdir/$exe_name
+}
+
 install_mouseless(){
     # output example: v0.3.0
     tag=$(curl -s https://api.github.com/repos/jbensmann/mouseless/releases/latest | jq -r .tag_name)
