@@ -258,10 +258,24 @@ install_joycond(){
 }
 
 install_mmctl(){
-    url=$(curl https://releases.mattermost.com | grep mattermost-team)
+    # Haven't found a link of mmctl version list, so we get version from here
+    url=$(curl -s https://releases.mattermost.com | grep mattermost-team)
+    version=${url#*com/}
+    version=${version%%/*}
+    echo Version: $version
+    arch=$(arch)
+    case $arch in
+        x86_64)
+            arch=amd64
+            ;;
+        aarch64)
+            arch=arm64
+            ;;
+    esac
+    echo Arch: $arch
+
+    url="https://releases.mattermost.com/mmctl/v${version}/linux_${arch}.tar"
     filename=$(basename $url)
-    curl -O "$url"
-    tar xf $filename
     curl -L -o $tmpdir/$filename $url
     tar xf $tmpdir/$filename -C $tmpdir
     chmod +x $tmpdir/mmctl
