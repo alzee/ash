@@ -257,6 +257,17 @@ install_joycond(){
     sudo systemctl enable --now joycond
 }
 
+install_mmctl(){
+    url=$(curl https://releases.mattermost.com | grep mattermost-team)
+    filename=$(basename $url)
+    curl -O "$url"
+    tar xf $filename
+    curl -L -o $tmpdir/$filename $url
+    tar xf $tmpdir/$filename -C $tmpdir
+    chmod +x $tmpdir/mmctl
+    cp $tmpdir/mmctl ~/.local/bin/
+}
+
 _install(){
     if [ -z "$1" ]; then
         echo "Error: No tool specified"
