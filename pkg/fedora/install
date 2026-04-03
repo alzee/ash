@@ -81,3 +81,5 @@ gvfs-mtp
 gvfs-gphoto2
 cmake
 dkms
+wine
+wine-dxvk
