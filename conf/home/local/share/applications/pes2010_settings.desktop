@@ -8,7 +8,7 @@ Version=1.0
 Name=pes2010_settings
 GenericName=pes2010_settings
 TryExec=/home/al/.pes2010/settings.exe
-Exec=wine /home/al/.pes2010/settings.exe
+Exec=wine64 /home/al/.pes2010/settings.exe
 Terminal=false
 # Category entry according to:
 # https://specifications.freedesktop.org/menu-spec/
