@@ -1,12 +1,13 @@
 # see https://github.com/sigoden/aichat/blob/main/config.example.yaml
 
 editor: vim
-model: ollama:gemini-3-flash-preview:latest
+model: ollama:gemma4:31b-cloud
 clients:
 - type: openai-compatible
   name: ollama
   api_base: http://localhost:11434/v1
   models:
+  - name: gemma4:31b-cloud
   - name: deepseek-v3.1:671b-cloud
   - name: deepseek-v3.2:cloud
   - name: gemini-3-flash-preview:cloud
@@ -46,3 +47,11 @@ clients:
   - name: qwen3-30b-a3b-thinking-2507
   - name: jennifer
   - name: glm-4.7
+- type: openai-compatible
+  name: openrouter
+  api_base: https://openrouter.ai/api/v1/chat/completions
+  models:
+  - name: google/gemma-4-31b-it:free
+  - name: google/gemma-4-26b-a4b-it:free
+  - name: nvidia/nemotron-3-super-120b-a12b:free
+  - name: minimax/minimax-m2.5:free
