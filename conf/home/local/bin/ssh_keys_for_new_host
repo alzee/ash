@@ -27,7 +27,7 @@ chcon -R -t ssh_home_t "$new_hostname"
 # gen new keys for new host 
 for k in $keys
 do
-    ssh-keygen -q -t ed25519 -f "$new_hostname"/ssh/$k -N ''
+    ssh-keygen -q -t ed25519 -f "$new_hostname"/ssh/$k -C al@$new_hostname -N ''
 done
 
 cp $conf "$new_hostname"/ssh
