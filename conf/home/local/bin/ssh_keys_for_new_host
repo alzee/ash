@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+
+if [ -z "$1" ]; then
+    echo Usage: $(basename $0) '<new_hostname>'
+    exit
+fi
+
+conf=~/.ssh/config
+
+# get all ssh keys
+keys=$(grep 'IdentityFile' .ssh/config | cut -d'/' -f3)
+echo $keys
+
+# dir for new host
+new_hostname="$1"
+mkdir -p "$new_hostname"/ssh
+chcon -R -t ssh_home_t "$new_hostname"
+
+# gen new keys for new host 
+for k in $keys
+do
+    ssh-keygen -q -t ed25519 -f "$new_hostname"/ssh/$k -N ''
+done
+
+cp $conf "$new_hostname"/ssh
+
+# ssh-copy-id
