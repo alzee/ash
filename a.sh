@@ -344,8 +344,6 @@ misc() {
         #sudo ln -s ~/.vhosts /etc/httpd/conf.d/
         sudo ln -s ~/.vhosts.conf /etc/httpd/conf.d/vhosts.conf
 
-        sudo postgresql-setup --initdb
-
         sudo setsebool -P httpd_can_network_connect 1   # so php-fpm can access mysql port
         sudo setsebool -P samba_enable_home_dirs 1
 
@@ -373,6 +371,16 @@ misc() {
     # https://forums.developer.nvidia.com/t/no-matching-gpu-found-with-510-47-03/202315/5
     # nvidia-powerd is only for mobile gpus
     # $pkg remove -y xorg-x11-drv-nvidia-power
+}
+
+setup_postgresql(){
+    local file
+    if [ "$distro" = fedora ]; then
+        sudo postgresql-setup --initdb
+        sudo systemctl enable --now postgresql.service
+    fi
+    file=$(sudo -u postgres psql -t -A -c "show hba_file")
+    sudo sed -i.bak "s/^\(host[[:space:]]\+all[[:space:]]\+all[[:space:]]\+127\.0\.0\.1\/32[[:space:]]\+\).*/\1scram-sha-256/" $file
 }
 
 setup_auto_upgrade(){
@@ -508,6 +516,7 @@ case $1 in
         settimezone
         dir_struct
         default_pool
+        setup_postgresql
         misc
         add_firewall_rules
         mklinks
