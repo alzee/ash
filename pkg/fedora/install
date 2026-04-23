@@ -83,3 +83,4 @@ cmake
 dkms
 wine
 wine-dxvk
+proxychains-ng
