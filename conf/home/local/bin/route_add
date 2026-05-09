@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+# permanent?
+conn="$(nmcli -t -f NAME connection show --active | head -1)"
+
+# sudo nmcli con modify "$conn" +ipv4.routes "172.20.0.0/16 192.168.112.188"
+sudo nmcli con modify "$conn" +ipv4.routes "$1 $2"
+sudo nmcli con up "$conn"
+
+# temporary
+# sudo ip r add 172.20.0.0/16 via 192.168.112.188
+# sudo ip r add "$1" via "$2"
