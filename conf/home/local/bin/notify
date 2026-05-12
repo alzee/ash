@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+msg="$1"
+
+sudo -u al DISPLAY=:0 XAUTHORITY=/home/al/.Xauthority notify-send "Message" "$msg"
