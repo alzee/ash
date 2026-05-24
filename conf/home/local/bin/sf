@@ -11,7 +11,8 @@ boilerplates_dir=~/w/boilerplates
 new(){
     local pkgs i opt project
     project="$1"
-    pkgs="easycorp/easyadmin-bundle
+    pkgs="symfony/flex
+    easycorp/easyadmin-bundle
     vich/uploader-bundle
     symfony/ux-chartjs
     overtrue/pinyin
