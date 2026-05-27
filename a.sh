@@ -163,7 +163,7 @@ install_pkg() {
 
 addgrp() {
     # since we put web and mariadb dir in home
-    sudo usermod -a -G $USER mysql && say added user mysql to group $USER
+    # sudo usermod -a -G $USER mysql && say added user mysql to group $USER
     case "$distro" in
         rhel | fedora)
             sudo usermod -a -G $USER apache && say added user apache to group $USER
