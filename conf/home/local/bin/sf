@@ -61,6 +61,10 @@ new(){
     bin/console make:migration
     git add -A; git commit -m "entity User"
 
+    [ -d "$boilerplates_dir" ] && boilerplates
+}
+
+boilerplates(){
     echo -e '\n*** Copy boilerplates...'
     for i in $(find $boilerplates_dir/symfony/ -type f -printf '%P\n')
     do
@@ -80,6 +84,9 @@ case "$1" in
         ;;
     S)
         symfony serve:stop
+        ;;
+    b)
+        boilerplates
         ;;
     n|new)
         new "$2"
