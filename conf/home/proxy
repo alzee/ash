@@ -8,5 +8,6 @@ export https_proxy=$SCHEME://$SERVER:$PORT
 export HTTPS_PROXY=$SCHEME://$SERVER:$PORT
 export all_proxy=$SCHEME://$SERVER:$PORT
 export ALL_PROXY=$SCHEME://$SERVER:$PORT
+export no_proxy=127.0.0.1
 export SOCKS_SERVER=$SERVER:$PORT
 export SOCKS_VERSION=5

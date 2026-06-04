@@ -1,7 +1,7 @@
 # see https://github.com/sigoden/aichat/blob/main/config.example.yaml
 
 editor: vim
-model: ollama:gemma4:31b-cloud
+model: ai:deepseek-v4-flash-w8a8-mtp
 clients:
 - type: openai-compatible
   name: ollama
@@ -41,8 +41,9 @@ clients:
 - type: openai-compatible
   name: ai
   api_base: https://ai.zxaicc.com/api/v1
+  #api_base: http://gx193:8006/v1
   models:
-  - name: deepseek-r1-0528
+  - name: deepseek-v4-flash-w8a8-mtp
   - name: qwen3-30b-a3b-instruct-2507
   - name: qwen3-30b-a3b-thinking-2507
   - name: jennifer
@@ -55,3 +56,9 @@ clients:
   - name: google/gemma-4-26b-a4b-it:free
   - name: nvidia/nemotron-3-super-120b-a12b:free
   - name: minimax/minimax-m2.5:free
+- type: openai-compatible
+  name: deepseek
+  api_base: https://api.deepseek.com
+  models:
+  - name: deepseek-v4-flash
+  - name: deepseek-v4-pro
