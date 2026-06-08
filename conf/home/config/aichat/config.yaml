@@ -42,12 +42,14 @@ clients:
   name: ai
   api_base: https://ai.zxaicc.com/api/v1
   #api_base: http://gx193:8006/v1
+  #api_base: http://gx107:8000/v1
   models:
   - name: deepseek-v4-flash-w8a8-mtp
-  - name: qwen3-30b-a3b-instruct-2507
-  - name: qwen3-30b-a3b-thinking-2507
+  - name: qwen3.6-35b-a3b
+  - name: qwen3.6-27b
+  #- name: qwen3-30b-a3b-instruct-2507
+  #- name: qwen3-30b-a3b-thinking-2507
   - name: jennifer
-  - name: glm-4.7
 - type: openai-compatible
   name: openrouter
   api_base: https://openrouter.ai/api/v1/chat/completions

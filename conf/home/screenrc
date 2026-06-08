@@ -1,7 +1,9 @@
 setenv PS1 "[\[${YELLOW}${BOLD}\]\D{%I}\[${CYAN}${BOLD}\]\D{%M}\[${END}${WHITE}\]\D{%S}\[${END}\] \u@\h \[${RED}${BOLD}\]\W\[${END}\]]\[${RED}${BOLD}\]\$\[${END}\] "
 # create a layout, otherwise the regions won't be remembered after reattach
 layout new
+defscrollback 10000
 #layout new
+
 # create windows
 # screen -t mysql 4 sudo mysql
 source ~/.screenrc.local
