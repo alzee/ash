@@ -166,11 +166,8 @@ addgrp() {
     # sudo usermod -a -G $USER mysql && say added user mysql to group $USER
     case "$distro" in
         rhel | fedora)
-            sudo usermod -a -G $USER apache && say added user apache to group $USER
-            sudo usermod -a -G $USER nginx && say added user nginx to group $USER
             ;;
         debian)
-            sudo usermod -a -G $USER www-data && say added user www-data to group $USER
             ;;
     esac
     sudo chmod 750 $HOME # 770 cause .ssh/authenticated fail since the permission is too open
