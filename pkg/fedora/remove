@@ -75,3 +75,4 @@ libavutil-free
 libpostproc-free
 libswresample-free
 libswscale-free
+mediawriter
