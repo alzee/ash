@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+vim $(sudo -u postgres psql -t -c 'show hba_file')
