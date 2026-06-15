@@ -6,6 +6,7 @@ defscrollback 10000
 
 # create windows
 # screen -t mysql 4 sudo mysql
+screen -t psql 9 sudo -u postgres psql
 source ~/.screenrc.local
 ### ~/.screenrc.local example
 # screen -t psql 5 sudo -u postgres psql
