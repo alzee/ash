@@ -287,12 +287,16 @@ add_firewall_rules(){
         sudo firewall-cmd --add-service samba
         sudo firewall-cmd --add-service nfs
         sudo firewall-cmd --add-service vnc-server
-        sudo firewall-cmd --add-service http --zone libvirt
-        sudo firewall-cmd --add-service https --zone libvirt
-        sudo firewall-cmd --add-service samba --zone libvirt
-        sudo firewall-cmd --add-service nfs --zone libvirt
         sudo firewall-cmd --add-port=1088/tcp --add-port=1080/tcp # dante(sockd)
-        sudo firewall-cmd --add-port=8000/tcp # symfony dev
+        sudo firewall-cmd --add-port=3000/tcp
+        sudo firewall-cmd --add-port=8000-8009/tcp
+        sudo firewall-cmd --zone libvirt --add-service http
+        sudo firewall-cmd --zone libvirt --add-service https
+        sudo firewall-cmd --zone libvirt --add-service samba
+        sudo firewall-cmd --zone libvirt --add-service postgresql
+        sudo firewall-cmd --zone libvirt --add-service nfs
+        sudo firewall-cmd --zone libvirt --add-port=3000/tcp
+        sudo firewall-cmd --zone libvirt --add-port=8000-8009/tcp
         sudo firewall-cmd --runtime-to-permanent
     fi
 }

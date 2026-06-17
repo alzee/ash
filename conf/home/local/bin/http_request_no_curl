@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+# see https://mareksuppa.com/til/bash-dev-tcp-http-without-curl/
+
+host=$1
+
+exec 3<>/dev/tcp/$host/80
+
+printf "GET / HTTP/1.1\r\nHost: $host\r\nConnection: close\r\n\r\n" >&3
+
+cat <&3
