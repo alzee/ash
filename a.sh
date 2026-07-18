@@ -285,7 +285,7 @@ add_firewall_rules(){
         sudo firewall-cmd --add-service http
         sudo firewall-cmd --add-service https
         sudo firewall-cmd --add-service samba
-        sudo firewall-cmd --add-service nfs
+        sudo firewall-cmd --add-service nfs --add-service=rpc-bind --add-service=mountd
         sudo firewall-cmd --add-service vnc-server
         sudo firewall-cmd --add-port=1088/tcp --add-port=1080/tcp # dante(sockd)
         sudo firewall-cmd --add-port=3000/tcp
@@ -294,7 +294,7 @@ add_firewall_rules(){
         sudo firewall-cmd --zone libvirt --add-service https
         sudo firewall-cmd --zone libvirt --add-service samba
         sudo firewall-cmd --zone libvirt --add-service postgresql
-        sudo firewall-cmd --zone libvirt --add-service nfs
+        sudo firewall-cmd --zone libvirt --add-service nfs --add-service=rpc-bind --add-service=mountd
         sudo firewall-cmd --zone libvirt --add-port=3000/tcp
         sudo firewall-cmd --zone libvirt --add-port=8000-8009/tcp
         sudo firewall-cmd --runtime-to-permanent
