@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+host=$1
+DIR=~/.local/bin
+
+if [ -z "$PASS" -o -z "$host" ]; then
+    echo Usage: PASS=xxxxx $(basename $0) '<hostname>'
+    exit
+fi
+
+if [[ "$host" == *@* ]]; then
+    echo Ignoring specified user ${host%@*}, using root
+    host=${host##*@}
+fi
+
+ssh root@$host "PASS=$PASS U=${U:-$USER} bash" < $DIR/adduser.sh
