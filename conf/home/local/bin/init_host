@@ -3,6 +3,7 @@
 # vim:ft=bash
 
 host=$1
+U=${U:-$USER}
 DIR=~/.local/bin
 
 if [ -z "$PASS" -o -z "$host" ]; then
@@ -15,4 +16,20 @@ if [[ "$host" == *@* ]]; then
     host=${host##*@}
 fi
 
-ssh root@$host "PASS=$PASS U=${U:-$USER} bash" < $DIR/adduser.sh
+ssh root@$host "PASS=$PASS U=$U bash" < $DIR/adduser.sh
+
+pushd ~/.ssh
+
+ssh-keygen -t ed25519 -N '' -f $host
+sed -i "/$host/d" known_hosts
+
+sed -i "/$host/d" config
+
+cat <<EOF >> config
+Host $(grep $host /etc/hosts)
+    IdentityFile ~/.ssh/$host
+EOF
+
+ssh-copy-id -i $host $U@$host
+
+popd
