@@ -10,6 +10,7 @@ fi
 u=${U:-$USER}
 useradd $u
 usermod -aG wheel $u
+usermod -aG docker $u
 echo $PASS | passwd --stdin $u
 
 echo Switching to user $u
