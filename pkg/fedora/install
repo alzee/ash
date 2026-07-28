@@ -66,6 +66,7 @@ openssl-devel
 libappindicator-gtk3-devel
 librsvg2-devel
 postgresql-server
+postgresql-contrib
 pwgen
 awscli2
 vultr-cli

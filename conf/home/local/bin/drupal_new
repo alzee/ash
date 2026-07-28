@@ -16,7 +16,8 @@ site_path=web/sites/default
 
 composer cre drupal/recommended-project $name
 cd $name
-composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,honeypot,gin,gin_toolbar,dashboard,smtp} league/commonmark:^1.0
+composer req drush/drush drupal/{token,ctools,pathauto,easy_breadcrumb,metatag,honeypot,gin,gin_toolbar,dashboard,smtp}
+# league/commonmark:^1.0
 # jsonapi_extras restui imce markdown
 # # composer require 'drupal/gin_toolbar_custom_menu'
 composer req --dev drupal/devel
