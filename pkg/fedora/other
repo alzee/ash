@@ -10,7 +10,6 @@ aircrack-ng
 libpcap-devel
 pixiewps
 sway
-arandr
 tlp
 eyeD3
 dnsmap
@@ -64,3 +63,7 @@ autossh
 easy-rsa
 evtest
 rclone
+mariadb-server
+mysql-devel
+php-mysqlnd
+jmtpfs
