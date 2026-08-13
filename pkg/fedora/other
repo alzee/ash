@@ -67,3 +67,5 @@ mariadb-server
 mysql-devel
 php-mysqlnd
 jmtpfs
+thermald
+tlp
