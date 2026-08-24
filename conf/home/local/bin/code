@@ -7,7 +7,7 @@
 
 unset ls
 
-agent="$1"
+agent="${1:-$AGENT}"
 
 case "$agent" in
     copilot)
@@ -22,7 +22,7 @@ case "$agent" in
     cursor)
         agent=cursor-agent
         ;;
-    claude|*)
+    claude)
         agent=claude
         ;;
 esac
