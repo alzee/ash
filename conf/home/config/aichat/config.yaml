@@ -1,7 +1,9 @@
 # see https://github.com/sigoden/aichat/blob/main/config.example.yaml
 
 editor: vim
-model: ai:deepseek-v4-flash-w8a8-mtp
+
+model: ai:qwen3.8-27b
+
 clients:
 - type: openai-compatible
   name: ollama
@@ -38,18 +40,22 @@ clients:
   - name: kimi-k2:1t-cloud
   - name: kimi-k2-thinking:cloud
   - name: mistral-large-3:675b-cloud
+
 - type: openai-compatible
   name: ai
-  api_base: https://ai.zxaicc.com/v1
+  #api_base: https://ai.zxaicc.com/v1
+  api_base: https://ai:4000/v1
   #api_base: http://gx193:8006/v1
   #api_base: http://gx107:8000/v1
   models:
   - name: deepseek-v4-flash-w8a8-mtp
   - name: qwen3.6-35b-a3b
   - name: qwen3.6-27b
+  - name: qwen3.8-27b
   #- name: qwen3-30b-a3b-instruct-2507
   #- name: qwen3-30b-a3b-thinking-2507
   - name: jennifer
+
 - type: openai-compatible
   name: openrouter
   api_base: https://openrouter.ai/api/v1/chat/completions
@@ -58,6 +64,7 @@ clients:
   - name: google/gemma-4-26b-a4b-it:free
   - name: nvidia/nemotron-3-super-120b-a12b:free
   - name: minimax/minimax-m2.5:free
+
 - type: openai-compatible
   name: deepseek
   api_base: https://api.deepseek.com
