@@ -44,7 +44,7 @@ clients:
 - type: openai-compatible
   name: ai
   #api_base: https://ai.zxaicc.com/v1
-  api_base: https://ai:4000/v1
+  api_base: http://ai:4000/v1
   #api_base: http://gx193:8006/v1
   #api_base: http://gx107:8000/v1
   models:

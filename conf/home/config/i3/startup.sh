@@ -10,7 +10,7 @@
 
 ibus-daemon -rxd
 
-feh --bg-fill ~/.config/i3/bg.png
+#feh --bg-fill ~/.config/i3/bg.png
 
 i3-sensible-terminal
 
