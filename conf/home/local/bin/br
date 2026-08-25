@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+v=${1}
+
+if [ -z "$v" ]; then
+    brightnessctl
+else
+    brightnessctl s $v
+fi
