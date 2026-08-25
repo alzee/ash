@@ -278,7 +278,7 @@ add_firewall_rules(){
         sudo ufw allow in on wg-server to any port 1080 proto tcp # danted
         sudo ufw allow in on wg-server to any port 8080 proto tcp # znc
         #sudo ufw allow in on wg-server to 10.5.3.0/24 port 1080 proto tcp
-        sudo ufw allow in on wg-server to any port 11434 proto tcp # ollama
+        # sudo ufw allow in on wg-server to any port 11434 proto tcp # ollama
         sudo ufw enable
     fi
 
