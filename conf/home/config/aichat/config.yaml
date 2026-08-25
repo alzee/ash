@@ -7,7 +7,8 @@ model: ai:qwen3.8-27b
 clients:
 - type: openai-compatible
   name: ollama
-  api_base: http://localhost:11434/v1
+  #api_base: http://localhost:11434/v1
+  api_base: http://v:11434/v1
   models:
   - name: gemma4:31b-cloud
   - name: deepseek-v3.1:671b-cloud
