@@ -8,9 +8,10 @@
 
 ############### Main Part ###############
 # 'DP-4 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 527mm x 296mm'
-rotate=$(xrandr | grep -w connected | cut -f4 -d' ')
+# rotate=$(xrandr | grep -w connected | cut -f4 -d' ') # not reliable, 'primary' (after connected) is optional
+rotate=$(xrandr | grep -w connected | grep -oE 'normal|left|inverted|right' | head -1)
 
-if [ "$rotate" = '(normal' ]; then
+if [ "$rotate" = 'normal' ]; then
     rotate=$MONITOR_ROTATE
 else
     rotate=normal
