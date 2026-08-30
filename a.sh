@@ -353,7 +353,8 @@ misc() {
 
         sudo chcon -Rt httpd_sys_rw_content_t ~/w
 
-        sudo chcon -t bin_t /usr/bin/rsync
+        # sudo chcon -t bin_t /usr/bin/rsync # termporary
+        sudo setsebool -P rsync_full_access 1
 
         # In case postfix warning: unable to look up public/pickup: No such file or directory
         sudo mkfifo /var/spool/postfix/public/pickup 2> /dev/null

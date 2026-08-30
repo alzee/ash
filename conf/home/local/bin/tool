@@ -244,7 +244,7 @@ install_wafw00f(){
 
 install_joycond(){
     sudo dnf install libevdev-devel libudev-devel
-    cd w
+    cd ~/w
     git clone https://github.com/DanielOgorchock/joycond
     cd joycond
     cmake .
