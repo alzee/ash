@@ -1,5 +1,7 @@
 [Unit]
 Description=Automount NFS share after VPN is up
+After=wg-quick@ai.service
+Requires=wg-quick@ai.service
 
 [Automount]
 Where=/mnt/remote
