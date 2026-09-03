@@ -1,6 +1,7 @@
 [Unit]
 Description=Mount NFS share after VPN is up
-After=network-online.target wg-quick@ai.service
+#After=network-online.target wg-quick@ai.service
+After=wg-quick@ai.service
 Requires=wg-quick@ai.service
 #Wants=network-online.target
 #PartOf=wg-quick@ai.service
