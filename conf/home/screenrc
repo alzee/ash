@@ -38,6 +38,8 @@ altscreen on
 #defflow off
 hardstatus off
 
+#startup_message off
+
 ############### key bind start ###############
 bind s eval split focus screen
 bind S eval other focus other
