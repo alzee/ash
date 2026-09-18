@@ -18,4 +18,5 @@ opacity = 0.6
 TERM = "xterm-256color" # alacritty will override TERM, so set it here
 
 [terminal]
-shell = { program = "s", args = [""] }
+#shell = { program = "s", args = ["-qRR"] }
+shell = { program = "s" }
