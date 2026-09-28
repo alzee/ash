@@ -34,6 +34,10 @@ install_composer(){
     fi
 }
 
+install_hermes(){
+    curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+}
+
 install_symfony(){
     curl -sS https://get.symfony.com/cli/installer | bash
     ln -sf ../../.symfony5/bin/symfony ~/.local/bin/
