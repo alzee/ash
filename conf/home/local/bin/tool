@@ -18,6 +18,24 @@ _clean(){
 }
 trap _clean EXIT
 
+install_yq(){
+    # Install mikefarah yq on Debian
+    arch=$(arch)
+    case $arch in
+        x86_64)
+            arch=amd64
+            ;;
+        aarch64)
+            arch=arm64
+            ;;
+    esac
+    wget -O /tmp/yq \
+        https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${arch}
+    chmod +x /tmp/yq
+
+    sudo cp /tmp/yq /usr/local/bin/yq
+}
+
 install_composer(){
     if [ ! -x ~/.local/bin/composer ];then
         echo Installing composer...
