@@ -20,6 +20,7 @@ trap _clean EXIT
 
 install_yq(){
     # Install mikefarah yq on Debian
+    # Debian has the kislyuk yq, which has different syntax
     arch=$(arch)
     case $arch in
         x86_64)
