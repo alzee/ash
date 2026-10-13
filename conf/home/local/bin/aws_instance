@@ -14,9 +14,11 @@ jq_aws_instance_id(){
 }
 
 run(){
-    local id
+    local id ip
     id=$(aws ec2 run-instances --launch-template LaunchTemplateName=min | jq '.Instances[0].InstanceId' | xargs | tee $idfile)
-    addhost $(aws ec2 describe-instances --instance-ids $id | jq_aws_instance_ip) aws
+    ip=$(aws ec2 describe-instances --instance-ids $id | jq_aws_instance_ip)
+    addhost $ip aws
+    # dns update $zone $record $ip
 }
 
 terminate(){

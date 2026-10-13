@@ -2,7 +2,8 @@
 # vim:ft=sh
 
 if [ -z $1 ]; then
-    echo usage: addhost 127.0.0.1 backend
+    echo Add an entry to /etc/hosts
+    echo usage: 'addhost <ip> <hostname>'
     exit
 fi
 

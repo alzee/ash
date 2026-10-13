@@ -1,0 +1,51 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+############### Variables ###############
+
+############### Functions ###############
+
+############### Main Part ###############
+map=~/.dns/zone
+
+read_map(){
+    :
+}
+
+write_map(){
+    :
+}
+
+get_zone_id(){
+    local url method
+}
+
+get_record_id(){
+    local url method
+}
+
+add_record(){
+    local url method
+}
+
+# params: $zone $record $content $type
+update(){
+    local url method content type
+    url="https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID"
+    # method=GET
+    method=PATCH
+
+    curl -s -X $method $url \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "Content-Type:application/json" \
+        --data "{
+            \"content\": \"$content\",
+            \"name\": \"$RECORD_NAME\",
+            \"proxied\": false,
+            \"type\": \"A\",
+            \"comment\": \"dns.sh: $(date)\",
+            \"tags\": [],
+            \"ttl\": 1
+        }"
+}
