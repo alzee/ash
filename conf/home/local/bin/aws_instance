@@ -14,8 +14,17 @@ jq_aws_instance_id(){
 }
 
 run(){
-    local id ip
-    id=$(aws ec2 run-instances --launch-template LaunchTemplateName=min | jq '.Instances[0].InstanceId' | xargs | tee $idfile)
+    local id ip is_spot spot_clause
+    [ "$1" ] && is_spot=1
+    if [ "$is_spot" ]; then
+        spot_clause=(
+            --instance-market-options
+            '{"MarketType": "spot", "SpotOptions": { "MaxPrice": "0.003", "SpotInstanceType": "one-time", "InstanceInterruptionBehavior": "terminate"}}'
+            )
+    else
+        spot_clause=
+    fi
+    id=$(aws ec2 run-instances --launch-template LaunchTemplateName=min "${spot_clause[@]}" | jq '.Instances[0].InstanceId' | xargs | tee $idfile)
     ip=$(aws ec2 describe-instances --instance-ids $id | jq_aws_instance_ip)
     addhost $ip aws
     # dns update $zone $record $ip
@@ -30,7 +39,7 @@ terminate(){
 
 case $1 in
     r|run)
-        run
+        run "$2"
         ;;
     t|terminate)
         terminate
