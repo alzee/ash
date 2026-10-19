@@ -3,6 +3,7 @@
 # vim:ft=bash
 
 ############### Variables ###############
+sg_name=z
 
 ############### Functions ###############
 get_vpc_id(){
@@ -78,13 +79,13 @@ create_sg_rule(){
 
 ############### Main Part ###############
 vpc_id=$get_vpc_id
+# one sg for all
+sg_id=$(create_sg $sg_name $vpc_id)
 
-for i in ssh http https wireguard icmp; do
-    sg_id=$(create_sg $i $vpc_id)
-
-    if [ -n "$sg_id" ]; then
-        create_sg_rule "$sg_id" $(sg_rule_preset $i)
-    fi
-
-    unset sg_id
-done
+if [ "$sg_id" ]; then
+    for i in ssh http https wireguard icmp; do
+        if [ -n "$sg_id" ]; then
+            create_sg_rule "$sg_id" $(sg_rule_preset $i)
+        fi
+    done
+fi
