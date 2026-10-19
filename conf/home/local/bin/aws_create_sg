@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+############### Variables ###############
+
+############### Functions ###############
+get_vpc_id(){
+    aws ec2 describe-vpcs | jq '.Vpcs[0].VpcId' | xargs
+}
+
+create_sg(){
+    aws ec2 create-security-group --group-name "$1" --description "$1" --vpc-id "$2" | jq '.GroupId' | xargs
+# output
+# {
+#     "GroupId": "sg-04e6c96983a4aa14d",
+#     "SecurityGroupArn": "arn:aws:ec2:ap-northeast-3:187585941853:security-group/sg-04e6c96983a4aa14d"
+# }
+}
+
+############### Main Part ###############
+vpc_id=$get_vpc_id
+
+for i in ssh 'http(s)' wireguard icmp; do
+    sg_id=$(create_sg $i $vpc_id)
+    echo sg_id: $sg_id
+done
+
+
+# aws ec2 authorize-security-group-ingress --group-id 'sg-0b2804b69684f4b68' --ip-permissions '{"FromPort":22,"ToPort":22,"IpProtocol":"tcp","IpRanges":[{"CidrIp":"0.0.0.0/0"}]}' 
+# output
+# {
+#     "Return": true,
+#     "SecurityGroupRules": [
+#         {
+#             "SecurityGroupRuleId": "sgr-048ec97136ed53c2e",
+#             "GroupId": "sg-04e6c96983a4aa14d",
+#             "GroupOwnerId": "187585941853",
+#             "IsEgress": false,
+#             "IpProtocol": "tcp",
+#             "FromPort": 80,
+#             "ToPort": 80,
+#             "CidrIpv4": "0.0.0.0/0",
+#             "SecurityGroupRuleArn": "arn:aws:ec2:ap-northeast-3:187585941853:security-group-rule/sgr-048ec97136ed53c2e"
+#         }
+#     ]
+# }
