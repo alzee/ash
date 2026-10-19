@@ -11,37 +11,80 @@ get_vpc_id(){
 
 create_sg(){
     aws ec2 create-security-group --group-name "$1" --description "$1" --vpc-id "$2" | jq '.GroupId' | xargs
-# output
-# {
-#     "GroupId": "sg-04e6c96983a4aa14d",
-#     "SecurityGroupArn": "arn:aws:ec2:ap-northeast-3:187585941853:security-group/sg-04e6c96983a4aa14d"
-# }
+    # output
+    # {
+    #     "GroupId": "sg-04e6c96983a4aa14d",
+    #     "SecurityGroupArn": "arn:aws:ec2:ap-northeast-3:187585941853:security-group/sg-04e6c96983a4aa14d"
+    # }
+}
+
+sg_rule_preset(){
+    case "$1" in
+        ssh)
+            echo 22 tcp
+            ;;
+        wireguard)
+            echo 16384 udp
+            ;;
+        icmp)
+            echo -1 icmp 0
+            ;;
+        http)
+            echo 80 tcp
+            ;;
+        https)
+            echo 443 tcp
+            ;;
+    esac
+}
+
+create_sg_rule(){
+    local sg_id port proto allow_ipv6 ip_clause ipv6_clause
+    sg_id="$1"
+    port="$2"
+    proto="$3"
+    allow_ipv6=1
+    [ "$4" = 0 ] && allow_ipv6=0
+    ip_clause="{\"FromPort\":"$port",\"ToPort\":"$port",\"IpProtocol\":\"$proto\",\"IpRanges\":[{\"CidrIp\":\"0.0.0.0/0\"}]}" 
+    if [ "$allow_ipv6" = 1 ]; then
+        ipv6_clause="{\"FromPort\":"$port",\"ToPort\":"$port",\"IpProtocol\":\"$proto\",\"Ipv6Ranges\":[{\"CidrIpv6\":\"::/0\"}]}" 
+    else
+        ipv6_clause=
+    fi
+
+    aws ec2 authorize-security-group-ingress --group-id "$sg_id" --ip-permissions $ip_clause $ipv6_clause
+    # example
+    # aws ec2 authorize-security-group-ingress --group-id "$sg_id" --ip-permissions "{\"FromPort\":"$port",\"ToPort\":"$port",\"IpProtocol\":\"$proto\",\"IpRanges\":[{\"CidrIp\":\"0.0.0.0/0\"}]}" 
+    #aws ec2 authorize-security-group-ingress --group-id 'sg-01ca5cdfe7db21f04' --ip-permissions '{"FromPort":16384,"ToPort":16384,"IpProtocol":"udp","IpRanges":[{"CidrIp":"0.0.0.0/0"}]}' '{"FromPort":16384,"ToPort":16384,"IpProtocol":"udp","Ipv6Ranges":[{"CidrIpv6":"::/0"}]}' 
+
+    # output
+    # {
+    #     "Return": true,
+    #     "SecurityGroupRules": [
+    #         {
+    #             "SecurityGroupRuleId": "sgr-048ec97136ed53c2e",
+    #             "GroupId": "sg-04e6c96983a4aa14d",
+    #             "GroupOwnerId": "187585941853",
+    #             "IsEgress": false,
+    #             "IpProtocol": "tcp",
+    #             "FromPort": 80,
+    #             "ToPort": 80,
+    #             "CidrIpv4": "0.0.0.0/0",
+    #             "SecurityGroupRuleArn": "arn:aws:ec2:ap-northeast-3:187585941853:security-group-rule/sgr-048ec97136ed53c2e"
+    #         }
+    #     ]
+    # }
 }
 
 ############### Main Part ###############
 vpc_id=$get_vpc_id
 
-for i in ssh 'http(s)' wireguard icmp; do
+for i in ssh http https wireguard icmp; do
     sg_id=$(create_sg $i $vpc_id)
-    echo sg_id: $sg_id
+
+    if [ -n "$sg_id" ]; then
+        create_sg_rule "$sg_id" $(sg_rule_preset $i)
+    fi
+
+    unset sg_id
 done
-
-
-# aws ec2 authorize-security-group-ingress --group-id 'sg-0b2804b69684f4b68' --ip-permissions '{"FromPort":22,"ToPort":22,"IpProtocol":"tcp","IpRanges":[{"CidrIp":"0.0.0.0/0"}]}' 
-# output
-# {
-#     "Return": true,
-#     "SecurityGroupRules": [
-#         {
-#             "SecurityGroupRuleId": "sgr-048ec97136ed53c2e",
-#             "GroupId": "sg-04e6c96983a4aa14d",
-#             "GroupOwnerId": "187585941853",
-#             "IsEgress": false,
-#             "IpProtocol": "tcp",
-#             "FromPort": 80,
-#             "ToPort": 80,
-#             "CidrIpv4": "0.0.0.0/0",
-#             "SecurityGroupRuleArn": "arn:aws:ec2:ap-northeast-3:187585941853:security-group-rule/sgr-048ec97136ed53c2e"
-#         }
-#     ]
-# }
