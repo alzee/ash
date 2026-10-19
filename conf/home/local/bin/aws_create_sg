@@ -36,6 +36,9 @@ sg_rule_preset(){
         https)
             echo 443 tcp
             ;;
+        dante)
+            echo 1080 tcp
+            ;;
     esac
 }
 
