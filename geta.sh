@@ -46,7 +46,7 @@ echo "default_user: $default_user" > ash/init_user
 echo "current_user: $current_user" >> ash/init_user
 echo "pwd: $PWD" >> ash/init_user
 
-sudo cp ash /home/$user/.ash
+sudo cp -r ash /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
 cd /home/$user
 sudo -u $user .ash/a.sh -L
