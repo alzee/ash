@@ -48,7 +48,6 @@ echo "pwd: $PWD" >> ash/init_user
 
 # testing repo
 ash/a.sh -R
-sudo apt update
 
 # dante
 sudo apt install -y dante-server
