@@ -35,6 +35,7 @@ terminate(){
     # id=$(aws ec2 describe-instances | jq_aws_instance_id)
     id=$(< $idfile)
     aws ec2 terminate-instances --instance-ids $id
+    sed -i '/^aws/d' ~/.ssh/known_hosts
 }
 
 case $1 in
