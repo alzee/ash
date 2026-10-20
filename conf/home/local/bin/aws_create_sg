@@ -30,7 +30,7 @@ create_sg(){
 sg_rule_preset(){
     case "$1" in
         ssh)
-            echo 22 tcp
+            echo 22 tcp 0
             ;;
         wireguard)
             echo 16384 udp
@@ -45,7 +45,7 @@ sg_rule_preset(){
             echo 443 tcp
             ;;
         dante)
-            echo 1080 tcp
+            echo 1080 tcp 0
             ;;
     esac
 }
