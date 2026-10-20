@@ -6,6 +6,8 @@ set -euo pipefail
 
 ############### Variables ###############
 
+[ -f /etc/os-release ] && . /etc/os-release
+
 #tools=$(declare -F | awk '/install_/{sub(/.*install_/, ""); print $1}' | xargs)
 tools=$(grep -oP '^install_\K\w+' "$0" | sort | xargs)
 tmpdir=$(mktemp -d)
@@ -17,6 +19,19 @@ _clean(){
     rm -rf "$tmpdir"
 }
 trap _clean EXIT
+
+install_docker(){
+    case $ID in
+        debian)
+            # see https://docs.docker.com/engine/install/debian/#install-using-the-repository
+            curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+            echo \
+                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+                https://download.docker.com/linux/debian \
+                $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            ;;
+    esac
+}
 
 install_yq(){
     # Install mikefarah yq on Debian
