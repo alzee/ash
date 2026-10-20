@@ -10,7 +10,15 @@ get_vpc_id(){
     aws ec2 describe-vpcs | jq '.Vpcs[0].VpcId' | xargs
 }
 
+get_sg_id_by_name(){
+    aws ec2 describe-security-groups \
+        --filters "Name=group-name,Values=$1" \
+        --query 'SecurityGroups[].GroupId' \
+        --output text
+}
+
 create_sg(){
+    # aws cli allows: --vpc-id "", will create the sg in the default VPC
     aws ec2 create-security-group --group-name "$1" --description "$1" --vpc-id "$2" | jq '.GroupId' | xargs
     # output
     # {
@@ -81,9 +89,15 @@ create_sg_rule(){
 }
 
 ############### Main Part ###############
-vpc_id=$get_vpc_id
+# omit vpc_id to create sg in the default VPC
+# vpc_id=$(get_vpc_id)
+echo vpc id: $vpc_id
 # one sg for all rules
-sg_id=$(create_sg $sg_name $vpc_id)
+sg_id=$(get_sg_id_by_name $sg_name)
+if [ -z "$sg_id" ]; then
+    echo No sg named $sg_name, creating one...
+    sg_id=$(create_sg $sg_name $vpc_id)
+fi
 
 if [ "$sg_id" ]; then
     for i in ssh http https wireguard icmp dante; do
