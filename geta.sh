@@ -46,11 +46,6 @@ echo "default_user: $default_user" > ash/init_user
 echo "current_user: $current_user" >> ash/init_user
 echo "pwd: $PWD" >> ash/init_user
 
-sudo cp -r ash /home/$user/.ash
-sudo chown -R $user:$user /home/$user/.ash
-cd /home/$user
-sudo -u $user .ash/a.sh -L
-
 # testing repo
 ash/a.sh -R
 sudo apt update
@@ -62,3 +57,8 @@ sudo cp /home/$user/.ash/conf/etc/danted.conf /etc/danted.conf
 iface=$(ip r show default | awk '{print $5}')
 sudo sed -i s/eth0/$iface/ /etc/danted.conf
 sudo systemctl restart danted.service
+
+sudo cp -r ash /home/$user/.ash
+sudo chown -R $user:$user /home/$user/.ash
+cd /home/$user
+sudo -u $user .ash/a.sh -L
