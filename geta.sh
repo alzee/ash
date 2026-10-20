@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# will run as **root** in init script such as AWS Lauch templates User data
 # add user
 user=${MY_USER:-al} # env MY_USER
 PASSWD=${PASSWD:-zee}
@@ -51,7 +52,8 @@ ash/a.sh -R
 
 # dante
 sudo apt install -y dante-server
-sudo mv /etc/danted.conf /etc/danted.conf.bak
+sudo systemctl stop danted.service
+sudo cp /etc/danted.conf /etc/danted.conf.bak
 sudo cp ash/conf/etc/danted.conf /etc/danted.conf
 iface=$(ip r show default | awk '{print $5}')
 sudo sed -i s/eth0/$iface/ /etc/danted.conf
