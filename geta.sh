@@ -53,7 +53,7 @@ sudo apt update
 # dante
 sudo apt install -y dante-server
 sudo mv /etc/danted.conf /etc/danted.conf.bak
-sudo cp /home/$user/.ash/conf/etc/danted.conf /etc/danted.conf
+sudo cp ash/conf/etc/danted.conf /etc/danted.conf
 iface=$(ip r show default | awk '{print $5}')
 sudo sed -i s/eth0/$iface/ /etc/danted.conf
 sudo systemctl restart danted.service
