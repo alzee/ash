@@ -50,15 +50,6 @@ echo "pwd: $PWD" >> ash/init_user
 # testing repo
 ash/a.sh -R
 
-# dante
-sudo apt install -y dante-server
-sudo systemctl stop danted.service
-sudo cp /etc/danted.conf /etc/danted.conf.bak
-sudo cp ash/conf/etc/danted.conf /etc/danted.conf
-iface=$(ip r show default | awk '{print $5}')
-sudo sed -i s/eth0/$iface/ /etc/danted.conf
-sudo systemctl restart danted.service
-
 sudo cp -r ash /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
 cd /home/$user
