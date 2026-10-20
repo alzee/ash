@@ -51,6 +51,9 @@ sudo chown -R $user:$user /home/$user/.ash
 cd /home/$user
 sudo -u $user .ash/a.sh -L
 
+# dante
 sudo mv /etc/danted.conf /etc/danted.conf.bak
 sudo cp /home/$user/.ash/conf/etc/danted.conf /etc/danted.conf
+iface=$(ip r show default | awk '{print $5}')
+sudo sed -i s/eth0/$iface/ /etc/danted.conf
 sudo systemctl restart danted.service
