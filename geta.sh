@@ -24,7 +24,7 @@ if ! id $user &> /dev/null; then
 fi
 
 sudo apt update
-sudo apt install -y git screen dante-server
+sudo apt install -y git screen
 
 if which git &> /dev/null; then
     git clone https://github.com/alzee/ash
@@ -46,12 +46,17 @@ echo "default_user: $default_user" > ash/init_user
 echo "current_user: $current_user" >> ash/init_user
 echo "pwd: $PWD" >> ash/init_user
 
-sudo mv ash /home/$user/.ash
+sudo cp ash /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
 cd /home/$user
 sudo -u $user .ash/a.sh -L
 
+# testing repo
+ash/a.sh -R
+sudo apt update
+
 # dante
+sudo apt install -y dante-server
 sudo mv /etc/danted.conf /etc/danted.conf.bak
 sudo cp /home/$user/.ash/conf/etc/danted.conf /etc/danted.conf
 iface=$(ip r show default | awk '{print $5}')
