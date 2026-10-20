@@ -82,11 +82,11 @@ create_sg_rule(){
 
 ############### Main Part ###############
 vpc_id=$get_vpc_id
-# one sg for all
+# one sg for all rules
 sg_id=$(create_sg $sg_name $vpc_id)
 
 if [ "$sg_id" ]; then
-    for i in ssh http https wireguard icmp; do
+    for i in ssh http https wireguard icmp dante; do
         if [ -n "$sg_id" ]; then
             create_sg_rule "$sg_id" $(sg_rule_preset $i)
         fi
