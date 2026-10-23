@@ -9,7 +9,7 @@
 	t = tag
 	sw = switch
 	p = pull
-	l = log --format='%C(auto)%h %Cred%cd%Creset %C(auto)%d %s' --date=format:'%b %d %H:%M %Y'
+	l = log --format='%C(auto)%h %Cred%cd%Creset %C(auto)%an %C(auto)%d %s' --date=format:'%b %d %H:%M %Y'
 	d = diff
 	b = branch
 [core]
