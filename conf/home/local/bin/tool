@@ -33,6 +33,10 @@ install_docker(){
     esac
 }
 
+install_watchexec(){
+    cargo install --locked watchexec-cli
+}
+
 install_yq(){
     # Install mikefarah yq on Debian
     # Debian has the kislyuk yq, which has different syntax
