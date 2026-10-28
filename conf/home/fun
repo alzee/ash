@@ -43,7 +43,14 @@ b(){
 }
 
 c(){
-    cargo "$@"
+    case $1 in
+        w|watch)
+            watchexec -r -e rs,toml -w src -w Cargo.toml -- cargo run
+            ;;
+        *)
+            cargo "$@"
+            ;;
+    esac
 }
 
 d(){
