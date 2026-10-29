@@ -2,7 +2,6 @@
 #
 # vim:ft=bash
 
-set -x
 ############### Variables ###############
 url="https://www.cnn.com/audio/podcasts/terms-of-service-with-clare-duffy"
 
@@ -10,4 +9,4 @@ url="https://www.cnn.com/audio/podcasts/terms-of-service-with-clare-duffy"
 
 ############### Main Part ###############
 
-xmllint --html --xpath '//audio-player-wc' < $(curl -L "$url") # 2>/dev/null
+curl -sL "$url" | xmllint --html --xpath '//audio-player-wc/@src' - 2>/dev/null
