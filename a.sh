@@ -482,6 +482,12 @@ _sysctl(){
     fi
 }
 
+set_locale(){
+    sudo localectl set-keymap us
+    sudo localectl set-x11-keymap us
+    sudo localectl set-locale LANG=en_US.UTF-8
+}
+
 
 enable_networkmanager(){
     # Since we remove dhcpcd5
@@ -552,6 +558,9 @@ case $1 in
         ;;
     -V)
         setup_x11vnc
+        ;;
+    -locale)
+        set_locale
         ;;
     *)
         ;;
