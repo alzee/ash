@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+_help(){
+    echo Usage:
+    echo $(basename $0) '<filename>'
+}
+
+[ -z "$1" ] && _help && exit
+
+awk '!seen[$0]++' "$1"
