@@ -144,6 +144,7 @@ install_claude(){
 }
 
 install_cursor(){
+    rm -rf ~/.local/share/cursor-agent/versions/*
     curl https://cursor.com/install -fsS | bash
     ln -sf cursor-agent ~/.local/bin/cursor
 }
