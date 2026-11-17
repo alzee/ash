@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# vim:ft=bash
+
+url="$1"
+browser=${2:-firefox}
+
+_help(){
+    echo Usage:
+    echo $(basename $0) '<url> [browser]'
+}
+
+if [ -z "$1" ]; then
+    _help
+    exit
+fi
+
+yt-dlp --cookies-from-browser $browser --remote-components ejs:github "$1"
