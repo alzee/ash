@@ -50,10 +50,10 @@ echo "pwd: $PWD" >> ash/init_user
 # testing repo
 ash/a.sh -R
 
+# firewall rules
+ash/a.sh -F
+
 sudo cp -r ash /home/$user/.ash
 sudo chown -R $user:$user /home/$user/.ash
 cd /home/$user
 sudo -u $user .ash/a.sh -L
-
-# firewall rules
-ash/a.sh -F
