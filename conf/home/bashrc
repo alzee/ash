@@ -43,6 +43,8 @@ if [[ $- == *i* && -z ${__MY_COMPLETIONS_LOADED:-} ]]; then
     complete -F _systemctl sd
     _completion_loader cargo
     complete -F _cargo c
+    complete -F _comp_cmd_ping p
+    _completion_loader ping
 fi
 
 # man gpg-agent
