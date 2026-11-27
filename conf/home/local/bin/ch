@@ -3,6 +3,7 @@
 # vim:ft=bash
 
 dir=${1:-z}
+use_proxy=${2:-1}
 prefix=~/.chromium
 # prefix=~/.config/google-chrome
 chrome=chromium-browser
@@ -11,4 +12,10 @@ if ! which $chrome &> /dev/null; then
 fi
 
 # $chrome --profile-directory=$profile
-$chrome --user-data-dir=$prefix/$dir 2> /dev/null &
+
+proxy_param="--proxy-server=socks5://s:1080"
+if [ "$use_proxy" = 0 ]; then
+    unset proxy_param
+fi
+
+$chrome --user-data-dir=$prefix/$dir $proxy_param 2> /dev/null &
