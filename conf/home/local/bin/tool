@@ -20,6 +20,10 @@ _clean(){
 }
 trap _clean EXIT
 
+install_antigravity(){
+    curl -fsSL https://antigravity.google/cli/install.sh | bash
+}
+
 install_docker(){
     case $ID in
         debian)
