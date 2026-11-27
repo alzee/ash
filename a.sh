@@ -538,7 +538,7 @@ case $1 in
     -D)
         default_pool
         ;;
-    -firewall)
+    -F|-firewall)
         add_firewall_rules
         ;;
     -L)
